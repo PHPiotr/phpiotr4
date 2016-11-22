@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "async": "^2.1.2",
     "body-parser": "~1.15.2",
     "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
@@ -14,8 +15,10 @@
     "grunt": "^1.0.1",
     "grunt-contrib-less": "^1.4.0",
     "mongodb": "^2.2.11",
+    "mongoose": "^4.6.8",
     "morgan": "~1.7.0",
     "pug": "^2.0.0-beta6",
+    "request": "^2.79.0",
     "serve-favicon": "~2.3.0"
   }
 }

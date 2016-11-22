@@ -43,4 +43,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+require('mongoose').connect('mongodb://localhost/phpiotr4');
+
 module.exports = app;
