@@ -45,7 +45,16 @@ router.get('/new', notLoggedIn,
             res.render('users/new', {title: "New User"});
         });
 router.get('/:name', loadUser, function(req, res, next) {
-    res.render('users/profile', {title: 'User profile', user: req.user});
+    req.user.recentArticles(function(err, articles) {
+        if (err) {
+            return next(err);
+        }
+        res.render('users/profile', {
+            title: 'User profile',
+            user: req.user,
+            recentArticles: articles
+        });
+    });
 });
 router.post('/', notLoggedIn,
         function(req, res, next) {

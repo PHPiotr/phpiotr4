@@ -1,0 +1,24 @@
+extends ../layout
+block content
+
+    h1 Log in
+    form(method="POST", action="/session")
+        div(class="form-group")
+            label(for="username") User name
+                input(
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    id="username"
+                    placeholder="User name"
+                )
+        div(class="form-group")
+            label(for="password") Password
+                input(
+                    type="text"
+                    name="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Password"
+                )
+        button(type="submit" class="btn btn-default") Log in

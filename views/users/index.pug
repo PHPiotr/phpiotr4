@@ -3,12 +3,14 @@ block content
 
     h1 Users
     p
-        a(href="/users/new") Create new profile
-    ul
+        a(href="/users/new" class="btn btn-default") Create new profile
+
+    ul(class="list-group")
         each user in users
-            li
-                a(href="/users/" + encodeURIComponent(user.username))= user.email
-    if page > 0
-        a(href="?page=" + (page - 1)) Previous
-    if !lastPage
-        a(href="?page=" + (page + 1)) Next
+            li(class="list-group-item")
+                a(href="/users/" + encodeURIComponent(user.username))= user.full_name
+    div
+        if page > 0
+            a(href="?page=" + (page - 1)) Previous
+        if !lastPage
+            a(href="?page=" + (page + 1)) Next

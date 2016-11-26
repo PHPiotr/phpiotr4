@@ -35,7 +35,7 @@ function filterTwitterHandle(handle) {
 
 var UserSchema = new mongoose.Schema({
     username: {type: String, unique: true},
-    name: String,
+    name: mongoose.Schema.Types.Mixed,
     password: String,
     email: {
         type: String,
@@ -52,11 +52,68 @@ var UserSchema = new mongoose.Schema({
         type: Date,
         validate: [validate_18_years_old_or_more, 'ou must be 18 years old or more']
     },
+    bio: {
+        type: String
+    },
     twitter: {
         type: String,
+        sparse: true,
         validate: [twitterHandleExists, 'Please provide a valid twitter handle'],
         get: filterTwitterHandle,
         set: filterTwitterHandle
+    },
+    meta: {
+        created_at: {
+            type: Date,
+            'default': Date.now,
+            set: function(val) {
+                return undefined;
+            }
+        },
+        updated_at: {
+            type: Date,
+            'default': Date.now
+        }
     }
 });
+UserSchema
+        .virtual('full_name')
+        .get(function() {
+            if (typeof this.name === 'string') {
+                return this.name;
+            }
+            return [this.name.first, this.name.last].join(' ');
+        })
+        .set(function(fullName) {
+            var nameComponents = fullName.split(' ');
+            this.name = {
+                last: nameComponents.pop(),
+                first: nameComponents.join(' ')
+            };
+        });
+UserSchema
+        .virtual('twitter_url')
+        .get(function() {
+            if (this.twitter) {
+                return 'http://twitter.com/' + encodeURIComponent(this.twitter);
+            }
+        });
+UserSchema.pre('save', function(next) {
+    if (this.isNew) {
+        this.meta.created_at = undefined;
+    }
+    this.meta.updated_at = undefined;
+    next();
+});
+
+UserSchema.index({username: 1, 'meta.created_at': -1});
+
+UserSchema.methods.recentArticles = function(callback) {
+    return this.model('Article')
+            .find({author: this._id})
+            .sort('created_at')
+            .limit(5)
+            .exec(callback);
+};
+
 module.exports = UserSchema;

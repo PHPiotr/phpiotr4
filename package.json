@@ -12,6 +12,8 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
+    "express-dynamic-helpers-patch": "0.0.2",
+    "express-session": "^1.14.2",
     "grunt": "^1.0.1",
     "grunt-contrib-less": "^1.4.0",
     "mongodb": "^2.2.11",
