@@ -7,7 +7,7 @@ function notLoggedIn(req, res, next) {
             next();
         } else {
             if (req.session.user) {
-                res.send('Unauthorized', 401);
+                res.status(401).send('Unauthorized');
             } else {
                 next();
             }

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var request = require('request');
+var bcrypt = require('bcrypt-nodejs');
 var emailRegexp = /.+\@.+\..+/;
 var TIMESPAN_YEAR = 31536000000;
 var TIMESPAN_18_YEARS = 18 * TIMESPAN_YEAR;
@@ -22,6 +23,8 @@ function twitterHandleExists(handle, done) {
     });
 }
 
+mongoose.Promise = require('bluebird');
+
 function filterTwitterHandle(handle) {
     if (!handle) {
         return;
@@ -34,9 +37,9 @@ function filterTwitterHandle(handle) {
 }
 
 var UserSchema = new mongoose.Schema({
-    username: {type: String, unique: true},
+    username: {type: String, required: true, unique: true},
     name: mongoose.Schema.Types.Mixed,
-    password: String,
+    password: {type: String, required: true},
     email: {
         type: String,
         required: true,
@@ -99,12 +102,34 @@ UserSchema
             }
         });
 UserSchema.pre('save', function(next) {
-    if (this.isNew) {
-        this.meta.created_at = undefined;
+
+    var that = this;
+
+    if (that.isNew) {
+        that.meta.created_at = undefined;
     }
-    this.meta.updated_at = undefined;
-    next();
+    that.meta.updated_at = undefined;
+
+    if (!this.isModified('password')) {
+        return next();
+    }
+
+    bcrypt.hash(this.password, null, null, function(err, hash) {
+        if (err) {
+            return next(err);
+        }
+        that.password = hash;
+        next();
+    });
 });
+UserSchema.methods.comparePassword = function(candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, isMatch);
+    });
+};
 
 UserSchema.index({username: 1, 'meta.created_at': -1});
 

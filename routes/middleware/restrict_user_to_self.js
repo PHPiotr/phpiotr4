@@ -1,6 +1,6 @@
 function restrictUserToSelf(req, res, next) {
     if (!req.session.user || req.session.user.username !== req.user.username) {
-        res.send('Unauthorized', 401);
+        res.status(401).send('Unauthorized');
     } else {
         next();
     }

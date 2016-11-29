@@ -5,7 +5,7 @@ function loadUser(req, res, next) {
             return next(err);
         }
         if (!user) {
-            return res.send('Not found', 404);
+            return res.status(404).send('Not found');
         }
         req.user = user;
         next();
