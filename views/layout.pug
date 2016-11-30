@@ -1,8 +1,19 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
-  body
-    div(class="container")
-      block content
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    body
+        div(class="container-fluid")
+            div(clss="row")
+                if error_messages.length
+                    div(class="alert alert-danger alert-dismissible")
+                        a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                        != error_messages
+                if success_messages.length
+                    div(class="alert alert-success alert-dismissible")
+                        a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                        != success_messages
+            block content
+        script(src="/javascripts/jquery.js")
+        script(src="/javascripts/bootstrap.js")

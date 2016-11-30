@@ -1,17 +1,17 @@
 function notLoggedIn(req, res, next) {
 
     if (undefined === req.session) {
-        next();
-    } else {
-        if (undefined === req.session.user) {
-            next();
-        } else {
-            if (req.session.user) {
-                res.status(401).send('Unauthorized');
-            } else {
-                next();
-            }
-        }
+        return next();
     }
+
+    if (undefined === req.session.user) {
+        return next();
+    }
+
+    if (!req.session.user) {
+        return next();
+    }
+
+    res.status(401).send('Unauthorized');
 }
 module.exports = notLoggedIn;

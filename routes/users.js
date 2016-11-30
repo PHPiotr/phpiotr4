@@ -1,5 +1,6 @@
 var async = require('async');
 var User = require('../data/models/user');
+var loggedIn = require('./middleware/logged_in');
 var notLoggedIn = require('./middleware/not_logged_in');
 var loadUser = require('./middleware/load_user');
 var restrictUserToSelf = require('./middleware/restrict_user_to_self');
@@ -44,7 +45,7 @@ router.get('/new', notLoggedIn,
         function(req, res) {
             res.render('users/new', {title: "New User"});
         });
-router.get('/:name', loadUser, function(req, res, next) {
+router.get('/:name', loggedIn, loadUser, function(req, res, next) {
     req.user.recentArticles(function(err, articles) {
         if (err) {
             return next(err);

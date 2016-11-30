@@ -7,7 +7,7 @@ function loadArticle(req, res, next) {
                     return next(err);
                 }
                 if (!article) {
-                    return res.send('Not found', 404);
+                    return res.status(404).send('Not found');
                 }
                 req.article = article;
                 next();

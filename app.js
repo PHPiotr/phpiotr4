@@ -1,11 +1,12 @@
 var express = require('express');
+var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var express_session = require('express-session');
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
@@ -19,6 +20,7 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -30,6 +32,12 @@ app.use(express_session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());
+app.use(function(req, res, next){
+    res.locals.success_messages = req.flash('success_message');
+    res.locals.error_messages = req.flash('error_message');
+    next();
+});
 
 app.use('/', index);
 app.use('/users', users);

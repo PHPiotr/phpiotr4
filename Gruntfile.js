@@ -20,10 +20,33 @@ module.exports = function(grunt) {
                     'public/stylesheets/bootstrap.css': 'node_modules/bootstrap/less/bootstrap.less'
                 }
             }
+        },
+        copy: {
+            main: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'node_modules/bootstrap/dist/js/',
+                        src: ['bootstrap.js'],
+                        dest: 'public/javascripts/',
+                        filter: 'isFile',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        cwd: 'node_modules/jquery/dist/',
+                        src: ['jquery.js'],
+                        dest: 'public/javascripts/',
+                        filter: 'isFile',
+                        flatten: true
+                    }
+                ]
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('default', ['less']);
     grunt.registerTask('production', ['less:production']);
