@@ -15,10 +15,14 @@ html
                         span(class="icon-bar")
                     a(class="navbar-brand" href="/") PHPiotr 4.0
                 div(class="collapse navbar-collapse" id="navbar-main")
-                    ul(class="nav navbar-nav")
+                    ul(class="nav navbar-nav navbar-right")
                         - if (session.user) {
                             li
-                                a(href="/session?_method=DELETE") Log out
+                                form(method="POST", action="/session?_method=DELETE" class="navbar-form")
+                                    button(type="submit" class="btn btn-link") Logout
+                            li
+                                form(method="POST", action="/users + encodeURIComponent(user.username) + ?_method=DELETE" class="navbar-form")
+                                    button(type="submit" class="btn btn-link") Delete account
                         - } else {
                             li
                                 a(href="/session/new") Login
