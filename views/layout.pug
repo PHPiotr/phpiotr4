@@ -4,6 +4,27 @@ html
         title= title
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     body
+
+        div(class="navbar navbar-default")
+            div(class="container-fluid")
+                div(class="navbar-header")
+                    button(type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false")
+                        span(class="sr-only") Toggle navigation
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                    a(class="navbar-brand" href="/") PHPiotr 4.0
+                div(class="collapse navbar-collapse" id="navbar-main")
+                    ul(class="nav navbar-nav")
+                        - if (session.user) {
+                            li
+                                a(href="/session?_method=DELETE") Log out
+                        - } else {
+                            li
+                                a(href="/session/new") Login
+                            li
+                                a(href="/users/new") Register
+                        - }
         div(class="container-fluid")
             div(clss="row")
                 if error_messages.length
