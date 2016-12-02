@@ -32,6 +32,7 @@
     "reactify": "^1.1.1",
     "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
+    "uuid": "^3.0.1",
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
