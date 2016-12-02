@@ -3,6 +3,7 @@ html
     head
         title= title
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+        block stylesheets
     body
 
         div(class="navbar navbar-default")
@@ -48,3 +49,4 @@ html
             block content
         script(src="/javascripts/jquery.js")
         script(src="/javascripts/bootstrap.js")
+        block javascripts
