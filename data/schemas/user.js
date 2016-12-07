@@ -53,7 +53,7 @@ var UserSchema = new mongoose.Schema({
     },
     birthday: {
         type: Date,
-        validate: [validate_18_years_old_or_more, 'ou must be 18 years old or more']
+        validate: [validate_18_years_old_or_more, 'You must be 18 years old or more']
     },
     bio: {
         type: String

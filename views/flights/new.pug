@@ -1,0 +1,86 @@
+extends ../layout
+block stylesheets
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+
+block content
+
+    h1= title
+    form(method="POST", action="/flights")
+        div(class="form-group")
+            label(for="confirmation-code") Confirmation code
+                input(
+                    type="text"
+                    name="confirmation_code"
+                    class="form-control"
+                    id="confirmation-code"
+                )
+        div(class="form-group")
+            label(for="from") Flying from
+                input(
+                    type="text"
+                    name="from"
+                    class="form-control"
+                    id="from"
+                )
+        div(class="form-group")
+            label(for="to") Flying to
+                input(
+                    type="text"
+                    name="to"
+                    class="form-control"
+                    id="to"
+                )
+        div(class="form-group")
+            label(for="departure-date") Departure date
+                input(
+                    type="text"
+                    name="departure_date"
+                    class="form-control"
+                    id="departure-date"
+                )
+        div(class="form-group")
+            label(for="departure-time") Departure time
+                input(
+                    type="text"
+                    name="departure_time"
+                    class="form-control"
+                    id="departure-time"
+                )
+        div(class="form-group")
+            label(for="arrival-time") Arrival time
+                input(
+                    type="text"
+                    name="arrival_time"
+                    class="form-control"
+                    id="arrival-time"
+                )
+        div(class="form-group")
+            label(for="price") Price
+                input(
+                    type="text"
+                    name="price"
+                    class="form-control"
+                    id="price"
+                )
+        div(class="form-group")
+            label(for="currency") Currency
+                select(
+                    name="currency"
+                    class="form-control"
+                    id="currency"
+                )
+                    each currency in currencies
+                        option(value= currency)= currency
+        div(class="form-group")
+            label(for="checked-in") Checked in
+                input(
+                    type="checkbox"
+                    name="checked_in"
+                    class="form-control"
+                    value="1"
+                    id="checked-in"
+                )
+        button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
+block javascripts
+    script(src="/javascripts/datepicker.js")
+    script(src="/javascripts/flights/new.js")

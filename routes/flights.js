@@ -1,28 +1,27 @@
 /*
- * Article Routes
+ * Ticket Routes
  */
 var async = require('async');
-var Article = require('../data/models/article');
+var Flight = require('../data/models/flight');
 var notLoggedIn = require('./middleware/not_logged_in');
-var loadArticle = require('./middleware/load_article');
+var loadFlight = require('./middleware/load_flight');
 var loggedIn = require('./middleware/logged_in');
-var maxArticlesPerPage = 5;
+var maxPerPage = 5;
 
 var express = require('express');
 var router = express.Router();
-
 
 router.get('/', function(req, res, next) {
     var page = req.query.page && parseInt(req.query.page, 10) || 0;
     async.parallel([
         function(next) {
-            Article.count(next);
+            Flight.count(next);
         },
         function(next) {
-            Article.find({})
-                    .sort('title')
-                    .skip(page * maxArticlesPerPage)
-                    .limit(maxArticlesPerPage)
+            Flight.find({})
+                    .sort('depature_date')
+                    .skip(page * maxPerPage)
+                    .limit(maxPerPage)
                     .exec(next);
         }
     ],
@@ -32,11 +31,11 @@ router.get('/', function(req, res, next) {
                     return next(err);
                 }
                 var count = results[0];
-                var articles = results[1];
-                var lastPage = (page + 1) * maxArticlesPerPage >= count;
-                res.render('articles/index', {
-                    title: 'Articles',
-                    articles: articles,
+                var flights = results[1];
+                var lastPage = (page + 1) * maxPerPage >= count;
+                res.render('flights/index', {
+                    title: 'Flights',
+                    flights: flights,
                     page: page,
                     lastPage: lastPage
                 });
@@ -44,32 +43,35 @@ router.get('/', function(req, res, next) {
     );
 });
 router.get('/new', loggedIn, function(req, res) {
-    res.render('articles/new', {title: "New Article"});
+    res.render('flights/new', {
+        title: "New flight",
+        currencies: Flight.schema.path('currency').enumValues
+    });
 });
 
 router.get('/search', function(req, res, next) {
     console.log('searching for', req.query.q);
-    Article.search(req.query.q, function(err, articles) {
+    Flight.search(req.query.q, function(err, flights) {
         if (err) {
             return next(err);
         }
-        res.render('articles/index', {
-            title: 'Article search results',
-            articles: articles,
+        res.render('flights/index', {
+            title: 'Flights search results',
+            flights: flights,
             page: 0,
             lastPage: true
         });
     });
 });
 
-router.get('/:title', loadArticle, function(req, res, next) {
-    res.render('articles/article', {title: req.article.title,
-        article: req.article});
+router.get('/:confirmation_code', loadFlight, function(req, res, next) {
+    res.render('flights/flight', {title: req.flight.confirmation_code,
+        flight: req.flight});
 });
 router.post('/', loggedIn, function(req, res, next) {
-    var article = req.body;
-    article.author = req.session.user._id;
-    Article.create(article, function(err) {
+    var flight = req.body;
+    flight.created_by = req.session.user._id;
+    Flight.create(flight, function(err) {
         if (err) {
             if (err.code === 11000) {
                 res.send('Conflict', 409);
@@ -84,15 +86,15 @@ router.post('/', loggedIn, function(req, res, next) {
             }
             return;
         }
-        res.redirect('/articles');
+        res.redirect('/flights');
     });
 });
-router.delete('/:title', loggedIn, loadArticle, function(req, res, next) {
-    req.article.remove(function(err) {
+router.delete('/:confirmation_code', loggedIn, loadFlight, function(req, res, next) {
+    req.event.remove(function(err) {
         if (err) {
             return next(err);
         }
-        res.redirect('/articles');
+        res.redirect('/flights');
     });
 });
 

@@ -39,6 +39,22 @@ module.exports = function(grunt) {
                         dest: 'public/javascripts/',
                         filter: 'isFile',
                         flatten: true
+                    },
+                    {
+                        expand: true,
+                        cwd: 'node_modules/jquery-ui/ui/widgets/',
+                        src: ['datepicker.js'],
+                        dest: 'public/javascripts/',
+                        filter: 'isFile',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        cwd: 'app/javascripts/flights/',
+                        src: ['*.js'],
+                        dest: 'public/javascripts/flights/',
+                        filter: 'isFile',
+                        flatten: true
                     }
                 ]
             }

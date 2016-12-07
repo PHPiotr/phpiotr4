@@ -17,13 +17,15 @@ html
                     a(class="navbar-brand" href="/") PHPiotr 4.0
                 div(class="collapse navbar-collapse" id="navbar-main")
                     ul(class="nav navbar-nav")
-                        li
-                            a(href="/articles") Articles
+                        - if (session.user) {
+                            li
+                                a(href="/flights") Flights
+                        - }
 
                     ul(class="nav navbar-nav navbar-right")
                         - if (session.user) {
                             li
-                                a(href="/articles/new") Create article
+                                a(href="/flights/new") Add flight
                             li
                                 form(method="POST", action="/session?_method=DELETE" class="navbar-form")
                                     button(type="submit" class="btn btn-link") Logout

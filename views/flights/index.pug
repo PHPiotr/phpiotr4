@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+
+    h1= title
+    if flights.length
+        table(class="table")
+            tr
+                th= 'Date'
+                th= 'Time'
+                th= 'From'
+                th= 'To'
+                th= 'Price'
+            each flight, index in flights
+                tr
+                    td= flight.formatted_departure_date
+                    td= flight.formatted_departure_time
+                    td= flight.from
+                    td= flight.to
+                    td= flight.currency + flight.price
+            else
+                p= 'No ' + title.toLowerCase() + '.'
+
+    if page > 0
+        a(href="?page=" + (page - 1)) Previous
+    if !lastPage
+        a(href="?page=" + (page + 1)) Next

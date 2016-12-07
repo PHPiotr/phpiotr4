@@ -1,0 +1,3 @@
+$(function() {
+    $("#departure-date").datepicker();
+});

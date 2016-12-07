@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var express_session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var articles = require('./routes/articles');
+var flights = require('./routes/flights');
 var session = require('./routes/session');
 
 var app = express();
@@ -41,7 +41,7 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/articles', articles);
+app.use('/flights', flights);
 app.use('/session', session);
 
 require('express-dynamic-helpers-patch')(app);
