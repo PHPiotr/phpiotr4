@@ -1,3 +1,3 @@
 $(function() {
-    $("#departure-date").datepicker();
+    $("#departure-date, #return-departure-date").datepicker();
 });

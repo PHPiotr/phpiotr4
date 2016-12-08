@@ -19,22 +19,23 @@ html
                     ul(class="nav navbar-nav")
                         - if (session.user) {
                             li
-                                a(href="/flights") Flights
+                                a(href="/flights" class="btn btn-link") Flights
+                            li
+                                a(href="/flights/new" class="btn btn-link") Add flight
+                            li
+                                form(method="POST", action="/session?_method=DELETE" class="navbar-form")
+                                    button(type="submit" class="btn btn-link") Logout
+                        - } else {
+                            li
+                                a(href="/session/new") Login
                         - }
 
                     ul(class="nav navbar-nav navbar-right")
                         - if (session.user) {
                             li
-                                a(href="/flights/new") Add flight
-                            li
-                                form(method="POST", action="/session?_method=DELETE" class="navbar-form")
-                                    button(type="submit" class="btn btn-link") Logout
-                            li
                                 form(method="POST", action="/users + encodeURIComponent(user.username) + ?_method=DELETE" class="navbar-form")
                                     button(type="submit" class="btn btn-link") Delete account
                         - } else {
-                            li
-                                a(href="/session/new") Login
                             li
                                 a(href="/users/new") Register
                         - }

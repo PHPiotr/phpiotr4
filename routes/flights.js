@@ -6,38 +6,65 @@ var Flight = require('../data/models/flight');
 var notLoggedIn = require('./middleware/not_logged_in');
 var loadFlight = require('./middleware/load_flight');
 var loggedIn = require('./middleware/logged_in');
-var maxPerPage = 5;
+var maxPerPage = 10;
 
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/', loggedIn, function(req, res, next) {
     var page = req.query.page && parseInt(req.query.page, 10) || 0;
-    async.parallel([
-        function(next) {
-            Flight.count(next);
-        },
-        function(next) {
-            Flight.find({})
-                    .sort('depature_date')
-                    .skip(page * maxPerPage)
-                    .limit(maxPerPage)
-                    .exec(next);
-        }
-    ],
-// final callback
+    async.parallel(
+            [
+                function(next) {
+                    Flight.count(next);
+                },
+                function(next) {
+                    Flight.find({})
+                            .sort('depature_date')
+                            .skip(page * maxPerPage)
+                            .limit(maxPerPage)
+                            .exec(next);
+                },
+                function(next) {
+                    Flight.aggregate(
+                            [
+                                {
+                                    "$group": {
+                                        "_id": "$created_by",
+                                        "cost": {"$sum": "$price"}
+                                    }
+                                }
+                            ],
+                            function(err, results) {
+                                next(err, results);
+                            }
+                    );
+                }
+            ],
             function(err, results) {
                 if (err) {
                     return next(err);
                 }
                 var count = results[0];
                 var flights = results[1];
+                var total_costs = results[2];
+                var total_costs_length = total_costs.length;
+                var user_id = req.session.user._id;
+                var user_cost = null;
+                for (var i = 0; i < total_costs_length; i++) {
+                    if ((total_costs[i]._id).toString() !== user_id) {
+                        continue
+                    }
+                    user_cost = (total_costs[i].cost / 100).toFixed(2);
+                    break;
+                }
                 var lastPage = (page + 1) * maxPerPage >= count;
                 res.render('flights/index', {
                     title: 'Flights',
                     flights: flights,
                     page: page,
-                    lastPage: lastPage
+                    lastPage: lastPage,
+                    user_cost: user_cost
                 });
             }
     );

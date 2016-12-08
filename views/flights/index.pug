@@ -6,20 +6,29 @@ block content
     if flights.length
         table(class="table")
             tr
-                th= 'Date'
-                th= 'Time'
-                th= 'From'
-                th= 'To'
-                th= 'Price'
+                th
+                th= 'Confirmation No.'
+                th= 'Checked in'
+                th= 'Going out'
+                th= 'Coming back'
+                th= 'Departs from'
+                th= 'Arrives to'
+                th(class="text-right")= 'Price'
             each flight, index in flights
                 tr
-                    td= flight.formatted_departure_date
-                    td= flight.formatted_departure_time
+                    td(class="text-right")= index + 1 + '.'
+                    td= flight.confirmation_code
+                    td= flight.checked_in ? 'Yes' : 'No'
+                    td= flight.going_out
+                    td= flight.coming_back
                     td= flight.from
                     td= flight.to
-                    td= flight.currency + flight.price
+                    td(class="text-right")= flight.price + ' ' + flight.currency
             else
                 p= 'No ' + title.toLowerCase() + '.'
+            tr
+                td(colspan="8" class="text-right")
+                    strong= user_cost + ' ' + flights[0].currency
 
     if page > 0
         a(href="?page=" + (page - 1)) Previous

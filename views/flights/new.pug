@@ -55,6 +55,39 @@ block content
                     id="arrival-time"
                 )
         div(class="form-group")
+            label(for="is-return") Is return flight?
+                input(
+                    type="checkbox"
+                    name="is_return"
+                    class="form-control"
+                    value="1"
+                    id="is-return"
+                )
+        div(class="form-group")
+            label(for="return-departure-date") Return departure date
+                input(
+                    type="text"
+                    name="return_departure_date"
+                    class="form-control"
+                    id="return-departure-date"
+                )
+        div(class="form-group")
+            label(for="return-departure-time") Return departure time
+                input(
+                    type="text"
+                    name="return_departure_time"
+                    class="form-control"
+                    id="return-departure-time"
+                )
+        div(class="form-group")
+            label(for="return-arrival-time") Return arrival time
+                input(
+                    type="text"
+                    name="return_arrival_time"
+                    class="form-control"
+                    id="return-arrival-time"
+                )
+        div(class="form-group")
             label(for="price") Price
                 input(
                     type="text"

@@ -1,16 +1,16 @@
 var React = require("react");
 
 module.exports = React.createClass({
-    render:function(){
+    render: function() {
         return(
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    {this.props.info.name}
+                    {this.props.info.label}
                 </div>
                 <div className="panel-body">
-                    {this.props.info.description}
+                    <a href={this.props.info.link}>{this.props.info.date}</a>
                 </div>
             </div>
-        )
+        );
     }
 });
