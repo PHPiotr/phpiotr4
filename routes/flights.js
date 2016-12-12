@@ -10,16 +10,15 @@ var maxPerPage = 10;
 
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 
 router.get('/', loggedIn, function(req, res, next) {
     var page = req.query.page && parseInt(req.query.page, 10) || 0;
+    var user_id =  req.session.user._id;
     async.parallel(
             [
                 function(next) {
-                    Flight.count(next);
-                },
-                function(next) {
-                    Flight.find({})
+                    Flight.find({created_by: mongoose.Types.ObjectId(user_id)})
                             .sort('depature_date')
                             .skip(page * maxPerPage)
                             .limit(maxPerPage)
@@ -29,14 +28,25 @@ router.get('/', loggedIn, function(req, res, next) {
                     Flight.aggregate(
                             [
                                 {
-                                    "$group": {
-                                        "_id": "$created_by",
-                                        "cost": {"$sum": "$price"}
+                                    $match: {
+                                        created_by: mongoose.Types.ObjectId(user_id)
+                                    }
+                                },
+                                {
+                                    $group: {
+                                        _id: "$created_by",
+                                        cost: {$sum: "$price"}
                                     }
                                 }
                             ],
                             function(err, results) {
-                                next(err, results);
+                                if (err) {
+                                    return next(err);
+                                }
+                                if (!results) {
+                                    return next();
+                                }
+                                next(err, (results[0].cost / 100).toFixed(2));
                             }
                     );
                 }
@@ -45,19 +55,9 @@ router.get('/', loggedIn, function(req, res, next) {
                 if (err) {
                     return next(err);
                 }
-                var count = results[0];
-                var flights = results[1];
-                var total_costs = results[2];
-                var total_costs_length = total_costs.length;
-                var user_id = req.session.user._id;
-                var user_cost = null;
-                for (var i = 0; i < total_costs_length; i++) {
-                    if ((total_costs[i]._id).toString() !== user_id) {
-                        continue
-                    }
-                    user_cost = (total_costs[i].cost / 100).toFixed(2);
-                    break;
-                }
+                var flights = results[0];
+                var user_cost = results[1];
+                var count = flights.length;
                 var lastPage = (page + 1) * maxPerPage >= count;
                 res.render('flights/index', {
                     title: 'Flights',
