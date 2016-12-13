@@ -12,14 +12,24 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/:type?', loggedIn, function(req, res, next) {
+
     var page = req.query.page && parseInt(req.query.page, 10) || 0;
-    var user_id =  req.session.user._id;
+    var user_id = req.session.user._id;
+    var param_type = req.params.type || '';
+    var sort_type = {$gte: new Date()};
+    var type = 'Current';
+    var type_lower = param_type.toLowerCase();
+    if ('past' === type_lower) {
+        sort_type = {$lt: new Date()};
+        type = 'Past';
+    }
+
     async.parallel(
             [
                 function(next) {
-                    Flight.find({created_by: mongoose.Types.ObjectId(user_id)})
-                            .sort('depature_date')
+                    Flight.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
+                            .sort('departure_date')
                             .skip(page * maxPerPage)
                             .limit(maxPerPage)
                             .exec(next);
@@ -29,7 +39,8 @@ router.get('/', loggedIn, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id)
+                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        departure_date: sort_type
                                     }
                                 },
                                 {
@@ -46,7 +57,7 @@ router.get('/', loggedIn, function(req, res, next) {
                                 if (!results) {
                                     return next();
                                 }
-                                next(err, (results[0].cost / 100).toFixed(2));
+                                next(err, results[0].cost);
                             }
                     );
                 }
@@ -56,15 +67,26 @@ router.get('/', loggedIn, function(req, res, next) {
                     return next(err);
                 }
                 var flights = results[0];
-                var user_cost = results[1];
-                var count = flights.length;
-                var lastPage = (page + 1) * maxPerPage >= count;
+                var cost = results[1];
+                var flights_length = flights.length;
+                var last_page = (page + 1) * maxPerPage >= flights_length;
+                var ages = [32, 33, 16, 40];
+
+                var return_flights_length = 0;
+                for (var key in flights) {
+                    return_flights_length += flights[key].is_return ? 1 : 0;
+                }
+
                 res.render('flights/index', {
-                    title: 'Flights',
+                    title: type + ' flights',
                     flights: flights,
                     page: page,
-                    lastPage: lastPage,
-                    user_cost: user_cost
+                    last_page: last_page,
+                    total_cost: flights_length ? (cost / 100).toFixed(2) : '0.00',
+                    average_cost: flights_length ? ((cost / (flights_length + return_flights_length)) / 100).toFixed(2) : '0.00',
+                    flights_length: flights_length,
+                    return_flights_length: return_flights_length,
+                    active: type_lower
                 });
             }
     );

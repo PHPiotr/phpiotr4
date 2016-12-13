@@ -4,6 +4,7 @@ function loggedIn(req, res, next) {
         return next();
     }
 
-    res.status(403).send('Forbidden. Please log in first.');
+    req.flash('error_message', 'Please log in.');
+    res.redirect('/session/new');
 }
 module.exports = loggedIn;

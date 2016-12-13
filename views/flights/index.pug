@@ -3,34 +3,68 @@ extends ../layout
 block content
 
     h1= title
-    if flights.length
-        table(class="table")
-            tr
-                th
-                th= 'Confirmation No.'
-                th= 'Checked in'
-                th= 'Going out'
-                th= 'Coming back'
-                th= 'Departs from'
-                th= 'Arrives to'
-                th(class="text-right")= 'Price'
-            each flight, index in flights
+    if flights_length
+        div(class="row-fluid")
+            ul(class="nav nav-pills")
+                li(role="presentation")
+                    a(href="/flights/current")= "Current flights"
+                li(role="presentation")
+                    a(href="/flights/past")= "Past flights"
+        div(class="row-fluid")
+            table(class="table table-hover")
                 tr
-                    td(class="text-right")= index + 1 + '.'
-                    td= flight.confirmation_code
-                    td= flight.checked_in ? 'Yes' : 'No'
-                    td= flight.going_out
-                    td= flight.coming_back
-                    td= flight.from
-                    td= flight.to
-                    td(class="text-right")= flight.price + ' ' + flight.currency
-            else
-                p= 'No ' + title.toLowerCase() + '.'
-            tr
-                td(colspan="8" class="text-right")
-                    strong= user_cost + ' ' + flights[0].currency
+                    th
+                    th= 'Confirmation No.'
+                    th= 'Checked in'
+                    th= 'Going out'
+                    th= 'Coming back'
+                    th= 'Departs from'
+                    th= 'Arrives to'
+                    th(class="t ext-right")= 'Price'
+                each flight, index in flights
+                    tr
+                        td(class="text-right")= index + 1 + '.'
+                        td= flight.confirmation_code
+                        td= flight.checked_in ? 'Yes' : 'No'
+                        td= flight.going_out
+                        td= flight.coming_back
+                        td= flight.from
+                        td= flight.to
+                        td(class="text-right")= flight.price + ' ' + flight.currency
+                else
+                    p= 'No ' + title.toLowerCase() + '.'
+                tr
+                    td(colspan="6")
+                    td(class="text-right")
+                        strong= "All flights:"
+                    td(class="text-right")
+                        strong= flights_length + return_flights_length
+                tr
+                    td(colspan="6")
+                    td(class="text-right")
+                        strong= "One way flights:"
+                    td(class="text-right")
+                        strong= flights_length - return_flights_length
+                tr
+                    td(colspan="6")
+                    td(class="text-right")
+                        strong= "Return flights:"
+                    td(class="text-right")
+                        strong= return_flights_length
+                tr
+                    td(colspan="6")
+                    td(class="text-right")
+                        strong= "Average cost per flight:"
+                    td(class="text-right")
+                        strong= average_cost + ' ' + flights[0].currency
+                tr
+                    td(colspan="6")
+                    td(class="text-right")
+                        strong= "Total cost of flights:"
+                    td(class="text-right")
+                        strong= total_cost + ' ' + flights[0].currency
 
     if page > 0
         a(href="?page=" + (page - 1)) Previous
-    if !lastPage
+    if !last_page
         a(href="?page=" + (page + 1)) Next
