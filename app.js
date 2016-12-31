@@ -9,7 +9,10 @@ var bodyParser = require('body-parser');
 var express_session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var flights = require('./routes/flights');
+var buses = require('./routes/bookings/buses');
+var planes = require('./routes/bookings/planes');
+var trains = require('./routes/bookings/trains');
+var hostels = require('./routes/bookings/hostels');
 var session = require('./routes/session');
 
 var app = express();
@@ -36,12 +39,16 @@ app.use(flash());
 app.use(function(req, res, next){
     res.locals.success_messages = req.flash('success_message');
     res.locals.error_messages = req.flash('error_message');
+    res.locals.active = req.active;
     next();
 });
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/flights', flights);
+app.use('/bookings/planes', planes);
+app.use('/bookings/hostels', hostels);
+app.use('/bookings/buses', buses);
+app.use('/bookings/trains', trains);
 app.use('/session', session);
 
 require('express-dynamic-helpers-patch')(app);

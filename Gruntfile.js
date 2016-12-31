@@ -55,6 +55,14 @@ module.exports = function(grunt) {
                         dest: 'public/javascripts/flights/',
                         filter: 'isFile',
                         flatten: true
+                    },
+                    {
+                        expand: true,
+                        cwd: 'app/javascripts/hostels/',
+                        src: ['*.js'],
+                        dest: 'public/javascripts/hostels/',
+                        filter: 'isFile',
+                        flatten: true
                     }
                 ]
             }

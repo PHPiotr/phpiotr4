@@ -1,0 +1,110 @@
+extends ../layout
+block stylesheets
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+
+block content
+
+    h1= title
+    div(class="row-fluid")
+            ul(class="nav nav-pills")
+                li(role="presentation")
+                        a(href="/bookings/trains?type=current")= "Current trains"
+                li(role="presentation")
+                    a(href="/bookings/trains?type=past")= "Past trains"
+                li(role="presentation")
+                    a(href="/bookings/trains/new")= "Add train"
+    form(method="POST", action="/bookings/trains")
+        div(class="form-group")
+            label(for="from") From
+                input(
+                    type="text"
+                    name="from"
+                    class="form-control"
+                    id="from"
+                )
+        div(class="form-group")
+            label(for="to") To
+                input(
+                    type="text"
+                    name="to"
+                    class="form-control"
+                    id="to"
+                )
+        div(class="form-group")
+            label(for="departure-date") Departure date
+                input(
+                    type="text"
+                    name="departure_date"
+                    class="form-control"
+                    id="departure-date"
+                )
+        div(class="form-group")
+            label(for="departure-time") Departure time
+                input(
+                    type="text"
+                    name="departure_time"
+                    class="form-control"
+                    id="departure-time"
+                )
+        div(class="form-group")
+            label(for="arrival-time") Arrival time
+                input(
+                    type="text"
+                    name="arrival_time"
+                    class="form-control"
+                    id="arrival-time"
+                )
+        div(class="form-group")
+            label(for="is-return") Is return train?
+                input(
+                    type="checkbox"
+                    name="is_return"
+                    class="form-control"
+                    value="1"
+                    id="is-return"
+                )
+        div(class="form-group")
+            label(for="return-departure-date") Return departure date
+                input(
+                    type="text"
+                    name="return_departure_date"
+                    class="form-control"
+                    id="return-departure-date"
+                )
+        div(class="form-group")
+            label(for="return-departure-time") Return departure time
+                input(
+                    type="text"
+                    name="return_departure_time"
+                    class="form-control"
+                    id="return-departure-time"
+                )
+        div(class="form-group")
+            label(for="return-arrival-time") Return arrival time
+                input(
+                    type="text"
+                    name="return_arrival_time"
+                    class="form-control"
+                    id="return-arrival-time"
+                )
+        div(class="form-group")
+            label(for="price") Price
+                input(
+                    type="text"
+                    name="price"
+                    class="form-control"
+                    id="price"
+                )
+        div(class="form-group")
+            label(for="currency") Currency
+                select(
+                    name="currency"
+                    class="form-control"
+                    id="currency"
+                )
+                    each currency in currencies
+                        option(value= currency)= currency
+        button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
+block javascripts
+    script(src="/javascripts/datepicker.js")
+    script(src="/javascripts/flights/new.js")

@@ -5,7 +5,15 @@ block stylesheets
 block content
 
     h1= title
-    form(method="POST", action="/flights")
+    div(class="row-fluid")
+            ul(class="nav nav-pills")
+                li(role="presentation")
+                        a(href="/bookings/planes?type=current")= "Current flights"
+                li(role="presentation")
+                    a(href="/bookings/planes?type=past")= "Past flights"
+                li(role="presentation")
+                    a(href="/bookings/planes/new")= "Add flight"
+    form(method="POST", action="/bookings/planes")
         div(class="form-group")
             label(for="confirmation-code") Confirmation code
                 input(
@@ -86,6 +94,14 @@ block content
                     name="return_arrival_time"
                     class="form-control"
                     id="return-arrival-time"
+                )
+        div(class="form-group")
+            label(for="seat") Seat
+                input(
+                    type="text"
+                    name="seat"
+                    class="form-control"
+                    id="seat"
                 )
         div(class="form-group")
             label(for="price") Price

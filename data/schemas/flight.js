@@ -27,8 +27,7 @@ var FlightSchema = new Schema({
         required: true
     },
     seat: {
-        type: String,
-        required: true
+        type: String
     },
     is_return: {
         type: Boolean,
@@ -56,7 +55,6 @@ var FlightSchema = new Schema({
     currency: {
         type: String,
         'enum': ['£', 'zł', '€', '$'],
-        required: true,
         default: '£'
     },
     checked_in: {

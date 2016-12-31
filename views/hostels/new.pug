@@ -1,0 +1,78 @@
+extends ../layout
+block stylesheets
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+
+block content
+
+    h1= title
+    div(class="row-fluid")
+            ul(class="nav nav-pills")
+                li(role="presentation")
+                        a(href="/bookings/hostels?type=current")= "Current hostels"
+                li(role="presentation")
+                    a(href="/bookings/hostels?type=past")= "Past hostels"
+                li(role="presentation")
+                    a(href="/bookings/hostels/new")= "Add hostel"
+    form(method="POST", action="/bookings/hostels")
+        div(class="form-group")
+            label(for="booking-number") Booking number
+                input(
+                    type="text"
+                    name="booking_number"
+                    class="form-control"
+                    id="booking-number"
+                )
+        div(class="form-group")
+            label(for="hostel-name") Hostel name
+                input(
+                    type="text"
+                    name="hostel_name"
+                    class="form-control"
+                    id="hostel-name"
+                )
+        div(class="form-group")
+            label(for="hostel-address") Hostel address
+                input(
+                    type="text"
+                    name="hostel_address"
+                    class="form-control"
+                    id="hostel-address"
+                )
+        div(class="form-group")
+            label(for="checkin-date") Check-in date
+                input(
+                    type="text"
+                    name="checkin_date"
+                    class="form-control"
+                    id="checkin-date"
+                )
+        div(class="form-group")
+            label(for="checkout-date") Check-out date
+                input(
+                    type="text"
+                    name="checkout_date"
+                    class="form-control"
+                    id="checkout-date"
+                )
+        div(class="form-group")
+            label(for="price") Price
+                input(
+                    type="text"
+                    name="price"
+                    class="form-control"
+                    id="price"
+                )
+        div(class="form-group")
+            label(for="currency") Currency
+                select(
+                    name="currency"
+                    class="form-control"
+                    id="currency"
+                )
+                    each currency in currencies
+                        option(value= currency)= currency
+
+        button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
+block javascripts
+    script(src="/javascripts/datepicker.js")
+    script(src="/javascripts/hostels/new.js")

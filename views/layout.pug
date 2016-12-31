@@ -18,24 +18,29 @@ html
                 div(class="collapse navbar-collapse" id="navbar-main")
                     ul(class="nav navbar-nav")
                         - if (session.user) {
-                            li
-                                a(href="/flights" class="btn btn-link") Flights
-                            li
-                                a(href="/flights/new" class="btn btn-link") Add flight
-                            li
-                                form(method="POST", action="/session?_method=DELETE" class="navbar-form")
-                                    button(type="submit" class="btn btn-link") Logout
-                        - } else {
-                            li
-                                a(href="/session/new") Login
+                            - var menu = ['buses', 'planes', 'trains', 'hostels'];
+                            - for (var i = 0; i < menu.length; i++) {
+                                - if (menu[i] === selected) {
+                                li.active
+                                    a(href="/bookings/" + menu[i] class="btn btn-link")= menu[i]
+                                - } else {
+                                li
+                                    a(href="/bookings/" + menu[i] class="btn btn-link")= menu[i]
+                                - }
+                            - }
                         - }
 
                     ul(class="nav navbar-nav navbar-right")
                         - if (session.user) {
                             li
+                                form(method="POST", action="/session?_method=DELETE" class="navbar-form")
+                                    button(type="submit" class="btn btn-link") Logout
+                            li
                                 form(method="POST", action="/users + encodeURIComponent(user.username) + ?_method=DELETE" class="navbar-form")
                                     button(type="submit" class="btn btn-link") Delete account
                         - } else {
+                            li
+                                a(href="/session/new") Login
                             li
                                 a(href="/users/new") Register
                         - }

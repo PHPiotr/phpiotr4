@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+
+    h1= title
+    div(class="row-fluid")
+        ul(class="nav nav-pills")
+            li(role="presentation")
+                    a(href="/bookings/hostels?type=current")= "Current hostels"
+            li(role="presentation")
+                a(href="/bookings/hostels?type=past")= "Past hostels"
+            li(role="presentation")
+                a(href="/bookings/hostels/new")= "Add hostel"
+    if bookings_length
+        div(class="row-fluid")
+            table(class="table table-hover")
+                tr
+                    th
+                    th= 'Booking No.'
+                    th= 'Name'
+                    th= 'Address'
+                    th= 'Check-in'
+                    th= 'Check-out'
+                    th(class="t ext-right")= 'Price'
+                each booking, index in bookings
+                    tr
+                        td(class="text-right")= index + 1 + '.'
+                        td= booking.booking_number
+                        td= booking.hostel_name
+                        td= booking.hostel_address
+                        td= booking.checkin
+                        td= booking.checkout
+                        td(class="text-right")= booking.currency + booking.price
+                else
+                    p= 'No ' + title.toLowerCase() + '.'
+                tr
+                    td(colspan="6" class="text-right")
+                        strong= "All bookings:"
+                    td(class="text-right")
+                        strong= bookings_length
+                tr
+                    td(colspan="6" class="text-right")
+                        strong= "Average:"
+                    td(class="text-right")
+                        strong= bookings[0].currency + average_cost
+                tr
+                    td(colspan="6" class="text-right")
+                        strong= "Total:"
+                    td(class="text-right")
+                        strong= bookings[0].currency + total_cost
+
+    if page > 0
+        a(href="?page=" + (page - 1)) Previous
+    if !last_page
+        a(href="?page=" + (page + 1)) Next
