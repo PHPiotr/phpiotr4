@@ -13,9 +13,10 @@ block content
                     a(href="/bookings/trains?type=past")= "Past trains"
                 li(role="presentation")
                     a(href="/bookings/trains/new")= "Add train"
-    form(method="POST", action="/bookings/trains")
+    form(method="POST", action="/bookings/trains" class="form-horizontal")
         div(class="form-group")
-            label(for="from") From
+            label(for="from" class="col-sm-2 control-label") From
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="from"
@@ -23,7 +24,8 @@ block content
                     id="from"
                 )
         div(class="form-group")
-            label(for="to") To
+            label(for="to" class="col-sm-2 control-label") To
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="to"
@@ -31,7 +33,8 @@ block content
                     id="to"
                 )
         div(class="form-group")
-            label(for="departure-date") Departure date
+            label(for="departure-date" class="col-sm-2 control-label") Departure date
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="departure_date"
@@ -39,7 +42,8 @@ block content
                     id="departure-date"
                 )
         div(class="form-group")
-            label(for="departure-time") Departure time
+            label(for="departure-time" class="col-sm-2 control-label") Departure time
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="departure_time"
@@ -47,7 +51,8 @@ block content
                     id="departure-time"
                 )
         div(class="form-group")
-            label(for="arrival-time") Arrival time
+            label(for="arrival-time" class="col-sm-2 control-label") Arrival time
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="arrival_time"
@@ -55,7 +60,8 @@ block content
                     id="arrival-time"
                 )
         div(class="form-group")
-            label(for="is-return") Is return train?
+            label(for="is-return" class="col-sm-2 control-label") Is return train?
+            div(class="col-sm-10")
                 input(
                     type="checkbox"
                     name="is_return"
@@ -64,7 +70,8 @@ block content
                     id="is-return"
                 )
         div(class="form-group")
-            label(for="return-departure-date") Return departure date
+            label(for="return-departure-date" class="col-sm-2 control-label") Return departure date
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="return_departure_date"
@@ -72,7 +79,8 @@ block content
                     id="return-departure-date"
                 )
         div(class="form-group")
-            label(for="return-departure-time") Return departure time
+            label(for="return-departure-time" class="col-sm-2 control-label") Return departure time
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="return_departure_time"
@@ -80,7 +88,8 @@ block content
                     id="return-departure-time"
                 )
         div(class="form-group")
-            label(for="return-arrival-time") Return arrival time
+            label(for="return-arrival-time" class="col-sm-2 control-label") Return arrival time
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="return_arrival_time"
@@ -88,7 +97,8 @@ block content
                     id="return-arrival-time"
                 )
         div(class="form-group")
-            label(for="price") Price
+            label(for="price" class="col-sm-2 control-label") Price
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="price"
@@ -96,7 +106,8 @@ block content
                     id="price"
                 )
         div(class="form-group")
-            label(for="currency") Currency
+            label(for="currency" class="col-sm-2 control-label") Currency
+            div(class="col-sm-10")
                 select(
                     name="currency"
                     class="form-control"
@@ -104,7 +115,9 @@ block content
                 )
                     each currency in currencies
                         option(value= currency)= currency
-        button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
+        div(class="form-group")
+            div(class="col-sm-offset-2 col-sm-10")
+                button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
 block javascripts
     script(src="/javascripts/datepicker.js")
     script(src="/javascripts/flights/new.js")

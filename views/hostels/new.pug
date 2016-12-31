@@ -13,9 +13,10 @@ block content
                     a(href="/bookings/hostels?type=past")= "Past hostels"
                 li(role="presentation")
                     a(href="/bookings/hostels/new")= "Add hostel"
-    form(method="POST", action="/bookings/hostels")
+    form(method="POST", action="/bookings/hostels" class="form-horizontal")
         div(class="form-group")
-            label(for="booking-number") Booking number
+            label(for="booking-number" class="col-sm-2 control-label") Booking number
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="booking_number"
@@ -23,7 +24,8 @@ block content
                     id="booking-number"
                 )
         div(class="form-group")
-            label(for="hostel-name") Hostel name
+            label(for="hostel-name" class="col-sm-2 control-label") Hostel name
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="hostel_name"
@@ -31,7 +33,8 @@ block content
                     id="hostel-name"
                 )
         div(class="form-group")
-            label(for="hostel-address") Hostel address
+            label(for="hostel-address" class="col-sm-2 control-label") Hostel address
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="hostel_address"
@@ -39,7 +42,8 @@ block content
                     id="hostel-address"
                 )
         div(class="form-group")
-            label(for="checkin-date") Check-in date
+            label(for="checkin-date" class="col-sm-2 control-label") Check-in date
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="checkin_date"
@@ -47,7 +51,8 @@ block content
                     id="checkin-date"
                 )
         div(class="form-group")
-            label(for="checkout-date") Check-out date
+            label(for="checkout-date" class="col-sm-2 control-label") Check-out date
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="checkout_date"
@@ -55,7 +60,8 @@ block content
                     id="checkout-date"
                 )
         div(class="form-group")
-            label(for="price") Price
+            label(for="price" class="col-sm-2 control-label") Price
+            div(class="col-sm-10")
                 input(
                     type="text"
                     name="price"
@@ -63,7 +69,8 @@ block content
                     id="price"
                 )
         div(class="form-group")
-            label(for="currency") Currency
+            label(for="currency" class="col-sm-2 control-label") Currency
+            div(class="col-sm-10")
                 select(
                     name="currency"
                     class="form-control"
@@ -71,8 +78,9 @@ block content
                 )
                     each currency in currencies
                         option(value= currency)= currency
-
-        button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
+        div(class="form-group")
+            div(class="col-sm-offset-2 col-sm-10")
+                button(type="submit" class="btn btn-default")= 'Add ' + title.toLowerCase()
 block javascripts
     script(src="/javascripts/datepicker.js")
     script(src="/javascripts/hostels/new.js")
