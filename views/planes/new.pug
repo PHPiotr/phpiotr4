@@ -69,6 +69,15 @@ block content
                     id="arrival-time"
                 )
         div(class="form-group")
+            label(for="seat" class="col-sm-2 control-label") Seat
+            div(class="col-sm-10")
+                input(
+                    type="text"
+                    name="seat"
+                    class="form-control"
+                    id="seat"
+                )
+        div(class="form-group")
             label(for="is-return" class="col-sm-2 control-label") Is return flight?
             div(class="col-sm-10")
                 input(
@@ -106,13 +115,13 @@ block content
                     id="return-arrival-time"
                 )
         div(class="form-group")
-            label(for="seat" class="col-sm-2 control-label") Seat
+            label(for="return-seat" class="col-sm-2 control-label") Return seat
             div(class="col-sm-10")
                 input(
                     type="text"
-                    name="seat"
+                    name="return_seat"
                     class="form-control"
-                    id="seat"
+                    id="return-seat"
                 )
         div(class="form-group")
             label(for="price" class="col-sm-2 control-label") Price
