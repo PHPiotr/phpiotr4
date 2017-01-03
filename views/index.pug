@@ -1,5 +1,11 @@
 extends layout
 
+block stylesheets
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+
 block content
     div(id="container" class="container-fluid")
+
+block javascripts
+    script(src="/javascripts/datepicker.js")
     script(src="/javascripts/main.js")

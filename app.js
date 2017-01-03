@@ -13,6 +13,7 @@ var buses = require('./routes/bookings/buses');
 var planes = require('./routes/bookings/planes');
 var trains = require('./routes/bookings/trains');
 var hostels = require('./routes/bookings/hostels');
+var report = require('./routes/report');
 var session = require('./routes/session');
 
 var app = express();
@@ -50,6 +51,7 @@ app.use('/bookings/hostels', hostels);
 app.use('/bookings/buses', buses);
 app.use('/bookings/trains', trains);
 app.use('/session', session);
+app.use('/report', report);
 
 require('express-dynamic-helpers-patch')(app);
 // and now You can use 2.x express dynamicHelpers

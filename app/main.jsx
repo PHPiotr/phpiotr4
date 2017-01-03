@@ -1,8 +1,8 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
-var EventsList = require("./components/EventsList.jsx");
+var Report = require("./components/Report.jsx");
 
 function render() {
-    ReactDOM.render(<EventsList />, document.getElementById('container'));
+    ReactDOM.render(<Report />, document.getElementById('container'));
 }
 render();
