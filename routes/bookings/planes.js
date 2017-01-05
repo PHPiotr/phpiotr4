@@ -14,14 +14,16 @@ var mongoose = require('mongoose');
 
 router.get('/', loggedIn, function(req, res, next) {
 
-    var page = req.query.page && parseInt(req.query.page, 10) || 0;
+    var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
     var user_id = req.session.user._id;
     var param_type = req.query.type || '';
     var sort_type = {$gte: new Date()};
+    var sort = {'departure_date': 1};
     var type = 'Current';
-    var type_lower = param_type.toLowerCase();
+    var type_lower = param_type.toLowerCase() || type.toLowerCase();
     if ('past' === type_lower) {
         sort_type = {$lt: new Date()};
+        sort = {'departure_date': -1};
         type = 'Past';
     }
     req.active = 'planes';
@@ -30,8 +32,8 @@ router.get('/', loggedIn, function(req, res, next) {
             [
                 function(next) {
                     Flight.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
-                            .sort('departure_date')
-                            .skip(page * maxPerPage)
+                            .sort(sort)
+                            .skip((current_page - 1) * maxPerPage)
                             .limit(maxPerPage)
                             .exec(next);
                 },
@@ -45,9 +47,19 @@ router.get('/', loggedIn, function(req, res, next) {
                                     }
                                 },
                                 {
+                                    $project: {
+                                        is_return_flight: {
+                                            $cond: ["$is_return", 1, 0]
+                                        },
+                                        price: 1
+                                    }
+                                },
+                                {
                                     $group: {
                                         _id: "$created_by",
-                                        cost: {$sum: "$price"}
+                                        cost: {$sum: "$price"},
+                                        flights_length: {$sum: 1},
+                                        return_flights_length: {$sum: "$is_return_flight"}
                                     }
                                 }
                             ],
@@ -58,7 +70,7 @@ router.get('/', loggedIn, function(req, res, next) {
                                 if (!results) {
                                     return next();
                                 }
-                                next(err, results[0].cost);
+                                next(err, results[0]);
                             }
                     );
                 }
@@ -68,20 +80,16 @@ router.get('/', loggedIn, function(req, res, next) {
                     return next(err);
                 }
                 var flights = results[0];
-                var cost = results[1];
-                var flights_length = flights.length;
-                var last_page = (page + 1) * maxPerPage >= flights_length;
-
-                var return_flights_length = 0;
-                for (var key in flights) {
-                    return_flights_length += flights[key].is_return ? 1 : 0;
-                }
+                var cost = results[1].cost;
+                var flights_length = results[1].flights_length;
+                var return_flights_length = results[1].return_flights_length;
 
                 res.render('planes/index', {
                     title: type + ' flights',
                     flights: flights,
-                    page: page,
-                    last_page: last_page,
+                    current_page: current_page,
+                    is_first_page: current_page === 1,
+                    is_last_page: current_page * maxPerPage >= flights_length,
                     total_cost: flights_length ? (cost / 100).toFixed(2) : '0.00',
                     average_cost: flights_length ? ((cost / (flights_length + return_flights_length)) / 100).toFixed(2) : '0.00',
                     flights_length: flights_length,

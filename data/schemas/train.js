@@ -1,9 +1,5 @@
 var Schema = require('mongoose').Schema;
 var TrainSchema = new Schema({
-    booking_number: {
-        type: String,
-        unique: true
-    },
     from: {
         type: String,
         required: true

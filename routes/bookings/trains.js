@@ -129,12 +129,13 @@ router.post('/', loggedIn, function(req, res, next) {
     Train.create(train, function(err) {
         if (err) {
             if (err.code === 11000) {
-                res.send('Conflict', 409);
+                console.log(err, train);
+                res.status(409).send('Conflict');
             } else {
                 if (err.name === 'ValidationError') {
-                    return res.send(Object.keys(err.errors).map(function(errField) {
+                    return res.status(406).send(Object.keys(err.errors).map(function(errField) {
                         return err.errors[errField].message;
-                    }).join('. '), 406);
+                    }).join('. '));
                 } else {
                     next(err);
                 }
