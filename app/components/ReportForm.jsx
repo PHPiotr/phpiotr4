@@ -11,9 +11,13 @@ module.exports = React.createClass({
                 trains: [],
                 hostels: [],
                 buses_cost: '0.00',
+                buses_avg: '0.00',
                 planes_cost: '0.00',
+                planes_avg: '0.00',
                 trains_cost: '0.00',
-                hostels_cost: '0.00'
+                trains_avg: '0.00',
+                hostels_cost: '0.00',
+                hostels_avg: '0.00'
             }
         };
     },

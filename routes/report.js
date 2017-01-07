@@ -22,7 +22,6 @@ router.get('/', loggedIn, function(req, res, next) {
     } else {
         if (from) {
             sort_type = {$gte: new Date(from)};
-
         } else {
             sort_type = {$lte: new Date(to)};
 
@@ -61,22 +60,29 @@ router.get('/', loggedIn, function(req, res, next) {
                                     }
                                 },
                                 {
+                                    $project: {
+                                        singles_quantity: {
+                                            $cond: ["$is_return", 2, 1]
+                                        },
+                                        price: 1
+                                    }
+                                },
+                                {
                                     $group: {
                                         _id: "$created_by",
-                                        cost: {$sum: "$price"}
+                                        cost: {$sum: "$price"},
+                                        avg_cost: {$avg: {$divide: ["$price", "$singles_quantity"]}}
                                     }
                                 }
                             ],
                             function(err, results) {
-                                var cost;
                                 if (err) {
                                     return next(err);
                                 }
                                 if (!results) {
                                     return next();
                                 }
-                                cost = undefined !== results[0] ? results[0].cost : 0;
-                                next(err, cost);
+                                next(err, results[0]);
                             }
                     );
                 },
@@ -90,22 +96,29 @@ router.get('/', loggedIn, function(req, res, next) {
                                     }
                                 },
                                 {
+                                    $project: {
+                                        singles_quantity: {
+                                            $cond: ["$is_return", 2, 1]
+                                        },
+                                        price: 1
+                                    }
+                                },
+                                {
                                     $group: {
                                         _id: "$created_by",
-                                        cost: {$sum: "$price"}
+                                        cost: {$sum: "$price"},
+                                        avg_cost: {$avg: {$divide: ["$price", "$singles_quantity"]}}
                                     }
                                 }
                             ],
                             function(err, results) {
-                                var cost;
                                 if (err) {
                                     return next(err);
                                 }
                                 if (!results) {
                                     return next();
                                 }
-                                cost = undefined !== results[0] ? results[0].cost : 0;
-                                next(err, cost);
+                                next(err, results[0]);
                             }
                     );
                 },
@@ -119,22 +132,29 @@ router.get('/', loggedIn, function(req, res, next) {
                                     }
                                 },
                                 {
+                                    $project: {
+                                        singles_quantity: {
+                                            $cond: ["$is_return", 2, 1]
+                                        },
+                                        price: 1
+                                    }
+                                },
+                                {
                                     $group: {
                                         _id: "$created_by",
-                                        cost: {$sum: "$price"}
+                                        cost: {$sum: "$price"},
+                                        avg_cost: {$avg: {$divide: ["$price", "$singles_quantity"]}}
                                     }
                                 }
                             ],
                             function(err, results) {
-                                var cost;
                                 if (err) {
                                     return next(err);
                                 }
                                 if (!results) {
                                     return next();
                                 }
-                                cost = undefined !== results[0] ? results[0].cost : 0;
-                                next(err, cost);
+                                next(err, results[0]);
                             }
                     );
                 },
@@ -150,20 +170,19 @@ router.get('/', loggedIn, function(req, res, next) {
                                 {
                                     $group: {
                                         _id: "$created_by",
-                                        cost: {$sum: "$price"}
+                                        cost: {$sum: "$price"},
+                                        avg_cost: {$avg: "$price"}
                                     }
                                 }
                             ],
                             function(err, results) {
-                                var cost;
                                 if (err) {
                                     return next(err);
                                 }
                                 if (!results) {
                                     return next();
                                 }
-                                cost = undefined !== results[0] ? results[0].cost : 0;
-                                next(err, cost);
+                                next(err, results[0]);
                             }
                     );
                 }
@@ -173,10 +192,14 @@ router.get('/', loggedIn, function(req, res, next) {
                 var planes       = data[1];
                 var trains       = data[2];
                 var hostels      = data[3];
-                var buses_cost   = data[4];
-                var planes_cost  = data[5];
-                var trains_cost  = data[6];
-                var hostels_cost = data[7];
+                var buses_cost   = data[4].cost;
+                var buses_avg    = data[4].avg_cost;
+                var planes_cost  = data[5].cost;;
+                var planes_avg   = data[5].avg_cost;
+                var trains_cost  = data[6].cost;
+                var trains_avg   = data[6].avg_cost;
+                var hostels_cost = data[7].cost;
+                var hostels_avg  = data[7].avg_cost;
                 res.send(JSON.stringify(
                     {
                         buses:        buses,
@@ -184,9 +207,13 @@ router.get('/', loggedIn, function(req, res, next) {
                         trains:       trains,
                         hostels:      hostels,
                         buses_cost:   (buses_cost / 100).toFixed(2),
+                        buses_avg:    (buses_avg / 100).toFixed(2),
                         planes_cost:  (planes_cost / 100).toFixed(2),
+                        planes_avg:   (planes_avg / 100).toFixed(2),
                         trains_cost:  (trains_cost / 100).toFixed(2),
+                        trains_avg:   (trains_avg / 100).toFixed(2),
                         hostels_cost: (hostels_cost / 100).toFixed(2),
+                        hostels_avg:  (hostels_avg / 100).toFixed(2),
                         total_cost:   ((buses_cost + planes_cost + trains_cost + hostels_cost) / 100).toFixed(2)
                     }
                 ));
