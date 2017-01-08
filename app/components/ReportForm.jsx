@@ -29,6 +29,7 @@ module.exports = React.createClass({
         $(function() {
             var from = $('#report-from');
             var to = $('#report-to');
+            var socket = io();
 
             from.datepicker();
 //            from.datepicker('option', 'dateFormat', 'dd/mm/yy');
@@ -43,6 +44,11 @@ module.exports = React.createClass({
             to.change(function() {
                 from.datepicker('option', 'maxDate', $(this).val());
                 that._onChange(from.val(), $(this).val(), that);
+            });
+
+            socket.on('insert', function(booking) {
+                console.log('Record inserted', booking);
+                that._onChange(from.val(), to.val(), that);
             });
         });
     },

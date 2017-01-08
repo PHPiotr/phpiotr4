@@ -1,4 +1,5 @@
 var express = require('express');
+var socket_io = require('socket.io');
 var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -17,6 +18,13 @@ var report = require('./routes/report');
 var session = require('./routes/session');
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+app.use(function(req, res, next) {
+    res.io = io;
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -81,4 +89,4 @@ app.use(function(err, req, res, next) {
 
 require('mongoose').connect('mongodb://localhost/phpiotr4');
 
-module.exports = app;
+module.exports = {app: app, server: server};

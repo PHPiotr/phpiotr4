@@ -141,7 +141,7 @@ router.post('/', loggedIn, function(req, res, next) {
     Flight.create(flight, function(err) {
         if (err) {
             if (err.code === 11000) {
-                res.send('Conflict', 409);
+                res.status(409).send('Conflict');
             } else {
                 if (err.name === 'ValidationError') {
                     return res.send(Object.keys(err.errors).map(function(errField) {
@@ -153,6 +153,7 @@ router.post('/', loggedIn, function(req, res, next) {
             }
             return;
         }
+        res.io.emit('insert', flight);
         res.redirect('/bookings/planes');
     });
 });

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
 var debug = require('debug')('phpiotr4:server');
 var http = require('http');
 
@@ -19,12 +19,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-var io = require('socket.io')(server);
-
-io.on('connection', function(socket){
-  console.log('User connected');
-});
+var server = require('../app').server;
 
 server.listen(port, function() {
     console.log('Listening on ' + port);
