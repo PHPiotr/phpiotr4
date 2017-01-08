@@ -6,7 +6,7 @@ var Flight = require('../../data/models/flight');
 var notLoggedIn = require('../middleware/not_logged_in');
 var loadFlight = require('../middleware/load_flight');
 var loggedIn = require('../middleware/logged_in');
-var maxPerPage = 10;
+var max_per_page = 10;
 
 var express = require('express');
 var router = express.Router();
@@ -33,8 +33,8 @@ router.get('/', loggedIn, function(req, res, next) {
                 function(next) {
                     Flight.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
                             .sort(sort)
-                            .skip((current_page - 1) * maxPerPage)
-                            .limit(maxPerPage)
+                            .skip((current_page - 1) * max_per_page)
+                            .limit(max_per_page)
                             .exec(next);
                 },
                 function(next) {
@@ -51,6 +51,9 @@ router.get('/', loggedIn, function(req, res, next) {
                                         is_return_flight: {
                                             $cond: ["$is_return", 1, 0]
                                         },
+                                        singles_quantity: {
+                                            $cond: ["$is_return", 2, 1]
+                                        },
                                         price: 1
                                     }
                                 },
@@ -59,7 +62,9 @@ router.get('/', loggedIn, function(req, res, next) {
                                         _id: "$created_by",
                                         cost: {$sum: "$price"},
                                         flights_length: {$sum: 1},
-                                        return_flights_length: {$sum: "$is_return_flight"}
+                                        return_flights_length: {$sum: "$is_return_flight"},
+                                        avg_cost: {$avg: {$divide: ["$price", "$singles_quantity"]}},
+                                        singles_quantity: {$sum: "$singles_quantity"}
                                     }
                                 }
                             ],
@@ -81,6 +86,7 @@ router.get('/', loggedIn, function(req, res, next) {
                 }
                 var flights = results[0];
                 var cost = results[1].cost;
+                var average_cost = results[1].avg_cost;
                 var flights_length = results[1].flights_length;
                 var return_flights_length = results[1].return_flights_length;
 
@@ -89,9 +95,11 @@ router.get('/', loggedIn, function(req, res, next) {
                     flights: flights,
                     current_page: current_page,
                     is_first_page: current_page === 1,
-                    is_last_page: current_page * maxPerPage >= flights_length,
+                    is_last_page: current_page * max_per_page >= flights_length,
+                    pages_count: flights_length <= max_per_page ? 1 : Math.ceil(flights_length / max_per_page),
+                    max_per_page: max_per_page,
                     total_cost: flights_length ? (cost / 100).toFixed(2) : '0.00',
-                    average_cost: flights_length ? ((cost / (flights_length + return_flights_length)) / 100).toFixed(2) : '0.00',
+                    average_cost: flights_length ? (average_cost / 100).toFixed(2) : '0.00',
                     flights_length: flights_length,
                     return_flights_length: return_flights_length,
                     active: type_lower,

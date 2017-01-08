@@ -2,71 +2,70 @@ extends ../layout
 
 block content
 
-    h1= title
     div(class="row-fluid")
-        ul(class="nav nav-pills")
-            li(role="presentation")
-                    a(href="/bookings/planes?type=current")= "Current flights"
-            li(role="presentation")
-                a(href="/bookings/planes?type=past")= "Past flights"
-            li(role="presentation")
-                a(href="/bookings/planes/new")= "Add flight"
+        div(class="well well-sm")
+            ul(class="nav nav-pills")
+                li(role="presentation" class=(active === 'current' ? 'active' : ''))
+                        a(href="/bookings/planes?type=current")= "Current flights"
+                li(role="presentation" class=(active === 'past' ? 'active' : ''))
+                    a(href="/bookings/planes?type=past")= "Past flights"
+                li(role="presentation")
+                    a(href="/bookings/planes/new")= "Add flight"
     if flights_length
         div(class="row-fluid")
-            table(class="table table-hover")
+            table(class="table table-hover table-condensed table-bordered")
+                tr
+                    th= 'Total'
+                    th= 'Average'
+                    th= 'Bookings'
+                    th= 'Single'
+                    th= 'Return'
+                tr
+                    td(class="info")= '£' + total_cost
+                    td= '£' + average_cost
+                    td= flights_length
+                    td= flights_length - return_flights_length
+                    td= return_flights_length
+        div(class="row-fluid")
+            table(class="table table-hover table-condensed table-bordered")
                 tr
                     th
-                    th= 'Confirmation No.'
-                    th= 'Checked in'
+                    th= 'Code'
+                    th(class="t ext-right")= 'Price'
                     th= 'Going out'
                     th= 'Coming back'
                     th= 'Departs from'
                     th= 'Arrives to'
-                    th(class="t ext-right")= 'Price'
                 each flight, index in flights
                     tr
-                        td(class="text-right")= index + 1 + '.'
+                        td(class="text-right")= (index + 1 + ((current_page - 1) * max_per_page)) + '.'
                         td= flight.confirmation_code
-                        td= flight.checked_in ? 'Yes' : 'No'
+                        td(class="text-right")= '£' + flight.price
                         td= flight.going_out
                         td= flight.coming_back
                         td= flight.from
                         td= flight.to
-                        td(class="text-right")= flight.price + ' ' + flight.currency
-                else
-                    p= 'No ' + title.toLowerCase() + '.'
-                tr
-                    td(colspan="6")
-                    td(class="text-right")
-                        strong= "All bookings:"
-                    td(class="text-right")
-                        strong= flights_length
-                tr
-                    td(colspan="6")
-                    td(class="text-right")
-                        strong= "Single bookings:"
-                    td(class="text-right")
-                        strong= flights_length - return_flights_length
-                tr
-                    td(colspan="6")
-                    td(class="text-right")
-                        strong= "Return bookings:"
-                    td(class="text-right")
-                        strong= return_flights_length
-                tr
-                    td(colspan="6")
-                    td(class="text-right")
-                        strong= "Average cost per flight:"
-                    td(class="text-right")
-                        strong= average_cost + ' ' + flights[0].currency
-                tr
-                    td(colspan="6")
-                    td(class="text-right")
-                        strong= "Total cost of flights:"
-                    td(class="text-right")
-                        strong= total_cost + ' ' + flights[0].currency
+    else
+        p= 'No ' + title.toLowerCase() + '.'
 
-    if !is_first_page
-        a(href="?type=" + active + "&page=" + (current_page - 1)) Previous
-    if !is_last_page
-        a(href="?type=" + active + "&page=" + (current_page + 1)) Next
+
+
+    - if (flights_length > max_per_page) {
+        div(class="row-fluid")
+            nav(aria-label="Page navigation")
+                ul(class="pagination pagination-sm")
+                    - if (!is_first_page) {
+                        li
+                            a(href="?type=" + active + "&page=" + (current_page - 1) aria-label="Previous")
+                                span(aria-hidden="true") &laquo;
+                    - }
+                    - for (var i = 1; i <= pages_count; i++) {
+                        li(class=(current_page == i ? "active" : ""))
+                            a(href="?type=" + active + "&page=" + i)= i
+                    - }
+                    - if (!is_last_page) {
+                        li
+                            a(href="?type=" + active + "&page=" + (current_page + 1) aria-label="Next")
+                                span(aria-hidden="true") &raquo;
+                    - }
+    - }

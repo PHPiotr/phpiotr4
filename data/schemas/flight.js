@@ -100,7 +100,7 @@ FlightSchema
         .virtual('coming_back')
         .get(function() {
             if (!this.return_departure_date) {
-                return '-';
+                return null;
             }
 
             var day = parseInt(this.return_departure_date.getDate(), 10) < 10 ? '0' + this.return_departure_date.getDate() : this.return_departure_date.getDate();

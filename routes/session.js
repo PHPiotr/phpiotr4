@@ -32,13 +32,13 @@ router.post('/', notLoggedIn, function(req, res) {
 
             req.flash('success_message', 'Hello, ' + user.username + '!');
             req.session.user = user;
-            res.redirect('/users');
+            res.redirect('/');
         });
     });
 });
 router.delete('/', function(req, res, next) {
     req.session.destroy();
-    res.redirect('/users');
+    res.redirect('/session/new');
 });
 
 module.exports = router;

@@ -28,19 +28,27 @@ html
                                     a(href="/bookings/" + menu[i] class="btn btn-link")= menu[i]
                                 - }
                             - }
+                        - } else {
+                            li
+                                a(href="/session/new") Login
                         - }
+                    - if (session.user) {
+                    form(method="GET", action="" class="navbar-form navbar-left")
+                        div(class="form-group")
+                            input(class="form-control" type="text" name="report_from" id="report-from" placeholder="From")
+                        div(class="form-group")
+                            input(class="form-control" type="text" name="report_to" id="report-to" placeholder="To")
+                    - }
 
                     ul(class="nav navbar-nav navbar-right")
                         - if (session.user) {
                             li
                                 form(method="POST", action="/session?_method=DELETE" class="navbar-form")
                                     button(type="submit" class="btn btn-link") Logout
-                            li
-                                form(method="POST", action="/users + encodeURIComponent(user.username) + ?_method=DELETE" class="navbar-form")
-                                    button(type="submit" class="btn btn-link") Delete account
+                            //-li
+                                //-form(method="POST", action="/users + encodeURIComponent(user.username) + ?_method=DELETE" class="navbar-form")
+                                    //-button(type="submit" class="btn btn-link") Delete account
                         - } else {
-                            li
-                                a(href="/session/new") Login
                             li
                                 a(href="/users/new") Register
                         - }

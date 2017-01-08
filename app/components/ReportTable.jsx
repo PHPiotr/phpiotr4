@@ -17,6 +17,9 @@ module.exports = React.createClass({
     },
 
     _getPrice: function(number) {
+        if (0 === number) {
+            return '0.00';
+        }
         return (number / 100).toFixed(2);
     },
 
@@ -49,7 +52,14 @@ module.exports = React.createClass({
                         <td>£{this.props.report.hostels_avg}</td>
                     </tr>
                     <tr>
-                        <td><strong>Amount:</strong></td>
+                        <td><strong>Journeys:</strong></td>
+                        <td>{this.props.report.buses_singles_quantity}</td>
+                        <td>{this.props.report.planes_singles_quantity}</td>
+                        <td>{this.props.report.trains_singles_quantity}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bookings:</strong></td>
                         <td>{this.props.report.buses.length}</td>
                         <td>{this.props.report.planes.length}</td>
                         <td>{this.props.report.trains.length}</td>

@@ -10,6 +10,9 @@ module.exports = React.createClass({
                 planes: [],
                 trains: [],
                 hostels: [],
+                buses_singles_quantity: 0,
+                planes_singles_quantity: 0,
+                trains_singles_quantity: 0,
                 buses_cost: '0.00',
                 buses_avg: '0.00',
                 planes_cost: '0.00',
@@ -64,16 +67,6 @@ module.exports = React.createClass({
     render: function() {
         return(
                 <div>
-                    <form className="form-inline">
-                        <div className="form-group">
-                            <label className="sr-only" htmlFor="report-from">From</label>
-                            <input className="form-control" type="text" name="report_from" id="report-from" placeholder="From" />
-                        </div>
-                        <div className="form-group">
-                            <label className="sr-only" htmlFor="report-to">To</label>
-                            <input className="form-control" type="text" name="report_to" id="report-to" placeholder="To" />
-                        </div>
-                    </form>
                     <ReportTable report={this.state.report}/>
                 </div>
         );

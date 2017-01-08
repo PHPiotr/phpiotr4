@@ -4,14 +4,14 @@ block stylesheets
 
 block content
 
-    h1= title
     div(class="row-fluid")
+        div(class="well well-sm")
             ul(class="nav nav-pills")
                 li(role="presentation")
                         a(href="/bookings/planes?type=current")= "Current flights"
                 li(role="presentation")
                     a(href="/bookings/planes?type=past")= "Past flights"
-                li(role="presentation")
+                li(role="presentation" class="active")
                     a(href="/bookings/planes/new")= "Add flight"
     form(method="POST", action="/bookings/planes" class="form-horizontal")
         div(class="form-group")
