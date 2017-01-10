@@ -5,14 +5,7 @@ block stylesheets
 block content
 
     div(class="row-fluid")
-        div(class="well well-sm")
-            ul(class="nav nav-pills")
-                li(role="presentation")
-                        a(href="/bookings/planes?type=current")= "Current flights"
-                li(role="presentation")
-                    a(href="/bookings/planes?type=past")= "Past flights"
-                li(role="presentation" class="active")
-                    a(href="/bookings/planes/new")= "Add flight"
+        include includes/nav.pug
     form(method="POST", action="/bookings/planes" class="form-horizontal")
         div(class="form-group")
             label(for="confirmation-code" class="col-sm-2 control-label") Confirmation code

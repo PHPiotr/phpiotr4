@@ -112,7 +112,8 @@ router.get('/new', loggedIn, function(req, res) {
     res.render('planes/new', {
         title: "New flight",
         currencies: Flight.schema.path('currency').enumValues,
-        selected: 'planes'
+        selected: 'planes',
+        active: 'new'
     });
 });
 
