@@ -1,4 +1,5 @@
 var React = require('react');
+var ReportAlert = require('./ReportAlert.jsx');
 var ReportTable = require('./ReportTable.jsx');
 
 module.exports = React.createClass({
@@ -21,7 +22,8 @@ module.exports = React.createClass({
                 trains_avg: '0.00',
                 hostels_cost: '0.00',
                 hostels_avg: '0.00'
-            }
+            },
+            insert: null
         };
     },
     componentDidMount: function() {
@@ -47,8 +49,15 @@ module.exports = React.createClass({
             });
 
             socket.on('insert', function(booking) {
-                console.log('Record inserted', booking);
                 that._onChange(from.val(), to.val(), that);
+                that.setState({
+                    insert: booking
+                });
+                setTimeout(function() {
+                    that.setState({
+                        insert: null
+                    });
+                }, 3000);
             });
         });
     },
@@ -73,6 +82,7 @@ module.exports = React.createClass({
     render: function() {
         return(
                 <div>
+                    <ReportAlert insert={this.state.insert}/>
                     <ReportTable report={this.state.report}/>
                 </div>
         );
