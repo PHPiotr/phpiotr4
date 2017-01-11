@@ -1,6 +1,7 @@
 var async = require('async');
 var mongoose = require('mongoose');
 var loggedIn = require('./middleware/logged_in');
+var validateDates = require('./middleware/validate_dates');
 
 var Bus = require('../data/models/bus');
 var Plane = require('../data/models/flight');
@@ -10,10 +11,10 @@ var Hostel = require('../data/models/hostel');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/', loggedIn, validateDates, function(req, res, next) {
 
-    var from = req.query.from || null;
-    var to = req.query.to || null;
+    var from = req.query.from;
+    var to = req.query.to;
 
     var default_results = {cost: 0, avg_cost: 0, singles_quantity: '0'};
 

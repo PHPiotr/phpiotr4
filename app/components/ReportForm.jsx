@@ -34,9 +34,9 @@ module.exports = React.createClass({
             var socket = io();
 
             from.datepicker();
-//            from.datepicker('option', 'dateFormat', 'dd/mm/yy');
+            from.datepicker('option', 'dateFormat', 'dd/mm/yy');
             to.datepicker();
-//            to.datepicker('option', 'dateFormat', 'dd/mm/yy');
+            to.datepicker('option', 'dateFormat', 'dd/mm/yy');
 
             from.change(function() {
                 to.datepicker('option', 'minDate', $(this).val());
