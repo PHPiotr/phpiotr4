@@ -32,24 +32,23 @@ module.exports = React.createClass({
             var from = $('#report-from');
             var to = $('#report-to');
             var socket = io();
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            var default_from = new Date(year, month, 1);
+            var default_to = new Date(year, month + 1, 0);
 
-            from.datepicker();
-            from.datepicker('option', 'dateFormat', 'dd/mm/yy');
-            to.datepicker();
-            to.datepicker('option', 'dateFormat', 'dd/mm/yy');
+            from.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_from);
+            to.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_to);
 
-            from.change(function() {
-                to.datepicker('option', 'minDate', $(this).val());
-                that._onChange($(this).val(), to.val(), that);
-            });
+            that._update();
 
-            to.change(function() {
-                from.datepicker('option', 'maxDate', $(this).val());
-                that._onChange(from.val(), $(this).val(), that);
+            $('#report-from, #report-to').change(function() {
+                that._update();
             });
 
             socket.on('insert', function(booking) {
-                that._onChange(from.val(), to.val(), that);
+                that._update();
                 that.setState({
                     insert: booking
                 });
@@ -61,20 +60,23 @@ module.exports = React.createClass({
             });
         });
     },
-    _onChange: function(from, to, that) {
+    _update: function() {
+        var that = this;
+        var from = $('#report-from');
+        var to = $('#report-to');
+        var from_value = from.val();
+        var to_value = to.val();
+        from.datepicker('option', 'maxDate', to_value);
+        to.datepicker('option', 'minDate', from_value);
         $.ajax({
             url: '/report',
             type: 'GET',
             dataType: 'json',
             data: {
-                from: from,
-                to: to
-            },
-            beforeSend: function() {
-                console.log('before');
+                from: from_value,
+                to: to_value
             },
             success: function(data) {
-                console.log(data);
                 that.setState({report: data});
             }
         });
