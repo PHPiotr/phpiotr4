@@ -5,7 +5,8 @@ var FormButton = require('../form/FormButton.jsx');
 var NewPlane = React.createClass({
     getDefaultProps: function() {
         return {
-            defaultCurrency: '£'
+            defaultCurrency: '£',
+            method: 'post'
         };
     },
     getInitialState: function() {
@@ -25,6 +26,7 @@ var NewPlane = React.createClass({
         };
     },
     componentDidMount: function() {
+        console.log('did mount');
         $(function() {
             $("#departure-date, #return-departure-date").datepicker();
         });

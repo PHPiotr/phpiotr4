@@ -1,8 +1,5 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var Report = require("./components/Report.jsx");
+import React from 'react';
+import { render } from 'react-dom';
+import Report from './components/Report.jsx';
 
-function render() {
-    ReactDOM.render(<Report />, document.getElementById('container'));
-}
-render();
+render(<Report />, document.getElementById('container'));
