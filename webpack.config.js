@@ -1,34 +1,42 @@
-const { resolve } = require('path');
+const {resolve} = require('path');
 const webpack = require('webpack');
 var config = {
+    context: resolve(__dirname, 'app'),
     devtool: 'inline-source-map',
     entry: [
         'react-hot-loader/patch',
         'webpack/hot/only-dev-server',
-        'webpack-hot-middleware/client?http://localhost:3000',
-        __dirname + '/app/main.jsx'
+        'webpack-hot-middleware/client',
+        resolve(__dirname, 'app/main.jsx')
     ],
     output: {
-        path: __dirname + "/public/javascripts/",
-        filename: "bundle.js",
-        publicPath: "/javascripts/"
+        path: resolve(__dirname, 'public'),
+        filename: 'bundle.js',
+        publicPath: '/javascripts/'
     },
     module: {
-        loaders: [{
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loaders: ['babel']
-            }]
-    },
-    devServer: {
-        hot: true,
-        contentBase: "./public",
-        inline: true,
-        port: 3000
+        rules: [
+            {
+                test: /\.jsx$/,
+                use: [
+                    'babel-loader'
+                ],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader?modules',
+                    'postcss-loader'
+                ]
+            }
+        ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-//        new webpack.NoErrorsPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.NoErrorsPlugin()
     ]
 };
 
