@@ -1,36 +1,40 @@
-var webpack = require('webpack');
-
+const { resolve } = require('path');
+const webpack = require('webpack');
 var config = {
-    devtool: 'eval-source-map',
-    entry: __dirname + "/app/main.jsx",
+    devtool: 'inline-source-map',
+    entry: [
+        'react-hot-loader/patch',
+        'webpack/hot/only-dev-server',
+        'webpack-hot-middleware/client?http://localhost:3000',
+        __dirname + '/app/main.jsx'
+    ],
     output: {
-        path: __dirname + "/public/javascripts",
-        filename: "bundle.js"
+        path: __dirname + "/public/javascripts/",
+        filename: "bundle.js",
+        publicPath: "/javascripts/"
     },
     module: {
         loaders: [{
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['es2015', 'react']
-                }
+                loaders: ['babel']
             }]
     },
     devServer: {
+        hot: true,
         contentBase: "./public",
-        colors: true,
-        historyApiFallback: true,
         inline: true,
-        port: 8081,
-        host: '0.0.0.0'     
-    }
+        port: 3000
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+//        new webpack.NoErrorsPlugin()
+    ]
 };
 
 if (process.env.NODE_ENV === 'production') {
     config.devtool = false;
     config.plugins = [
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({comments: false}),
         new webpack.DefinePlugin({
             'process.env': {NODE_ENV: JSON.stringify('production')}

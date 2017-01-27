@@ -20,6 +20,20 @@ var session = require('./routes/session');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var config = require('./webpack.config');
+
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config');
+
+var compiler = webpack(webpackConfig);
+
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    hot: true
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(function(req, res, next) {
     res.io = io;
