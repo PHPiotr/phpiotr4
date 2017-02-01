@@ -7,7 +7,7 @@ var config = {
         'react-hot-loader/patch',
         'webpack/hot/only-dev-server',
         'webpack-hot-middleware/client',
-        resolve(__dirname, 'app/main.jsx')
+        resolve(__dirname, 'app/AppContainer.jsx')
     ],
     output: {
         path: resolve(__dirname, 'public'),

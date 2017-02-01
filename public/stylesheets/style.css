@@ -1,8 +1,4 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+.navbar-default .navbar-nav>li>a.active, .navbar-default .navbar-nav>li>a.active:hover, .navbar-default .navbar-nav>li>a.active:focus {
+    color: #555;
+    background-color: #e7e7e7;
 }
