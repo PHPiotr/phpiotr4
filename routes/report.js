@@ -18,7 +18,7 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
 
     var default_results = {cost: 0, avg_cost: 0, singles_quantity: '0'};
 
-    var user_id = req.session.user._id;
+    //var user_id = req.session.user._id;
     var sort_type;
     if (from && to) {
         sort_type = {$gte: new Date(from), $lte: new Date(to)};
@@ -33,22 +33,22 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
     async.parallel(
             [
                 function(next) {
-                    Bus.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
+                    Bus.find({/*created_by: mongoose.Types.ObjectId(user_id), */departure_date: sort_type})
                             .sort('departure_date')
                             .exec(next);
                 },
                 function(next) {
-                    Plane.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
+                    Plane.find({/*created_by: mongoose.Types.ObjectId(user_id), */departure_date: sort_type})
                             .sort('departure_date')
                             .exec(next);
                 },
                 function(next) {
-                    Train.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
+                    Train.find({/*created_by: mongoose.Types.ObjectId(user_id), */departure_date: sort_type})
                             .sort('departure_date')
                             .exec(next);
                 },
                 function(next) {
-                    Hostel.find({created_by: mongoose.Types.ObjectId(user_id), checkin_date: sort_type})
+                    Hostel.find({/*created_by: mongoose.Types.ObjectId(user_id), */checkin_date: sort_type})
                             .sort('checkin_date')
                             .exec(next);
                 },
@@ -57,7 +57,7 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
                                         departure_date: sort_type
                                     }
                                 },
@@ -97,7 +97,7 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
                                         departure_date: sort_type
                                     }
                                 },
@@ -137,7 +137,7 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
                                         departure_date: sort_type
                                     }
                                 },
@@ -177,7 +177,7 @@ router.get('/', loggedIn, validateDates, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
                                         checkin_date: sort_type
                                     }
                                 },

@@ -1,15 +1,88 @@
 import React, { Component, PropTypes } from 'react';
 
 class PlanesCurrent extends Component {
+    
+    componentDidMount() {
+        this.props.planesCallbacks.getPlanes('current');
+    };
 
-    render(){
+    render() {
+
+        let planes = this.props.planes;
+        let flights_length = planes.flights_length;
+
+        if (!flights_length) {
+            return (
+                    <div className="row-fluid">
+                        <p>{`No ${planes.title}`}</p>
+                    </div>
+            );
+        }
+        
+        let indexCalc = (planes.current_page - 1) * planes.max_per_page;
+        
+        let flights = planes.flights.map((flight, flightIndex) => (
+                <tr key={flight.confirmation_code}>
+                    <td className="text-right">{`${flightIndex + 1 + indexCalc}.`}</td>
+                    <td>{flight.confirmation_code}</td>
+                    <td className="text-right">{`£ ${flight.price}`}</td>
+                    <td>{flight.departure_date}</td>
+                    <td>{flight.return_departure_date}</td>
+                    <td>{flight.from}</td>
+                    <td>{flight.to}</td>
+                </tr>
+        ));
         
         return(
-            <div>
-            PlanesCurrent
-            </div>
-        );
+                <div>
+                    <div className="row-fluid">         
+                        <table className="table table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Total</th>
+                                    <th>Average</th>
+                                    <th>Bookings</th>
+                                    <th>Single</th>
+                                    <th>Return</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="info">£ {planes.total_cost}</td>
+                                    <td>£ {planes.average_cost}</td>
+                                    <td>{planes.flights_length}</td>
+                                    <td>{planes.flights_length - planes.return_flights_length}</td>
+                                    <td>{planes.return_flights_length}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="row-fluid">         
+                        <table className="table table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Code</th>
+                                    <th className="t ext-right">Price</th>
+                                    <th>Going out</th>
+                                    <th>Coming back</th>
+                                    <th>Departs from</th>
+                                    <th>Arrives to</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {flights}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                );
     };
+};
+
+PlanesCurrent.propTypes = {
+    planes: PropTypes.object,
+    planesCallbacks: PropTypes.object
 };
 
 export default PlanesCurrent;

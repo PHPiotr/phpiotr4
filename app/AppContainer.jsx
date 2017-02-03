@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+import AppWrapper from './AppWrapper.jsx';
 import App from './App.jsx';
 import Report from './components/Report.jsx';
 import Buses from './components/bookings/Buses.jsx';
@@ -24,27 +25,29 @@ import { AppContainer } from 'react-hot-loader';
 let appContainer = (
         <AppContainer>
             <Router history={browserHistory}>
-                <Route path="/" component={App}>
-                    <IndexRoute component={Report} />
-                    <Route name="buses" path="bookings/buses" component={Buses}>
-                        <Route path="current" component={BusesCurrent} />
-                        <Route path="past" component={BusesPast} />
-                        <Route path="new" component={BusesNew} />
-                    </Route>
-                    <Route name="planes" path="bookings/planes" component={Planes}>
-                        <Route path="current" component={PlanesCurrent} />
-                        <Route path="past" component={PlanesPast} />
-                        <Route path="new" component={PlanesNew} />
-                    </Route>
-                    <Route name="trains" path="bookings/trains" component={Trains}>
-                        <Route path="current" component={TrainsCurrent} />
-                        <Route path="past" component={TrainsPast} />
-                        <Route path="new" component={TrainsNew} />
-                    </Route>
-                    <Route name="hostels" path="bookings/hostels" component={Hostels}>
-                        <Route path="current" component={HostelsCurrent} />
-                        <Route path="past" component={HostelsPast} />
-                        <Route path="new" component={HostelsNew} />
+                <Route component={AppWrapper}>
+                    <Route path="/" component={App}>
+                        <IndexRoute component={Report} />
+                        <Route name="buses" path="bookings/buses" component={Buses}>
+                            <Route path="current" component={BusesCurrent} />
+                            <Route path="past" component={BusesPast} />
+                            <Route path="new" component={BusesNew} />
+                        </Route>
+                        <Route name="planes" path="bookings/planes" component={Planes}>
+                            <Route path="current" component={PlanesCurrent} />
+                            <Route path="past" component={PlanesPast} />
+                            <Route path="new" component={PlanesNew} />
+                        </Route>
+                        <Route name="trains" path="bookings/trains" component={Trains}>
+                            <Route path="current" component={TrainsCurrent} />
+                            <Route path="past" component={TrainsPast} />
+                            <Route path="new" component={TrainsNew} />
+                        </Route>
+                        <Route name="hostels" path="bookings/hostels" component={Hostels}>
+                            <Route path="current" component={HostelsCurrent} />
+                            <Route path="past" component={HostelsPast} />
+                            <Route path="new" component={HostelsNew} />
+                        </Route>
                     </Route>
                 </Route>
             </Router>

@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 router.get('/', loggedIn, function(req, res, next) {
 
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
-    var user_id = req.session.user._id;
+    //var user_id = req.session.user._id;
     var param_type = req.query.type || '';
     var sort_type = {$gte: new Date()};
     var sort = {'departure_date': 1};
@@ -31,7 +31,7 @@ router.get('/', loggedIn, function(req, res, next) {
     async.parallel(
             [
                 function(next) {
-                    Flight.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
+                    Flight.find({/*created_by: mongoose.Types.ObjectId(user_id), */departure_date: sort_type})
                             .sort(sort)
                             .skip((current_page - 1) * max_per_page)
                             .limit(max_per_page)
@@ -42,7 +42,7 @@ router.get('/', loggedIn, function(req, res, next) {
                             [
                                 {
                                     $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
+                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
                                         departure_date: sort_type
                                     }
                                 },
@@ -90,7 +90,7 @@ router.get('/', loggedIn, function(req, res, next) {
                 var flights_length = results[1].flights_length;
                 var return_flights_length = results[1].return_flights_length;
 
-                res.render('planes/index', {
+                res.send(JSON.stringify({
                     title: type + ' flights',
                     flights: flights,
                     current_page: current_page,
@@ -104,7 +104,7 @@ router.get('/', loggedIn, function(req, res, next) {
                     return_flights_length: return_flights_length,
                     active: type_lower,
                     selected: 'planes'
-                });
+                }));
             }
     );
 });

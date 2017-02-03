@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import Report from './components/Report.jsx';
-import Buses from './components/bookings/Buses.jsx';
-import Planes from './components/bookings/Planes.jsx';
-import Trains from './components/bookings/Trains.jsx';
-import Hostels from './components/bookings/Hostels.jsx';
-import { AppContainer } from 'react-hot-loader';
+import React, { Component, PropTypes } from 'react';
+import { render } from 'react-dom';
+import { Link } from 'react-router';
 import NavLink from './components/nav/NavLink.jsx';
 
 class App extends Component {
 
-    componentDidMount() {
-        
-    }
-
     render() {
+        let propsChildren = this.props.children && React.cloneElement(this.props.children, {
+            planes: this.props.planes,
+            planesCallbacks: this.props.planesCallbacks
+        });
         let navItems = (
                 <ul className="nav navbar-nav">
                     <NavLink className="btn btn-link" to="/bookings/buses">Buses</NavLink>
@@ -43,14 +37,17 @@ class App extends Component {
                         </div>
                     </div>
                     <div className="container-fluid">
-                        {this.props.children}
+                        {propsChildren}
                     </div>
                 </div>
         );
     }
 };
 
-
+App.propTypes = {
+    planes: PropTypes.object,
+    planesCallbacks: PropTypes.object
+};
 
 export default App;
 
