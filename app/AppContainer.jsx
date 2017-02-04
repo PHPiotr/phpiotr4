@@ -29,23 +29,39 @@ let appContainer = (
                     <Route path="/" component={App}>
                         <IndexRoute component={Report} />
                         <Route name="buses" path="bookings/buses" component={Buses}>
-                            <Route path="current" component={BusesCurrent} />
-                            <Route path="past" component={BusesPast} />
+                            <Route path="current" component={BusesCurrent}>
+                                <Route path=":page" component={BusesCurrent}/ >
+                            </Route>
+                            <Route path="past" component={BusesPast}>
+                                <Route path=":page" component={BusesPast}/ >
+                            </Route>
                             <Route path="new" component={BusesNew} />
                         </Route>
                         <Route name="planes" path="bookings/planes" component={Planes}>
-                            <Route path="current" component={PlanesCurrent} />
-                            <Route path="past" component={PlanesPast} />
+                            <Route path="current" component={PlanesCurrent}>
+                                <Route path=":page" component={PlanesCurrent}/ >
+                            </Route>
+                            <Route path="past" component={PlanesPast}>
+                                <Route path=":page" component={PlanesPast}/ >
+                            </Route>
                             <Route path="new" component={PlanesNew} />
                         </Route>
                         <Route name="trains" path="bookings/trains" component={Trains}>
-                            <Route path="current" component={TrainsCurrent} />
-                            <Route path="past" component={TrainsPast} />
+                            <Route path="current(/:page)" component={TrainsCurrent}>
+                                <Route path=":page" component={TrainsCurrent}/ >
+                            </Route>
+                            <Route path="past(/:page)" component={TrainsPast}>
+                                <Route path=":page" component={TrainsPast}/ >
+                            </Route>
                             <Route path="new" component={TrainsNew} />
                         </Route>
                         <Route name="hostels" path="bookings/hostels" component={Hostels}>
-                            <Route path="current" component={HostelsCurrent} />
-                            <Route path="past" component={HostelsPast} />
+                            <Route path="current(/:page)" component={HostelsCurrent}>
+                                <Route path=":page" component={HostelsCurrent}/ >
+                            </Route>
+                            <Route path="past(/:page)" component={HostelsPast}>
+                                <Route path=":page" component={HostelsPast}/ >
+                            </Route>
                             <Route path="new" component={HostelsNew} />
                         </Route>
                     </Route>

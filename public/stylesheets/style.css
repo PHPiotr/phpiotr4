@@ -2,3 +2,15 @@
     color: #555;
     background-color: #e7e7e7;
 }
+
+.nav-pills>li>a.active, .nav-pills>li>a.active:hover, .nav-pills>li>a.active:focus {
+    color: #fff;
+    background-color: #337ab7;
+}
+.pagination>li>a.active, .pagination>li>a.active>span, .pagination>li>a.active:hover, .pagination>li>a.active>span:hover, .pagination>li>a.active:focus, .pagination>li>a.active>span:focus {
+    z-index: 3;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    cursor: default;
+}

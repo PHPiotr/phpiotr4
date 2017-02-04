@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import Pagination from '../nav/Pagination.jsx';
 
 class PlanesCurrent extends Component {
     
     componentDidMount() {
-        this.props.planesCallbacks.getPlanes('current');
+        console.log(this.props.router.page);
+        this.props.planesCallbacks.getBookings('current');
     };
 
     render() {
@@ -75,6 +77,17 @@ class PlanesCurrent extends Component {
                             </tbody>
                         </table>
                     </div>
+                    <Pagination
+                        booking_type={planes.selected}
+                        pages_count={planes.pages_count}
+                        bookings_length={planes.flights_length}
+                        max_per_page={planes.max_per_page}
+                        current_page={planes.current_page}
+                        is_first_page={planes.is_first_page}
+                        is_last_page={planes.is_last_page}
+                        active={planes.active}
+                        getBookingsCallback={this.props.planesCallbacks.getBookings}
+                    />
                 </div>
                 );
     };
