@@ -1,12 +1,10 @@
-import React, {Component} from 'react';
-import ReportForm from './ReportForm.jsx';
+var React = require('react');
+var ReportForm = require('./ReportForm.jsx');
 
-class Report extends Component {
-    render() {
+module.exports = React.createClass({
+    render: function() {
         return(
-            <ReportForm />
+                <ReportForm />
         );
     }
-};
-
-export default Report;
+});

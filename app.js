@@ -29,9 +29,7 @@ var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-    contentBase: config.output.path,
-    publicPath: config.output.publicPath,
-    hot: true
+    publicPath: config.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));

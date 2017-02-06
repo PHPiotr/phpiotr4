@@ -73,7 +73,5 @@ let appContainer = (
 render(appContainer, document.getElementById('root'));
 
 if (module.hot) {
-    module.hot.accept('./App.jsx', () => {
-        render(appContainer, document.getElementById('root'));
-    });
+    module.hot.accept();
 }

@@ -11,7 +11,7 @@ class App extends Component {
             planesCallbacks: this.props.planesCallbacks
         });
         let navItems = (
-                <ul className="nav navbar-nav">
+                <ul className="nav navbar-nav">yay
                     <NavLink className="btn btn-link" to="/bookings/buses">Buses</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/planes">Planes</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/trains">Trains</NavLink>

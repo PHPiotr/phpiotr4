@@ -1,7 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Report from './components/Report.jsx';
-import { AppContainer } from 'react-hot-loader';
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Report = require('./components/Report.jsx');
+var ReactHotLoader = require('react-hot-loader');
+var AppContainer = ReactHotLoader.AppContainer;
 
 const render = (Component) => {
     ReactDOM.render(

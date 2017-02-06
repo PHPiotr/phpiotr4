@@ -1,8 +1,8 @@
 const {resolve} = require('path');
 const webpack = require('webpack');
 var config = {
-    context: resolve(__dirname, 'app'),
-    devtool: 'inline-source-map',
+    context: __dirname,
+    devtool: 'source-map',
     entry: [
         'react-hot-loader/patch',
         'webpack/hot/only-dev-server',
@@ -21,7 +21,9 @@ var config = {
                 use: [
                     'babel-loader'
                 ],
-                exclude: /node_modules/
+                include: [
+                    resolve(__dirname, 'app')
+                ]
             },
             {
                 test: /\.css$/,

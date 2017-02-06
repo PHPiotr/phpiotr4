@@ -4,7 +4,6 @@ import Pagination from '../nav/Pagination.jsx';
 class PlanesCurrent extends Component {
     
     componentDidMount() {
-        console.log(this.props.router.page);
         this.props.planesCallbacks.getBookings('current');
     };
 
