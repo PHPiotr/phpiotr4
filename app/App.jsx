@@ -8,10 +8,12 @@ class App extends Component {
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
             planes: this.props.planes,
+            plane: this.props.plane,
+            callbacks: this.props.callbacks,
             planesCallbacks: this.props.planesCallbacks
         });
         let navItems = (
-                <ul className="nav navbar-nav">yay
+                <ul className="nav navbar-nav">
                     <NavLink className="btn btn-link" to="/bookings/buses">Buses</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/planes">Planes</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/trains">Trains</NavLink>
