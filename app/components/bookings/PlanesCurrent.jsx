@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Pagination from '../nav/Pagination.jsx';
+import moment from 'moment';
 
 class PlanesCurrent extends Component {
     
@@ -43,8 +44,8 @@ class PlanesCurrent extends Component {
                     <td className="text-right">{`${flightIndex + 1 + indexCalc}.`}</td>
                     <td>{flight.confirmation_code}</td>
                     <td className="text-right">{`£ ${flight.price}`}</td>
-                    <td>{flight.departure_date}</td>
-                    <td>{flight.return_departure_date}</td>
+                    <td>{moment(flight.departure_date, 'DD/MM/YYYY').add(1, 'day').format('DD/MM/YYYY')}</td>
+                    <td>{flight.return_departure_date ? moment(flight.return_departure_date, 'DD/MM/YYYY').add(1, 'day').format('DD/MM/YYYY') : ''}</td>
                     <td>{flight.from}</td>
                     <td>{flight.to}</td>
                 </tr>
