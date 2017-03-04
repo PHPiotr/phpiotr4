@@ -10,7 +10,8 @@ class App extends Component {
             planes: this.props.planes,
             plane: this.props.plane,
             callbacks: this.props.callbacks,
-            planesCallbacks: this.props.planesCallbacks
+            planesCallbacks: this.props.planesCallbacks,
+            socket: this.props.socket
         });
         let navItems = (
                 <ul className="nav navbar-nav">

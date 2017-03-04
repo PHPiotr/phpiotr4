@@ -2,9 +2,25 @@ import React, { Component, PropTypes } from 'react';
 import Pagination from '../nav/Pagination.jsx';
 
 class PlanesPast extends Component {
-    
+
+    constructor(props) {
+        super(props);
+        this.getPlanes = this.getPlanes.bind(this);
+    }
+
     componentDidMount() {
         this.props.planesCallbacks.getBookings('past');
+        this.props.socket.on('insert_plane', this.getPlanes);
+    };
+
+    componentWillUnmount() {
+        this.props.socket.removeListener('insert_plane', this.getPlanes);
+    };
+
+    getPlanes() {
+        this.props.planesCallbacks.getBookings('past');
+        console.log('socket on insert fetched past planes');
+        alert('Sockets!');
     };
 
     render() {

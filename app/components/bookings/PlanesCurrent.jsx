@@ -3,8 +3,24 @@ import Pagination from '../nav/Pagination.jsx';
 
 class PlanesCurrent extends Component {
     
+    constructor(props) {
+        super(props); 
+        this.getPlanes = this.getPlanes.bind(this);
+    }
+    
     componentDidMount() {
         this.props.planesCallbacks.getBookings('current');
+        this.props.socket.on('insert_plane', this.getPlanes);
+    };
+
+    componentWillUnmount() {
+        this.props.socket.removeListener('insert_plane', this.getPlanes);
+    };
+
+    getPlanes() {
+        this.props.planesCallbacks.getBookings('current');
+        console.log('socket on insert fetched current planes');
+        alert('Sockets!');
     };
 
     render() {
