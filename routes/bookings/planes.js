@@ -13,7 +13,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 router.get('/', loggedIn, function(req, res, next) {
-
+    console.log(process.env);
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
     //var user_id = req.session.user._id;
     var param_type = req.query.type || '';
@@ -26,26 +26,102 @@ router.get('/', loggedIn, function(req, res, next) {
         sort = {'departure_date': -1};
         type = 'Past';
     }
+    var match = {
+        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        "departure_date": sort_type
+    };
     req.active = 'planes';
 
     async.parallel(
             [
                 function(next) {
-                    Flight.find({/*created_by: mongoose.Types.ObjectId(user_id), */departure_date: sort_type})
-                            .sort(sort)
-                            .skip((current_page - 1) * max_per_page)
-                            .limit(max_per_page)
-                            .exec(next);
+                    Flight.aggregate(
+                        [
+                            {$match: match},
+                            {"$sort": sort},
+                            {"$skip": ((current_page - 1) * max_per_page)},
+                            {"$limit": max_per_page},
+                            {
+                                $project: {
+                                    "_id": 1,
+                                    "confirmation_code": 1,
+                                    "from": 1,
+                                    "to": 1,
+                                    "departure_date": {
+                                        "$dateToString": {
+                                            "format": "%d/%m/%Y",
+                                            "date": "$departure_date"
+                                        }
+                                    },
+                                    "departure_time": {
+                                        "$concat": [
+                                            {"$substr": ["$departure_time", 0, 2]},
+                                            ":",
+                                            {"$substr": ["$departure_time", 2, 4]}
+                                        ]
+                                    },
+                                    "arrival_time": {
+                                        "$concat": [
+                                            {"$substr": ["$arrival_time", 0, 2]},
+                                            ":",
+                                            {"$substr": ["$arrival_time", 2, 4]}
+                                        ]
+                                    },
+                                    "return_departure_date": {
+                                        $cond: ["$is_return", {
+                                            "$dateToString": {
+                                                "format": "%d/%m/%Y",
+                                                "date": "$return_departure_date"
+                                            }
+                                        }, null]
+                                    },
+                                    "return_departure_time": {
+                                        $cond: ["$is_return", {
+                                            "$concat": [
+                                                {"$substr": ["$return_departure_time", 0, 2]},
+                                                ":",
+                                                {"$substr": ["$return_departure_time", 2, 4]}
+                                            ]
+                                        }, null]
+                                    },
+                                    "return_arrival_time": {
+                                        $cond: ["$is_return", {
+                                            "$concat": [
+                                                {"$substr": ["$return_arrival_time", 0, 2]},
+                                                ":",
+                                                {"$substr": ["$return_arrival_time", 2, 4]}
+                                            ]
+                                        }, null]
+                                    },
+                                    "price": {
+                                        "$divide": ["$price", 100]
+                                    },
+                                    "created_by": 1,
+                                    "seat": 1,
+                                    "return_seat": {
+                                        "$cond": ["$is_return", "$return_seat", null]
+                                    },
+                                    "checked_in": 1,
+                                    "currency": 1,
+                                    "is_return": 1
+                                }
+                            }
+                        ],
+                        function(err, results) {
+                            if (err) {
+                                return next(err);
+                            }
+                            if (!results) {
+                                return next();
+                            }
+                            next(err, results);
+                        }
+                    );
                 },
                 function(next) {
                     Flight.aggregate(
                             [
-                                {
-                                    $match: {
-                                        /*created_by: mongoose.Types.ObjectId(user_id),*/
-                                        departure_date: sort_type
-                                    }
-                                },
+                                {$match: match},
                                 {
                                     $project: {
                                         is_return_flight: {
@@ -136,26 +212,28 @@ router.get('/:confirmation_code', loadFlight, function(req, res, next) {
     res.render('planes/flight', {title: req.flight.confirmation_code,
         flight: req.flight});
 });
-router.post('/', loggedIn, function(req, res, next) {
-    var flight = req.body;
-    flight.created_by = req.session.user._id;
-    Flight.create(flight, function(err) {
+router.post('/', function(req, res, next) {
+    
+    res.io.emit('insert_plane', plane);
+    
+    var plane = req.body;
+    // TODO: Get created_by based on JWT
+    plane.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
+    Flight.create(plane, function(err) {
         if (err) {
             if (err.code === 11000) {
-                res.status(409).send('Conflict');
+                res.status(409).send(JSON.stringify({error: err}));
             } else {
                 if (err.name === 'ValidationError') {
-                    return res.send(Object.keys(err.errors).map(function(errField) {
-                        return err.errors[errField].message;
-                    }).join('. '), 406);
+                    return res.send(JSON.stringify({error: err}), 406);
                 } else {
                     next(err);
                 }
             }
             return;
         }
-        res.io.emit('insert', flight);
-        res.redirect('/bookings/planes');
+        res.io.emit('insert_plane', plane);
+        res.status(200).send(JSON.stringify({message: 'Success', plane: plane}));
     });
 });
 router.delete('/:confirmation_code', loggedIn, loadFlight, function(req, res, next) {
