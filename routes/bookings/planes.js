@@ -213,19 +213,17 @@ router.get('/:confirmation_code', loadFlight, function(req, res, next) {
         flight: req.flight});
 });
 router.post('/', function(req, res, next) {
-    
-    res.io.emit('insert_plane', plane);
-    
+
     var plane = req.body;
     // TODO: Get created_by based on JWT
     plane.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
     Flight.create(plane, function(err) {
         if (err) {
             if (err.code === 11000) {
-                res.status(409).send(JSON.stringify({error: err}));
+                res.status(409).send(JSON.stringify({err: err}));
             } else {
                 if (err.name === 'ValidationError') {
-                    return res.send(JSON.stringify({error: err}), 406);
+                    return res.status(200).send(JSON.stringify({err: err}));
                 } else {
                     next(err);
                 }

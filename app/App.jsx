@@ -10,6 +10,8 @@ class App extends Component {
             planes: this.props.planes,
             plane: this.props.plane,
             callbacks: this.props.callbacks,
+            planeErrors: this.props.planeErrors,
+            planeErrorMessage: this.props.planeErrorMessage,
             planesCallbacks: this.props.planesCallbacks,
             socket: this.props.socket
         });
@@ -49,7 +51,9 @@ class App extends Component {
 
 App.propTypes = {
     planes: PropTypes.object,
-    planesCallbacks: PropTypes.object
+    planesCallbacks: PropTypes.object,
+    planeErrors: PropTypes.object,
+    planeErrorMessage: PropTypes.string
 };
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import update from 'react-addons-update';
 import io from 'socket.io-client';
 import 'whatwg-fetch';
@@ -18,7 +18,9 @@ class AppWrapper extends Component {
         super(...arguments);
         this.state = {
             planes: {},
-            plane: {}
+            plane: {},
+            planeErrorMessage: '',
+            planeErrors: {}
         };
     };
 
@@ -30,39 +32,41 @@ class AppWrapper extends Component {
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
-        });
+            });
     };
 
     addPlane(event) {
         let planes = this.state.planes;
         let plane = this.state.plane;
-        
+
         fetch(`${API_URL}/bookings/planes`, {
             method: 'post',
             headers: API_HEADERS,
-            body: JSON.stringify(this.state.plane)
+            body: JSON.stringify(plane)
         })
-                .then((response) => {
-                    if (!response.ok) {
-                        console.log(response);
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
                         throw new Error('Response was not ok');
                     }
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log('responseData: ', data);
-                    // When the server returns the definitive ID
-                    // used for the new Task on the server, update it on React
-                    //newTask.id = responseData.id
-                    //this.setState({cards: nextState});
-                })
-                .catch((error) => {
-                    console.log(error);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('...then...', data.err);
+                if (data.err) {
                     this.setState({
-                        planes: planes
+                        planeErrorMessage: data.err.message,
+                        planeErrors: data.err.errors
                     });
-                });
-        
+                    return;
+                }
+
+            })
+            .catch((error) => {
+
+            });
+
         event.preventDefault();
     }
 
@@ -81,24 +85,49 @@ class AppWrapper extends Component {
         });
     }
 
+    handleFocus(event, type) {
+        const name = event.target.name;
+        const typeErrors = type + 'Errors';
+        const typeErrorMessage = type + 'ErrorMessage';
+        console.log(this.state[typeErrors]);
+        if (this.state[typeErrorMessage]) {
+            this.setState({
+                [typeErrorMessage]: ''
+            });
+        }
+        if (undefined === this.state[typeErrors][name]) {
+            return;
+        }
+        let errors = Object.assign({}, this.state[typeErrors]);
+        errors[name] = undefined;
+
+        this.setState({
+            [typeErrors]: errors
+        });
+    }
+
     render() {
         let App = this.props.children && React.cloneElement(this.props.children, {
-            planes: this.state.planes,
-            plane: this.state.plane,
-            planesCallbacks: {
-                getBookings: this.getPlanes.bind(this),
-                addBooking: this.addPlane.bind(this),
-                handleChange: this.handleChange.bind(this)
-            },
-            callbacks: {
-                handleChange: this.handleChange.bind(this)
-            },
-            socket: socket
-        });
+                planes: this.state.planes,
+                plane: this.state.plane,
+                planeErrors: this.state.planeErrors,
+                planeErrorMessage: this.state.planeErrorMessage,
+                planesCallbacks: {
+                    getBookings: this.getPlanes.bind(this),
+                    addBooking: this.addPlane.bind(this),
+                    handleChange: this.handleChange.bind(this)
+                },
+                callbacks: {
+                    handleChange: this.handleChange.bind(this),
+                    handleFocus: this.handleFocus.bind(this)
+                },
+                socket: socket
+            });
 
         return App;
     }
-};
+}
+;
 
 export default AppWrapper;
 

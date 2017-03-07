@@ -9,6 +9,8 @@ class Planes extends Component {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
             planes: this.props.planes,
             plane: this.props.plane,
+            planeErrors: this.props.planeErrors,
+            planeErrorMessage: this.props.planeErrorMessage,
             callbacks: this.props.callbacks,
             planesCallbacks: this.props.planesCallbacks,
             socket: this.props.socket
@@ -25,6 +27,8 @@ class Planes extends Component {
 Planes.propTypes = {
     planes: PropTypes.object,
     plane: PropTypes.object,
+    planeErrors: PropTypes.object,
+    planeErrorMessage: PropTypes.string,
     planesCallbacks: PropTypes.object
 };
 

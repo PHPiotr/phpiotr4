@@ -36,7 +36,7 @@ class InputGroup extends Component {
     
     render() {
         return (
-                <div className={this.props.groupClass}>
+                <div className={this.props.groupClass + ' ' + this.props.hasError}>
                     <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
                     <div className={this.props.inputWrapperClass}>
                     <input
@@ -45,6 +45,7 @@ class InputGroup extends Component {
                         name={this.props.name}
                         className={this.props.inputClass}
                         onChange={this.props.handler}
+                        onFocus={this.props.focusHandler}
                         value={this.props.value}
                     />
                     </div>
@@ -59,7 +60,8 @@ InputGroup.defaultProps = {
     inputWrapperClass: 'col-sm-2',
     groupClass: 'form-group',
     labelClass: 'col-sm-2 control-label',
-    inputClass: 'form-control'
+    inputClass: 'form-control',
+    hasError: '',
 };
 
 InputGroup.propTypes = {

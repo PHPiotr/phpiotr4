@@ -10,6 +10,14 @@ class PlanesNew extends Component
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
+
+        console.log(this.props.plane);
+        for (var property in this.props.plane) {
+            if (object.hasOwnProperty(property)) {
+                console.log(property);
+            }
+        }
     }
 
     handleSubmit(event) {
@@ -20,33 +28,47 @@ class PlanesNew extends Component
         this.props.callbacks.handleChange(event, 'plane');
     }
 
+    handleFocus(event) {
+        this.props.callbacks.handleFocus(event, 'plane');
+    }
+
     render() {
         let returnFlightInputs = null;
+        let planeErrorMessage = this.props.planeErrorMessage;
+        let planeError = null;
 
         if (this.props.plane.is_return) {
             returnFlightInputs = (
                 <div>
-                    <InputGroup value={this.props.plane.return_departure_date} type="date" handler={this.handleChange} name="return_departure_date" />
-                    <InputGroup value={this.props.plane.return_departure_time} type="time" handler={this.handleChange} name="return_departure_time" />
-                    <InputGroup value={this.props.plane.return_arrival_time} type="time" handler={this.handleChange} name="return_arrival_time" />
-                    <InputGroup value={this.props.plane.return_seat} handler={this.handleChange} name="return_seat" />
+                    <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.return_departure_date ? 'has-error' : ''} value={this.props.plane.return_departure_date} type="date" handler={this.handleChange} name="return_departure_date" />
+                    <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.return_departure_time ? 'has-error' : ''} value={this.props.plane.return_departure_time} type="time" handler={this.handleChange} name="return_departure_time" />
+                    <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.return_arrival_time ? 'has-error' : ''} value={this.props.plane.return_arrival_time} type="time" handler={this.handleChange} name="return_arrival_time" />
+                    <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.return_seat ? 'has-error' : ''} value={this.props.plane.return_seat} handler={this.handleChange} name="return_seat" />
                 </div>
             );
         }
 
+        if (planeErrorMessage) {
+            planeError = (
+                <div className="alert alert-danger" role="alert">{planeErrorMessage}</div>
+            );
+        }
+
+
         return(
             <form onSubmit={this.handleSubmit} className="form-horizontal">
-                <InputGroup value={this.props.plane.confirmation_number} handler={this.handleChange} name="confirmation_number" />
-                <InputGroup value={this.props.plane.from} handler={this.handleChange} name="from" />
-                <InputGroup value={this.props.plane.to} handler={this.handleChange} name="to" />
-                <InputGroup value={this.props.plane.departure_date} type="date" handler={this.handleChange} name="departure_date" />
-                <InputGroup value={this.props.plane.departure_time} type="time" handler={this.handleChange} name="departure_time" />
-                <InputGroup value={this.props.plane.arrival_time} type="time" handler={this.handleChange} name="arrival_time" />
-                <InputGroup value={this.props.plane.seat} handler={this.handleChange} name="seat" />
-                <InputGroup value={this.props.plane.price} handler={this.handleChange} name="price" />
-                <InputGroup value={this.props.plane.currency} handler={this.handleChange} name="currency" />
-                <InputGroup value={this.props.plane.checked_in} type="checkbox" handler={this.handleChange} name="checked_in" />
-                <InputGroup value={this.props.plane.is_return} type="checkbox" handler={this.handleChange} name="is_return" />
+                {planeError}
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.confirmation_code ? 'has-error' : ''} value={this.props.plane.confirmation_code} handler={this.handleChange} name="confirmation_code" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.from ? 'has-error' : ''} value={this.props.plane.from} handler={this.handleChange} name="from" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.to ? 'has-error' : ''} value={this.props.plane.to} handler={this.handleChange} name="to" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.departure_date ? 'has-error' : ''} value={this.props.plane.departure_date} type="date" handler={this.handleChange} name="departure_date" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.departure_time ? 'has-error' : ''} value={this.props.plane.departure_time} type="time" handler={this.handleChange} name="departure_time" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.arrival_time ? 'has-error' : ''} value={this.props.plane.arrival_time} type="time" handler={this.handleChange} name="arrival_time" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.seat ? 'has-error' : ''} value={this.props.plane.seat} handler={this.handleChange} name="seat" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.price ? 'has-error' : ''} value={this.props.plane.price} handler={this.handleChange} name="price" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.currency ? 'has-error' : ''} value={this.props.plane.currency} handler={this.handleChange} name="currency" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.checked_in ? 'has-error' : ''} value={this.props.plane.checked_in} type="checkbox" handler={this.handleChange} name="checked_in" />
+                <InputGroup focusHandler={this.handleFocus} hasError={this.props.planeErrors.is_return ? 'has-error' : ''} value={this.props.plane.is_return} type="checkbox" handler={this.handleChange} name="is_return" />
                 {returnFlightInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
@@ -70,11 +92,14 @@ PlanesNew.defaultProps = {
         return_departure_date: '',
         return_departure_time: '',
         return_seat: ''
-    }
+    },
+    errors: {}
 };
 
 PlanesNew.propTypes = {
     plane: PropTypes.object,
+    planeErrors: PropTypes.object,
+    planeErrorMessage: PropTypes.string,
     planesCallbacks: PropTypes.object
 };
 
