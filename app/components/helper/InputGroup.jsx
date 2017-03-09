@@ -35,8 +35,16 @@ class InputGroup extends Component {
     }
     
     render() {
+        let error_span = null;
+        let error_class = '';
+        if (this.props.error) {
+            error_span = (
+                <span className="label label-danger">{this.props.error.message}</span>
+            );
+            error_class = ' has-error';
+        }
         return (
-                <div className={this.props.groupClass + ' ' + this.props.hasError}>
+                <div className={this.props.groupClass + error_class}>
                     <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
                     <div className={this.props.inputWrapperClass}>
                     <input
@@ -48,6 +56,7 @@ class InputGroup extends Component {
                         onFocus={this.props.focusHandler}
                         value={this.props.value}
                     />
+                        {error_span}
                     </div>
                 </div>
         );
