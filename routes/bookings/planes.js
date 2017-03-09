@@ -6,6 +6,7 @@ var Flight = require('../../data/models/flight');
 var notLoggedIn = require('../middleware/not_logged_in');
 var loadFlight = require('../middleware/load_flight');
 var loggedIn = require('../middleware/logged_in');
+var validatePrice = require('../middleware/validate_price');
 var max_per_page = 10;
 
 var express = require('express');
@@ -21,15 +22,29 @@ router.get('/', loggedIn, function(req, res, next) {
     var sort = {'departure_date': 1};
     var type = 'Current';
     var type_lower = param_type.toLowerCase() || type.toLowerCase();
+    var match = {
+        $or: [
+            {"departure_date": {$gte: new Date()}},
+            {"return_departure_date": {$gte: new Date()}}
+        ]
+        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+    };
     if ('past' === type_lower) {
         sort_type = {$lt: new Date()};
         sort = {'departure_date': -1};
         type = 'Past';
+        match = {
+            $and: [
+                {"departure_date": {$lt: new Date()}},
+                {$or: [
+                    {"return_departure_date": {$lt: new Date()}},
+                    {"return_departure_date": {$eq: null}},
+                    {"return_departure_date": {$eq: ""}}
+                ]}
+            ]
+            /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        };
     }
-    var match = {
-        /*"created_by": mongoose.Types.ObjectId(user_id),*/
-        "departure_date": sort_type
-    };
     req.active = 'planes';
 
     async.parallel(
@@ -212,7 +227,7 @@ router.get('/:confirmation_code', loadFlight, function(req, res, next) {
     res.render('planes/flight', {title: req.flight.confirmation_code,
         flight: req.flight});
 });
-router.post('/', function(req, res, next) {
+router.post('/', validatePrice, function(req, res, next) {
 
     var plane = req.body;
     // TODO: Get created_by based on JWT
@@ -220,7 +235,7 @@ router.post('/', function(req, res, next) {
     Flight.create(plane, function(err) {
         if (err) {
             if (err.code === 11000) {
-                res.status(409).send(JSON.stringify({err: err}));
+                res.status(409).send(JSON.stringify({ok: false, err: err}));
             } else {
                 if (err.name === 'ValidationError') {
                     return res.status(200).send(JSON.stringify({err: err}));
@@ -228,10 +243,11 @@ router.post('/', function(req, res, next) {
                     next(err);
                 }
             }
+
             return;
         }
         res.io.emit('insert_plane', plane);
-        res.status(200).send(JSON.stringify({message: 'Success', plane: plane}));
+        res.status(200).send(JSON.stringify({ok: true, plane: plane}));
     });
 });
 router.delete('/:confirmation_code', loggedIn, loadFlight, function(req, res, next) {

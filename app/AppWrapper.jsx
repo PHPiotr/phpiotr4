@@ -53,15 +53,22 @@ class AppWrapper extends Component {
                 return response.json();
             })
             .then((data) => {
-                console.log('...then...', data.err);
-                if (data.err) {
-                    this.setState({
-                        planeErrorMessage: data.err.message,
-                        planeErrors: data.err.errors
-                    });
-                    return;
-                }
+                console.log('...then...', data);
 
+                if (data.ok) {
+                    this.setState({
+                        plane: {},
+                        planeErrors: {},
+                        planeErrorMessage: {},
+                    });
+                } else {
+                    if (data.err) {
+                        this.setState({
+                            planeErrorMessage: data.err.message,
+                            planeErrors: data.err.errors
+                        });
+                    }
+                }
             })
             .catch((error) => {
 
@@ -89,7 +96,6 @@ class AppWrapper extends Component {
         const name = event.target.name;
         const typeErrors = type + 'Errors';
         const typeErrorMessage = type + 'ErrorMessage';
-        console.log(this.state[typeErrors]);
         if (this.state[typeErrorMessage]) {
             this.setState({
                 [typeErrorMessage]: ''
