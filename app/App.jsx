@@ -12,6 +12,7 @@ class App extends Component {
             callbacks: this.props.callbacks,
             planeErrors: this.props.planeErrors,
             planeErrorMessage: this.props.planeErrorMessage,
+            planeInserted: this.props.planeInserted,
             planesCallbacks: this.props.planesCallbacks,
             socket: this.props.socket
         });

@@ -6,7 +6,6 @@ var Flight = require('../../data/models/flight');
 var notLoggedIn = require('../middleware/not_logged_in');
 var loadFlight = require('../middleware/load_flight');
 var loggedIn = require('../middleware/logged_in');
-var validatePrice = require('../middleware/validate_price');
 var max_per_page = 10;
 
 var express = require('express');
@@ -14,30 +13,30 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 router.get('/', loggedIn, function(req, res, next) {
-    console.log(process.env);
+
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
     //var user_id = req.session.user._id;
     var param_type = req.query.type || '';
-    var sort_type = {$gte: new Date()};
     var sort = {'departure_date': 1};
     var type = 'Current';
     var type_lower = param_type.toLowerCase() || type.toLowerCase();
+    var newDate = new Date();
+    newDate.setHours(0, 0, 0, 0);
     var match = {
         $or: [
-            {"departure_date": {$gte: new Date()}},
-            {"return_departure_date": {$gte: new Date()}}
+            {"departure_date": {$gte: newDate}},
+            {"return_departure_date": {$gte: newDate}}
         ]
         /*"created_by": mongoose.Types.ObjectId(user_id),*/
     };
     if ('past' === type_lower) {
-        sort_type = {$lt: new Date()};
         sort = {'departure_date': -1};
         type = 'Past';
         match = {
             $and: [
-                {"departure_date": {$lt: new Date()}},
+                {"departure_date": {$lt: newDate}},
                 {$or: [
-                    {"return_departure_date": {$lt: new Date()}},
+                    {"return_departure_date": {$lt: newDate}},
                     {"return_departure_date": {$eq: null}},
                     {"return_departure_date": {$eq: ""}}
                 ]}
@@ -227,7 +226,7 @@ router.get('/:confirmation_code', loadFlight, function(req, res, next) {
     res.render('planes/flight', {title: req.flight.confirmation_code,
         flight: req.flight});
 });
-router.post('/', validatePrice, function(req, res, next) {
+router.post('/', function(req, res, next) {
 
     var plane = req.body;
     // TODO: Get created_by based on JWT

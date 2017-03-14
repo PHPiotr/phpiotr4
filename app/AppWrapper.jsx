@@ -20,7 +20,8 @@ class AppWrapper extends Component {
             planes: {},
             plane: {},
             planeErrorMessage: '',
-            planeErrors: {}
+            planeErrors: {},
+            planeInserted: {}
         };
     };
 
@@ -53,14 +54,19 @@ class AppWrapper extends Component {
                 return response.json();
             })
             .then((data) => {
-                console.log('...then...', data);
-
+                var that = this;
                 if (data.ok) {
                     this.setState({
                         plane: {},
                         planeErrors: {},
-                        planeErrorMessage: {},
+                        planeErrorMessage: '',
+                        planeInserted: data.plane
                     });
+                    setTimeout(function() {
+                        that.setState({
+                            planeInserted: {}
+                        });
+                    }, 5000);
                 } else {
                     if (data.err) {
                         this.setState({
@@ -118,6 +124,7 @@ class AppWrapper extends Component {
                 plane: this.state.plane,
                 planeErrors: this.state.planeErrors,
                 planeErrorMessage: this.state.planeErrorMessage,
+                planeInserted: this.state.planeInserted,
                 planesCallbacks: {
                     getBookings: this.getPlanes.bind(this),
                     addBooking: this.addPlane.bind(this),

@@ -28,6 +28,8 @@ class PlanesNew extends Component
     render() {
         let returnFlightInputs = null;
         let planeErrorMessage = this.props.planeErrorMessage;
+        let planeInserted = this.props.planeInserted;
+        let planeInsert = null;
         let planeError = null;
 
         if (this.props.plane.is_return) {
@@ -47,8 +49,15 @@ class PlanesNew extends Component
             );
         }
 
+        if (Object.keys(planeInserted).length > 0) {
+            planeInsert = (
+                <div className="alert alert-success" role="alert">New plane was just inserted</div>
+            );
+        }
+
         return(
             <form onSubmit={this.handleSubmit} className="form-horizontal">
+                {planeInsert}
                 {planeError}
                 <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.confirmation_code} value={this.props.plane.confirmation_code} handler={this.handleChange} name="confirmation_code" />
                 <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.from} value={this.props.plane.from} handler={this.handleChange} name="from" />
@@ -92,7 +101,8 @@ PlanesNew.propTypes = {
     plane: PropTypes.object,
     planeErrors: PropTypes.object,
     planeErrorMessage: PropTypes.string,
-    planesCallbacks: PropTypes.object
+    planesCallbacks: PropTypes.object,
+    planeInserted: PropTypes.object
 };
 
 export default PlanesNew;

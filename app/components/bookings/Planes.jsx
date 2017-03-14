@@ -11,6 +11,7 @@ class Planes extends Component {
             plane: this.props.plane,
             planeErrors: this.props.planeErrors,
             planeErrorMessage: this.props.planeErrorMessage,
+            planeInserted: this.props.planeInserted,
             callbacks: this.props.callbacks,
             planesCallbacks: this.props.planesCallbacks,
             socket: this.props.socket
@@ -28,6 +29,7 @@ Planes.propTypes = {
     planes: PropTypes.object,
     plane: PropTypes.object,
     planeErrors: PropTypes.object,
+    planeInserted: PropTypes.object,
     planeErrorMessage: PropTypes.string,
     planesCallbacks: PropTypes.object
 };

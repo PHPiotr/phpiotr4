@@ -19,15 +19,22 @@ class PlanesPast extends Component {
     };
 
     getPlanes() {
+        // TODO: Check if flight added is in th e past.
         this.props.planesCallbacks.getBookings('past');
-        console.log('socket on insert fetched past planes');
-        alert('Sockets!');
     };
 
     render() {
 
         let planes = this.props.planes;
         let flights_length = planes.flights_length;
+        let planeInserted = this.props.planeInserted;
+        let planeInsert = null;
+
+        if (Object.keys(planeInserted).length > 0) {
+            planeInsert = (
+                <div className="alert alert-success" role="alert">New plane was just inserted</div>
+            );
+        }
 
         if (!flights_length) {
             return (
@@ -53,6 +60,7 @@ class PlanesPast extends Component {
         
         return(
                 <div>
+                    {planeInsert}
                     <div className="row-fluid">         
                         <table className="table table-hover table-condensed table-bordered">
                             <thead>

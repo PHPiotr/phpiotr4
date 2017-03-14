@@ -73,6 +73,9 @@ var FlightSchema = new Schema({
             set: function(val) {
                 return undefined;
             }
+        },timezone_offset: {
+            type: String,
+            'default': (new Date()).getTimezoneOffset()
         },
         updated_at: {
             type: Date,
