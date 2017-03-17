@@ -20,7 +20,13 @@ class App extends Component {
             busErrors: this.props.busErrors,
             busErrorMessage: this.props.busErrorMessage,
             busInserted: this.props.busInserted,
-            busesCallbacks: this.props.busesCallbacks
+            busesCallbacks: this.props.busesCallbacks,
+            trains: this.props.trains,
+            train: this.props.train,
+            trainErrors: this.props.trainErrors,
+            trainErrorMessage: this.props.trainErrorMessage,
+            trainInserted: this.props.trainInserted,
+            trainsCallbacks: this.props.trainsCallbacks,
         });
         let navItems = (
                 <ul className="nav navbar-nav">
@@ -65,6 +71,10 @@ App.propTypes = {
     busesCallbacks: PropTypes.object,
     busErrors: PropTypes.object,
     busErrorMessage: PropTypes.string,
+    trains: PropTypes.object,
+    trainsCallbacks: PropTypes.object,
+    trainErrors: PropTypes.object,
+    trainErrorMessage: PropTypes.string,
 };
 
 export default App;

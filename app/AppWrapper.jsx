@@ -27,6 +27,11 @@ class AppWrapper extends Component {
             busErrorMessage: '',
             busErrors: {},
             busInserted: {},
+            trains: {},
+            train: {},
+            trainErrorMessage: '',
+            trainErrors: {},
+            trainInserted: {},
         };
     };
 
@@ -46,6 +51,17 @@ class AppWrapper extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({buses: responseData});
+            })
+            .catch((error) => {
+                console.log('Error fetching and parsing data', error);
+            });
+    };
+
+    getTrains(type, page = 1) {
+        fetch(`${API_URL}/bookings/trains?type=${type}&page=${page}`, {headers: API_HEADERS})
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({trains: responseData});
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
@@ -146,6 +162,53 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
+    addTrain(event) {
+        let trains = this.state.trains;
+        let train = this.state.train;
+
+        fetch(`${API_URL}/bookings/trains`, {
+            method: 'post',
+            headers: API_HEADERS,
+            body: JSON.stringify(train)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                var that = this;
+                if (data.ok) {
+                    this.setState({
+                        train: {},
+                        trainErrors: {},
+                        trainErrorMessage: '',
+                        trainInserted: data.train
+                    });
+                    setTimeout(function() {
+                        that.setState({
+                            trainInserted: {}
+                        });
+                    }, 5000);
+                } else {
+                    if (data.err) {
+                        this.setState({
+                            trainErrorMessage: data.err.message,
+                            trainErrors: data.err.errors
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+
+            });
+
+        event.preventDefault();
+    }
+
     /**
      * @param {Object} event
      * @param {String} type  bus|plane|train|hostel
@@ -205,6 +268,15 @@ class AppWrapper extends Component {
                 busesCallbacks: {
                     getBookings: this.getBuses.bind(this),
                     addBooking: this.addBus.bind(this),
+                },
+                trains: this.state.trains,
+                train: this.state.train,
+                trainErrors: this.state.trainErrors,
+                trainErrorMessage: this.state.trainErrorMessage,
+                trainInserted: this.state.trainInserted,
+                trainsCallbacks: {
+                    getBookings: this.getTrains.bind(this),
+                    addBooking: this.addTrain.bind(this),
                 },
             });
 

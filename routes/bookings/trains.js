@@ -6,7 +6,7 @@ var Train = require('../../data/models/train');
 var notLoggedIn = require('../middleware/not_logged_in');
 var loadTrain = require('../middleware/load_train');
 var loggedIn = require('../middleware/logged_in');
-var maxPerPage = 10;
+var max_per_page = 10;
 
 var express = require('express');
 var router = express.Router();
@@ -14,93 +14,159 @@ var mongoose = require('mongoose');
 
 router.get('/', loggedIn, function(req, res, next) {
 
-    var page = req.query.page && parseInt(req.query.page, 10) || 0;
-    var user_id = req.session.user._id;
+    var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
+    //var user_id = req.session.user._id;
     var param_type = req.query.type || '';
-    var sort_type = {$gte: new Date()};
+    var sort = {'departure_date': 1};
     var type = 'Current';
-    var type_lower = param_type.toLowerCase();
+    var type_lower = param_type.toLowerCase() || type.toLowerCase();
+    var newDate = new Date();
+    newDate.setHours(0, 0, 0, 0);
+    var match = {
+        $or: [
+            {"departure_date": {$gte: newDate}},
+            {"return_departure_date": {$gte: newDate}}
+        ]
+        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+    };
     if ('past' === type_lower) {
-        sort_type = {$lt: new Date()};
+        sort = {'departure_date': -1};
         type = 'Past';
+        match = {
+            $and: [
+                {"departure_date": {$lt: newDate}},
+                {$or: [
+                    {"return_departure_date": {$lt: newDate}},
+                    {"return_departure_date": {$eq: null}},
+                    {"return_departure_date": {$eq: ""}}
+                ]}
+            ]
+            /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        };
     }
+    req.active = 'trains';
 
     async.parallel(
-            [
-                function(next) {
-                    Train.find({created_by: mongoose.Types.ObjectId(user_id), departure_date: sort_type})
-                            .sort('departure_date')
-                            .skip(page * maxPerPage)
-                            .limit(maxPerPage)
-                            .exec(next);
-                },
-                function(next) {
-                    Train.aggregate(
-                            [
-                                {
-                                    $match: {
-                                        created_by: mongoose.Types.ObjectId(user_id),
-                                        departure_date: sort_type
+        [
+            function(next) {
+                Train.aggregate(
+                    [
+                        {$match: match},
+                        {"$sort": sort},
+                        {"$skip": ((current_page - 1) * max_per_page)},
+                        {"$limit": max_per_page},
+                        {
+                            $project: {
+                                "_id": 1,
+                                "from": 1,
+                                "to": 1,
+                                "departure_date": {
+                                    "$dateToString": {
+                                        "format": "%d/%m/%Y",
+                                        "date": "$departure_date"
                                     }
                                 },
-                                {
-                                    $group: {
-                                        _id: "$created_by",
-                                        cost: {$sum: "$price"}
-                                    }
-                                }
-                            ],
-                            function(err, results) {
-                                if (err) {
-                                    return next(err);
-                                }
-                                if (!results) {
-                                    return next();
-                                }
-
-                                if (undefined === results[0]) {
-                                    return next(err);
-                                }
-
-                                next(err, results[0].cost);
+                                "return_departure_date": {
+                                    $cond: ["$is_return", {
+                                        "$dateToString": {
+                                            "format": "%d/%m/%Y",
+                                            "date": "$return_departure_date"
+                                        }
+                                    }, null]
+                                },
+                                "price": {
+                                    "$divide": ["$price", 100]
+                                },
+                                "created_by": 1,
+                                "currency": 1,
+                                "is_return": 1
                             }
-                    );
-                }
-            ],
-            function(err, results) {
-                if (err) {
-                    return next(err);
-                }
-                var trains = results[0];
-                var cost = results[1];
-                var trains_length = trains.length;
-                var last_page = (page + 1) * maxPerPage >= trains_length;
-
-                var return_trains_length = 0;
-                for (var key in trains) {
-                    return_trains_length += trains[key].is_return ? 1 : 0;
-                }
-
-                res.render('trains/index', {
-                    title: type + ' trains',
-                    trains: trains,
-                    page: page,
-                    last_page: last_page,
-                    total_cost: trains_length ? (cost / 100).toFixed(2) : '0.00',
-                    average_cost: trains_length ? ((cost / (trains_length + return_trains_length)) / 100).toFixed(2) : '0.00',
-                    trains_length: trains_length,
-                    return_trains_length: return_trains_length,
-                    active: type_lower,
-                    selected: 'trains'
-                });
+                        }
+                    ],
+                    function(err, results) {
+                        if (err) {
+                            return next(err);
+                        }
+                        if (!results) {
+                            return next();
+                        }
+                        next(err, results);
+                    }
+                );
+            },
+            function(next) {
+                Train.aggregate(
+                    [
+                        {$match: match},
+                        {
+                            $project: {
+                                is_return_journey: {
+                                    $cond: ["$is_return", 1, 0]
+                                },
+                                singles_quantity: {
+                                    $cond: ["$is_return", 2, 1]
+                                },
+                                price: 1
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: "$created_by",
+                                cost: {$sum: "$price"},
+                                journeys_length: {$sum: 1},
+                                return_journeys_length: {$sum: "$is_return_journey"},
+                                avg_cost: {$avg: {$divide: ["$price", "$singles_quantity"]}},
+                                singles_quantity: {$sum: "$singles_quantity"}
+                            }
+                        }
+                    ],
+                    function(err, results) {
+                        if (err) {
+                            return next(err);
+                        }
+                        if (!results) {
+                            return next();
+                        }
+                        next(err, results[0]);
+                    }
+                );
             }
+        ],
+        function(err, results) {
+            if (err) {
+                return next(err);
+            }
+            var journeys = results[0];
+            var journeysExist = undefined !== results[1];
+            var cost = journeysExist ? results[1].cost : 0;
+            var average_cost = journeysExist ? results[1].avg_cost : 0;
+            var journeys_length = journeysExist ? results[1].journeys_length : 0;
+            var return_journeys_length = journeysExist ? results[1].return_journeys_length : 0;
+
+            res.send(JSON.stringify({
+                title: type + ' trains',
+                journeys: journeys,
+                current_page: current_page,
+                is_first_page: current_page === 1,
+                is_last_page: current_page * max_per_page >= journeys_length,
+                pages_count: journeys_length <= max_per_page ? 1 : Math.ceil(journeys_length / max_per_page),
+                max_per_page: max_per_page,
+                total_cost: journeys_length ? (cost / 100).toFixed(2) : '0.00',
+                average_cost: journeys_length ? (average_cost / 100).toFixed(2) : '0.00',
+                journeys_length: journeys_length,
+                return_journeys_length: return_journeys_length,
+                active: type_lower,
+                selected: 'trains'
+            }));
+        }
     );
 });
 router.get('/new', loggedIn, function(req, res) {
     res.render('trains/new', {
         title: "New train",
         currencies: Train.schema.path('currency').enumValues,
-        selected: 'trains'
+        selected: 'trains',
+        active: 'new'
     });
 });
 
@@ -123,26 +189,27 @@ router.get('/:booking_number', loadTrain, function(req, res, next) {
     res.render('trains/train', {title: req.train.confirmation_code,
         train: req.train});
 });
-router.post('/', loggedIn, function(req, res, next) {
+router.post('/', function(req, res, next) {
+
     var train = req.body;
-    train.created_by = req.session.user._id;
+    // TODO: Get created_by based on JWT
+    train.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
     Train.create(train, function(err) {
         if (err) {
             if (err.code === 11000) {
-                console.log(err, train);
-                res.status(409).send('Conflict');
+                res.status(409).send(JSON.stringify({ok: false, err: err}));
             } else {
                 if (err.name === 'ValidationError') {
-                    return res.status(406).send(Object.keys(err.errors).map(function(errField) {
-                        return err.errors[errField].message;
-                    }).join('. '));
+                    return res.status(200).send(JSON.stringify({err: err}));
                 } else {
                     next(err);
                 }
             }
+
             return;
         }
-        res.redirect('/bookings/trains');
+        res.io.emit('insert_train', train);
+        res.status(200).send(JSON.stringify({ok: true, train: train}));
     });
 });
 router.delete('/:booking_number', loggedIn, loadTrain, function(req, res, next) {
