@@ -14,7 +14,7 @@ class TrainsNew extends Component
     }
 
     handleSubmit(event) {
-        this.props.trainsCallbacks.addBooking(event);
+        this.props.callbacks.handleAdd(event, 'train', 'trains');
     }
 
     handleChange(event) {

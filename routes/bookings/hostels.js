@@ -56,6 +56,7 @@ router.get('/', loggedIn, function(req, res, next) {
                                 "_id": 1,
                                 "from": 1,
                                 "to": 1,
+                                "booking_number": 1,
                                 "checkin_date": {
                                     "$dateToString": {
                                         "format": "%d/%m/%Y",

@@ -14,7 +14,7 @@ class PlanesNew extends Component
     }
 
     handleSubmit(event) {
-        this.props.planesCallbacks.addBooking(event);
+        this.props.callbacks.handleAdd(event, 'plane', 'planes');
     }
 
     handleChange(event) {

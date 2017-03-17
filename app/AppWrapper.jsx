@@ -84,194 +84,6 @@ class AppWrapper extends Component {
             });
     };
 
-    addPlane(event) {
-        let planes = this.state.planes;
-        let plane = this.state.plane;
-
-        fetch(`${API_URL}/bookings/planes`, {
-            method: 'post',
-            headers: API_HEADERS,
-            body: JSON.stringify(plane)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                var that = this;
-                if (data.ok) {
-                    this.setState({
-                        plane: {},
-                        planeErrors: {},
-                        planeErrorMessage: '',
-                        planeInserted: data.plane
-                    });
-                    setTimeout(function() {
-                        that.setState({
-                            planeInserted: {}
-                        });
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.setState({
-                            planeErrorMessage: data.err.message,
-                            planeErrors: data.err.errors
-                        });
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
-    }
-
-    addBus(event) {
-        let buses = this.state.buses;
-        let bus = this.state.bus;
-
-        fetch(`${API_URL}/bookings/buses`, {
-            method: 'post',
-            headers: API_HEADERS,
-            body: JSON.stringify(bus)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                var that = this;
-                if (data.ok) {
-                    this.setState({
-                        bus: {},
-                        busErrors: {},
-                        busErrorMessage: '',
-                        busInserted: data.bus
-                    });
-                    setTimeout(function() {
-                        that.setState({
-                            busInserted: {}
-                        });
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.setState({
-                            busErrorMessage: data.err.message,
-                            busErrors: data.err.errors
-                        });
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
-    }
-
-    addTrain(event) {
-        let trains = this.state.trains;
-        let train = this.state.train;
-
-        fetch(`${API_URL}/bookings/trains`, {
-            method: 'post',
-            headers: API_HEADERS,
-            body: JSON.stringify(train)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                var that = this;
-                if (data.ok) {
-                    this.setState({
-                        train: {},
-                        trainErrors: {},
-                        trainErrorMessage: '',
-                        trainInserted: data.train
-                    });
-                    setTimeout(function() {
-                        that.setState({
-                            trainInserted: {}
-                        });
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.setState({
-                            trainErrorMessage: data.err.message,
-                            trainErrors: data.err.errors
-                        });
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
-    }
-
-    addHostel(event) {
-        let hostels = this.state.hostels;
-        let hostel = this.state.hostel;
-
-        fetch(`${API_URL}/bookings/hostels`, {
-            method: 'post',
-            headers: API_HEADERS,
-            body: JSON.stringify(hostel)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                var that = this;
-                if (data.ok) {
-                    this.setState({
-                        hostel: {},
-                        hostelErrors: {},
-                        hostelErrorMessage: '',
-                        hostelInserted: data.hostel
-                    });
-                    setTimeout(function() {
-                        that.setState({
-                            hostelInserted: {}
-                        });
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.setState({
-                            hostelErrorMessage: data.err.message,
-                            hostelErrors: data.err.errors
-                        });
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
-    }
-
     /**
      * @param {Object} event
      * @param {String} type  bus|plane|train|hostel
@@ -307,11 +119,64 @@ class AppWrapper extends Component {
         });
     }
 
+    handleAdd(event, type, types) {
+
+        let bookings = this.state[types];
+        let booking = this.state[type];
+
+        const typeErrors = type + 'Errors';
+        const typeErrorMessage = type + 'ErrorMessage';
+        const typeInserted = type + 'Inserted';
+
+        fetch(`${API_URL}/bookings/${types}`, {
+            method: 'post',
+            headers: API_HEADERS,
+            body: JSON.stringify(booking)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                var that = this;
+                if (data.ok) {
+                    this.setState({
+                        [type]: {},
+                        [typeErrors]: {},
+                        [typeErrorMessage]: '',
+                        [typeInserted]: data[type]
+                    });
+                    setTimeout(function () {
+                        that.setState({
+                            [typeInserted]: {}
+                        });
+                    }, 5000);
+                } else {
+                    if (data.err) {
+                        this.setState({
+                            [typeErrorMessage]: data.err.message,
+                            [typeErrors]: data.err.errors
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+
+            });
+
+        event.preventDefault();
+    }
+
     render() {
         let App = this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
                     handleChange: this.handleChange.bind(this),
-                    handleFocus: this.handleFocus.bind(this)
+                    handleFocus: this.handleFocus.bind(this),
+                    handleAdd: this.handleAdd.bind(this),
                 },
                 socket: socket,
                 planes: this.state.planes,
@@ -321,7 +186,6 @@ class AppWrapper extends Component {
                 planeInserted: this.state.planeInserted,
                 planesCallbacks: {
                     getBookings: this.getPlanes.bind(this),
-                    addBooking: this.addPlane.bind(this),
                 },
                 buses: this.state.buses,
                 bus: this.state.bus,
@@ -330,7 +194,6 @@ class AppWrapper extends Component {
                 busInserted: this.state.busInserted,
                 busesCallbacks: {
                     getBookings: this.getBuses.bind(this),
-                    addBooking: this.addBus.bind(this),
                 },
                 trains: this.state.trains,
                 train: this.state.train,
@@ -339,7 +202,6 @@ class AppWrapper extends Component {
                 trainInserted: this.state.trainInserted,
                 trainsCallbacks: {
                     getBookings: this.getTrains.bind(this),
-                    addBooking: this.addTrain.bind(this),
                 },
                 hostels: this.state.hostels,
                 hostel: this.state.hostel,
@@ -348,7 +210,6 @@ class AppWrapper extends Component {
                 hostelInserted: this.state.hostelInserted,
                 hostelsCallbacks: {
                     getBookings: this.getHostels.bind(this),
-                    addBooking: this.addHostel.bind(this),
                 },
             });
 

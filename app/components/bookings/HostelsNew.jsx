@@ -14,7 +14,7 @@ class HostelsNew extends Component
     }
 
     handleSubmit(event) {
-        this.props.hostelsCallbacks.addBooking(event);
+        this.props.callbacks.handleAdd(event, 'hostel', 'hostels');
     }
 
     handleChange(event) {
