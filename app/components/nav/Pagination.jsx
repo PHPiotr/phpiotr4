@@ -4,7 +4,7 @@ import NavLink from './NavLink.jsx';
 class Pagination extends Component {
     
     goToPage(page) {
-        this.props.getBookingsCallback(this.props.active, this.props.booking_type, page);
+        this.props.getBookingsCallback(this.props.booking_type, this.props.active, page);
     }
 
     render() {
