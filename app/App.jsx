@@ -7,14 +7,20 @@ class App extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
+            callbacks: this.props.callbacks,
+            socket: this.props.socket,
             planes: this.props.planes,
             plane: this.props.plane,
-            callbacks: this.props.callbacks,
             planeErrors: this.props.planeErrors,
             planeErrorMessage: this.props.planeErrorMessage,
             planeInserted: this.props.planeInserted,
             planesCallbacks: this.props.planesCallbacks,
-            socket: this.props.socket
+            buses: this.props.buses,
+            bus: this.props.bus,
+            busErrors: this.props.busErrors,
+            busErrorMessage: this.props.busErrorMessage,
+            busInserted: this.props.busInserted,
+            busesCallbacks: this.props.busesCallbacks
         });
         let navItems = (
                 <ul className="nav navbar-nav">
@@ -54,7 +60,11 @@ App.propTypes = {
     planes: PropTypes.object,
     planesCallbacks: PropTypes.object,
     planeErrors: PropTypes.object,
-    planeErrorMessage: PropTypes.string
+    planeErrorMessage: PropTypes.string,
+    buses: PropTypes.object,
+    busesCallbacks: PropTypes.object,
+    busErrors: PropTypes.object,
+    busErrorMessage: PropTypes.string,
 };
 
 export default App;

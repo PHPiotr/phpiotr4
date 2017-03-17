@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
-import PlanesCurrent from '../bookings/PlanesCurrent.jsx';
 
 
 class Planes extends Component {
@@ -23,7 +22,7 @@ class Planes extends Component {
             </div>
         );
     };
-};
+}
 
 Planes.propTypes = {
     planes: PropTypes.object,

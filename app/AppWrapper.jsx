@@ -21,7 +21,12 @@ class AppWrapper extends Component {
             plane: {},
             planeErrorMessage: '',
             planeErrors: {},
-            planeInserted: {}
+            planeInserted: {},
+            buses: {},
+            bus: {},
+            busErrorMessage: '',
+            busErrors: {},
+            busInserted: {},
         };
     };
 
@@ -30,6 +35,17 @@ class AppWrapper extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({planes: responseData});
+            })
+            .catch((error) => {
+                console.log('Error fetching and parsing data', error);
+            });
+    };
+
+    getBuses(type, page = 1) {
+        fetch(`${API_URL}/bookings/buses?type=${type}&page=${page}`, {headers: API_HEADERS})
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({buses: responseData});
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
@@ -83,6 +99,53 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
+    addBus(event) {
+        let buses = this.state.buses;
+        let bus = this.state.bus;
+
+        fetch(`${API_URL}/bookings/buses`, {
+            method: 'post',
+            headers: API_HEADERS,
+            body: JSON.stringify(bus)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                var that = this;
+                if (data.ok) {
+                    this.setState({
+                        bus: {},
+                        busErrors: {},
+                        busErrorMessage: '',
+                        busInserted: data.bus
+                    });
+                    setTimeout(function() {
+                        that.setState({
+                            busInserted: {}
+                        });
+                    }, 5000);
+                } else {
+                    if (data.err) {
+                        this.setState({
+                            busErrorMessage: data.err.message,
+                            busErrors: data.err.errors
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+
+            });
+
+        event.preventDefault();
+    }
+
     /**
      * @param {Object} event
      * @param {String} type  bus|plane|train|hostel
@@ -120,6 +183,11 @@ class AppWrapper extends Component {
 
     render() {
         let App = this.props.children && React.cloneElement(this.props.children, {
+                callbacks: {
+                    handleChange: this.handleChange.bind(this),
+                    handleFocus: this.handleFocus.bind(this)
+                },
+                socket: socket,
                 planes: this.state.planes,
                 plane: this.state.plane,
                 planeErrors: this.state.planeErrors,
@@ -128,13 +196,16 @@ class AppWrapper extends Component {
                 planesCallbacks: {
                     getBookings: this.getPlanes.bind(this),
                     addBooking: this.addPlane.bind(this),
-                    handleChange: this.handleChange.bind(this)
                 },
-                callbacks: {
-                    handleChange: this.handleChange.bind(this),
-                    handleFocus: this.handleFocus.bind(this)
+                buses: this.state.buses,
+                bus: this.state.bus,
+                busErrors: this.state.busErrors,
+                busErrorMessage: this.state.busErrorMessage,
+                busInserted: this.state.busInserted,
+                busesCallbacks: {
+                    getBookings: this.getBuses.bind(this),
+                    addBooking: this.addBus.bind(this),
                 },
-                socket: socket
             });
 
         return App;
