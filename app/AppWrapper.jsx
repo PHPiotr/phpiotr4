@@ -41,7 +41,7 @@ class AppWrapper extends Component {
     };
 
     handleList(bookings, type, page) {
-        fetch(`${API_URL}/bookings/${bookings}?type=${type}&page=${page}`, {headers: API_HEADERS})
+        fetch(`${API_URL}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: API_HEADERS})
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({[bookings]: responseData});
