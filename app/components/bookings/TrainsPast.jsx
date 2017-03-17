@@ -10,7 +10,7 @@ class TrainsPast extends Component {
     }
 
     componentDidMount() {
-        this.props.trainsCallbacks.getBookings('past');
+        this.props.callbacks.handleList('trains', 'past');
         this.props.socket.on('insert_train', this.getTrains);
     };
 
@@ -19,9 +19,7 @@ class TrainsPast extends Component {
     };
 
     getTrains() {
-        this.props.trainsCallbacks.getBookings('past');
-        console.log('socket on insert fetched past trains');
-        alert('Sockets!');
+        this.props.callbacks.handleList('trains', 'past');
     };
 
     render() {
@@ -100,7 +98,7 @@ class TrainsPast extends Component {
                     is_first_page={trains.is_first_page}
                     is_last_page={trains.is_last_page}
                     active={trains.active}
-                    getBookingsCallback={this.props.trainsCallbacks.getBookings}
+                    getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
         );
@@ -109,7 +107,6 @@ class TrainsPast extends Component {
 
 TrainsPast.propTypes = {
     trains: PropTypes.object,
-    trainsCallbacks: PropTypes.object
 };
 
 export default TrainsPast;

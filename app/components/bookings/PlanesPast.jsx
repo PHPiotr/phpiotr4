@@ -10,7 +10,7 @@ class PlanesPast extends Component {
     }
 
     componentDidMount() {
-        this.props.planesCallbacks.getBookings('past');
+        this.props.callbacks.handleList('planes', 'past');
         this.props.socket.on('insert_plane', this.getPlanes);
     };
 
@@ -20,7 +20,7 @@ class PlanesPast extends Component {
 
     getPlanes() {
         // TODO: Check if flight added is in th e past.
-        this.props.planesCallbacks.getBookings('past');
+        this.props.callbacks.handleList('planes', 'past');
     };
 
     render() {
@@ -110,7 +110,7 @@ class PlanesPast extends Component {
                         is_first_page={planes.is_first_page}
                         is_last_page={planes.is_last_page}
                         active={planes.active}
-                        getBookingsCallback={this.props.planesCallbacks.getBookings}
+                        getBookingsCallback={this.props.callbacks.handleList}
                     />
                 </div>
                 );
@@ -119,7 +119,6 @@ class PlanesPast extends Component {
 
 PlanesPast.propTypes = {
     planes: PropTypes.object,
-    planesCallbacks: PropTypes.object
 };
 
 export default PlanesPast;

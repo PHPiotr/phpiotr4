@@ -11,7 +11,6 @@ class Trains extends Component {
                 trainErrorMessage: this.props.trainErrorMessage,
                 trainInserted: this.props.trainInserted,
                 callbacks: this.props.callbacks,
-                trainsCallbacks: this.props.trainsCallbacks,
                 socket: this.props.socket
             });
         return(
@@ -29,7 +28,6 @@ Trains.propTypes = {
     trainErrors: PropTypes.object,
     trainInserted: PropTypes.object,
     trainErrorMessage: PropTypes.string,
-    trainsCallbacks: PropTypes.object
 };
 
 export default Trains;

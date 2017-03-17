@@ -10,7 +10,7 @@ class HostelsCurrent extends Component {
     }
 
     componentDidMount() {
-        this.props.hostelsCallbacks.getBookings('current');
+        this.props.callbacks.handleList('hostels', 'current');
         this.props.socket.on('insert_hostel', this.getHostels);
     };
 
@@ -19,9 +19,7 @@ class HostelsCurrent extends Component {
     };
 
     getHostels() {
-        this.props.hostelsCallbacks.getBookings('current');
-        console.log('socket on insert fetched current hostels');
-        alert('Sockets!');
+        this.props.callbacks.handleList('hostels', 'current');
     };
 
     render() {
@@ -98,7 +96,7 @@ class HostelsCurrent extends Component {
                     is_first_page={hostels.is_first_page}
                     is_last_page={hostels.is_last_page}
                     active={hostels.active}
-                    getBookingsCallback={this.props.hostelsCallbacks.getBookings}
+                    getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
         );
@@ -107,7 +105,6 @@ class HostelsCurrent extends Component {
 
 HostelsCurrent.propTypes = {
     hostels: PropTypes.object,
-    hostelsCallbacks: PropTypes.object
 };
 
 export default HostelsCurrent;

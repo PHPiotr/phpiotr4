@@ -11,7 +11,6 @@ class Hostels extends Component {
                 hostelErrorMessage: this.props.hostelErrorMessage,
                 hostelInserted: this.props.hostelInserted,
                 callbacks: this.props.callbacks,
-                hostelsCallbacks: this.props.hostelsCallbacks,
                 socket: this.props.socket
             });
         return(
@@ -29,7 +28,6 @@ Hostels.propTypes = {
     hostelErrors: PropTypes.object,
     hostelInserted: PropTypes.object,
     hostelErrorMessage: PropTypes.string,
-    hostelsCallbacks: PropTypes.object
 };
 
 export default Hostels;

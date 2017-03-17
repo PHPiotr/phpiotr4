@@ -11,7 +11,6 @@ class Buses extends Component {
                 busErrorMessage: this.props.busErrorMessage,
                 busInserted: this.props.busInserted,
                 callbacks: this.props.callbacks,
-                busesCallbacks: this.props.busesCallbacks,
                 socket: this.props.socket
             });
         return(
@@ -29,7 +28,6 @@ Buses.propTypes = {
     busErrors: PropTypes.object,
     busInserted: PropTypes.object,
     busErrorMessage: PropTypes.string,
-    busesCallbacks: PropTypes.object
 };
 
 export default Buses;

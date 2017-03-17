@@ -10,7 +10,7 @@ class BusesPast extends Component {
     }
 
     componentDidMount() {
-        this.props.busesCallbacks.getBookings('past');
+        this.props.callbacks.handleList('buses', 'past');
         this.props.socket.on('insert_bus', this.getBuses);
     };
 
@@ -19,9 +19,7 @@ class BusesPast extends Component {
     };
 
     getBuses() {
-        this.props.busesCallbacks.getBookings('past');
-        console.log('socket on insert fetched past buses');
-        alert('Sockets!');
+        this.props.callbacks.handleList('buses', 'past');
     };
 
     render() {
@@ -102,7 +100,7 @@ class BusesPast extends Component {
                     is_first_page={buses.is_first_page}
                     is_last_page={buses.is_last_page}
                     active={buses.active}
-                    getBookingsCallback={this.props.busesCallbacks.getBookings}
+                    getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
         );
@@ -111,7 +109,6 @@ class BusesPast extends Component {
 
 BusesPast.propTypes = {
     buses: PropTypes.object,
-    busesCallbacks: PropTypes.object
 };
 
 export default BusesPast;

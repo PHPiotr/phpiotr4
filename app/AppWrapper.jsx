@@ -40,49 +40,16 @@ class AppWrapper extends Component {
         };
     };
 
-    getPlanes(type, page = 1) {
-        fetch(`${API_URL}/bookings/planes?type=${type}&page=${page}`, {headers: API_HEADERS})
+    handleList(bookings, type, page) {
+        fetch(`${API_URL}/bookings/${bookings}?type=${type}&page=${page}`, {headers: API_HEADERS})
             .then((response) => response.json())
             .then((responseData) => {
-                this.setState({planes: responseData});
+                this.setState({[bookings]: responseData});
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
             });
-    };
-
-    getBuses(type, page = 1) {
-        fetch(`${API_URL}/bookings/buses?type=${type}&page=${page}`, {headers: API_HEADERS})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({buses: responseData});
-            })
-            .catch((error) => {
-                console.log('Error fetching and parsing data', error);
-            });
-    };
-
-    getTrains(type, page = 1) {
-        fetch(`${API_URL}/bookings/trains?type=${type}&page=${page}`, {headers: API_HEADERS})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({trains: responseData});
-            })
-            .catch((error) => {
-                console.log('Error fetching and parsing data', error);
-            });
-    };
-
-    getHostels(type, page = 1) {
-        fetch(`${API_URL}/bookings/hostels?type=${type}&page=${page}`, {headers: API_HEADERS})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({hostels: responseData});
-            })
-            .catch((error) => {
-                console.log('Error fetching and parsing data', error);
-            });
-    };
+    }
 
     /**
      * @param {Object} event
@@ -177,6 +144,7 @@ class AppWrapper extends Component {
                     handleChange: this.handleChange.bind(this),
                     handleFocus: this.handleFocus.bind(this),
                     handleAdd: this.handleAdd.bind(this),
+                    handleList: this.handleList.bind(this),
                 },
                 socket: socket,
                 planes: this.state.planes,
@@ -184,33 +152,21 @@ class AppWrapper extends Component {
                 planeErrors: this.state.planeErrors,
                 planeErrorMessage: this.state.planeErrorMessage,
                 planeInserted: this.state.planeInserted,
-                planesCallbacks: {
-                    getBookings: this.getPlanes.bind(this),
-                },
                 buses: this.state.buses,
                 bus: this.state.bus,
                 busErrors: this.state.busErrors,
                 busErrorMessage: this.state.busErrorMessage,
                 busInserted: this.state.busInserted,
-                busesCallbacks: {
-                    getBookings: this.getBuses.bind(this),
-                },
                 trains: this.state.trains,
                 train: this.state.train,
                 trainErrors: this.state.trainErrors,
                 trainErrorMessage: this.state.trainErrorMessage,
                 trainInserted: this.state.trainInserted,
-                trainsCallbacks: {
-                    getBookings: this.getTrains.bind(this),
-                },
                 hostels: this.state.hostels,
                 hostel: this.state.hostel,
                 hostelErrors: this.state.hostelErrors,
                 hostelErrorMessage: this.state.hostelErrorMessage,
                 hostelInserted: this.state.hostelInserted,
-                hostelsCallbacks: {
-                    getBookings: this.getHostels.bind(this),
-                },
             });
 
         return App;

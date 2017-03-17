@@ -10,7 +10,7 @@ class PlanesCurrent extends Component {
     }
     
     componentDidMount() {
-        this.props.planesCallbacks.getBookings('current');
+        this.props.callbacks.handleList('planes', 'current');
         this.props.socket.on('insert_plane', this.getPlanes);
     };
 
@@ -19,9 +19,7 @@ class PlanesCurrent extends Component {
     };
 
     getPlanes() {
-        this.props.planesCallbacks.getBookings('current');
-        console.log('socket on insert fetched current planes');
-        alert('Sockets!');
+        this.props.callbacks.handleList('planes', 'current');
     };
 
     render() {
@@ -102,7 +100,7 @@ class PlanesCurrent extends Component {
                         is_first_page={planes.is_first_page}
                         is_last_page={planes.is_last_page}
                         active={planes.active}
-                        getBookingsCallback={this.props.planesCallbacks.getBookings}
+                        getBookingsCallback={this.props.callbacks.handleList}
                     />
                 </div>
                 );
@@ -111,7 +109,6 @@ class PlanesCurrent extends Component {
 
 PlanesCurrent.propTypes = {
     planes: PropTypes.object,
-    planesCallbacks: PropTypes.object
 };
 
 export default PlanesCurrent;
