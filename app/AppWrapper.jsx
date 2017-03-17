@@ -51,11 +51,6 @@ class AppWrapper extends Component {
             });
     }
 
-    /**
-     * @param {Object} event
-     * @param {String} type  bus|plane|train|hostel
-     * @returns {undefined}
-     */
     handleChange(event, type) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -109,7 +104,7 @@ class AppWrapper extends Component {
                 return response.json();
             })
             .then((data) => {
-                var that = this;
+                let that = this;
                 if (data.ok) {
                     this.setState({
                         [type]: {},
@@ -139,7 +134,7 @@ class AppWrapper extends Component {
     }
 
     render() {
-        let App = this.props.children && React.cloneElement(this.props.children, {
+        return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
                     handleChange: this.handleChange.bind(this),
                     handleFocus: this.handleFocus.bind(this),
@@ -168,11 +163,8 @@ class AppWrapper extends Component {
                 hostelErrorMessage: this.state.hostelErrorMessage,
                 hostelInserted: this.state.hostelInserted,
             });
-
-        return App;
     }
 }
-;
 
 export default AppWrapper;
 
