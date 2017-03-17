@@ -27,6 +27,12 @@ class App extends Component {
             trainErrorMessage: this.props.trainErrorMessage,
             trainInserted: this.props.trainInserted,
             trainsCallbacks: this.props.trainsCallbacks,
+            hostels: this.props.hostels,
+            hostel: this.props.hostel,
+            hostelErrors: this.props.hostelErrors,
+            hostelErrorMessage: this.props.hostelErrorMessage,
+            hostelInserted: this.props.hostelInserted,
+            hostelsCallbacks: this.props.hostelsCallbacks,
         });
         let navItems = (
                 <ul className="nav navbar-nav">
@@ -75,6 +81,10 @@ App.propTypes = {
     trainsCallbacks: PropTypes.object,
     trainErrors: PropTypes.object,
     trainErrorMessage: PropTypes.string,
+    hostels: PropTypes.object,
+    hostelsCallbacks: PropTypes.object,
+    hostelErrors: PropTypes.object,
+    hostelErrorMessage: PropTypes.string,
 };
 
 export default App;

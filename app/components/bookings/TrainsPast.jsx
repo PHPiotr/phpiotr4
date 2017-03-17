@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Pagination from '../nav/Pagination.jsx';
 import moment from 'moment';
 
-class TrainsCurrent extends Component {
+class TrainsPast extends Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class TrainsCurrent extends Component {
 
     getTrains() {
         this.props.trainsCallbacks.getBookings('past');
-        console.log('socket on insert fetched current trains');
+        console.log('socket on insert fetched past trains');
         alert('Sockets!');
     };
 
@@ -107,10 +107,10 @@ class TrainsCurrent extends Component {
     };
 };
 
-TrainsCurrent.propTypes = {
+TrainsPast.propTypes = {
     trains: PropTypes.object,
     trainsCallbacks: PropTypes.object
 };
 
-export default TrainsCurrent;
+export default TrainsPast;
 

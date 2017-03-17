@@ -1,17 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
 
 class Hostels extends Component {
+
     render() {
+        let propsChildren = this.props.children && React.cloneElement(this.props.children, {
+                hostels: this.props.hostels,
+                hostel: this.props.hostel,
+                hostelErrors: this.props.hostelErrors,
+                hostelErrorMessage: this.props.hostelErrorMessage,
+                hostelInserted: this.props.hostelInserted,
+                callbacks: this.props.callbacks,
+                hostelsCallbacks: this.props.hostelsCallbacks,
+                socket: this.props.socket
+            });
         return(
             <div>
                 <Nav booking="hostels" />
-                {this.props.children}
+                {propsChildren}
             </div>
         );
-    }
+    };
+}
+
+Hostels.propTypes = {
+    hostels: PropTypes.object,
+    hostel: PropTypes.object,
+    hostelErrors: PropTypes.object,
+    hostelInserted: PropTypes.object,
+    hostelErrorMessage: PropTypes.string,
+    hostelsCallbacks: PropTypes.object
 };
 
 export default Hostels;
-
 

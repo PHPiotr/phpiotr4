@@ -32,6 +32,11 @@ class AppWrapper extends Component {
             trainErrorMessage: '',
             trainErrors: {},
             trainInserted: {},
+            hostels: {},
+            hostel: {},
+            hostelErrorMessage: '',
+            hostelErrors: {},
+            hostelInserted: {},
         };
     };
 
@@ -62,6 +67,17 @@ class AppWrapper extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({trains: responseData});
+            })
+            .catch((error) => {
+                console.log('Error fetching and parsing data', error);
+            });
+    };
+
+    getHostels(type, page = 1) {
+        fetch(`${API_URL}/bookings/hostels?type=${type}&page=${page}`, {headers: API_HEADERS})
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({hostels: responseData});
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
@@ -209,6 +225,53 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
+    addHostel(event) {
+        let hostels = this.state.hostels;
+        let hostel = this.state.hostel;
+
+        fetch(`${API_URL}/bookings/hostels`, {
+            method: 'post',
+            headers: API_HEADERS,
+            body: JSON.stringify(hostel)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                var that = this;
+                if (data.ok) {
+                    this.setState({
+                        hostel: {},
+                        hostelErrors: {},
+                        hostelErrorMessage: '',
+                        hostelInserted: data.hostel
+                    });
+                    setTimeout(function() {
+                        that.setState({
+                            hostelInserted: {}
+                        });
+                    }, 5000);
+                } else {
+                    if (data.err) {
+                        this.setState({
+                            hostelErrorMessage: data.err.message,
+                            hostelErrors: data.err.errors
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+
+            });
+
+        event.preventDefault();
+    }
+
     /**
      * @param {Object} event
      * @param {String} type  bus|plane|train|hostel
@@ -277,6 +340,15 @@ class AppWrapper extends Component {
                 trainsCallbacks: {
                     getBookings: this.getTrains.bind(this),
                     addBooking: this.addTrain.bind(this),
+                },
+                hostels: this.state.hostels,
+                hostel: this.state.hostel,
+                hostelErrors: this.state.hostelErrors,
+                hostelErrorMessage: this.state.hostelErrorMessage,
+                hostelInserted: this.state.hostelInserted,
+                hostelsCallbacks: {
+                    getBookings: this.getHostels.bind(this),
+                    addBooking: this.addHostel.bind(this),
                 },
             });
 
