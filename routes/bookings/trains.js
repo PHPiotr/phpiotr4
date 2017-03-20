@@ -1,21 +1,16 @@
-/*
- * Ticket Routes
- */
 var async = require('async');
 var Train = require('../../data/models/train');
-var notLoggedIn = require('../middleware/not_logged_in');
 var loadTrain = require('../middleware/load_train');
-var loggedIn = require('../middleware/logged_in');
 var max_per_page = 10;
 
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/', function(req, res, next) {
 
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
-    //var user_id = req.session.user._id;
+    var user_id = req.user._id;
     var param_type = req.query.type || '';
     var sort = {'departure_date': 1};
     var type = 'Current';
@@ -26,8 +21,8 @@ router.get('/', loggedIn, function(req, res, next) {
         $or: [
             {"departure_date": {$gte: newDate}},
             {"return_departure_date": {$gte: newDate}}
-        ]
-        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        ],
+        "created_by": user_id,
     };
     if ('past' === type_lower) {
         sort = {'departure_date': -1};
@@ -40,8 +35,8 @@ router.get('/', loggedIn, function(req, res, next) {
                     {"return_departure_date": {$eq: null}},
                     {"return_departure_date": {$eq: ""}}
                 ]}
-            ]
-            /*"created_by": mongoose.Types.ObjectId(user_id),*/
+            ],
+            "created_by": user_id,
         };
     }
     req.active = 'trains';
@@ -161,7 +156,7 @@ router.get('/', loggedIn, function(req, res, next) {
         }
     );
 });
-router.get('/new', loggedIn, function(req, res) {
+router.get('/new', function(req, res) {
     res.render('trains/new', {
         title: "New train",
         currencies: Train.schema.path('currency').enumValues,
@@ -192,8 +187,7 @@ router.get('/:booking_number', loadTrain, function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     var train = req.body;
-    // TODO: Get created_by based on JWT
-    train.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
+    train.created_by = req.user._id;
     Train.create(train, function(err) {
         if (err) {
             if (err.code === 11000) {
@@ -212,7 +206,7 @@ router.post('/', function(req, res, next) {
         res.status(200).send(JSON.stringify({ok: true, train: train}));
     });
 });
-router.delete('/:booking_number', loggedIn, loadTrain, function(req, res, next) {
+router.delete('/:booking_number', loadTrain, function(req, res, next) {
     req.event.remove(function(err) {
         if (err) {
             return next(err);

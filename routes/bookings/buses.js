@@ -3,19 +3,17 @@
  */
 var async = require('async');
 var Bus = require('../../data/models/bus');
-var notLoggedIn = require('../middleware/not_logged_in');
 var loadBus = require('../middleware/load_bus');
-var loggedIn = require('../middleware/logged_in');
 var max_per_page = 10;
 
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/', function(req, res, next) {
 
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
-    //var user_id = req.session.user._id;
+    var user_id = req.user._id;
     var param_type = req.query.type || '';
     var sort = {'departure_date': 1};
     var type = 'Current';
@@ -26,8 +24,8 @@ router.get('/', loggedIn, function(req, res, next) {
         $or: [
             {"departure_date": {$gte: newDate}},
             {"return_departure_date": {$gte: newDate}}
-        ]
-        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        ],
+        "created_by": user_id,
     };
     if ('past' === type_lower) {
         sort = {'departure_date': -1};
@@ -40,8 +38,8 @@ router.get('/', loggedIn, function(req, res, next) {
                     {"return_departure_date": {$eq: null}},
                     {"return_departure_date": {$eq: ""}}
                 ]}
-            ]
-            /*"created_by": mongoose.Types.ObjectId(user_id),*/
+            ],
+            "created_by": user_id,
         };
     }
     req.active = 'buses';
@@ -194,7 +192,7 @@ router.get('/', loggedIn, function(req, res, next) {
         }
     );
 });
-router.get('/new', loggedIn, function(req, res) {
+router.get('/new', function(req, res) {
     res.render('buses/new', {
         title: "New bus",
         currencies: Bus.schema.path('currency').enumValues,
@@ -225,8 +223,7 @@ router.get('/:booking_number', loadBus, function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     var bus = req.body;
-    // TODO: Get created_by based on JWT
-    bus.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
+    bus.created_by = req.user._id;
     Bus.create(bus, function(err) {
         if (err) {
             if (err.code === 11000) {
@@ -245,7 +242,7 @@ router.post('/', function(req, res, next) {
         res.status(200).send(JSON.stringify({ok: true, bus: bus}));
     });
 });
-router.delete('/:booking_number', loggedIn, loadBus, function(req, res, next) {
+router.delete('/:booking_number', loadBus, function(req, res, next) {
     req.event.remove(function(err) {
         if (err) {
             return next(err);

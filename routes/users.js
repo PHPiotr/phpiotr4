@@ -1,16 +1,17 @@
 var async = require('async');
 var User = require('../data/models/user');
+var config = require('../config');
 var loggedIn = require('./middleware/logged_in');
 var notLoggedIn = require('./middleware/not_logged_in');
 var loadUser = require('./middleware/load_user');
 var restrictUserToSelf = require('./middleware/restrict_user_to_self');
 var maxUsersPerPage = 10;
-
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 router.get('/', function(req, res, next) {
-    var page = req.query.page && parseInt(req.query.page, 10) || 0;
+    var page = req.query.page && parseInt(req.query.page, 10) || 1;
 
     async.parallel(
             [
@@ -31,8 +32,8 @@ router.get('/', function(req, res, next) {
                 }
                 var count = results[0];
                 var users = results[1];
-                var lastPage = (page + 1) * maxUsersPerPage >= count;
-                res.render('users/index', {
+                var lastPage = page * maxUsersPerPage >= count;
+                res.json({
                     title: 'Users',
                     users: users,
                     page: page,
@@ -85,6 +86,48 @@ router.post('/', notLoggedIn,
                 });
             });
         });
+
+router.post('/authenticate', function (req, res) {
+
+    var username = req.body.username || '';
+    var password = req.body.password || '';
+    User.findOne({
+        username: username
+    }, function (err, user) {
+        if (err) {
+            throw err;
+        }
+        if (!user) {
+            return res.json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+        user.comparePassword(req.body.password, function (err, isMatch) {
+            if (err) {
+                return next(err);
+            }
+            if (!isMatch) {
+                return res.json({
+                    success: false,
+                    message: 'Wrong password'
+                });
+            }
+            var token = jwt.sign({
+                sub: user._id
+            }, config.secret, {
+                expiresIn: 1440
+            });
+
+            res.json({
+                success: true,
+                message: 'Enjoy!',
+                token: token
+            });
+        });
+    });
+});
+
 router.delete('/:name', loadUser, restrictUserToSelf,
         function(req, res, next) {
             req.user.remove(function(err) {

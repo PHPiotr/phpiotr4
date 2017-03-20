@@ -3,19 +3,17 @@
  */
 var async = require('async');
 var Hostel = require('../../data/models/hostel');
-var notLoggedIn = require('../middleware/not_logged_in');
 var loadHostel = require('../middleware/load_hostel');
-var loggedIn = require('../middleware/logged_in');
 var max_per_page = 10;
 
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/', function(req, res, next) {
 
     var current_page = req.query.page && parseInt(req.query.page, 10) || 1;
-    //var user_id = req.session.user._id;
+    var user_id = req.user._id;
     var param_type = req.query.type || '';
     var sort = {'departure_date': 1};
     var type = 'Current';
@@ -26,8 +24,8 @@ router.get('/', loggedIn, function(req, res, next) {
         $or: [
             {"checkin_date": {$gte: newDate}},
             {"checkout_date": {$gte: newDate}}
-        ]
-        /*"created_by": mongoose.Types.ObjectId(user_id),*/
+        ],
+        "created_by": user_id,
     };
     if ('past' === type_lower) {
         sort = {'checkin_date': -1};
@@ -36,8 +34,8 @@ router.get('/', loggedIn, function(req, res, next) {
             $and: [
                 {"checkin_date": {$lt: newDate}},
                 {"checkout_date": {$lt: newDate}}
-            ]
-            /*"created_by": mongoose.Types.ObjectId(user_id),*/
+            ],
+            "created_by": user_id,
         };
     }
     req.active = 'hostels';
@@ -145,7 +143,7 @@ router.get('/', loggedIn, function(req, res, next) {
         }
     );
 });
-router.get('/new', loggedIn, function(req, res) {
+router.get('/new', function(req, res) {
     res.render('hostels/new', {
         title: "New hostel",
         currencies: Hostel.schema.path('currency').enumValues,
@@ -176,8 +174,7 @@ router.get('/:confirmation_code', loadHostel, function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     var hostel = req.body;
-    // TODO: Get created_by based on JWT
-    hostel.created_by = mongoose.Types.ObjectId('583cc8ac7c1aa01fae016306'); //req.session.user._id;
+    hostel.created_by = req.user._id;
     Hostel.create(hostel, function(err) {
         if (err) {
             if (err.code === 11000) {
@@ -196,7 +193,7 @@ router.post('/', function(req, res, next) {
         res.status(200).send(JSON.stringify({ok: true, hostel: hostel}));
     });
 });
-router.delete('/:confirmation_code', loggedIn, loadHostel, function(req, res, next) {
+router.delete('/:confirmation_code', loadHostel, function(req, res, next) {
     req.event.remove(function(err) {
         if (err) {
             return next(err);

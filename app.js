@@ -1,5 +1,4 @@
 var express = require('express');
-var socket_io = require('socket.io');
 var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,6 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var config = require('./config.js');
+var loggedIn = require('./routes/middleware/logged_in');
 var express_session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -20,7 +22,6 @@ var session = require('./routes/session');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var config = require('./webpack.config');
 
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpack = require('webpack');
@@ -29,7 +30,7 @@ var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath
+    publicPath: webpackConfig.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
@@ -42,6 +43,7 @@ app.use(function(req, res, next) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.set('superSecret', config.secret);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -49,6 +51,7 @@ app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(morgan('dev'));
 app.use(cookieParser('my secret string'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express_session({
@@ -65,8 +68,10 @@ app.use(function(req, res, next){
     next();
 });
 
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/bookings/*', loggedIn);
 app.use('/bookings/planes', planes);
 app.use('/bookings/hostels', hostels);
 app.use('/bookings/buses', buses);
@@ -100,6 +105,6 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-require('mongoose').connect('mongodb://localhost/phpiotr4');
+mongoose.connect(config.database);
 
 module.exports = {app: app, server: server};

@@ -1,12 +1,43 @@
-function loggedIn(req, res, next) {
-    
-    return next();
+var config = require('../../config');
+var jwt = require('jsonwebtoken');
+var User = require('../../data/models/user');
 
-    if (req.session.user) {
-        return next();
+function loggedIn(req, res, next) {
+
+    var token = req.headers['authorization'];
+
+    if (token) {
+
+        token = token.replace('Bearer ', '');
+
+        return jwt.verify(token, config.secret, function (err, decoded) {
+            if (err) {
+                return res.status(403).json({
+                    success: false,
+                    message: 'Failed to authenticate token.',
+                    err: err,
+                });
+            }
+            req.decoded = decoded;
+            User.findOne({_id: decoded.sub}, function (err, user) {
+                if (err) {
+                    return next(err);
+                }
+                if (!user) {
+                    return res.status(404).send('User not found');
+                }
+                req.user = user;
+                return next();
+            });
+        });
+
     }
 
-    req.flash('error_message', 'Please log in.');
-    res.redirect('/session/new');
+    res.status(403).json({
+        success: false,
+        message: 'No token provided.'
+    });
+
 }
+
 module.exports = loggedIn;
