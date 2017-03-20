@@ -133,6 +133,20 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
+    formatPrice(input) {
+        let stringInput = '' + input;
+        let dotIndex = stringInput.indexOf('.');
+        if (-1 === dotIndex) {
+            return stringInput + '.00';
+        }
+        let afterDot = stringInput.substring(dotIndex + 1);
+        let afterDotLength = afterDot.length;
+        if (1 === afterDotLength) {
+            return stringInput + '0';
+        }
+        return stringInput;
+    }
+
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
@@ -140,6 +154,7 @@ class AppWrapper extends Component {
                     handleFocus: this.handleFocus.bind(this),
                     handleAdd: this.handleAdd.bind(this),
                     handleList: this.handleList.bind(this),
+                    formatPrice: this.formatPrice.bind(this),
                 },
                 socket: socket,
                 planes: this.state.planes,

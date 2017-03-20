@@ -41,7 +41,7 @@ class HostelsPast extends Component {
             <tr key={booking._id}>
                 <td className="text-right">{`${bookingIndex + 1 + indexCalc}.`}</td>
                 <td>{booking.booking_number}</td>
-                <td className="text-right">{`£ ${booking.price}`}</td>
+                <td className="text-right">{`£ ${this.props.callbacks.formatPrice(booking.price)}`}</td>
                 <td>{moment(booking.checkin_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
                 <td>{booking.checkout_date ? moment(booking.checkout_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
                 <td>{booking.hostel_name}</td>
@@ -62,8 +62,8 @@ class HostelsPast extends Component {
                         </thead>
                         <tbody>
                         <tr>
-                            <td className="info">£ {hostels.total_cost}</td>
-                            <td>£ {hostels.average_cost}</td>
+                            <td className="info">£ {this.props.callbacks.formatPrice(hostels.total_cost)}</td>
+                            <td>£ {this.props.callbacks.formatPrice(hostels.average_cost)}</td>
                             <td>{hostels.bookings_length}</td>
                         </tr>
                         </tbody>

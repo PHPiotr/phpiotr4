@@ -41,7 +41,7 @@ class BusesPast extends Component {
             <tr key={journey.booking_number}>
                 <td className="text-right">{`${journeyIndex + 1 + indexCalc}.`}</td>
                 <td>{journey.booking_number}</td>
-                <td className="text-right">{`£ ${journey.price}`}</td>
+                <td className="text-right">{`£ ${this.props.callbacks.formatPrice(journey.price)}`}</td>
                 <td>{moment(journey.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
                 <td>{journey.return_departure_date ? moment(journey.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
                 <td>{journey.from}</td>
@@ -64,8 +64,8 @@ class BusesPast extends Component {
                         </thead>
                         <tbody>
                         <tr>
-                            <td className="info">£ {buses.total_cost}</td>
-                            <td>£ {buses.average_cost}</td>
+                            <td className="info">£ {this.props.callbacks.formatPrice(buses.total_cost)}</td>
+                            <td>£ {this.props.callbacks.formatPrice(buses.average_cost)}</td>
                             <td>{buses.journeys_length}</td>
                             <td>{buses.journeys_length - buses.return_journeys_length}</td>
                             <td>{buses.return_journeys_length}</td>

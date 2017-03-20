@@ -50,7 +50,7 @@ class PlanesPast extends Component {
                 <tr key={flight.confirmation_code}>
                     <td className="text-right">{`${flightIndex + 1 + indexCalc}.`}</td>
                     <td>{flight.confirmation_code}</td>
-                    <td className="text-right">{`£ ${flight.price}`}</td>
+                    <td className="text-right">{`£ ${this.props.callbacks.formatPrice(flight.price)}`}</td>
                     <td>{moment(flight.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
                     <td>{flight.return_departure_date ? moment(flight.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
                     <td>{flight.from}</td>
@@ -74,8 +74,8 @@ class PlanesPast extends Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className="info">£ {planes.total_cost}</td>
-                                    <td>£ {planes.average_cost}</td>
+                                    <td className="info">£ {this.props.callbacks.formatPrice(planes.total_cost)}</td>
+                                    <td>£ {this.props.callbacks.formatPrice(planes.average_cost)}</td>
                                     <td>{planes.flights_length}</td>
                                     <td>{planes.flights_length - planes.return_flights_length}</td>
                                     <td>{planes.return_flights_length}</td>

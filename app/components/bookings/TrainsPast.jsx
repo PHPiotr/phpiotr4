@@ -40,7 +40,7 @@ class TrainsPast extends Component {
         let journeys = trains.journeys.map((journey, journeyIndex) => (
             <tr key={journey._id}>
                 <td className="text-right">{`${journeyIndex + 1 + indexCalc}.`}</td>
-                <td className="text-right">{`£ ${journey.price}`}</td>
+                <td className="text-right">{`£ ${this.props.callbacks.formatPrice(journey.price)}`}</td>
                 <td>{moment(journey.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
                 <td>{journey.return_departure_date ? moment(journey.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
                 <td>{journey.from}</td>
@@ -63,8 +63,8 @@ class TrainsPast extends Component {
                         </thead>
                         <tbody>
                         <tr>
-                            <td className="info">£ {trains.total_cost}</td>
-                            <td>£ {trains.average_cost}</td>
+                            <td className="info">£ {this.props.callbacks.formatPrice(trains.total_cost)}</td>
+                            <td>£ {this.props.callbacks.formatPrice(trains.average_cost)}</td>
                             <td>{trains.journeys_length}</td>
                             <td>{trains.journeys_length - trains.return_journeys_length}</td>
                             <td>{trains.return_journeys_length}</td>
