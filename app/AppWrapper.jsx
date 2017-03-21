@@ -50,6 +50,7 @@ class AppWrapper extends Component {
                 token: ''
             });
             delete config.api_headers['Authorization'];
+            that.context.router.push('/login');
         });
         socket.on('token_received', function (token) {
             config.api_headers['Authorization'] = `Bearer ${token}`;
