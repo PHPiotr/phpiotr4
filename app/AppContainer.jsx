@@ -60,8 +60,8 @@ let appContainer = (
                 <Route path="/" component={App}>
                     <Route name="login" path="login" component={Login} onEnter={requireNotAuth}/>
                     <Route name="register" path="register" component={Register} onEnter={requireNotAuth}/>
-                    <IndexRoute component={Report}/>
                     <Route onEnter={requireAuth}>
+                        <IndexRoute component={Report}/>
                         <Route name="logout" path="logout" component={Logout}/>
                         <Route name="buses" path="bookings/buses" component={Buses}>
                             <Route path="current" component={BusesCurrent}>
