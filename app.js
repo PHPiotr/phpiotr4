@@ -18,6 +18,7 @@ var trains = require('./routes/bookings/trains');
 var hostels = require('./routes/bookings/hostels');
 var report = require('./routes/report');
 var session = require('./routes/session');
+var morgan = require('morgan');
 
 var app = express();
 var server = require('http').Server(app);

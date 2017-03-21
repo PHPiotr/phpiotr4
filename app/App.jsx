@@ -9,6 +9,7 @@ class App extends Component {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
             callbacks: this.props.callbacks,
             socket: this.props.socket,
+            token: this.props.token,
             planes: this.props.planes,
             plane: this.props.plane,
             planeErrors: this.props.planeErrors,
@@ -27,17 +28,35 @@ class App extends Component {
             hostels: this.props.hostels,
             hostel: this.props.hostel,
             hostelErrors: this.props.hostelErrors,
-            hostelErrorMessage: this.props.hostelErrorMessage,
             hostelInserted: this.props.hostelInserted,
+            hostelErrorMessage: this.props.hostelErrorMessage,
+            login: this.props.login,
+            loginErrors: this.props.loginErrors,
+            loginErrorMessage: this.props.loginErrorMessage,
         });
-        let navItems = (
+        let navItems = null;
+        let navLoginItems = (
+            <ul className="nav navbar-nav navbar-right">
+                <NavLink className="btn btn-link" to="/login">Login</NavLink>
+                <NavLink className="btn btn-link" to="/register">Register</NavLink>
+            </ul>
+        );
+        if (this.props.callbacks.handleIsLoggedIn()) {
+            navItems = (
                 <ul className="nav navbar-nav">
                     <NavLink className="btn btn-link" to="/bookings/buses">Buses</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/planes">Planes</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/trains">Trains</NavLink>
                     <NavLink className="btn btn-link" to="/bookings/hostels">Hostels</NavLink>
                 </ul>
-        );
+            );
+            navLoginItems = (
+                <ul className="nav navbar-nav navbar-right">
+                    <NavLink className="btn btn-link" to="/logout">Logout</NavLink>
+                </ul>
+            );
+        }
+
         return (
                 <div>
                     <div className="navbar navbar-default">
@@ -52,7 +71,8 @@ class App extends Component {
                                 <Link className="navbar-brand" to="/">PHPiotr 4.0</Link>
                             </div>
                             <div className="collapse navbar-collapse" id="navbar-main">
-                                {navItems}  
+                                {navItems}
+                                {navLoginItems}
                             </div>
                         </div>
                     </div>
@@ -77,6 +97,9 @@ App.propTypes = {
     hostels: PropTypes.object,
     hostelErrors: PropTypes.object,
     hostelErrorMessage: PropTypes.string,
+    login: PropTypes.object,
+    loginErrors: PropTypes.object,
+    loginErrorMessage: PropTypes.string,
 };
 
 export default App;

@@ -91,6 +91,14 @@ router.post('/authenticate', function (req, res) {
 
     var username = req.body.username || '';
     var password = req.body.password || '';
+    var errors = {};
+    if (!username) {
+        errors['username'] = {message: 'Username is required'};
+    }
+    if (!password) {
+        errors['password'] = {message: 'Password is required'};
+    }
+
     User.findOne({
         username: username
     }, function (err, user) {
@@ -98,9 +106,13 @@ router.post('/authenticate', function (req, res) {
             throw err;
         }
         if (!user) {
+            if (username) {
+                errors['username'] = {message: 'Wrong username'};
+            }
             return res.json({
-                success: false,
-                message: 'User not found'
+                ok: false,
+                message: 'Validation failed',
+                errors: errors,
             })
         }
         user.comparePassword(req.body.password, function (err, isMatch) {
@@ -108,20 +120,23 @@ router.post('/authenticate', function (req, res) {
                 return next(err);
             }
             if (!isMatch) {
+                if (password) {
+                    errors['password'] = {message: 'Wrong password'};
+                }
                 return res.json({
-                    success: false,
-                    message: 'Wrong password'
+                    ok: false,
+                    message: 'Validation failed',
+                    errors: errors
                 });
             }
             var token = jwt.sign({
                 sub: user._id
             }, config.secret, {
-                expiresIn: 1440
+                expiresIn: 2880
             });
-
+            res.io.emit('token_received', token);
             res.json({
-                success: true,
-                message: 'Enjoy!',
+                ok: true,
                 token: token
             });
         });

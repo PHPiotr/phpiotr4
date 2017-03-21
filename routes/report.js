@@ -11,7 +11,7 @@ var Hostel = require('../data/models/hostel');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', loggedIn, validateDates, function(req, res, next) {
+router.get('/', validateDates, function(req, res, next) {
 
     var from = req.query.from;
     var to = req.query.to;

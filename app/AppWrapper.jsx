@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import update from 'react-addons-update';
 import io from 'socket.io-client';
 import 'whatwg-fetch';
 import 'babel-polyfill';
+import config from '../config';
 
-const API_URL = 'http://localhost:3000';
-const API_HEADERS = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer jwt'
-};
-
-const socket = io.connect(API_URL);
+const socket = io.connect(config.api_url);
 
 class AppWrapper extends Component {
+
+    static contextTypes = {
+        router: PropTypes.object,
+    };
 
     constructor() {
         super(...arguments);
@@ -35,13 +34,36 @@ class AppWrapper extends Component {
             hostels: {},
             hostel: {},
             hostelErrorMessage: '',
-            hostelErrors: {},
             hostelInserted: {},
+            hostelErrors: {},
+            login: {},
+            loginErrorMessage: '',
+            loginErrors: {},
+            token: '',
         };
     };
 
+    componentDidMount() {
+        let that = this;
+        socket.on('auth_failed', function () {
+            that.setState({
+                token: ''
+            });
+            delete config.api_headers['Authorization'];
+        });
+        socket.on('token_received', function (token) {
+            config.api_headers['Authorization'] = `Bearer ${token}`;
+            that.context.router.push('/');
+        });
+    }
+
+    componentWillUnmount() {
+        this.props.socket.removeListener('auth_failed');
+        this.props.socket.removeListener('token_received');
+    }
+
     handleList(bookings, type, page) {
-        fetch(`${API_URL}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: API_HEADERS})
+        fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: config.api_headers})
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({[bookings]: responseData});
@@ -90,9 +112,9 @@ class AppWrapper extends Component {
         const typeErrorMessage = type + 'ErrorMessage';
         const typeInserted = type + 'Inserted';
 
-        fetch(`${API_URL}/bookings/${types}`, {
+        fetch(`${config.api_url}/bookings/${types}`, {
             method: 'post',
-            headers: API_HEADERS,
+            headers: config.api_headers,
             body: JSON.stringify(booking)
         })
             .then((response) => {
@@ -133,6 +155,63 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
+    handleLogin(event) {
+
+        this.setState({
+            token: ''
+        });
+
+        let login = this.state.login;
+
+        fetch(`${config.api_url}/users/authenticate`, {
+            method: 'post',
+            headers: config.api_headers,
+            body: JSON.stringify(login)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.ok) {
+                    this.setState({
+                        login: {},
+                        loginErrors: {},
+                        loginErrorMessage: '',
+                        token: data.token,
+                    });
+                } else {
+                    if (data.errors) {
+                        this.setState({
+                            loginErrorMessage: data.message,
+                            loginErrors: data.errors
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+                socket.emit('auth_failed');
+            });
+
+        event.preventDefault();
+    }
+
+    handleIsLoggedIn() {
+        return !!this.state.token;
+    }
+
+    handleLogout() {
+        this.setState({
+            token: ''
+        });
+        delete config.api_headers['Authorization'];
+        this.context.router.push('/login');
+    }
+
     formatPrice(input) {
         let stringInput = '' + input;
         let dotIndex = stringInput.indexOf('.');
@@ -150,11 +229,14 @@ class AppWrapper extends Component {
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
+                    formatPrice: this.formatPrice.bind(this),
                     handleChange: this.handleChange.bind(this),
                     handleFocus: this.handleFocus.bind(this),
                     handleAdd: this.handleAdd.bind(this),
                     handleList: this.handleList.bind(this),
-                    formatPrice: this.formatPrice.bind(this),
+                    handleLogin: this.handleLogin.bind(this),
+                    handleLogout: this.handleLogout.bind(this),
+                    handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
                 },
                 socket: socket,
                 planes: this.state.planes,
@@ -175,8 +257,12 @@ class AppWrapper extends Component {
                 hostels: this.state.hostels,
                 hostel: this.state.hostel,
                 hostelErrors: this.state.hostelErrors,
-                hostelErrorMessage: this.state.hostelErrorMessage,
                 hostelInserted: this.state.hostelInserted,
+                hostelErrorMessage: this.state.hostelErrorMessage,
+                login: this.state.login,
+                loginErrors: this.state.loginErrors,
+                loginErrorMessage: this.state.loginErrorMessage,
+                token: this.state.token,
             });
     }
 }
