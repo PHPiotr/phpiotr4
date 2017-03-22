@@ -43,7 +43,7 @@ class Login extends Component {
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {loginError}
                 <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.username} value={this.props.login.username} handler={this.handleChange} name="username" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
+                <InputGroup type="password" focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
                 <ButtonGroup>Log in</ButtonGroup>
             </form>
         );
