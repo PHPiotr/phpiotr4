@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import 'whatwg-fetch';
 import 'babel-polyfill';
 import config from '../config';
+import cookie from 'cookie-monster';
 
 const socket = io.connect(config.api_url);
 
@@ -44,27 +45,51 @@ class AppWrapper extends Component {
     };
 
     componentDidMount() {
+
         let that = this;
-        socket.on('auth_failed', function () {
+        let tokenCookie = cookie.getItem(config.token_key);
+        if (undefined !== tokenCookie) {
+            that.setState({
+                token: tokenCookie
+            });
+            config.api_headers['Authorization'] = `Bearer ${tokenCookie}`;
+        }
+        socket.on(config.event.token_received, function (token) {
+            config.api_headers['Authorization'] = `Bearer ${token}`;
+            let now = new Date();
+            let time = now.getTime();
+            let expireTime = time + config.token_expires_in;
+            now.setTime(expireTime);
+            cookie.setItem(config.token_key, token);
+            that.context.router.push('/');
+        });
+
+        socket.on(config.event.auth_failed, function () {
             that.setState({
                 token: ''
             });
             delete config.api_headers['Authorization'];
+            cookie.removeItem(config.token_key);
             that.context.router.push('/login');
         });
-        socket.on('token_received', function (token) {
-            config.api_headers['Authorization'] = `Bearer ${token}`;
-            that.context.router.push('/');
-        });
+
     }
 
     componentWillUnmount() {
-        this.props.socket.removeListener('auth_failed');
-        this.props.socket.removeListener('token_received');
+        this.props.socket.removeListener(config.event.auth_failed);
+        this.props.socket.removeListener(config.event.token_received);
+    }
+
+    setHeaders() {
+        let currentCookie = cookie.getItem(config.token_key);
+        config.api_headers['Authorization'] = `Bearer ${currentCookie}`;
+
+        return config.api_headers;
     }
 
     handleList(bookings, type, page) {
-        fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: config.api_headers})
+        let headers = this.setHeaders();
+        fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({[bookings]: responseData});
@@ -108,6 +133,7 @@ class AppWrapper extends Component {
 
         let bookings = this.state[types];
         let booking = this.state[type];
+        let headers = this.setHeaders();
 
         const typeErrors = type + 'Errors';
         const typeErrorMessage = type + 'ErrorMessage';
@@ -115,7 +141,7 @@ class AppWrapper extends Component {
 
         fetch(`${config.api_url}/bookings/${types}`, {
             method: 'post',
-            headers: config.api_headers,
+            headers: headers,
             body: JSON.stringify(booking)
         })
             .then((response) => {
@@ -195,7 +221,7 @@ class AppWrapper extends Component {
                 }
             })
             .catch((error) => {
-                socket.emit('auth_failed');
+                socket.emit(config.event.auth_failed);
             });
 
         event.preventDefault();
@@ -210,6 +236,7 @@ class AppWrapper extends Component {
             token: ''
         });
         delete config.api_headers['Authorization'];
+        cookie.removeItem(config.token_key);
         this.context.router.push('/login');
     }
 

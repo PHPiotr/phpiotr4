@@ -134,7 +134,7 @@ router.post('/authenticate', function (req, res) {
             }, config.secret, {
                 expiresIn: 2880
             });
-            res.io.emit('token_received', token);
+            res.io.emit(config.event.token_received, token);
             res.json({
                 ok: true,
                 token: token

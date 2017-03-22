@@ -25,15 +25,10 @@ import Logout from './components/Logout.jsx';
 import Register from './components/Register.jsx';
 import {AppContainer} from 'react-hot-loader';
 import config from '../config';
+import cookie from 'cookie-monster';
 
 function isLoggedIn() {
-    if (undefined === config.api_headers['Authorization']) {
-        return false;
-    }
-    if (!config.api_headers['Authorization']) {
-        return false;
-    }
-    return true;
+    return undefined !== cookie.getItem(config.token_key);
 }
 
 function requireAuth(nextState, replace) {

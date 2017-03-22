@@ -12,7 +12,7 @@ function loggedIn(req, res, next) {
 
         return jwt.verify(token, config.secret, function (err, decoded) {
             if (err) {
-                res.io.emit('auth_failed');
+                res.io.emit(config.event.auth_failed);
                 return res.status(403).json({
                     success: false,
                     message: 'Failed to authenticate token.',
@@ -21,14 +21,14 @@ function loggedIn(req, res, next) {
             }
             User.findOne({_id: decoded.sub}, function (err, user) {
                 if (err) {
-                    res.io.emit('auth_failed');
+                    res.io.emit(config.event.auth_failed);
                     return next(err);
                 }
                 if (!user) {
-                    res.io.emit('auth_failed');
+                    res.io.emit(config.event.auth_failed);
                     return res.status(404).send('User not found');
                 }
-                res.io.emit('auth_success');
+                res.io.emit(config.event.auth_success);
                 req.decoded = decoded;
                 req.user = user;
                 return next();
@@ -37,7 +37,7 @@ function loggedIn(req, res, next) {
 
     }
 
-    res.io.emit('auth_failed');
+    res.io.emit(config.event.auth_failed);
     res.status(403).json({
         success: false,
         message: 'No token provided.'
