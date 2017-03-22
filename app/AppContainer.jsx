@@ -23,6 +23,7 @@ import HostelsNew from './components/bookings/HostelsNew.jsx';
 import Login from './components/Login.jsx';
 import Logout from './components/Logout.jsx';
 import Register from './components/Register.jsx';
+import Auth from './components/Auth.jsx';
 import {AppContainer} from 'react-hot-loader';
 import config from '../config';
 import cookie from 'cookie-monster';
@@ -55,8 +56,9 @@ let appContainer = (
                 <Route path="/" component={App}>
                     <Route name="login" path="login" component={Login} onEnter={requireNotAuth}/>
                     <Route name="register" path="register" component={Register} onEnter={requireNotAuth}/>
-                    <Route onEnter={requireAuth}>
+                    <Route onEnter={requireAuth} >
                         <IndexRoute component={Report}/>
+                        <Route name="auth" component={Auth}/>
                         <Route name="logout" path="logout" component={Logout}/>
                         <Route name="buses" path="bookings/buses" component={Buses}>
                             <Route path="current" component={BusesCurrent}>

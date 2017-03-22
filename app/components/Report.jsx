@@ -1,10 +1,18 @@
-var React = require('react');
-var ReportForm = require('./ReportForm.jsx');
+import Auth from './Auth.jsx';
+import ReportForm from './ReportForm.jsx';
+import React from 'react';
 
-module.exports = React.createClass({
-    render: function() {
-        return(
-                <ReportForm />
-        );
+class Report extends Auth {
+
+    constructor(props) {
+        super(props);
     }
-});
+
+    render() {
+        return(
+            <ReportForm />
+        );
+    };
+}
+
+export default Report;

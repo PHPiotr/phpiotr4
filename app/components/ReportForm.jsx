@@ -77,7 +77,7 @@ module.exports = React.createClass({
                 to: to_value
             },
             success: function(data) {
-                that.setState({report: data});
+                //that.setState({report: data});
             }
         });
     },

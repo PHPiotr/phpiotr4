@@ -12,6 +12,7 @@ var loggedIn = require('./routes/middleware/logged_in');
 var express_session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
 var buses = require('./routes/bookings/buses');
 var planes = require('./routes/bookings/planes');
 var trains = require('./routes/bookings/trains');
@@ -72,6 +73,7 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/auth', auth);
 app.use('/bookings/*', loggedIn);
 app.use('/bookings/planes', planes);
 app.use('/bookings/hostels', hostels);

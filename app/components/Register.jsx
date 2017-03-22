@@ -31,7 +31,6 @@ class Register extends Component {
                 <div className="alert alert-danger" role="alert">{loginErrorMessage}</div>
             );
         }
-        console.log('propsee', this.props);
         return(
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {loginError}

@@ -26,7 +26,10 @@ function loggedIn(req, res, next) {
                 }
                 if (!user) {
                     res.io.emit(config.event.auth_failed);
-                    return res.status(404).send('User not found');
+                    return res.status(404).json({
+                        success: false,
+                        message: 'User not found'
+                    });
                 }
                 res.io.emit(config.event.auth_success);
                 req.decoded = decoded;

@@ -14,8 +14,8 @@ class AppWrapper extends Component {
         router: PropTypes.object,
     };
 
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
         this.state = {
             planes: {},
             plane: {},
@@ -40,19 +40,18 @@ class AppWrapper extends Component {
             login: {},
             loginErrorMessage: '',
             loginErrors: {},
-            token: '',
+            isLoggedIn: false,
         };
     };
 
     componentDidMount() {
-
         let that = this;
         let tokenCookie = cookie.getItem(config.token_key);
         if (undefined !== tokenCookie) {
-            that.setState({
-                token: tokenCookie
-            });
             config.api_headers['Authorization'] = `Bearer ${tokenCookie}`;
+            that.setState({
+                isLoggedIn: true
+            })
         }
         socket.on(config.event.token_received, function (token) {
             config.api_headers['Authorization'] = `Bearer ${token}`;
@@ -61,18 +60,20 @@ class AppWrapper extends Component {
             let expireTime = time + config.token_expires_in;
             now.setTime(expireTime);
             cookie.setItem(config.token_key, token);
+            that.setState({
+                isLoggedIn: true,
+            });
             that.context.router.push('/');
         });
 
         socket.on(config.event.auth_failed, function () {
             that.setState({
-                token: ''
+                isLoggedIn: false
             });
             delete config.api_headers['Authorization'];
             cookie.removeItem(config.token_key);
             that.context.router.push('/login');
         });
-
     }
 
     componentWillUnmount() {
@@ -80,15 +81,32 @@ class AppWrapper extends Component {
         this.props.socket.removeListener(config.event.token_received);
     }
 
-    setHeaders() {
+    getHeaders() {
         let currentCookie = cookie.getItem(config.token_key);
-        config.api_headers['Authorization'] = `Bearer ${currentCookie}`;
-
+        if (!currentCookie) {
+            delete config.api_headers['Authorization'];
+        } else {
+            config.api_headers['Authorization'] = `Bearer ${currentCookie}`;
+        }
         return config.api_headers;
     }
 
+    handleVerify() {
+        let headers = this.getHeaders();
+        fetch(`${config.api_url}/auth/verify`, {
+            headers: headers
+        })
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log('handleVerify: ', responseData);
+            })
+            .catch((error) => {
+                console.log('Not verified', error);
+            });
+    }
+
     handleList(bookings, type, page) {
-        let headers = this.setHeaders();
+        let headers = this.getHeaders();
         fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
@@ -133,7 +151,7 @@ class AppWrapper extends Component {
 
         let bookings = this.state[types];
         let booking = this.state[type];
-        let headers = this.setHeaders();
+        let headers = this.getHeaders();
 
         const typeErrors = type + 'Errors';
         const typeErrorMessage = type + 'ErrorMessage';
@@ -184,13 +202,13 @@ class AppWrapper extends Component {
 
     handleLogin(event) {
 
-        this.setState({
-            token: ''
-        });
+        if (this.state.isLoggedIn) {
+            return this.context.router.push('/');
+        }
 
         let login = this.state.login;
 
-        fetch(`${config.api_url}/users/authenticate`, {
+        fetch(`${config.api_url}/auth/login`, {
             method: 'post',
             headers: config.api_headers,
             body: JSON.stringify(login)
@@ -209,13 +227,14 @@ class AppWrapper extends Component {
                         login: {},
                         loginErrors: {},
                         loginErrorMessage: '',
-                        token: data.token,
+                        isLoggedIn: true,
                     });
                 } else {
                     if (data.errors) {
                         this.setState({
                             loginErrorMessage: data.message,
-                            loginErrors: data.errors
+                            loginErrors: data.errors,
+                            isLoggedIn: false
                         });
                     }
                 }
@@ -228,12 +247,12 @@ class AppWrapper extends Component {
     }
 
     handleIsLoggedIn() {
-        return !!this.state.token;
+        return this.state.isLoggedIn;
     }
 
     handleLogout() {
         this.setState({
-            token: ''
+            isLoggedIn: false,
         });
         delete config.api_headers['Authorization'];
         cookie.removeItem(config.token_key);
@@ -265,6 +284,7 @@ class AppWrapper extends Component {
                     handleLogin: this.handleLogin.bind(this),
                     handleLogout: this.handleLogout.bind(this),
                     handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
+                    handleVerify: this.handleVerify.bind(this),
                 },
                 socket: socket,
                 planes: this.state.planes,
@@ -290,7 +310,6 @@ class AppWrapper extends Component {
                 login: this.state.login,
                 loginErrors: this.state.loginErrors,
                 loginErrorMessage: this.state.loginErrorMessage,
-                token: this.state.token,
             });
     }
 }

@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Auth from './Auth.jsx';
 
-class Logout extends Component {
+class Logout extends Auth {
 
     constructor(props) {
         super(props);

@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
+import Auth from '../Auth.jsx';
 
 
-class Planes extends Component {
+class Planes extends Auth {
+
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {

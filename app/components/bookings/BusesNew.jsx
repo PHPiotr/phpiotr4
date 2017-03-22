@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Auth from '../Auth.jsx';
 
-
-class BusesNew extends Component
+class BusesNew extends Auth
 {
 
     constructor(props) {

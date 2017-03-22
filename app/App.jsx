@@ -9,7 +9,6 @@ class App extends Component {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
             callbacks: this.props.callbacks,
             socket: this.props.socket,
-            token: this.props.token,
             planes: this.props.planes,
             plane: this.props.plane,
             planeErrors: this.props.planeErrors,
