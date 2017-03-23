@@ -8,6 +8,9 @@ function Auth(WrappedComponent) {
         }
 
         render() {
+            if (!this.props.callbacks.handleIsLoggedIn()) {
+                return null;
+            }
             return <WrappedComponent {...this.props} />;
         }
     };

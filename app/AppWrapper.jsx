@@ -57,9 +57,10 @@ class AppWrapper extends Component {
             config.api_headers['Authorization'] = `Bearer ${token}`;
             let now = new Date();
             let time = now.getTime();
-            let expireTime = time + config.token_expires_in;
+            let expireTime = time + 1000 * config.token_expires_in;
             now.setTime(expireTime);
-            cookie.setItem(config.token_key, token);
+            console.log(now.toGMTString());
+            cookie.setItem(config.token_key, token, {expires: now.toGMTString()});
             that.setState({
                 isLoggedIn: true,
             });

@@ -12,7 +12,7 @@ var Form = React.createClass({
     },
     render: function() {
         return (
-                <form action={this.props.action} className="form-horizontal" method={this.props.method}>
+                <form action={this.props.action} method={this.props.method}>
                     {this.props.children}
                 </form>
         );

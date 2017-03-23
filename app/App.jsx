@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router';
 import NavLink from './components/nav/NavLink.jsx';
+import CSSModules from 'react-css-modules';
+import { normalize, grid, forms, navs, navbar, table, buttons, inputGroups } from 'bootstrap-css';
+import './css/style.css';
 
 class App extends Component {
 
@@ -35,7 +38,7 @@ class App extends Component {
         });
         let navItems = null;
         let navLoginItems = (
-            <ul className="nav navbar-nav navbar-right">
+            <ul className="nav navbar-nav">
                 <NavLink className="btn btn-link" to="/login">Login</NavLink>
                 <NavLink className="btn btn-link" to="/register">Register</NavLink>
             </ul>
@@ -58,7 +61,7 @@ class App extends Component {
 
         return (
                 <div>
-                    <div className="navbar navbar-default">
+                    <div className="navbar navbar-default clearfix">
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <button type="button" className="collapsed navbar-toggle" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false">

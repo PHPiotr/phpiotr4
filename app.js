@@ -3,13 +3,11 @@ var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config.js');
 var loggedIn = require('./routes/middleware/logged_in');
-var express_session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
@@ -18,8 +16,6 @@ var planes = require('./routes/bookings/planes');
 var trains = require('./routes/bookings/trains');
 var hostels = require('./routes/bookings/hostels');
 var report = require('./routes/report');
-var session = require('./routes/session');
-var morgan = require('morgan');
 
 var app = express();
 var server = require('http').Server(app);
@@ -32,7 +28,7 @@ var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath
+    //publicPath: webpackConfig.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
@@ -53,24 +49,6 @@ app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(morgan('dev'));
-app.use(cookieParser('my secret string'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express_session({
-    secret: 'my secret string',
-    cookie: {maxAge: 3600000},
-    resave: true,
-    saveUninitialized: true
-}));
-app.use(flash());
-app.use(function(req, res, next){
-    res.locals.success_messages = req.flash('success_message');
-    res.locals.error_messages = req.flash('error_message');
-    res.locals.active = req.active;
-    next();
-});
-
-
 app.use('/', index);
 app.use('/users', users);
 app.use('/auth', auth);
@@ -79,16 +57,7 @@ app.use('/bookings/planes', planes);
 app.use('/bookings/hostels', hostels);
 app.use('/bookings/buses', buses);
 app.use('/bookings/trains', trains);
-app.use('/session', session);
 app.use('/report', report);
-
-require('express-dynamic-helpers-patch')(app);
-// and now You can use 2.x express dynamicHelpers
-app.dynamicHelpers({
-    session: function(req, res) {
-        return req.session;
-    }
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -98,7 +67,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

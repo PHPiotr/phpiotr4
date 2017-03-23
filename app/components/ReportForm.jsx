@@ -28,58 +28,58 @@ module.exports = React.createClass({
     },
     componentDidMount: function() {
         var that = this;
-        $(function() {
-            var from = $('#report-from');
-            var to = $('#report-to');
-            var socket = io();
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth();
-            var default_from = new Date(year, month, 1);
-            var default_to = new Date(year, month + 1, 0);
-
-            from.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_from);
-            to.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_to);
-
-            that._update();
-
-            $('#report-from, #report-to').change(function() {
-                that._update();
-            });
-
-            socket.on('insert', function(booking) {
-                that._update();
-                that.setState({
-                    insert: booking
-                });
-                setTimeout(function() {
-                    that.setState({
-                        insert: null
-                    });
-                }, 3000);
-            });
-        });
+        // $(function() {
+        //     var from = $('#report-from');
+        //     var to = $('#report-to');
+        //     var socket = io();
+        //     var date = new Date();
+        //     var year = date.getFullYear();
+        //     var month = date.getMonth();
+        //     var default_from = new Date(year, month, 1);
+        //     var default_to = new Date(year, month + 1, 0);
+        //
+        //     from.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_from);
+        //     to.datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy').datepicker('setDate', default_to);
+        //
+        //     that._update();
+        //
+        //     // $('#report-from, #report-to').change(function() {
+        //     //     that._update();
+        //     // });
+        //
+        //     socket.on('insert', function(booking) {
+        //         that._update();
+        //         that.setState({
+        //             insert: booking
+        //         });
+        //         setTimeout(function() {
+        //             that.setState({
+        //                 insert: null
+        //             });
+        //         }, 3000);
+        //     });
+        // });
     },
     _update: function() {
-        var that = this;
-        var from = $('#report-from');
-        var to = $('#report-to');
-        var from_value = from.val();
-        var to_value = to.val();
-        from.datepicker('option', 'maxDate', to_value);
-        to.datepicker('option', 'minDate', from_value);
-        $.ajax({
-            url: '/report',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                from: from_value,
-                to: to_value
-            },
-            success: function(data) {
-                //that.setState({report: data});
-            }
-        });
+        // var that = this;
+        // var from = $('#report-from');
+        // var to = $('#report-to');
+        // var from_value = from.val();
+        // var to_value = to.val();
+        // from.datepicker('option', 'maxDate', to_value);
+        // to.datepicker('option', 'minDate', from_value);
+        // $.ajax({
+        //     url: '/report',
+        //     type: 'GET',
+        //     dataType: 'json',
+        //     data: {
+        //         from: from_value,
+        //         to: to_value
+        //     },
+        //     success: function(data) {
+        //         //that.setState({report: data});
+        //     }
+        // });
     },
     render: function() {
         return(
