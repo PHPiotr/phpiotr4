@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-
-class Planes extends Auth {
+class Planes extends Component {
 
     constructor(props) {
         super(props);
@@ -36,5 +35,5 @@ Planes.propTypes = {
     planeErrorMessage: PropTypes.string,
 };
 
-export default Planes;
+export default Auth(Planes);
 

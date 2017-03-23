@@ -23,79 +23,52 @@ import HostelsNew from './components/bookings/HostelsNew.jsx';
 import Login from './components/Login.jsx';
 import Logout from './components/Logout.jsx';
 import Register from './components/Register.jsx';
-import Auth from './components/Auth.jsx';
 import {AppContainer} from 'react-hot-loader';
-import config from '../config';
-import cookie from 'cookie-monster';
-
-function isLoggedIn() {
-    return undefined !== cookie.getItem(config.token_key);
-}
-
-function requireAuth(nextState, replace) {
-    if (!isLoggedIn()) {
-        replace({
-            pathname: '/login',
-            state: {nextPathname: nextState.location.pathname}
-        })
-    }
-}
-function requireNotAuth(nextState, replace) {
-    if (isLoggedIn()) {
-        replace({
-            pathname: '/',
-            state: {nextPathname: nextState.location.pathname}
-        });
-    }
-}
 
 let appContainer = (
     <AppContainer>
         <Router history={browserHistory}>
             <Route component={AppWrapper}>
                 <Route path="/" component={App}>
-                    <Route name="login" path="login" component={Login} onEnter={requireNotAuth}/>
-                    <Route name="register" path="register" component={Register} onEnter={requireNotAuth}/>
-                    <Route onEnter={requireAuth} >
-                        <IndexRoute component={Report}/>
-                        <Route name="auth" component={Auth}/>
-                        <Route name="logout" path="logout" component={Logout}/>
-                        <Route name="buses" path="bookings/buses" component={Buses}>
-                            <Route path="current" component={BusesCurrent}>
-                                <Route path=":page" component={BusesCurrent}/>
-                            </Route>
-                            <Route path="past" component={BusesPast}>
-                                <Route path=":page" component={BusesPast}/>
-                            </Route>
-                            <Route path="new" component={BusesNew}/>
+                    <Route name="login" path="login" component={Login}/>
+                    <Route name="register" path="register" component={Register}/>
+                    <IndexRoute component={Report}/>
+                    <Route name="logout" path="logout" component={Logout}/>
+                    <Route name="buses" path="bookings/buses" component={Buses}>
+                        <Route path="current" component={BusesCurrent}>
+                            <Route path=":page" component={BusesCurrent}/>
                         </Route>
-                        <Route name="planes" path="bookings/planes" component={Planes}>
-                            <Route path="current" component={PlanesCurrent}>
-                                <Route path=":page" component={PlanesCurrent}/>
-                            </Route>
-                            <Route path="past" component={PlanesPast}>
-                                <Route path=":page" component={PlanesPast}/>
-                            </Route>
-                            <Route path="new" component={PlanesNew}/>
+                        <Route path="past" component={BusesPast}>
+                            <Route path=":page" component={BusesPast}/>
                         </Route>
-                        <Route name="trains" path="bookings/trains" component={Trains}>
-                            <Route path="current(/:page)" component={TrainsCurrent}>
-                                <Route path=":page" component={TrainsCurrent}/>
-                            </Route>
-                            <Route path="past(/:page)" component={TrainsPast}>
-                                <Route path=":page" component={TrainsPast}/>
-                            </Route>
-                            <Route path="new" component={TrainsNew}/>
+                        <Route path="new" component={BusesNew}/>
+                    </Route>
+                    <Route name="planes" path="bookings/planes" component={Planes}>
+                        <Route path="current" component={PlanesCurrent}>
+                            <Route path=":page" component={PlanesCurrent}/>
                         </Route>
-                        <Route name="hostels" path="bookings/hostels" component={Hostels}>
-                            <Route path="current(/:page)" component={HostelsCurrent}>
-                                <Route path=":page" component={HostelsCurrent}/>
-                            </Route>
-                            <Route path="past(/:page)" component={HostelsPast}>
-                                <Route path=":page" component={HostelsPast}/>
-                            </Route>
-                            <Route path="new" component={HostelsNew}/>
+                        <Route path="past" component={PlanesPast}>
+                            <Route path=":page" component={PlanesPast}/>
                         </Route>
+                        <Route path="new" component={PlanesNew}/>
+                    </Route>
+                    <Route name="trains" path="bookings/trains" component={Trains}>
+                        <Route path="current(/:page)" component={TrainsCurrent}>
+                            <Route path=":page" component={TrainsCurrent}/>
+                        </Route>
+                        <Route path="past(/:page)" component={TrainsPast}>
+                            <Route path=":page" component={TrainsPast}/>
+                        </Route>
+                        <Route path="new" component={TrainsNew}/>
+                    </Route>
+                    <Route name="hostels" path="bookings/hostels" component={Hostels}>
+                        <Route path="current(/:page)" component={HostelsCurrent}>
+                            <Route path=":page" component={HostelsCurrent}/>
+                        </Route>
+                        <Route path="past(/:page)" component={HostelsPast}>
+                            <Route path=":page" component={HostelsPast}/>
+                        </Route>
+                        <Route path="new" component={HostelsNew}/>
                     </Route>
                 </Route>
             </Route>

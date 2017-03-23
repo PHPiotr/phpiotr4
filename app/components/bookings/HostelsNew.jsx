@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-class HostelsNew extends Auth
+class HostelsNew extends Component
 {
 
     constructor(props) {
@@ -81,5 +81,5 @@ HostelsNew.propTypes = {
     hostelInserted: PropTypes.object
 };
 
-export default HostelsNew;
+export default Auth(HostelsNew);
 

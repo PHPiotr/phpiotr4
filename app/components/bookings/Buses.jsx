@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-class Buses extends Auth {
+class Buses extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
@@ -31,5 +31,5 @@ Buses.propTypes = {
     busErrorMessage: PropTypes.string,
 };
 
-export default Buses;
+export default Auth(Buses);
 

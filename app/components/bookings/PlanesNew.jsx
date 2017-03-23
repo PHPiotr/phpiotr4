@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-class PlanesNew extends Auth
+class PlanesNew extends Component
 {
 
     constructor(props) {
@@ -105,5 +105,5 @@ PlanesNew.propTypes = {
     planeInserted: PropTypes.object
 };
 
-export default PlanesNew;
+export default Auth(PlanesNew);
 

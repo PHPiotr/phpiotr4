@@ -1,18 +1,18 @@
-import Auth from './Auth.jsx';
+import Auth from './hoc/Auth.jsx';
 import ReportForm from './ReportForm.jsx';
-import React from 'react';
+import React, {Component} from 'react';
 
-class Report extends Auth {
+class Report extends Component {
 
     constructor(props) {
         super(props);
     }
 
     render() {
-        return(
+        return (
             <ReportForm />
         );
     };
 }
 
-export default Report;
+export default Auth(Report);

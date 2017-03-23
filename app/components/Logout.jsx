@@ -1,7 +1,7 @@
-import React from 'react';
-import Auth from './Auth.jsx';
+import React, {Component} from 'react';
+import Auth from './hoc/Auth.jsx';
 
-class Logout extends Auth {
+class Logout extends Component {
 
     constructor(props) {
         super(props);
@@ -16,5 +16,5 @@ class Logout extends Auth {
     };
 }
 
-export default Logout;
+export default Auth(Logout);
 

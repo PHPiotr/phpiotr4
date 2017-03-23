@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Nav from '../nav/Nav.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-class Hostels extends Auth {
+class Hostels extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
@@ -31,5 +31,5 @@ Hostels.propTypes = {
     hostelErrorMessage: PropTypes.string,
 };
 
-export default Hostels;
+export default Auth(Hostels);
 

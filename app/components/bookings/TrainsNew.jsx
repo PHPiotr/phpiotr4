@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
-import Auth from '../Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
-class TrainsNew extends Auth
+class TrainsNew extends Component
 {
 
     constructor(props) {
@@ -90,5 +90,5 @@ TrainsNew.propTypes = {
     trainInserted: PropTypes.object
 };
 
-export default TrainsNew;
+export default Auth(TrainsNew);
 
