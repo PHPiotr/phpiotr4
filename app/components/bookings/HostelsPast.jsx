@@ -1,26 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import Pagination from '../nav/Pagination.jsx';
 import moment from 'moment';
+import Bookings from '../hoc/Bookings.jsx';
 
 class HostelsPast extends Component {
-
-    constructor(props) {
-        super(props);
-        this.getHostels = this.getHostels.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.callbacks.handleList('hostels', 'past');
-        this.props.socket.on('insert_hostel', this.getHostels);
-    };
-
-    componentWillUnmount() {
-        this.props.socket.removeListener('insert_hostel', this.getHostels);
-    };
-
-    getHostels() {
-        this.props.callbacks.handleList('hostels', 'past');
-    };
 
     render() {
 
@@ -107,5 +90,5 @@ HostelsPast.propTypes = {
     hostels: PropTypes.object,
 };
 
-export default HostelsPast;
+export default Bookings(HostelsPast, 'hostels', 'past');
 

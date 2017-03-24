@@ -1,27 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import Pagination from '../nav/Pagination.jsx';
 import moment from 'moment';
+import Bookings from '../hoc/Bookings.jsx';
 
 class PlanesPast extends Component {
-
-    constructor(props) {
-        super(props);
-        this.getPlanes = this.getPlanes.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.callbacks.handleList('planes', 'past');
-        this.props.socket.on('insert_plane', this.getPlanes);
-    };
-
-    componentWillUnmount() {
-        this.props.socket.removeListener('insert_plane', this.getPlanes);
-    };
-
-    getPlanes() {
-        // TODO: Check if flight added is in th e past.
-        this.props.callbacks.handleList('planes', 'past');
-    };
 
     render() {
 
@@ -121,5 +103,5 @@ PlanesPast.propTypes = {
     planes: PropTypes.object,
 };
 
-export default PlanesPast;
+export default Bookings(PlanesPast, 'planes', 'past');
 
