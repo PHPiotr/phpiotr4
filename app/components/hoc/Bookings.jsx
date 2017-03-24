@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-function bookings(WrappedComponent, type_plural, type_singular, active) {
+function bookings(WrappedComponent, active) {
+
     class Bookings extends Component {
         constructor(props) {
             super(props);
@@ -9,16 +10,16 @@ function bookings(WrappedComponent, type_plural, type_singular, active) {
         }
 
         componentDidMount() {
-            this.props.callbacks.handleList(type_plural, active);
-            this.props.socket.on(`insert_${type_singular}`, this.getBookings);
+            this.props.callbacks.handleList(this.props.labelPlural, active);
+            this.props.socket.on(`insert_${this.props.labelSingular}`, this.getBookings);
         };
 
         componentWillUnmount() {
-            this.props.socket.removeListener(`insert_${type_singular}`, this.getBookings);
+            this.props.socket.removeListener(`insert_${this.props.labelSingular}`, this.getBookings);
         };
 
         getBookings() {
-            this.props.callbacks.handleList(type_plural, active);
+            this.props.callbacks.handleList(this.props.labelPlural, active);
         };
 
         render() {
@@ -28,9 +29,6 @@ function bookings(WrappedComponent, type_plural, type_singular, active) {
 
     Bookings.displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Bookings, WrappedComponent);
-    Bookings.propTypes = {
-        [type_plural]: PropTypes.object,
-    };
 
     return Bookings;
 }
