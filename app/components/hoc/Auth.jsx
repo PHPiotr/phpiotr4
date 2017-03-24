@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-function Auth(WrappedComponent) {
-    return class extends Component {
+function auth(WrappedComponent) {
+    class Auth extends Component {
         constructor(props) {
             super(props);
             this.props.callbacks.handleVerify();
@@ -13,8 +13,17 @@ function Auth(WrappedComponent) {
             }
             return <WrappedComponent {...this.props} />;
         }
-    };
+    }
+
+    Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
+    Auth.propTypes = WrappedComponent.propTypes;
+
+    return Auth;
 }
 
-export default Auth
+function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+export default auth
 

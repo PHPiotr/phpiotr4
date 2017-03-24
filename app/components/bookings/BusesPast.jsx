@@ -90,9 +90,7 @@ class BusesPast extends Component {
     };
 };
 
-BusesPast.propTypes = {
-    buses: PropTypes.object,
-};
+BusesPast.displayName = 'BusesPast'
 
 export default Bookings(BusesPast, 'buses', 'past');
 

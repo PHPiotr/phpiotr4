@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import Nav from '../nav/Nav.jsx';
 import Auth from '../hoc/Auth.jsx';
 
@@ -14,13 +14,13 @@ class Buses extends Component {
                 callbacks: this.props.callbacks,
                 socket: this.props.socket
             });
-        return(
+        return (
             <div>
-                <Nav booking="buses" />
+                <Nav booking="buses"/>
                 {propsChildren}
             </div>
-        );
-    };
+        )
+    }
 }
 
 Buses.propTypes = {
@@ -29,7 +29,9 @@ Buses.propTypes = {
     busErrors: PropTypes.object,
     busInserted: PropTypes.object,
     busErrorMessage: PropTypes.string,
-};
+}
 
-export default Auth(Buses);
+Buses.displayName = 'Buses'
+
+export default Auth(Buses)
 

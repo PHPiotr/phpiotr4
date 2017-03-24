@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
 import Auth from '../hoc/Auth.jsx';
 
-class PlanesNew extends Component
-{
+class PlanesNew extends Component {
 
     constructor(props) {
         super(props);
@@ -35,47 +34,71 @@ class PlanesNew extends Component
         if (this.props.plane.is_return) {
             returnFlightInputs = (
                 <div>
-                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_departure_date} value={this.props.plane.return_departure_date} type="date" handler={this.handleChange} name="return_departure_date" />
-                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_departure_time} value={this.props.plane.return_departure_time} type="time" handler={this.handleChange} name="return_departure_time" />
-                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_arrival_time} value={this.props.plane.return_arrival_time} type="time" handler={this.handleChange} name="return_arrival_time" />
-                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_seat} value={this.props.plane.return_seat} handler={this.handleChange} name="return_seat" />
+                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_departure_date}
+                                value={this.props.plane.return_departure_date} type="date" handler={this.handleChange}
+                                name="return_departure_date"/>
+                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_departure_time}
+                                value={this.props.plane.return_departure_time} type="time" handler={this.handleChange}
+                                name="return_departure_time"/>
+                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_arrival_time}
+                                value={this.props.plane.return_arrival_time} type="time" handler={this.handleChange}
+                                name="return_arrival_time"/>
+                    <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_seat}
+                                value={this.props.plane.return_seat} handler={this.handleChange} name="return_seat"/>
                 </div>
-            );
+            )
         }
 
         if (planeErrorMessage) {
             planeError = (
                 <div className="alert alert-danger" role="alert">{planeErrorMessage}</div>
-            );
+            )
         }
 
         if (Object.keys(planeInserted).length > 0) {
             planeInsert = (
                 <div className="alert alert-success" role="alert">New plane was just inserted</div>
-            );
+            )
         }
 
-        return(
+        return (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {planeInsert}
                 {planeError}
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.confirmation_code} value={this.props.plane.confirmation_code} handler={this.handleChange} name="confirmation_code" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.from} value={this.props.plane.from} handler={this.handleChange} name="from" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.to} value={this.props.plane.to} handler={this.handleChange} name="to" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.departure_date} value={this.props.plane.departure_date} type="date" handler={this.handleChange} name="departure_date" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.departure_time} value={this.props.plane.departure_time} type="time" handler={this.handleChange} name="departure_time" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.arrival_time} value={this.props.plane.arrival_time} type="time" handler={this.handleChange} name="arrival_time" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.seat} value={this.props.plane.seat} handler={this.handleChange} name="seat" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.price} value={this.props.plane.price} handler={this.handleChange} name="price" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.currency} value={this.props.plane.currency} handler={this.handleChange} name="currency" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.checked_in} value={this.props.plane.checked_in} type="checkbox" handler={this.handleChange} name="checked_in" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.is_return} value={this.props.plane.is_return} type="checkbox" handler={this.handleChange} name="is_return" />
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.confirmation_code}
+                            value={this.props.plane.confirmation_code} handler={this.handleChange}
+                            name="confirmation_code"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.from}
+                            value={this.props.plane.from} handler={this.handleChange} name="from"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.to}
+                            value={this.props.plane.to} handler={this.handleChange} name="to"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.departure_date}
+                            value={this.props.plane.departure_date} type="date" handler={this.handleChange}
+                            name="departure_date"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.departure_time}
+                            value={this.props.plane.departure_time} type="time" handler={this.handleChange}
+                            name="departure_time"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.arrival_time}
+                            value={this.props.plane.arrival_time} type="time" handler={this.handleChange}
+                            name="arrival_time"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.seat}
+                            value={this.props.plane.seat} handler={this.handleChange} name="seat"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.price}
+                            value={this.props.plane.price} handler={this.handleChange} name="price"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.currency}
+                            value={this.props.plane.currency} handler={this.handleChange} name="currency"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.checked_in}
+                            value={this.props.plane.checked_in} type="checkbox" handler={this.handleChange}
+                            name="checked_in"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.is_return}
+                            value={this.props.plane.is_return} type="checkbox" handler={this.handleChange}
+                            name="is_return"/>
                 {returnFlightInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        );
-    };
-};
+        )
+    }
+}
 
 PlanesNew.defaultProps = {
     plane: {
@@ -95,7 +118,7 @@ PlanesNew.defaultProps = {
         return_seat: ''
     },
     errors: {}
-};
+}
 
 PlanesNew.propTypes = {
     plane: PropTypes.object,
@@ -103,7 +126,9 @@ PlanesNew.propTypes = {
     planeErrorMessage: PropTypes.string,
     planesCallbacks: PropTypes.object,
     planeInserted: PropTypes.object
-};
+}
+
+PlanesNew.displayName = 'PlanesNew'
 
 export default Auth(PlanesNew);
 

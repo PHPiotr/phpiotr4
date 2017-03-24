@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import Nav from '../nav/Nav.jsx';
 import Auth from '../hoc/Auth.jsx';
 
@@ -14,13 +14,13 @@ class Hostels extends Component {
                 callbacks: this.props.callbacks,
                 socket: this.props.socket
             });
-        return(
+        return (
             <div>
-                <Nav booking="hostels" />
+                <Nav booking="hostels"/>
                 {propsChildren}
             </div>
-        );
-    };
+        )
+    }
 }
 
 Hostels.propTypes = {
@@ -29,7 +29,9 @@ Hostels.propTypes = {
     hostelErrors: PropTypes.object,
     hostelInserted: PropTypes.object,
     hostelErrorMessage: PropTypes.string,
-};
+}
 
-export default Auth(Hostels);
+Hostels.displayName = 'Hostels'
+
+export default Auth(Hostels)
 

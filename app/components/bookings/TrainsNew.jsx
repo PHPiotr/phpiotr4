@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
 import ButtonGroup from '../helper/ButtonGroup.jsx';
 import Auth from '../hoc/Auth.jsx';
 
-class TrainsNew extends Component
-{
+class TrainsNew extends Component {
 
     constructor(props) {
         super(props);
@@ -35,9 +34,11 @@ class TrainsNew extends Component
         if (this.props.train.is_return) {
             returnJourneyInputs = (
                 <div>
-                    <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.return_departure_date} value={this.props.train.return_departure_date} type="date" handler={this.handleChange} name="return_departure_date" />
+                    <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.return_departure_date}
+                                value={this.props.train.return_departure_date} type="date" handler={this.handleChange}
+                                name="return_departure_date"/>
                 </div>
-            );
+            )
         }
 
         if (trainErrorMessage) {
@@ -52,22 +53,30 @@ class TrainsNew extends Component
             );
         }
 
-        return(
+        return (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {trainInsert}
                 {trainError}
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.from} value={this.props.train.from} handler={this.handleChange} name="from" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.to} value={this.props.train.to} handler={this.handleChange} name="to" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.departure_date} value={this.props.train.departure_date} type="date" handler={this.handleChange} name="departure_date" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.price} value={this.props.train.price} handler={this.handleChange} name="price" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.currency} value={this.props.train.currency} handler={this.handleChange} name="currency" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.is_return} value={this.props.train.is_return} type="checkbox" handler={this.handleChange} name="is_return" />
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.from}
+                            value={this.props.train.from} handler={this.handleChange} name="from"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.to}
+                            value={this.props.train.to} handler={this.handleChange} name="to"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.departure_date}
+                            value={this.props.train.departure_date} type="date" handler={this.handleChange}
+                            name="departure_date"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.price}
+                            value={this.props.train.price} handler={this.handleChange} name="price"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.currency}
+                            value={this.props.train.currency} handler={this.handleChange} name="currency"/>
+                <InputGroup focusHandler={this.handleFocus} error={this.props.trainErrors.is_return}
+                            value={this.props.train.is_return} type="checkbox" handler={this.handleChange}
+                            name="is_return"/>
                 {returnJourneyInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        );
-    };
-};
+        )
+    }
+}
 
 TrainsNew.defaultProps = {
     train: {
@@ -80,7 +89,7 @@ TrainsNew.defaultProps = {
         return_departure_date: '',
     },
     errors: {}
-};
+}
 
 TrainsNew.propTypes = {
     train: PropTypes.object,
@@ -88,7 +97,9 @@ TrainsNew.propTypes = {
     trainErrorMessage: PropTypes.string,
     trainsCallbacks: PropTypes.object,
     trainInserted: PropTypes.object
-};
+}
+
+TrainsNew.displayName = 'TrainsNew'
 
 export default Auth(TrainsNew);
 

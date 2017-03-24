@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
-function Bookings(WrappedComponent, type, active) {
-    return class extends Component {
+function bookings(WrappedComponent, type, active) {
+    class Bookings extends Component {
         constructor(props) {
             super(props);
             this.getBookings = this.getBookings.bind(this);
@@ -23,8 +23,19 @@ function Bookings(WrappedComponent, type, active) {
         render() {
             return <WrappedComponent {...this.props} />;
         }
+    }
+
+    Bookings.displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
+    Bookings.propTypes = {
+        [type]: PropTypes.object,
     };
+
+    return Bookings;
 }
 
-export default Bookings
+function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+export default bookings
 

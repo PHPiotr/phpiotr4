@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component} from 'react';
 import Pagination from '../nav/Pagination.jsx';
 import moment from 'moment';
 import Bookings from '../hoc/Bookings.jsx';
@@ -31,7 +31,7 @@ class TrainsCurrent extends Component {
             </tr>
         ));
 
-        return(
+        return (
             <div>
                 <div className="row-fluid">
                     <table className="table table-hover table-condensed table-bordered">
@@ -84,13 +84,11 @@ class TrainsCurrent extends Component {
                     getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
-        );
-    };
-};
+        )
+    }
+}
 
-TrainsCurrent.propTypes = {
-    trains: PropTypes.object,
-};
+TrainsCurrent.displayName = 'TrainsCurrent'
 
-export default Bookings(TrainsCurrent, 'trains', 'current');
+export default Bookings(TrainsCurrent, 'trains', 'current')
 

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import Nav from '../nav/Nav.jsx';
 import Auth from '../hoc/Auth.jsx';
 
@@ -13,10 +13,10 @@ class Trains extends Component {
                 trainInserted: this.props.trainInserted,
                 callbacks: this.props.callbacks,
                 socket: this.props.socket
-            });
-        return(
+            })
+        return (
             <div>
-                <Nav booking="trains" />
+                <Nav booking="trains"/>
                 {propsChildren}
             </div>
         );
@@ -29,7 +29,9 @@ Trains.propTypes = {
     trainErrors: PropTypes.object,
     trainInserted: PropTypes.object,
     trainErrorMessage: PropTypes.string,
-};
+}
 
-export default Auth(Trains);
+Trains.displayName = 'Trains'
+
+export default Auth(Trains)
 
