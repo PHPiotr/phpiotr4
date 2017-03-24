@@ -90,5 +90,5 @@ class TrainsCurrent extends Component {
 
 TrainsCurrent.displayName = 'TrainsCurrent'
 
-export default Bookings(TrainsCurrent, 'trains', 'current')
+export default Bookings(TrainsCurrent, 'trains', 'train', 'current')
 

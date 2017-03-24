@@ -101,5 +101,5 @@ class PlanesPast extends Component {
 
 PlanesPast.displayName = 'PlanesPast'
 
-export default Bookings(PlanesPast, 'planes', 'past')
+export default Bookings(PlanesPast, 'planes', 'plane', 'past')
 

@@ -92,5 +92,5 @@ class BusesCurrent extends Component {
 
 BusesCurrent.displayName = 'BusesCurrent'
 
-export default Bookings(BusesCurrent, 'buses', 'current')
+export default Bookings(BusesCurrent, 'buses', 'bus', 'current')
 

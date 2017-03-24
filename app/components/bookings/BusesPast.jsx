@@ -92,5 +92,5 @@ class BusesPast extends Component {
 
 BusesPast.displayName = 'BusesPast'
 
-export default Bookings(BusesPast, 'buses', 'past');
+export default Bookings(BusesPast, 'buses', 'bus', 'past');
 

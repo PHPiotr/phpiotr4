@@ -88,5 +88,5 @@ class HostelsPast extends Component {
 
 HostelsPast.displayName = 'HostelsPast'
 
-export default Bookings(HostelsPast, 'hostels', 'past')
+export default Bookings(HostelsPast, 'hostels', 'hostel', 'past')
 

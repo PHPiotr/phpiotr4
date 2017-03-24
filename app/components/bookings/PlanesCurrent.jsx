@@ -92,5 +92,5 @@ class PlanesCurrent extends Component {
 
 PlanesCurrent.displayName = 'PlanesCurrent'
 
-export default Bookings(PlanesCurrent, 'planes', 'current')
+export default Bookings(PlanesCurrent, 'planes', 'plane', 'current')
 
