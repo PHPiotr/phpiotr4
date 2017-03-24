@@ -2,19 +2,28 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-//const VENDOR_LIBS = ["react","react-dom","react-router","react-tap-event-plugin","es6-promise"];
 
 var config = {
     context: __dirname,
     devtool: 'source-map',
     entry: {
-        bundle: [
-                'react-hot-loader/patch',
-                'webpack/hot/only-dev-server',
-                'webpack-hot-middleware/client',
-                path.resolve(__dirname, 'app/AppContainer.jsx')
-            ],
-        //vendor: VENDOR_LIBS
+        app: [
+            path.resolve(__dirname, 'app/AppContainer.jsx'),
+            'react-hot-loader/patch',
+            'webpack/hot/only-dev-server',
+            'webpack-hot-middleware/client',
+        ],
+        vendor: [
+            "react",
+            "react-addons-css-transition-group",
+            "react-addons-update",
+            "react-css-modules",
+            "react-dnd",
+            "react-dnd-html5-backend",
+            "react-dom",
+            "react-jwt-store",
+            "react-router"
+        ]
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -74,7 +83,7 @@ var config = {
             allChunks: true
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor', 'manifest']
+            names: ['vendor'],
         }),
         new HtmlWebpackPlugin({
             template: './app/index.html'
