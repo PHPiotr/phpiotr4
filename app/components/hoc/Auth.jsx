@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
@@ -16,7 +17,7 @@ function auth(WrappedComponent) {
     }
 
     Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
-    Auth.propTypes = WrappedComponent.propTypes;
+    hoistNonReactStatic(Auth, WrappedComponent);
 
     return Auth;
 }

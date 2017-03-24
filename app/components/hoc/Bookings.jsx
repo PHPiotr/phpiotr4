@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 function bookings(WrappedComponent, type, active) {
     class Bookings extends Component {
@@ -26,6 +27,7 @@ function bookings(WrappedComponent, type, active) {
     }
 
     Bookings.displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
+    hoistNonReactStatic(Bookings, WrappedComponent);
     Bookings.propTypes = {
         [type]: PropTypes.object,
     };
