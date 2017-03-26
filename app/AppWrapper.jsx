@@ -59,7 +59,6 @@ class AppWrapper extends Component {
             let time = now.getTime();
             let expireTime = time + 1000 * config.token_expires_in;
             now.setTime(expireTime);
-            console.log(now.toGMTString());
             cookie.setItem(config.token_key, token, {expires: now.toGMTString()});
             that.setState({
                 isLoggedIn: true,
@@ -75,11 +74,6 @@ class AppWrapper extends Component {
             cookie.removeItem(config.token_key);
             that.context.router.push('/login');
         });
-    }
-
-    componentWillUnmount() {
-        this.props.socket.removeListener(config.event.auth_failed);
-        this.props.socket.removeListener(config.event.token_received);
     }
 
     getHeaders() {

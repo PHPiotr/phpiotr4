@@ -26,7 +26,6 @@ var NewPlane = React.createClass({
         };
     },
     componentDidMount: function() {
-        console.log('did mount');
         $(function() {
             $("#departure-date, #return-departure-date").datepicker();
         });

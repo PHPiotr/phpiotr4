@@ -15,7 +15,7 @@ function bookings(WrappedComponent, active) {
         };
 
         componentWillUnmount() {
-            this.props.socket.removeListener(`insert_${this.props.labelSingular}`, this.getBookings);
+            this.props.socket.removeListener(`insert_${this.props.labelSingular}`);
         };
 
         getBookings() {

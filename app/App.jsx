@@ -2,11 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router';
 import NavLink from './components/nav/NavLink.jsx';
-import CSSModules from 'react-css-modules';
-import { normalize, grid, forms, navs, navbar, table, buttons, inputGroups } from 'bootstrap-css';
+import 'react-css-modules';
+import { forms, navs, navbar, table, buttons, inputGroups } from 'bootstrap-css';
 import './css/style.css';
+import config from '../config';
 
 class App extends Component {
+
+    componentWillUnmount() {
+        this.props.socket.removeListener(config.event.auth_failed);
+        this.props.socket.removeListener(config.event.token_received);
+    }
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {

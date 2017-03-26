@@ -4,16 +4,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 var config = {
-    context: __dirname,
-    devtool: 'source-map',
+    context: path.resolve(__dirname, 'app'),
+    devtool: 'inline-source-map',
     entry: {
         app: [
-            path.resolve(__dirname, 'app/AppContainer.jsx'),
             'react-hot-loader/patch',
             'webpack/hot/only-dev-server',
             'webpack-hot-middleware/client',
+            './AppContainer.jsx',
         ],
         vendor: [
+            "babel-polyfill",
+            "bootstrap-css",
+            "cookie-monster",
+            "history",
+            "hoist-non-react-statics",
+            "moment",
             "react",
             "react-addons-css-transition-group",
             "react-addons-update",
@@ -21,20 +27,21 @@ var config = {
             "react-dnd",
             "react-dnd-html5-backend",
             "react-dom",
-            "react-jwt-store",
-            "react-router"
+            "react-router",
+            "socket.io-client",
+            "whatwg-fetch"
         ]
     },
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: '[name].[hash].js',
+        publicPath: '/',
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 use: 'babel-loader',
-                include: path.resolve(__dirname, 'app'),
                 exclude: /node_modules/
             },
             {
@@ -86,7 +93,7 @@ var config = {
             names: ['vendor'],
         }),
         new HtmlWebpackPlugin({
-            template: './app/index.html'
+            template: './index.html'
         })
     ],
     node: {
