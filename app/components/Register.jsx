@@ -39,7 +39,7 @@ class Register extends Component {
                 <ButtonGroup>Log in</ButtonGroup>
             </form>
         );
-    };
+    }
 }
 
 Register.propTypes = {

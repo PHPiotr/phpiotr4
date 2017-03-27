@@ -4,10 +4,6 @@ import ButtonGroup from './helper/ButtonGroup.jsx';
 
 class Login extends Component {
 
-    static contextTypes = {
-        router: PropTypes.object,
-    };
-
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,13 +43,17 @@ class Login extends Component {
                 <ButtonGroup>Log in</ButtonGroup>
             </form>
         );
-    };
+    }
 }
 
 Login.propTypes = {
     login: PropTypes.object,
     loginErrors: PropTypes.object,
     loginErrorMessage: PropTypes.string,
+};
+
+Login.contextTypes = {
+    router: PropTypes.object,
 };
 
 export default Login;

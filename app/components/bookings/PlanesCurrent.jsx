@@ -1,6 +1,4 @@
-import React, {Component} from 'react';
-import Pagination from '../nav/Pagination.jsx';
-import moment from 'moment';
+import {Component} from 'react';
 import Bookings from '../hoc/Bookings.jsx';
 
 class PlanesCurrent extends Component {
@@ -10,7 +8,7 @@ class PlanesCurrent extends Component {
     }
 }
 
-PlanesCurrent.displayName = 'PlanesCurrent'
+PlanesCurrent.displayName = 'PlanesCurrent';
 
-export default Bookings(PlanesCurrent, 'current')
+export default Bookings(PlanesCurrent, 'current');
 

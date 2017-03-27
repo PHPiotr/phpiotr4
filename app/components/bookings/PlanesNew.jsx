@@ -46,19 +46,19 @@ class PlanesNew extends Component {
                     <InputGroup focusHandler={this.handleFocus} error={this.props.planeErrors.return_seat}
                                 value={this.props.plane.return_seat} handler={this.handleChange} name="return_seat"/>
                 </div>
-            )
+            );
         }
 
         if (planeErrorMessage) {
             planeError = (
                 <div className="alert alert-danger" role="alert">{planeErrorMessage}</div>
-            )
+            );
         }
 
         if (Object.keys(planeInserted).length > 0) {
             planeInsert = (
                 <div className="alert alert-success" role="alert">New plane was just inserted</div>
-            )
+            );
         }
 
         return (
@@ -96,7 +96,7 @@ class PlanesNew extends Component {
                 {returnFlightInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        )
+        );
     }
 }
 
@@ -118,7 +118,7 @@ PlanesNew.defaultProps = {
         return_seat: ''
     },
     errors: {}
-}
+};
 
 PlanesNew.propTypes = {
     plane: PropTypes.object,
@@ -126,9 +126,9 @@ PlanesNew.propTypes = {
     planeErrorMessage: PropTypes.string,
     planesCallbacks: PropTypes.object,
     planeInserted: PropTypes.object
-}
+};
 
-PlanesNew.displayName = 'PlanesNew'
+PlanesNew.displayName = 'PlanesNew';
 
 export default Auth(PlanesNew);
 

@@ -18,7 +18,7 @@ render(AppRouter);
 
 if (module.hot) {
     module.hot.accept('./AppRouter.jsx', () => {
-        render(AppRouter)
+        render(AppRouter);
     });
 }
 

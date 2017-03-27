@@ -33,13 +33,13 @@ class HostelsNew extends Component {
         if (hostelErrorMessage) {
             hostelError = (
                 <div className="alert alert-danger" role="alert">{hostelErrorMessage}</div>
-            )
+            );
         }
 
         if (Object.keys(hostelInserted).length > 0) {
             hostelInsert = (
                 <div className="alert alert-success" role="alert">New hostel was just inserted</div>
-            )
+            );
         }
 
         return (
@@ -64,7 +64,7 @@ class HostelsNew extends Component {
                             value={this.props.hostel.currency} handler={this.handleChange} name="currency"/>
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        )
+        );
     }
 }
 
@@ -79,7 +79,7 @@ HostelsNew.defaultProps = {
         currency: '£',
     },
     errors: {}
-}
+};
 
 HostelsNew.propTypes = {
     hostel: PropTypes.object,
@@ -87,9 +87,9 @@ HostelsNew.propTypes = {
     hostelErrorMessage: PropTypes.string,
     hostelsCallbacks: PropTypes.object,
     hostelInserted: PropTypes.object
-}
+};
 
-HostelsNew.displayName = 'HostelsNew'
+HostelsNew.displayName = 'HostelsNew';
 
-export default Auth(HostelsNew)
+export default Auth(HostelsNew);
 

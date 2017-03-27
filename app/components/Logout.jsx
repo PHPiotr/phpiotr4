@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import Auth from './hoc/Auth.jsx';
 
 class Logout extends Component {
@@ -13,7 +13,7 @@ class Logout extends Component {
 
     render() {
         return null;
-    };
+    }
 }
 
 export default Auth(Logout);

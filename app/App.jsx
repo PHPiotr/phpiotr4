@@ -90,7 +90,7 @@ class App extends Component {
                 </div>
         );
     }
-};
+}
 
 App.propTypes = {
     planes: PropTypes.object,

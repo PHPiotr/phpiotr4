@@ -8,23 +8,23 @@ class Buses extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                buses: this.props.buses,
-                bus: this.props.bus,
-                busErrors: this.props.busErrors,
-                busErrorMessage: this.props.busErrorMessage,
-                busInserted: this.props.busInserted,
-                callbacks: this.props.callbacks,
-                socket: this.props.socket,
-                getContent: this.getContent.bind(this),
-                labelPlural: 'buses',
-                labelSingular: 'bus'
-            });
+            buses: this.props.buses,
+            bus: this.props.bus,
+            busErrors: this.props.busErrors,
+            busErrorMessage: this.props.busErrorMessage,
+            busInserted: this.props.busInserted,
+            callbacks: this.props.callbacks,
+            socket: this.props.socket,
+            getContent: this.getContent.bind(this),
+            labelPlural: 'buses',
+            labelSingular: 'bus'
+        });
         return (
             <div>
                 <Nav booking="buses"/>
                 {propsChildren}
             </div>
-        )
+        );
     }
 
     getContent() {
@@ -107,7 +107,7 @@ class Buses extends Component {
                     getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
-        )
+        );
     }
 }
 
@@ -117,9 +117,9 @@ Buses.propTypes = {
     busErrors: PropTypes.object,
     busInserted: PropTypes.object,
     busErrorMessage: PropTypes.string,
-}
+};
 
-Buses.displayName = 'Buses'
+Buses.displayName = 'Buses';
 
-export default Auth(Buses)
+export default Auth(Buses);
 

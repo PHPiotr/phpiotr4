@@ -38,7 +38,7 @@ class TrainsNew extends Component {
                                 value={this.props.train.return_departure_date} type="date" handler={this.handleChange}
                                 name="return_departure_date"/>
                 </div>
-            )
+            );
         }
 
         if (trainErrorMessage) {
@@ -74,7 +74,7 @@ class TrainsNew extends Component {
                 {returnJourneyInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        )
+        );
     }
 }
 
@@ -89,7 +89,7 @@ TrainsNew.defaultProps = {
         return_departure_date: '',
     },
     errors: {}
-}
+};
 
 TrainsNew.propTypes = {
     train: PropTypes.object,
@@ -97,9 +97,9 @@ TrainsNew.propTypes = {
     trainErrorMessage: PropTypes.string,
     trainsCallbacks: PropTypes.object,
     trainInserted: PropTypes.object
-}
+};
 
-TrainsNew.displayName = 'TrainsNew'
+TrainsNew.displayName = 'TrainsNew';
 
 export default Auth(TrainsNew);
 

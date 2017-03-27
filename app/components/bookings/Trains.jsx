@@ -8,24 +8,24 @@ class Trains extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                trains: this.props.trains,
-                train: this.props.train,
-                trainErrors: this.props.trainErrors,
-                trainErrorMessage: this.props.trainErrorMessage,
-                trainInserted: this.props.trainInserted,
-                callbacks: this.props.callbacks,
-                socket: this.props.socket,
-                getContent: this.getContent.bind(this),
-                labelPlural: 'trains',
-                labelSingular: 'train'
-            })
+            trains: this.props.trains,
+            train: this.props.train,
+            trainErrors: this.props.trainErrors,
+            trainErrorMessage: this.props.trainErrorMessage,
+            trainInserted: this.props.trainInserted,
+            callbacks: this.props.callbacks,
+            socket: this.props.socket,
+            getContent: this.getContent.bind(this),
+            labelPlural: 'trains',
+            labelSingular: 'train'
+        });
         return (
             <div>
                 <Nav booking="trains"/>
                 {propsChildren}
             </div>
         );
-    };
+    }
 
     getContent() {
 
@@ -106,7 +106,7 @@ class Trains extends Component {
                     getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
-        )
+        );
     }
 }
 
@@ -116,9 +116,9 @@ Trains.propTypes = {
     trainErrors: PropTypes.object,
     trainInserted: PropTypes.object,
     trainErrorMessage: PropTypes.string,
-}
+};
 
-Trains.displayName = 'Trains'
+Trains.displayName = 'Trains';
 
-export default Auth(Trains)
+export default Auth(Trains);
 

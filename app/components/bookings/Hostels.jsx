@@ -8,23 +8,23 @@ class Hostels extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                hostels: this.props.hostels,
-                hostel: this.props.hostel,
-                hostelErrors: this.props.hostelErrors,
-                hostelErrorMessage: this.props.hostelErrorMessage,
-                hostelInserted: this.props.hostelInserted,
-                callbacks: this.props.callbacks,
-                socket: this.props.socket,
-                getContent: this.getContent.bind(this),
-                labelPlural: 'hostels',
-                labelSingular: 'hostel'
-            });
+            hostels: this.props.hostels,
+            hostel: this.props.hostel,
+            hostelErrors: this.props.hostelErrors,
+            hostelErrorMessage: this.props.hostelErrorMessage,
+            hostelInserted: this.props.hostelInserted,
+            callbacks: this.props.callbacks,
+            socket: this.props.socket,
+            getContent: this.getContent.bind(this),
+            labelPlural: 'hostels',
+            labelSingular: 'hostel'
+        });
         return (
             <div>
                 <Nav booking="hostels"/>
                 {propsChildren}
             </div>
-        )
+        );
     }
 
     getContent() {
@@ -103,7 +103,7 @@ class Hostels extends Component {
                     getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
-        )
+        );
     }
 }
 
@@ -113,9 +113,9 @@ Hostels.propTypes = {
     hostelErrors: PropTypes.object,
     hostelInserted: PropTypes.object,
     hostelErrorMessage: PropTypes.string,
-}
+};
 
-Hostels.displayName = 'Hostels'
+Hostels.displayName = 'Hostels';
 
-export default Auth(Hostels)
+export default Auth(Hostels);
 

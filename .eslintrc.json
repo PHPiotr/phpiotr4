@@ -33,6 +33,9 @@
     "semi": [
       "error"
     ],
+    "no-extra-semi": [
+      "warn"
+    ],
     "no-console": [
       "warn"
     ],

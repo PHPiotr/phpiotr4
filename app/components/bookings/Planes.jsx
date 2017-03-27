@@ -12,24 +12,24 @@ class Planes extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                planes: this.props.planes,
-                plane: this.props.plane,
-                planeErrors: this.props.planeErrors,
-                planeErrorMessage: this.props.planeErrorMessage,
-                planeInserted: this.props.planeInserted,
-                callbacks: this.props.callbacks,
-                socket: this.props.socket,
-                getContent: this.getContent.bind(this),
-                labelPlural: 'planes',
-                labelSingular: 'plane'
-            });
+            planes: this.props.planes,
+            plane: this.props.plane,
+            planeErrors: this.props.planeErrors,
+            planeErrorMessage: this.props.planeErrorMessage,
+            planeInserted: this.props.planeInserted,
+            callbacks: this.props.callbacks,
+            socket: this.props.socket,
+            getContent: this.getContent.bind(this),
+            labelPlural: 'planes',
+            labelSingular: 'plane'
+        });
         return (
             <div>
                 <Nav booking="planes"/>
                 {propsChildren}
             </div>
         );
-    };
+    }
 
     getContent() {
 
@@ -112,7 +112,7 @@ class Planes extends Component {
                     getBookingsCallback={this.props.callbacks.handleList}
                 />
             </div>
-        )
+        );
     }
 }
 
@@ -122,9 +122,9 @@ Planes.propTypes = {
     planeErrors: PropTypes.object,
     planeInserted: PropTypes.object,
     planeErrorMessage: PropTypes.string,
-}
+};
 
-Planes.displayName = 'Planes'
+Planes.displayName = 'Planes';
 
-export default Auth(Planes)
+export default Auth(Planes);
 

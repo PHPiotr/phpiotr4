@@ -90,7 +90,7 @@ class BusesNew extends Component {
                 {returnJourneyInputs}
                 <ButtonGroup>Add</ButtonGroup>
             </form>
-        )
+        );
     }
 }
 
@@ -109,7 +109,7 @@ BusesNew.defaultProps = {
         return_departure_time: ''
     },
     errors: {}
-}
+};
 
 BusesNew.propTypes = {
     bus: PropTypes.object,
@@ -117,9 +117,9 @@ BusesNew.propTypes = {
     busErrorMessage: PropTypes.string,
     busesCallbacks: PropTypes.object,
     busInserted: PropTypes.object
-}
+};
 
-BusesNew.displayName = 'BusesNew'
+BusesNew.displayName = 'BusesNew';
 
-export default Auth(BusesNew)
+export default Auth(BusesNew);
 

@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
 class InputGroup extends Component {
-    
+
     constructor(props) {
         super(props);
-        
+
         this.setLabel();
         this.setId();
     }
-    
+
     setLabel() {
 
         if (this.props.label) {
@@ -25,15 +25,15 @@ class InputGroup extends Component {
 
         this.label = splitted.join(' ');
     }
-    
+
     setId() {
-        
+
         if (this.props.id) {
             this.id = this.props.id;
         }
         this.id = this.props.name.split('_').join('-');
     }
-    
+
     render() {
         let error_span = null;
         let error_class = '';
@@ -44,9 +44,9 @@ class InputGroup extends Component {
             error_class = ' has-error';
         }
         return (
-                <div className={"clearfix " + this.props.groupClass + error_class}>
-                    <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
-                    <div className={this.props.inputWrapperClass}>
+            <div className={`clearfix ${this.props.groupClass} ${error_class}`}>
+                <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
+                <div className={this.props.inputWrapperClass}>
                     <input
                         id={this.id}
                         type={this.props.type}
@@ -56,12 +56,12 @@ class InputGroup extends Component {
                         onFocus={this.props.focusHandler}
                         value={this.props.value}
                     />
-                        {error_span}
-                    </div>
+                    {error_span}
                 </div>
+            </div>
         );
-    };
-};
+    }
+}
 
 InputGroup.defaultProps = {
     type: 'text',

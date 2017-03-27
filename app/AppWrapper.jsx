@@ -10,9 +10,9 @@ const socket = io.connect(config.api_url);
 
 class AppWrapper extends Component {
 
-    static contextTypes = {
-        router: PropTypes.object,
-    };
+    // static contextTypes = {
+    //     router: PropTypes.object,
+    // };
 
     constructor(props) {
         super(props);
@@ -42,7 +42,7 @@ class AppWrapper extends Component {
             loginErrors: {},
             isLoggedIn: false,
         };
-    };
+    }
 
     componentDidMount() {
         let that = this;
@@ -51,7 +51,7 @@ class AppWrapper extends Component {
             config.api_headers['Authorization'] = `Bearer ${tokenCookie}`;
             that.setState({
                 isLoggedIn: true
-            })
+            });
         }
         socket.on(config.event.token_received, function (token) {
             config.api_headers['Authorization'] = `Bearer ${token}`;
@@ -270,44 +270,48 @@ class AppWrapper extends Component {
 
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
-                callbacks: {
-                    formatPrice: this.formatPrice.bind(this),
-                    handleChange: this.handleChange.bind(this),
-                    handleFocus: this.handleFocus.bind(this),
-                    handleAdd: this.handleAdd.bind(this),
-                    handleList: this.handleList.bind(this),
-                    handleLogin: this.handleLogin.bind(this),
-                    handleLogout: this.handleLogout.bind(this),
-                    handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
-                    handleVerify: this.handleVerify.bind(this),
-                },
-                socket: socket,
-                planes: this.state.planes,
-                plane: this.state.plane,
-                planeErrors: this.state.planeErrors,
-                planeErrorMessage: this.state.planeErrorMessage,
-                planeInserted: this.state.planeInserted,
-                buses: this.state.buses,
-                bus: this.state.bus,
-                busErrors: this.state.busErrors,
-                busErrorMessage: this.state.busErrorMessage,
-                busInserted: this.state.busInserted,
-                trains: this.state.trains,
-                train: this.state.train,
-                trainErrors: this.state.trainErrors,
-                trainErrorMessage: this.state.trainErrorMessage,
-                trainInserted: this.state.trainInserted,
-                hostels: this.state.hostels,
-                hostel: this.state.hostel,
-                hostelErrors: this.state.hostelErrors,
-                hostelInserted: this.state.hostelInserted,
-                hostelErrorMessage: this.state.hostelErrorMessage,
-                login: this.state.login,
-                loginErrors: this.state.loginErrors,
-                loginErrorMessage: this.state.loginErrorMessage,
-            });
+            callbacks: {
+                formatPrice: this.formatPrice.bind(this),
+                handleChange: this.handleChange.bind(this),
+                handleFocus: this.handleFocus.bind(this),
+                handleAdd: this.handleAdd.bind(this),
+                handleList: this.handleList.bind(this),
+                handleLogin: this.handleLogin.bind(this),
+                handleLogout: this.handleLogout.bind(this),
+                handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
+                handleVerify: this.handleVerify.bind(this),
+            },
+            socket: socket,
+            planes: this.state.planes,
+            plane: this.state.plane,
+            planeErrors: this.state.planeErrors,
+            planeErrorMessage: this.state.planeErrorMessage,
+            planeInserted: this.state.planeInserted,
+            buses: this.state.buses,
+            bus: this.state.bus,
+            busErrors: this.state.busErrors,
+            busErrorMessage: this.state.busErrorMessage,
+            busInserted: this.state.busInserted,
+            trains: this.state.trains,
+            train: this.state.train,
+            trainErrors: this.state.trainErrors,
+            trainErrorMessage: this.state.trainErrorMessage,
+            trainInserted: this.state.trainInserted,
+            hostels: this.state.hostels,
+            hostel: this.state.hostel,
+            hostelErrors: this.state.hostelErrors,
+            hostelInserted: this.state.hostelInserted,
+            hostelErrorMessage: this.state.hostelErrorMessage,
+            login: this.state.login,
+            loginErrors: this.state.loginErrors,
+            loginErrorMessage: this.state.loginErrorMessage,
+        });
     }
 }
+
+AppWrapper.contextTypes = {
+    router: PropTypes.object,
+};
 
 export default AppWrapper;
 

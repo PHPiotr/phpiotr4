@@ -1,5 +1,4 @@
 import Auth from './hoc/Auth.jsx';
-import ReportForm from './ReportForm.jsx';
 import React, {Component} from 'react';
 
 class Report extends Component {
@@ -9,10 +8,8 @@ class Report extends Component {
     }
 
     render() {
-        return (
-            <ReportForm />
-        );
-    };
+        return null;
+    }
 }
 
 export default Auth(Report);

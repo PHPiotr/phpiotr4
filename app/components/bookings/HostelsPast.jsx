@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import Bookings from '../hoc/Bookings.jsx';
 
 class HostelsPast extends Component {
@@ -8,7 +8,7 @@ class HostelsPast extends Component {
     }
 }
 
-HostelsPast.displayName = 'HostelsPast'
+HostelsPast.displayName = 'HostelsPast';
 
-export default Bookings(HostelsPast, 'past')
+export default Bookings(HostelsPast, 'past');
 

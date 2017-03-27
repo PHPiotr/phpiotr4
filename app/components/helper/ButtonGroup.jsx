@@ -1,18 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
 class ButtonGroup extends Component {
     render() {
         return (
-                <div className={this.props.groupClass}>
-                    <div className={this.props.buttonWrapperClass}>
-                        <button type={this.props.type} className={this.props.buttonClass}>
-                            {this.props.children}
-                        </button>
-                    </div>
+            <div className={this.props.groupClass}>
+                <div className={this.props.buttonWrapperClass}>
+                    <button type={this.props.type} className={this.props.buttonClass}>
+                        {this.props.children}
+                    </button>
                 </div>
+            </div>
         );
     }
-};
+}
 
 ButtonGroup.defaultProps = {
     type: 'submit',
@@ -22,7 +22,7 @@ ButtonGroup.defaultProps = {
 };
 
 ButtonGroup.propTypes = {
-    children: React.PropTypes.string.isRequired
+    children: PropTypes.string.isRequired
 };
 
 export default ButtonGroup;

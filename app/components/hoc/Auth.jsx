@@ -26,5 +26,5 @@ function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-export default auth
+export default auth;
 
