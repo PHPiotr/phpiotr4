@@ -19,9 +19,9 @@ import BusesNew from './components/bookings/BusesNew.jsx';
 import PlanesNew from './components/bookings/PlanesNew.jsx';
 import TrainsNew from './components/bookings/TrainsNew.jsx';
 import HostelsNew from './components/bookings/HostelsNew.jsx';
-import Login from './components/Login.jsx';
-import Logout from './components/Logout.jsx';
-import Register from './components/Register.jsx';
+import Login from './components/auth/Login.jsx';
+import Logout from './components/auth/Logout.jsx';
+import Register from './components/auth/Register.jsx';
 
 const AppRouter = () => (
     <Router history={browserHistory}>

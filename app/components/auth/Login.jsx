@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import InputGroup from './helper/InputGroup.jsx';
-import ButtonGroup from './helper/ButtonGroup.jsx';
+import InputGroup from '../helper/InputGroup.jsx';
+import ButtonGroup from '../helper/ButtonGroup.jsx';
 
-class Register extends Component {
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -24,6 +24,10 @@ class Register extends Component {
     }
 
     render() {
+        if (this.props.callbacks.handleIsLoggedIn()) {
+            return null;
+        }
+
         let loginErrorMessage = this.props.loginErrorMessage;
         let loginError = null;
         if (loginErrorMessage) {
@@ -35,18 +39,22 @@ class Register extends Component {
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {loginError}
                 <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.username} value={this.props.login.username} handler={this.handleChange} name="username" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
+                <InputGroup type="password" focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
                 <ButtonGroup>Log in</ButtonGroup>
             </form>
         );
     }
 }
 
-Register.propTypes = {
+Login.propTypes = {
     login: PropTypes.object,
     loginErrors: PropTypes.object,
     loginErrorMessage: PropTypes.string,
 };
 
-export default Register;
+Login.contextTypes = {
+    router: PropTypes.object,
+};
+
+export default Login;
 

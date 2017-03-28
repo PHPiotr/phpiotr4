@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import Auth from './hoc/Auth.jsx';
+import Auth from '../hoc/Auth.jsx';
 
 class Logout extends Component {
 

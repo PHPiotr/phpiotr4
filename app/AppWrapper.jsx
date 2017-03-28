@@ -41,6 +41,24 @@ class AppWrapper extends Component {
             loginErrorMessage: '',
             loginErrors: {},
             isLoggedIn: false,
+            report: {
+                total_cost: 0,
+                buses: [],
+                buses_avg: 0,
+                buses_cost: 0,
+                buses_singles_quantity: 0,
+                planes: [],
+                planes_avg: 0,
+                planes_cost: 0,
+                planes_singles_quantity: 0,
+                trains: [],
+                trains_avg: 0,
+                trains_cost: 0,
+                trains_singles_quantity: 0,
+                hostels: [],
+                hostels_avg: 0,
+                hostels_cost: 0,
+            },
         };
     }
 
@@ -97,6 +115,37 @@ class AppWrapper extends Component {
             })
             .catch((error) => {
                 console.log('Not verified', error);
+            });
+    }
+
+    handleReport() {
+        let headers = this.getHeaders();
+        let oldReport = this.state.report;
+        fetch(`${config.api_url}/report`, {headers: headers})
+            .then((response) => response.json())
+            .then((responseData) => {
+                let newReport = update(oldReport, {$merge: {
+                    total_cost: responseData['total_cost'],
+                    buses: responseData['buses'],
+                    planes: responseData['planes'],
+                    trains: responseData['trains'],
+                    hostels: responseData['hostels'],
+                    buses_avg: responseData['buses_avg'],
+                    buses_cost: responseData['buses_cost'],
+                    buses_singles_quantity: responseData['buses_singles_quantity'],
+                    planes_avg: responseData['planes_avg'],
+                    planes_cost: responseData['planes_cost'],
+                    planes_singles_quantity: responseData['planes_singles_quantity'],
+                    trains_avg: responseData['trains_avg'],
+                    trains_cost: responseData['trains_cost'],
+                    trains_singles_quantity: responseData['trains_singles_quantity'],
+                    hostels_avg: responseData['hostels_avg'],
+                    hostels_cost: responseData['hostels_cost'],
+                }});
+                this.setState({report: newReport});
+            })
+            .catch((error) => {
+                this.setState({report: oldReport});
             });
     }
 
@@ -280,7 +329,9 @@ class AppWrapper extends Component {
                 handleLogout: this.handleLogout.bind(this),
                 handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
                 handleVerify: this.handleVerify.bind(this),
+                handleReport: this.handleReport.bind(this),
             },
+            report: this.state.report,
             socket: socket,
             planes: this.state.planes,
             plane: this.state.plane,
