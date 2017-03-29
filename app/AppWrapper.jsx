@@ -10,10 +10,6 @@ const socket = io.connect(config.api_url);
 
 class AppWrapper extends Component {
 
-    // static contextTypes = {
-    //     router: PropTypes.object,
-    // };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -41,6 +37,9 @@ class AppWrapper extends Component {
             loginErrorMessage: '',
             loginErrors: {},
             isLoggedIn: false,
+            fromDateFieldType: 'text',
+            toDateFieldType: 'text',
+            isDateFilterEnabled: false,
             report: {
                 total_cost: 0,
                 buses: [],
@@ -124,24 +123,26 @@ class AppWrapper extends Component {
         fetch(`${config.api_url}/report`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
-                let newReport = update(oldReport, {$merge: {
-                    total_cost: responseData['total_cost'],
-                    buses: responseData['buses'],
-                    planes: responseData['planes'],
-                    trains: responseData['trains'],
-                    hostels: responseData['hostels'],
-                    buses_avg: responseData['buses_avg'],
-                    buses_cost: responseData['buses_cost'],
-                    buses_singles_quantity: responseData['buses_singles_quantity'],
-                    planes_avg: responseData['planes_avg'],
-                    planes_cost: responseData['planes_cost'],
-                    planes_singles_quantity: responseData['planes_singles_quantity'],
-                    trains_avg: responseData['trains_avg'],
-                    trains_cost: responseData['trains_cost'],
-                    trains_singles_quantity: responseData['trains_singles_quantity'],
-                    hostels_avg: responseData['hostels_avg'],
-                    hostels_cost: responseData['hostels_cost'],
-                }});
+                let newReport = update(oldReport, {
+                    $merge: {
+                        total_cost: responseData['total_cost'],
+                        buses: responseData['buses'],
+                        planes: responseData['planes'],
+                        trains: responseData['trains'],
+                        hostels: responseData['hostels'],
+                        buses_avg: responseData['buses_avg'],
+                        buses_cost: responseData['buses_cost'],
+                        buses_singles_quantity: responseData['buses_singles_quantity'],
+                        planes_avg: responseData['planes_avg'],
+                        planes_cost: responseData['planes_cost'],
+                        planes_singles_quantity: responseData['planes_singles_quantity'],
+                        trains_avg: responseData['trains_avg'],
+                        trains_cost: responseData['trains_cost'],
+                        trains_singles_quantity: responseData['trains_singles_quantity'],
+                        hostels_avg: responseData['hostels_avg'],
+                        hostels_cost: responseData['hostels_cost'],
+                    }
+                });
                 this.setState({report: newReport});
             })
             .catch((error) => {
@@ -189,6 +190,46 @@ class AppWrapper extends Component {
         this.setState({
             [typeErrors]: errors
         });
+    }
+
+    handleFocusDate(event) {
+        let fieldType = `${event.target.name}DateFieldType`;
+        if (this.state[fieldType] === 'text') {
+            this.setState({
+                [fieldType]: 'date'
+            });
+        }
+    }
+
+    handleSubmitDate(event) {
+        console.log('isDateFilterEnabled:', this.state.isDateFilterEnabled);
+        event.preventDefault();
+    }
+
+    handleResetDate(event) {
+        event.preventDefault();
+    }
+
+    handleChangeDate(event) {
+        console.log(event.target.value, event.target.name);
+    }
+
+    handleBlurDate(event) {
+        let target, fieldType;
+
+        target = event.target;
+
+        if (target.value) {
+            return;
+        }
+
+        fieldType = `${target.name}DateFieldType`;
+
+        if (this.state[fieldType] === 'date') {
+            this.setState({
+                [fieldType]: 'text'
+            });
+        }
     }
 
     handleAdd(event, type, types) {
@@ -317,46 +358,61 @@ class AppWrapper extends Component {
         return stringInput;
     }
 
+    handleIsDateFilterEnabled(isDateFilterEnabled) {
+        this.setState({
+            isDateFilterEnabled: isDateFilterEnabled
+        });
+    }
+
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
-            callbacks: {
-                formatPrice: this.formatPrice.bind(this),
-                handleChange: this.handleChange.bind(this),
-                handleFocus: this.handleFocus.bind(this),
-                handleAdd: this.handleAdd.bind(this),
-                handleList: this.handleList.bind(this),
-                handleLogin: this.handleLogin.bind(this),
-                handleLogout: this.handleLogout.bind(this),
-                handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
-                handleVerify: this.handleVerify.bind(this),
-                handleReport: this.handleReport.bind(this),
-            },
-            report: this.state.report,
-            socket: socket,
-            planes: this.state.planes,
-            plane: this.state.plane,
-            planeErrors: this.state.planeErrors,
-            planeErrorMessage: this.state.planeErrorMessage,
-            planeInserted: this.state.planeInserted,
-            buses: this.state.buses,
-            bus: this.state.bus,
-            busErrors: this.state.busErrors,
-            busErrorMessage: this.state.busErrorMessage,
-            busInserted: this.state.busInserted,
-            trains: this.state.trains,
-            train: this.state.train,
-            trainErrors: this.state.trainErrors,
-            trainErrorMessage: this.state.trainErrorMessage,
-            trainInserted: this.state.trainInserted,
-            hostels: this.state.hostels,
-            hostel: this.state.hostel,
-            hostelErrors: this.state.hostelErrors,
-            hostelInserted: this.state.hostelInserted,
-            hostelErrorMessage: this.state.hostelErrorMessage,
-            login: this.state.login,
-            loginErrors: this.state.loginErrors,
-            loginErrorMessage: this.state.loginErrorMessage,
-        });
+                callbacks: {
+                    formatPrice: this.formatPrice.bind(this),
+                    handleChange: this.handleChange.bind(this),
+                    handleFocus: this.handleFocus.bind(this),
+                    handleAdd: this.handleAdd.bind(this),
+                    handleList: this.handleList.bind(this),
+                    handleLogin: this.handleLogin.bind(this),
+                    handleLogout: this.handleLogout.bind(this),
+                    handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
+                    handleVerify: this.handleVerify.bind(this),
+                    handleReport: this.handleReport.bind(this),
+                    handleIsDateFilterEnabled: this.handleIsDateFilterEnabled.bind(this),
+                    handleFocusDate: this.handleFocusDate.bind(this),
+                    handleChangeDate: this.handleChangeDate.bind(this),
+                    handleSubmitDate: this.handleSubmitDate.bind(this),
+                    handleBlurDate: this.handleBlurDate.bind(this),
+                    handleResetDate: this.handleResetDate.bind(this),
+                },
+                report: this.state.report,
+                socket: socket,
+                fromDateFieldType: this.state.fromDateFieldType,
+                toDateFieldType: this.state.toDateFieldType,
+                isDateFilterEnabled: this.state.isDateFilterEnabled,
+                planes: this.state.planes,
+                plane: this.state.plane,
+                planeErrors: this.state.planeErrors,
+                planeErrorMessage: this.state.planeErrorMessage,
+                planeInserted: this.state.planeInserted,
+                buses: this.state.buses,
+                bus: this.state.bus,
+                busErrors: this.state.busErrors,
+                busErrorMessage: this.state.busErrorMessage,
+                busInserted: this.state.busInserted,
+                trains: this.state.trains,
+                train: this.state.train,
+                trainErrors: this.state.trainErrors,
+                trainErrorMessage: this.state.trainErrorMessage,
+                trainInserted: this.state.trainInserted,
+                hostels: this.state.hostels,
+                hostel: this.state.hostel,
+                hostelErrors: this.state.hostelErrors,
+                hostelInserted: this.state.hostelInserted,
+                hostelErrorMessage: this.state.hostelErrorMessage,
+                login: this.state.login,
+                loginErrors: this.state.loginErrors,
+                loginErrorMessage: this.state.loginErrorMessage,
+            });
     }
 }
 

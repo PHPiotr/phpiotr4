@@ -1,86 +1,30 @@
 import Auth from './hoc/Auth.jsx';
 import React, {Component} from 'react';
+import BookingCell from './helper/BookingCell.jsx';
 
 class Report extends Component {
 
     constructor(props) {
         super(props);
         this.props.callbacks.handleReport();
+        this.props.callbacks.handleIsDateFilterEnabled(true);
     }
 
-    _formatDate(date_string) {
-        var date = new Date(date_string);
-        var day = parseInt(date.getDate(), 10) < 10 ? '0' + date.getDate() : date.getDate();
-        var month = parseInt(date.getMonth(), 10) < 9 ? '0' + (parseInt(date.getMonth(), 10) + 1) : (parseInt(date.getMonth(), 10) + 1);
-        var year = date.getFullYear();
-        return day + '/' + month + '/' + year;
-    }
-
-    _truncate(string, start, end) {
-        start || 0;
-        end || 3;
-        return string.substring(start, end);
-    }
-
-    _getPrice(number) {
-        if (0 === number) {
-            return '0.00';
-        }
-        return '£ ' + (number / 100).toFixed(2);
+    componentWillUnmount() {
+        this.props.callbacks.handleIsDateFilterEnabled(false);
     }
 
     render() {
-        return this.getContent(this);
+        return this.getContent();
     }
 
-    getContent(that) {
+    getContent() {
         let report = this.props.report;
-        let busesMap, planesMap, trainsMap, hostelsMap;
-        busesMap = report.buses.map(function (row, i) {
-            return (
-                <tr key={i}>
-                    <td><strong>{i + 1}.</strong></td>
-                    <td>{that._formatDate(row['departure_date'])}{row['is_return'] ? '-' + that._formatDate(row['return_departure_date']) : null}</td>
-                    <td>{that._truncate(row['from']) + '-' + that._truncate(row['to'])}</td>
-                    <td>{that._getPrice(row['price'])}</td>
-                </tr>
-            );
-        });
-        hostelsMap = report.hostels.map(function (row, i) {
-            return (
-                <tr key={i}>
-                    <td><strong>{i + 1}.</strong></td>
-                    <td>{that._formatDate(row.checkin_date) + '-' + that._formatDate(row.checkout_date)}</td>
-                    <td>{that._getPrice(row.price)}</td>
-                </tr>
-            );
-        });
-        planesMap = report.planes.map(function (row, i) {
-            return (
-                <tr key={i}>
-                    <td><strong>{i + 1}.</strong></td>
-                    <td>{that._formatDate(row.departure_date)}{row.is_return ? '-' + that._formatDate(row.return_departure_date) : null}</td>
-                    <td>{that._truncate(row.from) + '-' + that._truncate(row.to)}</td>
-                    <td>{that._getPrice(row.price)}</td>
-                </tr>
-            );
-        });
-        trainsMap = report.trains.map(function (row, i) {
-            return (
-                <tr key={i}>
-                    <td><strong>{i + 1}.</strong></td>
-                    <td>{that._formatDate(row.departure_date)}</td>
-                    <td>{that._truncate(row.from) + '-' + that._truncate(row.to)}</td>
-                    <td>{row.is_return ? 'R' : null}</td>
-                    <td>{that._getPrice(row.price)}</td>
-                </tr>
-            );
-        });
         return (
             <table className="table table-bordered table-hover table-condensed">
                 <thead>
                 <tr>
-                    <td className="info">£{report.total_cost}</td>
+                    <td className="info">£ {report.total_cost}</td>
                     <th>Buses</th>
                     <th>Planes</th>
                     <th>Trains</th>
@@ -118,31 +62,17 @@ class Report extends Component {
                 </tr>
                 <tr>
                     <td><strong>Details:</strong></td>
-                    <td>
-                        <table className="table table-bordered table-condensed">
-                            <tbody>{busesMap}</tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <table className="table table-bordered table-condensed">
-                            <tbody>{planesMap}</tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <table className="table table-bordered table-condensed">
-                            <tbody>{trainsMap}</tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <table className="table table-bordered table-condensed">
-                            <tbody>{hostelsMap}</tbody>
-                        </table>
-                    </td>
+                    <BookingCell details={report.buses}/>
+                    <BookingCell details={report.planes}/>
+                    <BookingCell details={report.trains}/>
+                    <BookingCell details={report.hostels} isHostel={true}/>
                 </tr>
                 </tbody>
             </table>
         );
     }
 }
+
+Report.displayName = 'Report';
 
 export default Auth(Report);
