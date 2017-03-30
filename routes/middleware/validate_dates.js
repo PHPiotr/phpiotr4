@@ -4,21 +4,24 @@ function getFormattedValue(date) {
         return null;
     }
 
-    var pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+    var pattern = /(\d{4})-(\d{2})-(\d{2})/;
     var match = pattern.exec(date);
 
-    if (undefined === match[1]) {
-        return null;
+    if (!match) {
+        throw new Error('Invalid date format');
     }
 
-    return match[2] + '/' + match[1] + '/' + match[3];
+    return date;
 }
 
 function validateDates(req, res, next) {
-
-    req.query.from = getFormattedValue(req.query.from);
-    req.query.to = getFormattedValue(req.query.to);
-
-    next();
+    try {
+        req.query.from = getFormattedValue(req.query.from);
+        req.query.to = getFormattedValue(req.query.to);
+        next();
+    } catch (e) {
+        next(e);
+    }
 }
+
 module.exports = validateDates;

@@ -3,6 +3,11 @@ import React, {Component, PropTypes} from 'react';
 class BookingCell extends Component {
 
     render() {
+        if (0 === this.props.details.length) {
+            return (
+                <td>-</td>
+            );
+        }
         return (
             <td>
                 <table className="table table-bordered table-condensed">

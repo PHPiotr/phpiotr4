@@ -13,67 +13,54 @@ var router = express.Router();
 
 router.get('/', loggedIn, validateDates, function (req, res) {
 
-    var from = req.query.from;
-    var to = req.query.to;
+    var from, to, default_results, user_id, sort_type, criteria, journey_criteria, hostel_criteria;
 
-    var default_results = {cost: 0, avg_cost: 0, singles_quantity: '0'};
-
-    var user_id = req.user._id;
-    var sort_type;
+    from = req.query.from;
+    to = req.query.to;
+    default_results = {cost: 0, avg_cost: 0, singles_quantity: '0'};
+    user_id = req.user._id;
     if (from && to) {
         sort_type = {$gte: new Date(from), $lte: new Date(to)};
     } else {
         if (from) {
             sort_type = {$gte: new Date(from)};
-        } else if (to) {
-            sort_type = {$lte: new Date(to)};
-        } else {
-            sort_type = {$gte: new Date()};
         }
+        if (to) {
+            sort_type = {$lte: new Date(to)};
+        }
+    }
+
+    criteria = {
+        'created_by': user_id
+    };
+    criteria['created_by'] = user_id;
+    if (sort_type) {
+        journey_criteria = Object.assign({}, criteria, {'departure_date': sort_type});
+        hostel_criteria = Object.assign({}, criteria, {'checkin_date': sort_type});
+    } else {
+        journey_criteria = criteria;
+        hostel_criteria = criteria;
     }
 
     async.parallel(
         [
             function (next) {
-                Bus.find({
-                    created_by: user_id,
-                    departure_date: sort_type
-                })
-                    .sort('departure_date')
-                    .exec(next);
+                Bus.find(journey_criteria).sort('departure_date').exec(next);
             },
             function (next) {
-                Plane.find({
-                    created_by: user_id,
-                    departure_date: sort_type
-                })
-                    .sort('departure_date')
-                    .exec(next);
+                Plane.find(journey_criteria).sort('departure_date').exec(next);
             },
             function (next) {
-                Train.find({
-                    created_by: user_id,
-                    departure_date: sort_type
-                })
-                    .sort('departure_date')
-                    .exec(next);
+                Train.find(journey_criteria).sort('departure_date').exec(next);
             },
             function (next) {
-                Hostel.find({
-                    created_by: user_id,
-                    checkin_date: sort_type
-                })
-                    .sort('checkin_date')
-                    .exec(next);
+                Hostel.find(hostel_criteria).sort('checkin_date').exec(next);
             },
             function (next) {
                 Bus.aggregate(
                     [
                         {
-                            $match: {
-                                created_by: user_id,
-                                departure_date: sort_type
-                            }
+                            $match: journey_criteria
                         },
                         {
                             $project: {
@@ -110,10 +97,7 @@ router.get('/', loggedIn, validateDates, function (req, res) {
                 Plane.aggregate(
                     [
                         {
-                            $match: {
-                                created_by: user_id,
-                                departure_date: sort_type
-                            }
+                            $match: journey_criteria
                         },
                         {
                             $project: {
@@ -150,10 +134,7 @@ router.get('/', loggedIn, validateDates, function (req, res) {
                 Train.aggregate(
                     [
                         {
-                            $match: {
-                                created_by: user_id,
-                                departure_date: sort_type
-                            }
+                            $match: journey_criteria
                         },
                         {
                             $project: {
@@ -190,10 +171,7 @@ router.get('/', loggedIn, validateDates, function (req, res) {
                 Hostel.aggregate(
                     [
                         {
-                            $match: {
-                                created_by: user_id,
-                                checkin_date: sort_type
-                            }
+                            $match: hostel_criteria
                         },
                         {
                             $group: {

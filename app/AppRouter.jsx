@@ -29,7 +29,7 @@ const AppRouter = () => (
             <Route path="/" component={App}>
                 <Route name="login" path="login" component={Login}/>
                 <Route name="register" path="register" component={Register}/>
-                <IndexRoute component={Report}/>
+                <IndexRoute component={Report} path="(/:from)(/:to)"/>
                 <Route name="logout" path="logout" component={Logout}/>
                 <Route name="buses" path="bookings/buses" component={Buses}>
                     <Route path="current" component={BusesCurrent}>

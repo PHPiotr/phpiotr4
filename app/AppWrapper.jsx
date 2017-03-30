@@ -5,6 +5,7 @@ import 'whatwg-fetch';
 import 'babel-polyfill';
 import config from '../config';
 import cookie from 'cookie-monster';
+import moment from 'moment';
 
 const socket = io.connect(config.api_url);
 
@@ -37,8 +38,10 @@ class AppWrapper extends Component {
             loginErrorMessage: '',
             loginErrors: {},
             isLoggedIn: false,
-            fromDateFieldType: 'text',
+            fromDateFieldType: 'date',
             toDateFieldType: 'text',
+            fromDate: moment().format('YYYY-MM-DD'),
+            toDate: '',
             isDateFilterEnabled: false,
             report: {
                 total_cost: 0,
@@ -120,7 +123,7 @@ class AppWrapper extends Component {
     handleReport() {
         let headers = this.getHeaders();
         let oldReport = this.state.report;
-        fetch(`${config.api_url}/report`, {headers: headers})
+        fetch(`${config.api_url}/report?from=${this.state.fromDate}&to=${this.state.toDate}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
                 let newReport = update(oldReport, {
@@ -202,16 +205,20 @@ class AppWrapper extends Component {
     }
 
     handleSubmitDate(event) {
-        console.log('isDateFilterEnabled:', this.state.isDateFilterEnabled);
-        event.preventDefault();
-    }
-
-    handleResetDate(event) {
+        const state = this.state;
+        if (!state.isDateFilterEnabled) {
+            return;
+        }
+        this.handleReport();
         event.preventDefault();
     }
 
     handleChangeDate(event) {
-        console.log(event.target.value, event.target.name);
+        const target = event.target;
+        const dateField = `${target.name}Date`;
+        this.setState({
+            [dateField]: target.value
+        });
     }
 
     handleBlurDate(event) {
@@ -382,13 +389,14 @@ class AppWrapper extends Component {
                     handleChangeDate: this.handleChangeDate.bind(this),
                     handleSubmitDate: this.handleSubmitDate.bind(this),
                     handleBlurDate: this.handleBlurDate.bind(this),
-                    handleResetDate: this.handleResetDate.bind(this),
                 },
                 report: this.state.report,
                 socket: socket,
                 fromDateFieldType: this.state.fromDateFieldType,
                 toDateFieldType: this.state.toDateFieldType,
                 isDateFilterEnabled: this.state.isDateFilterEnabled,
+                fromDate: this.state.fromDate,
+                toDate: this.state.toDate,
                 planes: this.state.planes,
                 plane: this.state.plane,
                 planeErrors: this.state.planeErrors,
@@ -419,6 +427,8 @@ class AppWrapper extends Component {
 AppWrapper.contextTypes = {
     router: PropTypes.object,
 };
+
+AppWrapper.displayName = 'AppWrapper';
 
 export default AppWrapper;
 

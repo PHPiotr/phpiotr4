@@ -15,7 +15,6 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleReset = this.handleReset.bind(this);
     }
 
     componentWillUnmount() {
@@ -37,10 +36,6 @@ class App extends Component {
 
     handleSubmit(event) {
         this.props.callbacks.handleSubmitDate(event);
-    }
-
-    handleReset(event) {
-        this.props.callbacks.handleResetDate(event);
     }
 
     render() {
@@ -95,20 +90,15 @@ class App extends Component {
                         <div className="form-group">
                             <input onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange}
                                    type={this.props.fromDateFieldType} name="from" className="form-control"
-                                   placeholder="From"/>
+                                   placeholder="From" value={this.props.fromDate}/>
                         </div>
                         <div className="form-group">
                             <input onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange}
                                    type={this.props.toDateFieldType} name="to" className="form-control"
-                                   placeholder="To"/>
+                                   placeholder="To" value={this.props.toDate}/>
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-default">Search</button>
-                        </div>
-                        <div className="form-group">
-                            <button onClick={this.handleReset} name="reset" type="button" className="btn btn-default">
-                                Reset
-                            </button>
                         </div>
                     </form>
                 );
