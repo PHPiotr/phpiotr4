@@ -41,6 +41,7 @@ class App extends Component {
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
                 callbacks: this.props.callbacks,
+                auth: this.props.auth,
                 report: this.props.report,
                 socket: this.props.socket,
                 planes: this.props.planes,
@@ -63,9 +64,6 @@ class App extends Component {
                 hostelErrors: this.props.hostelErrors,
                 hostelInserted: this.props.hostelInserted,
                 hostelErrorMessage: this.props.hostelErrorMessage,
-                login: this.props.login,
-                loginErrors: this.props.loginErrors,
-                loginErrorMessage: this.props.loginErrorMessage,
             });
         let navItems = null;
         let searchItems = null;
@@ -84,18 +82,19 @@ class App extends Component {
                     <NavLink className="btn btn-link" to="/bookings/hostels">Hostels</NavLink>
                 </ul>
             );
-            if (this.props.isDateFilterEnabled) {
+            const dateFilter = this.props.dateFilter;
+            if (dateFilter.isDateFilterEnabled) {
                 searchItems = (
                     <form onSubmit={this.handleSubmit} componentName={this.props.componentName}>
                         <div className="form-group">
                             <input onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange}
-                                   type={this.props.fromDateFieldType} name="from" className="form-control"
-                                   placeholder="From" value={this.props.fromDate}/>
+                                   type={dateFilter.fromDateFieldType} name="from" className="form-control"
+                                   placeholder="From" value={dateFilter.fromDate}/>
                         </div>
                         <div className="form-group">
                             <input onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange}
-                                   type={this.props.toDateFieldType} name="to" className="form-control"
-                                   placeholder="To" value={this.props.toDate}/>
+                                   type={dateFilter.toDateFieldType} name="to" className="form-control"
+                                   placeholder="To" value={dateFilter.toDate}/>
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-default">Search</button>
@@ -155,12 +154,6 @@ App.propTypes = {
     login: PropTypes.object,
     loginErrors: PropTypes.object,
     loginErrorMessage: PropTypes.string,
-};
-
-App.defaultProps = {
-    fromDateFieldType: 'text',
-    toDateFieldType: 'text',
-    isDateFilterEnabled: false,
 };
 
 App.displayName = 'App';

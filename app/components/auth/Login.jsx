@@ -28,7 +28,8 @@ class Login extends Component {
             return null;
         }
 
-        let loginErrorMessage = this.props.loginErrorMessage;
+        const auth = this.props.auth;
+        const loginErrorMessage = auth.loginErrorMessage;
         let loginError = null;
         if (loginErrorMessage) {
             loginError = (
@@ -38,23 +39,13 @@ class Login extends Component {
         return(
             <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {loginError}
-                <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.username} value={this.props.login.username} handler={this.handleChange} name="username" />
-                <InputGroup type="password" focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
+                <InputGroup focusHandler={this.handleFocus} error={auth.loginErrors.username} value={auth.login.username} handler={this.handleChange} name="username" />
+                <InputGroup type="password" focusHandler={this.handleFocus} error={auth.loginErrors.password} value={auth.login.password} handler={this.handleChange} name="password" />
                 <ButtonGroup>Log in</ButtonGroup>
             </form>
         );
     }
 }
-
-Login.propTypes = {
-    login: PropTypes.object,
-    loginErrors: PropTypes.object,
-    loginErrorMessage: PropTypes.string,
-};
-
-Login.contextTypes = {
-    router: PropTypes.object,
-};
 
 export default Login;
 

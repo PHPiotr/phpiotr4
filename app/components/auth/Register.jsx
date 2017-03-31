@@ -24,29 +24,10 @@ class Register extends Component {
     }
 
     render() {
-        let loginErrorMessage = this.props.loginErrorMessage;
-        let loginError = null;
-        if (loginErrorMessage) {
-            loginError = (
-                <div className="alert alert-danger" role="alert">{loginErrorMessage}</div>
-            );
-        }
-        return(
-            <form onSubmit={this.handleSubmit} className="form-horizontal">
-                {loginError}
-                <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.username} value={this.props.login.username} handler={this.handleChange} name="username" />
-                <InputGroup focusHandler={this.handleFocus} error={this.props.loginErrors.password} value={this.props.login.password} handler={this.handleChange} name="password" />
-                <ButtonGroup>Log in</ButtonGroup>
-            </form>
-        );
+        // TODO: Register user
+        return null;
     }
 }
-
-Register.propTypes = {
-    login: PropTypes.object,
-    loginErrors: PropTypes.object,
-    loginErrorMessage: PropTypes.string,
-};
 
 export default Register;
 
