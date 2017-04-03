@@ -7,12 +7,13 @@ import moment from 'moment';
 class Buses extends Component {
 
     render() {
+        let bookings = this.props.bookings;
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-            buses: this.props.buses,
-            bus: this.props.bus,
-            busErrors: this.props.busErrors,
-            busErrorMessage: this.props.busErrorMessage,
-            busInserted: this.props.busInserted,
+            buses: bookings.buses,
+            bus: bookings.bus,
+            busErrors: bookings.busErrors,
+            busErrorMessage: bookings.busErrorMessage,
+            busInserted: bookings.busInserted,
             callbacks: this.props.callbacks,
             socket: this.props.socket,
             getContent: this.getContent.bind(this),
@@ -28,7 +29,7 @@ class Buses extends Component {
     }
 
     getContent() {
-        let buses = this.props.buses;
+        let buses = this.props.bookings.buses;
         let journeys_length = buses.journeys_length;
 
         if (!journeys_length) {

@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import update from 'react-addons-update';
 import io from 'socket.io-client';
 import 'whatwg-fetch';
 import 'babel-polyfill';
@@ -12,28 +11,6 @@ class AppWrapper extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            planes: {},
-            plane: {},
-            planeErrorMessage: '',
-            planeErrors: {},
-            planeInserted: {},
-            buses: {},
-            bus: {},
-            busErrorMessage: '',
-            busErrors: {},
-            busInserted: {},
-            trains: {},
-            train: {},
-            trainErrorMessage: '',
-            trainErrors: {},
-            trainInserted: {},
-            hostels: {},
-            hostel: {},
-            hostelErrorMessage: '',
-            hostelInserted: {},
-            hostelErrors: {},
-        };
     }
 
     componentDidMount() {
@@ -116,18 +93,22 @@ class AppWrapper extends Component {
         fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
-                this.setState({[bookings]: responseData});
+                this.context.store.dispatch({
+                    type: 'SET_BOOKINGS',
+                    bookingLabelPlural: bookings,
+                    data: responseData
+                });
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
             });
     }
 
-    handleChange(event, type) {
+    handleChange(event, bookingLabelSingular) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        if (type == 'login') {
+        if (bookingLabelSingular == 'login') {
             this.context.store.dispatch({
                 type: 'ON_CHANGE_LOGIN_FIELD',
                 fieldName: name,
@@ -135,38 +116,87 @@ class AppWrapper extends Component {
             });
             return;
         }
-        let booking = update(this.state[type], {[name]: {$set: value}});
-        this.setState({
-            [type]: booking
+        this.context.store.dispatch({
+            type: 'SET_BOOKING',
+            bookingLabelSingular: bookingLabelSingular,
+            fieldName: name,
+            fieldValue: value,
         });
     }
 
-    handleFocus(event, type) {
-        const name = event.target.name;
-        const typeErrors = type + 'Errors';
-        const typeErrorMessage = type + 'ErrorMessage';
-
-        if (type == 'login') {
+    handleFocus(event, bookingLabelSingular) {
+        if (bookingLabelSingular == 'login') {
             this.context.store.dispatch({
                 type: 'ON_FOCUS_LOGIN_FIELD',
                 fieldName: event.target.name
             });
             return;
         }
-        if (this.state[typeErrorMessage]) {
-            this.setState({
-                [typeErrorMessage]: ''
-            });
-        }
-        if (undefined === this.state[typeErrors][name]) {
-            return;
-        }
-        let errors = Object.assign({}, this.state[typeErrors]);
-        errors[name] = undefined;
-
-        this.setState({
-            [typeErrors]: errors
+        this.context.store.dispatch({
+            type: 'SET_BOOKING_ERROR_MESSAGE',
+            bookingLabelSingular: bookingLabelSingular,
+            errorMessageValue: '',
         });
+        this.context.store.dispatch({
+            type: 'SET_BOOKING_INPUT_ERROR',
+            bookingLabelSingular: bookingLabelSingular,
+            errorsValue: undefined,
+            fieldName: event.target.name,
+        });
+    }
+
+    handleAdd(event, bookingLabelSingular, bookingLabelPlural) {
+
+        let headers = this.getHeaders();
+        const that = this;
+
+        fetch(`${config.api_url}/bookings/${bookingLabelPlural}`, {
+            method: 'post',
+            headers: headers,
+            body: JSON.stringify(that.context.store.getState()[bookingLabelSingular])
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    if (response.code != 406) {
+                        throw new Error('Response was not ok');
+                    }
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.ok) {
+                    that.context.store.dispatch({
+                        type: 'SET_BOOKING_INSERTED',
+                        bookingLabelSingular: bookingLabelSingular,
+                        bookingInserted: data[bookingLabelSingular]
+                    });
+                    setTimeout(function () {
+                        that.context.store.dispatch({
+                            type: 'SET_BOOKING_INSERTED',
+                            bookingLabelSingular: bookingLabelSingular,
+                            bookingInserted: {}
+                        });
+                    }, 5000);
+                } else {
+                    if (data.err) {
+                        this.context.store.dispatch({
+                            type: 'SET_BOOKING_ERROR_MESSAGE',
+                            bookingLabelSingular: bookingLabelSingular,
+                            errorMessageValue: data.err.message,
+                        });
+                        this.context.store.dispatch({
+                            type: 'SET_BOOKING_ERRORS',
+                            bookingLabelSingular: bookingLabelSingular,
+                            errorsValue: data.err.errors,
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+
+            });
+
+        event.preventDefault();
     }
 
     handleIsDateFilterEnabled(isDateFilterEnabled) {
@@ -223,59 +253,6 @@ class AppWrapper extends Component {
             dateTypeName: fieldType,
             dateTypeValue: 'text',
         });
-    }
-
-    handleAdd(event, type, types) {
-
-        let bookings = this.state[types];
-        let booking = this.state[type];
-        let headers = this.getHeaders();
-
-        const typeErrors = type + 'Errors';
-        const typeErrorMessage = type + 'ErrorMessage';
-        const typeInserted = type + 'Inserted';
-
-        fetch(`${config.api_url}/bookings/${types}`, {
-            method: 'post',
-            headers: headers,
-            body: JSON.stringify(booking)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                let that = this;
-                if (data.ok) {
-                    this.setState({
-                        [type]: {},
-                        [typeErrors]: {},
-                        [typeErrorMessage]: '',
-                        [typeInserted]: data[type]
-                    });
-                    setTimeout(function () {
-                        that.setState({
-                            [typeInserted]: {}
-                        });
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.setState({
-                            [typeErrorMessage]: data.err.message,
-                            [typeErrors]: data.err.errors
-                        });
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
     }
 
     handleLogin(event) {
@@ -349,6 +326,7 @@ class AppWrapper extends Component {
     }
 
     render() {
+        let state = this.context.store.getState();
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
                     formatPrice: this.formatPrice.bind(this),
@@ -367,30 +345,11 @@ class AppWrapper extends Component {
                     handleSubmitDate: this.handleSubmitDate.bind(this),
                     handleBlurDate: this.handleBlurDate.bind(this),
                 },
-                report: this.context.store.getState().report,
-                dateFilter: this.context.store.getState().dateFilter,
-                auth: this.context.store.getState().auth,
+                report: state.report,
+                dateFilter: state.dateFilter,
+                auth: state.auth,
+                bookings: state.bookings,
                 socket: socket,
-                planes: this.state.planes,
-                plane: this.state.plane,
-                planeErrors: this.state.planeErrors,
-                planeErrorMessage: this.state.planeErrorMessage,
-                planeInserted: this.state.planeInserted,
-                buses: this.state.buses,
-                bus: this.state.bus,
-                busErrors: this.state.busErrors,
-                busErrorMessage: this.state.busErrorMessage,
-                busInserted: this.state.busInserted,
-                trains: this.state.trains,
-                train: this.state.train,
-                trainErrors: this.state.trainErrors,
-                trainErrorMessage: this.state.trainErrorMessage,
-                trainInserted: this.state.trainInserted,
-                hostels: this.state.hostels,
-                hostel: this.state.hostel,
-                hostelErrors: this.state.hostelErrors,
-                hostelInserted: this.state.hostelInserted,
-                hostelErrorMessage: this.state.hostelErrorMessage,
             });
     }
 }

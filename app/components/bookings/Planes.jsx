@@ -11,12 +11,13 @@ class Planes extends Component {
     }
 
     render() {
+        let bookings = this.props.bookings;
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-            planes: this.props.planes,
-            plane: this.props.plane,
-            planeErrors: this.props.planeErrors,
-            planeErrorMessage: this.props.planeErrorMessage,
-            planeInserted: this.props.planeInserted,
+            planes: bookings.planes,
+            plane: bookings.plane,
+            planeErrors: bookings.planeErrors,
+            planeErrorMessage: bookings.planeErrorMessage,
+            planeInserted: bookings.planeInserted,
             callbacks: this.props.callbacks,
             socket: this.props.socket,
             getContent: this.getContent.bind(this),
@@ -33,7 +34,7 @@ class Planes extends Component {
 
     getContent() {
 
-        let planes = this.props.planes;
+        let planes = this.props.bookings.planes;
         let flights_length = planes.flights_length;
 
         if (!flights_length) {

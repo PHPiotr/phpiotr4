@@ -43,27 +43,8 @@ class App extends Component {
                 callbacks: this.props.callbacks,
                 auth: this.props.auth,
                 report: this.props.report,
+                bookings: this.props.bookings,
                 socket: this.props.socket,
-                planes: this.props.planes,
-                plane: this.props.plane,
-                planeErrors: this.props.planeErrors,
-                planeErrorMessage: this.props.planeErrorMessage,
-                planeInserted: this.props.planeInserted,
-                buses: this.props.buses,
-                bus: this.props.bus,
-                busErrors: this.props.busErrors,
-                busErrorMessage: this.props.busErrorMessage,
-                busInserted: this.props.busInserted,
-                trains: this.props.trains,
-                train: this.props.train,
-                trainErrors: this.props.trainErrors,
-                trainErrorMessage: this.props.trainErrorMessage,
-                trainInserted: this.props.trainInserted,
-                hostels: this.props.hostels,
-                hostel: this.props.hostel,
-                hostelErrors: this.props.hostelErrors,
-                hostelInserted: this.props.hostelInserted,
-                hostelErrorMessage: this.props.hostelErrorMessage,
             });
         let navItems = null;
         let searchItems = null;
@@ -137,24 +118,6 @@ class App extends Component {
         );
     }
 }
-
-App.propTypes = {
-    planes: PropTypes.object,
-    planeErrors: PropTypes.object,
-    planeErrorMessage: PropTypes.string,
-    buses: PropTypes.object,
-    busErrors: PropTypes.object,
-    busErrorMessage: PropTypes.string,
-    trains: PropTypes.object,
-    trainErrors: PropTypes.object,
-    trainErrorMessage: PropTypes.string,
-    hostels: PropTypes.object,
-    hostelErrors: PropTypes.object,
-    hostelErrorMessage: PropTypes.string,
-    login: PropTypes.object,
-    loginErrors: PropTypes.object,
-    loginErrorMessage: PropTypes.string,
-};
 
 App.displayName = 'App';
 

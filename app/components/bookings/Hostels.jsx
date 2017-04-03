@@ -7,12 +7,13 @@ import moment from 'moment';
 class Hostels extends Component {
 
     render() {
+        let bookings = this.props.bookings;
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-            hostels: this.props.hostels,
-            hostel: this.props.hostel,
-            hostelErrors: this.props.hostelErrors,
-            hostelErrorMessage: this.props.hostelErrorMessage,
-            hostelInserted: this.props.hostelInserted,
+            hostels: bookings.hostels,
+            hostel: bookings.hostel,
+            hostelErrors: bookings.hostelErrors,
+            hostelErrorMessage: bookings.hostelErrorMessage,
+            hostelInserted: bookings.hostelInserted,
             callbacks: this.props.callbacks,
             socket: this.props.socket,
             getContent: this.getContent.bind(this),
@@ -28,7 +29,7 @@ class Hostels extends Component {
     }
 
     getContent() {
-        let hostels = this.props.hostels;
+        let hostels = this.props.bookings.hostels;
         let bookings_length = hostels.bookings_length;
 
         if (!bookings_length) {
