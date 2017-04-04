@@ -32,7 +32,7 @@ const bookings = (state = initialState, action) => {
 
         case 'SET_BOOKING':
             let booking = {...state[action.bookingLabelSingular], [action.fieldName]: action.fieldValue};
-            return {...state, booking};
+            return {...state, [action.bookingLabelSingular]: booking};
 
         case 'SET_BOOKING_ERROR_MESSAGE':
             let errorMessageType = `${action.bookingLabelSingular}ErrorMessage`;

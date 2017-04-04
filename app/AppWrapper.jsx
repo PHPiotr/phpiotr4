@@ -153,7 +153,7 @@ class AppWrapper extends Component {
         fetch(`${config.api_url}/bookings/${bookingLabelPlural}`, {
             method: 'post',
             headers: headers,
-            body: JSON.stringify(that.context.store.getState()[bookingLabelSingular])
+            body: JSON.stringify(that.context.store.getState().bookings[bookingLabelSingular])
         })
             .then((response) => {
                 if (!response.ok) {
