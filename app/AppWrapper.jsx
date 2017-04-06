@@ -57,7 +57,7 @@ class AppWrapper extends Component {
 
     handleVerify() {
         let headers = this.getHeaders();
-        fetch(`${config.api_url}/auth/verify`, {
+        fetch(`${config.api_url}/api/v1/auth/verify`, {
             headers: headers
         })
             .then((response) => response.json())
@@ -72,7 +72,7 @@ class AppWrapper extends Component {
     handleReport() {
         let headers = this.getHeaders();
         let oldReport = this.context.store.getState().report;
-        fetch(`${config.api_url}/report?from=${this.context.store.getState().dateFilter.fromDate}&to=${this.context.store.getState().dateFilter.toDate}`, {headers: headers})
+        fetch(`${config.api_url}/api/v1/report?from=${this.context.store.getState().dateFilter.fromDate}&to=${this.context.store.getState().dateFilter.toDate}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
                 this.context.store.dispatch({
@@ -90,7 +90,7 @@ class AppWrapper extends Component {
 
     handleList(bookings, type, page) {
         let headers = this.getHeaders();
-        fetch(`${config.api_url}/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
+        fetch(`${config.api_url}/api/v1/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
                 this.context.store.dispatch({
@@ -150,7 +150,7 @@ class AppWrapper extends Component {
         let headers = this.getHeaders();
         const that = this;
 
-        fetch(`${config.api_url}/bookings/${bookingLabelPlural}`, {
+        fetch(`${config.api_url}/api/v1/bookings/${bookingLabelPlural}`, {
             method: 'post',
             headers: headers,
             body: JSON.stringify(that.context.store.getState().bookings[bookingLabelSingular])
@@ -263,7 +263,7 @@ class AppWrapper extends Component {
 
         const login = this.context.store.getState().auth.login;
 
-        fetch(`${config.api_url}/auth/login`, {
+        fetch(`${config.api_url}/api/v1/auth/login`, {
             method: 'post',
             headers: config.api_headers,
             body: JSON.stringify(login)

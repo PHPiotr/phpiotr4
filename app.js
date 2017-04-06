@@ -7,19 +7,9 @@ var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config.js');
-var loggedIn = require('./routes/middleware/logged_in');
-var index = require('./routes/index');
-var users = require('./routes/users');
-var auth = require('./routes/auth');
-var buses = require('./routes/bookings/buses');
-var planes = require('./routes/bookings/planes');
-var trains = require('./routes/bookings/trains');
-var hostels = require('./routes/bookings/hostels');
-var report = require('./routes/report');
 
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpack = require('webpack');
@@ -33,13 +23,7 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use(function(req, res, next) {
-    res.io = io;
-    next();
-});
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('superSecret', config.secret);
 
@@ -49,34 +33,9 @@ app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/', index);
-app.use('/users', users);
-app.use('/auth', auth);
-app.use('/bookings/*', loggedIn);
-app.use('/bookings/planes', planes);
-app.use('/bookings/hostels', hostels);
-app.use('/bookings/buses', buses);
-app.use('/bookings/trains', trains);
-app.use('/report', report);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-// error handler
-app.use(function(err, req, res) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-});
-
-mongoose.connect(config.database);
+app.get('/*', (req,res) => {
+    res.sendFile(path.resolve(__dirname, 'app/index.html'))
+})
 
 module.exports = {app: app, server: server};

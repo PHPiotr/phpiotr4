@@ -1,8 +1,0 @@
-div(class="well well-sm")
-    ul(class="nav nav-pills")
-        li(role="presentation" class=(active === 'current' ? 'active' : ''))
-                a(href="/bookings/planes?type=current")= "Current flights"
-        li(role="presentation" class=(active === 'past' ? 'active' : ''))
-            a(href="/bookings/planes?type=past")= "Past flights"
-        li(role="presentation" class=(active === 'new' ? 'active' : ''))
-            a(href="/bookings/planes/new")= "Add flight"
