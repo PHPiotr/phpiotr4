@@ -15,6 +15,11 @@ class AppWrapper extends Component {
 
     componentDidMount() {
         let that = this;
+
+        this.unsubscribe = this.context.store.subscribe(() => {
+            this.forceUpdate();
+        });
+
         let tokenCookie = cookie.getItem(config.token_key);
         if (undefined !== tokenCookie) {
             config.api_headers['Authorization'] = `Bearer ${tokenCookie}`;
@@ -43,6 +48,10 @@ class AppWrapper extends Component {
             cookie.removeItem(config.token_key);
             that.context.router.push('/login');
         });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
     getHeaders() {

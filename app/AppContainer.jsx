@@ -9,23 +9,16 @@ import {AppContainer} from 'react-hot-loader';
 
 import AppRouter from './AppRouter.jsx';
 
-let store = createStore(reducers);
-
 const render = (Component) => {
     ReactDOM.render(
         <AppContainer>
-            <Provider store={store}>
+            <Provider store={createStore(reducers)}>
                 <Component/>
             </Provider>
         </AppContainer>,
         document.getElementById('root')
     );
 };
-
-store.subscribe(() => {
-    console.log('subscribe: ', store.getState());
-    render(AppRouter);
-});
 
 render(AppRouter);
 
