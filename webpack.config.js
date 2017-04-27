@@ -70,20 +70,8 @@ var config = {
         new webpack.WatchIgnorePlugin([
             path.join(__dirname, 'node_modules')
         ]),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            }
-        }),
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise'
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_console: false,
-            },
-            comments: false
         }),
         new ExtractTextPlugin({
             filename: 'style.[contenthash].css',
@@ -95,10 +83,7 @@ var config = {
         new HtmlWebpackPlugin({
             template: './index.html'
         })
-    ],
-    node: {
-        fs: "empty"
-    }
+    ]
 };
 
 module.exports = config;
