@@ -7,6 +7,10 @@ class Report extends Component {
     constructor(props) {
         super(props);
         this.props.callbacks.handleReport();
+    }
+
+    componentWillMount()
+    {
         this.props.callbacks.handleIsDateFilterEnabled(true);
     }
 

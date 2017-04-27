@@ -4,6 +4,8 @@ import 'whatwg-fetch';
 import 'babel-polyfill';
 import config from '../config';
 import cookie from 'cookie-monster';
+import { connect } from 'react-redux';
+import * as action from './actionCreators';
 
 const socket = io.connect(config.api_url);
 
@@ -16,16 +18,10 @@ class AppWrapper extends Component {
     componentDidMount() {
         let that = this;
 
-        this.unsubscribe = this.context.store.subscribe(() => {
-            this.forceUpdate();
-        });
-
         let tokenCookie = cookie.getItem(config.token_key);
         if (undefined !== tokenCookie) {
             config.api_headers['Authorization'] = `Bearer ${tokenCookie}`;
-            that.context.store.dispatch({
-                type: 'SET_LOGGED_IN'
-            });
+            that.props.dispatch(action.setLoggedIn());
         }
         socket.on(config.event.token_received, function (token) {
             config.api_headers['Authorization'] = `Bearer ${token}`;
@@ -34,24 +30,16 @@ class AppWrapper extends Component {
             let expireTime = time + 1000 * config.token_expires_in;
             now.setTime(expireTime);
             cookie.setItem(config.token_key, token, {expires: now.toGMTString()});
-            that.context.store.dispatch({
-                type: 'SET_LOGGED_IN'
-            });
-            that.context.router.push('/');
+            that.props.dispatch(action.setLoggedIn());
+            that.props.router.push('/');
         });
 
         socket.on(config.event.auth_failed, function () {
-            that.context.store.dispatch({
-                type: 'SET_LOGGED_OUT'
-            });
+            that.props.dispatch(action.setLoggedOut());
             delete config.api_headers['Authorization'];
             cookie.removeItem(config.token_key);
-            that.context.router.push('/login');
+            that.props.router.push('/login');
         });
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     getHeaders() {
@@ -80,20 +68,14 @@ class AppWrapper extends Component {
 
     handleReport() {
         let headers = this.getHeaders();
-        let oldReport = this.context.store.getState().report;
-        fetch(`${config.api_url}/api/v1/report?from=${this.context.store.getState().dateFilter.fromDate}&to=${this.context.store.getState().dateFilter.toDate}`, {headers: headers})
+        let oldReport = this.props.report;
+        fetch(`${config.api_url}/api/v1/report?from=${this.props.dateFilter.fromDate}&to=${this.props.dateFilter.toDate}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
-                this.context.store.dispatch({
-                    type: 'GET_REPORT',
-                    data: responseData,
-                });
+                this.props.dispatch(action.getReport(responseData));
             })
             .catch((error) => {
-                this.context.store.dispatch({
-                    type: 'GET_REPORT',
-                    data: oldReport,
-                });
+                this.props.dispatch(action.getReport(oldReport));
             });
     }
 
@@ -102,11 +84,7 @@ class AppWrapper extends Component {
         fetch(`${config.api_url}/api/v1/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
-                this.context.store.dispatch({
-                    type: 'SET_BOOKINGS',
-                    bookingLabelPlural: bookings,
-                    data: responseData
-                });
+                this.props.dispatch(action.setBookings(bookings, responseData));
             })
             .catch((error) => {
                 console.log('Error fetching and parsing data', error);
@@ -118,40 +96,19 @@ class AppWrapper extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         if (bookingLabelSingular == 'login') {
-            this.context.store.dispatch({
-                type: 'ON_CHANGE_LOGIN_FIELD',
-                fieldName: name,
-                fieldValue: value,
-            });
+            this.props.dispatch(action.onChangeLoginField(name, value));
             return;
         }
-        this.context.store.dispatch({
-            type: 'SET_BOOKING',
-            bookingLabelSingular: bookingLabelSingular,
-            fieldName: name,
-            fieldValue: value,
-        });
+        this.props.dispatch(action.setBooking(bookingLabelSingular, name, value));
     }
 
     handleFocus(event, bookingLabelSingular) {
         if (bookingLabelSingular == 'login') {
-            this.context.store.dispatch({
-                type: 'ON_FOCUS_LOGIN_FIELD',
-                fieldName: event.target.name
-            });
+            this.props.dispatch(action.onFocusLoginField(event.target.name));
             return;
         }
-        this.context.store.dispatch({
-            type: 'SET_BOOKING_ERROR_MESSAGE',
-            bookingLabelSingular: bookingLabelSingular,
-            errorMessageValue: '',
-        });
-        this.context.store.dispatch({
-            type: 'SET_BOOKING_INPUT_ERROR',
-            bookingLabelSingular: bookingLabelSingular,
-            errorsValue: undefined,
-            fieldName: event.target.name,
-        });
+        this.props.dispatch(action.setBookingErrorMessage(bookingLabelSingular, ''));
+        this.props.dispatch(action.setBookingInputError(bookingLabelSingular, undefined, event.target.name));
     }
 
     handleAdd(event, bookingLabelSingular, bookingLabelPlural) {
@@ -162,7 +119,7 @@ class AppWrapper extends Component {
         fetch(`${config.api_url}/api/v1/bookings/${bookingLabelPlural}`, {
             method: 'post',
             headers: headers,
-            body: JSON.stringify(that.context.store.getState().bookings[bookingLabelSingular])
+            body: JSON.stringify(that.props.bookings[bookingLabelSingular])
         })
             .then((response) => {
                 if (!response.ok) {
@@ -174,30 +131,14 @@ class AppWrapper extends Component {
             })
             .then((data) => {
                 if (data.ok) {
-                    that.context.store.dispatch({
-                        type: 'SET_BOOKING_INSERTED',
-                        bookingLabelSingular: bookingLabelSingular,
-                        bookingInserted: data[bookingLabelSingular]
-                    });
+                    that.props.dispatch(action.setBookingInserted(bookingLabelSingular, data[bookingLabelSingular]));
                     setTimeout(function () {
-                        that.context.store.dispatch({
-                            type: 'SET_BOOKING_INSERTED',
-                            bookingLabelSingular: bookingLabelSingular,
-                            bookingInserted: {}
-                        });
+                        that.props.dispatch(action.setBookingInserted(bookingLabelSingular, {}));
                     }, 5000);
                 } else {
                     if (data.err) {
-                        this.context.store.dispatch({
-                            type: 'SET_BOOKING_ERROR_MESSAGE',
-                            bookingLabelSingular: bookingLabelSingular,
-                            errorMessageValue: data.err.message,
-                        });
-                        this.context.store.dispatch({
-                            type: 'SET_BOOKING_ERRORS',
-                            bookingLabelSingular: bookingLabelSingular,
-                            errorsValue: data.err.errors,
-                        });
+                        this.props.dispatch(action.setBookingErrorMessage(bookingLabelSingular, data.err.message));
+                        this.props.dispatch(action.setBookingErrors(bookingLabelSingular, data.err.errors));
                     }
                 }
             })
@@ -209,27 +150,20 @@ class AppWrapper extends Component {
     }
 
     handleIsDateFilterEnabled(isDateFilterEnabled) {
-        this.context.store.dispatch({
-            type: 'TOGGLE_DATE_FILTER_ENABLED',
-            isDateFilterEnabled: isDateFilterEnabled,
-        });
+        this.props.dispatch(action.toggleDateFilterEnabled(isDateFilterEnabled));
     }
 
     handleFocusDate(event) {
         const fieldType = `${event.target.name}DateFieldType`;
-        if (this.context.store.getState().dateFilter[fieldType] === 'date') {
+        if (this.props.dateFilter[fieldType] === 'date') {
             return;
         }
 
-        this.context.store.dispatch({
-            type: 'SET_DATE_TYPE',
-            dateTypeName: fieldType,
-            dateTypeValue: 'date',
-        });
+        this.props.dispatch(action.setDateType(fieldType, 'date'));
     }
 
     handleSubmitDate(event) {
-        if (!this.context.store.getState().dateFilter.isDateFilterEnabled) {
+        if (!this.props.dateFilter.isDateFilterEnabled) {
             return;
         }
         this.handleReport();
@@ -237,11 +171,7 @@ class AppWrapper extends Component {
     }
 
     handleChangeDate(event) {
-        this.context.store.dispatch({
-            type: 'SET_DATE',
-            dateFieldName: `${event.target.name}Date`,
-            dateFieldValue: event.target.value,
-        });
+        this.props.dispatch(action.setDate(`${event.target.name}Date`, event.target.value));
     }
 
     handleBlurDate(event) {
@@ -253,24 +183,20 @@ class AppWrapper extends Component {
 
         const fieldType = `${target.name}DateFieldType`;
 
-        if (this.context.store.getState().dateFilter[fieldType] === 'text') {
+        if (this.props.dateFilter[fieldType] === 'text') {
             return;
         }
 
-        this.context.store.dispatch({
-            type: 'SET_DATE_TYPE',
-            dateTypeName: fieldType,
-            dateTypeValue: 'text',
-        });
+        this.props.dispatch(action.setDateType(fieldType, 'text'));
     }
 
     handleLogin(event) {
 
-        if (this.context.store.getState().auth.isLoggedIn) {
-            return this.context.router.push('/');
+        if (this.props.auth.isLoggedIn) {
+            return this.props.router.push('/');
         }
 
-        const login = this.context.store.getState().auth.login;
+        const login = this.props.auth.login;
 
         fetch(`${config.api_url}/api/v1/auth/login`, {
             method: 'post',
@@ -287,16 +213,10 @@ class AppWrapper extends Component {
             })
             .then((data) => {
                 if (data.ok) {
-                    this.context.store.dispatch({
-                        type: 'SET_LOGGED_IN'
-                    });
+                    this.props.dispatch(action.setLoggedIn());
                 } else {
                     if (data.errors) {
-                        this.context.store.dispatch({
-                            type: 'SET_LOGIN_FAILED',
-                            loginErrorMessage: data.message,
-                            loginErrors: data.errors,
-                        });
+                        this.props.dispatch(action.setLoginFailed(data.message, data.errors));
                     }
                 }
             })
@@ -308,16 +228,14 @@ class AppWrapper extends Component {
     }
 
     handleIsLoggedIn() {
-        return this.context.store.getState().auth.isLoggedIn;
+        return this.props.auth.isLoggedIn;
     }
 
     handleLogout() {
-        this.context.store.dispatch({
-            type: 'SET_LOGGED_OUT'
-        });
+        this.props.dispatch(action.setLoggedOut());
         delete config.api_headers['Authorization'];
         cookie.removeItem(config.token_key);
-        this.context.router.push('/login');
+        this.props.router.push('/login');
     }
 
     formatPrice(input) {
@@ -335,7 +253,6 @@ class AppWrapper extends Component {
     }
 
     render() {
-        let state = this.context.store.getState();
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
                     formatPrice: this.formatPrice.bind(this),
@@ -354,21 +271,26 @@ class AppWrapper extends Component {
                     handleSubmitDate: this.handleSubmitDate.bind(this),
                     handleBlurDate: this.handleBlurDate.bind(this),
                 },
-                report: state.report,
-                dateFilter: state.dateFilter,
-                auth: state.auth,
-                bookings: state.bookings,
+                report: this.props.report,
+                dateFilter: this.props.dateFilter,
+                auth: this.props.auth,
+                bookings: this.props.bookings,
                 socket: socket,
             });
     }
 }
 
-AppWrapper.contextTypes = {
-    router: PropTypes.object,
-    store: PropTypes.object,
-};
-
 AppWrapper.displayName = 'AppWrapper';
+
+const mapStateToProps = (state) => ({
+    report: state.report,
+    dateFilter: state.dateFilter,
+    auth: state.auth,
+    bookings: state.bookings,
+    auth: state.auth,
+});
+
+AppWrapper = connect(mapStateToProps)(AppWrapper);
 
 export default AppWrapper;
 
