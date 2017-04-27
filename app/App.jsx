@@ -66,7 +66,7 @@ class App extends Component {
             const dateFilter = this.props.dateFilter;
             if (dateFilter.isDateFilterEnabled) {
                 searchItems = (
-                    <form onSubmit={this.handleSubmit} componentName={this.props.componentName}>
+                    <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <input onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleChange}
                                    type={dateFilter.fromDateFieldType} name="from" className="form-control"
