@@ -26,10 +26,10 @@ import Register from './components/auth/Register.jsx';
 const AppRouter = () => (
     <Router history={browserHistory}>
         <Route component={AppWrapper}>
-            <Route path="/" component={App}>
+            <Route path="(/:from)(/:to)" component={App}>
                 <Route name="login" path="login" component={Login}/>
                 <Route name="register" path="register" component={Register}/>
-                <IndexRoute component={Report} path="(/:from)(/:to)"/>
+                <IndexRoute component={Report}/>
                 <Route name="logout" path="logout" component={Logout}/>
                 <Route name="buses" path="bookings/buses" component={Buses}>
                     <Route path="current" component={BusesCurrent}>
