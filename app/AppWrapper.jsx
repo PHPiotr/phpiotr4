@@ -153,41 +153,12 @@ class AppWrapper extends Component {
         this.props.dispatch(action.toggleDateFilterEnabled(isDateFilterEnabled));
     }
 
-    handleFocusDate(event) {
-        const fieldType = `${event.target.name}DateFieldType`;
-        if (this.props.dateFilter[fieldType] === 'date') {
-            return;
-        }
-
-        this.props.dispatch(action.setDateType(fieldType, 'date'));
-    }
-
     handleSubmitDate(event) {
         if (!this.props.dateFilter.isDateFilterEnabled) {
             return;
         }
         this.handleReport();
         event.preventDefault();
-    }
-
-    handleChangeDate(event) {
-        this.props.dispatch(action.setDate(`${event.target.name}Date`, event.target.value));
-    }
-
-    handleBlurDate(event) {
-        const target = event.target;
-
-        if (target.value) {
-            return;
-        }
-
-        const fieldType = `${target.name}DateFieldType`;
-
-        if (this.props.dateFilter[fieldType] === 'text') {
-            return;
-        }
-
-        this.props.dispatch(action.setDateType(fieldType, 'text'));
     }
 
     handleLogin(event) {
@@ -266,10 +237,7 @@ class AppWrapper extends Component {
                     handleVerify: this.handleVerify.bind(this),
                     handleReport: this.handleReport.bind(this),
                     handleIsDateFilterEnabled: this.handleIsDateFilterEnabled.bind(this),
-                    handleFocusDate: this.handleFocusDate.bind(this),
-                    handleChangeDate: this.handleChangeDate.bind(this),
                     handleSubmitDate: this.handleSubmitDate.bind(this),
-                    handleBlurDate: this.handleBlurDate.bind(this),
                 },
                 report: this.props.report,
                 dateFilter: this.props.dateFilter,
