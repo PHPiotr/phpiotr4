@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger';
-import promise from 'redux-promise';
 import reducers from './reducers';
+import thunk from 'redux-thunk';
 
 const configureStore = () => {
-    const middlewares = [promise];
+    const middlewares = [thunk];
 
     if (process.env.NODE_ENV !== 'production') {
         middlewares.push(createLogger());

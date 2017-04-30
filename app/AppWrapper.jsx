@@ -1,11 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import io from 'socket.io-client';
-import 'whatwg-fetch';
+import fetch from 'isomorphic-fetch';
 import 'babel-polyfill';
 import config from '../config';
 import cookie from 'cookie-monster';
 import { connect } from 'react-redux';
-import * as action from './actionCreators';
+import * as action from './actions';
+import getHeaders from './getHeaders';
 
 const socket = io.connect(config.api_url);
 
@@ -42,18 +43,8 @@ class AppWrapper extends Component {
         });
     }
 
-    getHeaders() {
-        let currentCookie = cookie.getItem(config.token_key);
-        if (!currentCookie) {
-            delete config.api_headers['Authorization'];
-        } else {
-            config.api_headers['Authorization'] = `Bearer ${currentCookie}`;
-        }
-        return config.api_headers;
-    }
-
     handleVerify() {
-        let headers = this.getHeaders();
+        let headers = getHeaders();
         fetch(`${config.api_url}/api/v1/auth/verify`, {
             headers: headers
         })
@@ -67,20 +58,11 @@ class AppWrapper extends Component {
     }
 
     handleReport() {
-        let headers = this.getHeaders();
-        let oldReport = this.props.report;
-        fetch(`${config.api_url}/api/v1/report?from=${this.props.dateFilter.fromDate}&to=${this.props.dateFilter.toDate}`, {headers: headers})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.props.dispatch(action.getReport(responseData));
-            })
-            .catch((error) => {
-                this.props.dispatch(action.getReport(oldReport));
-            });
+        this.props.dispatch(action.fetchReportIfNeeded(this.props.dateFilter.fromDate, this.props.dateFilter.toDate, getHeaders()));
     }
 
     handleList(bookings, type, page) {
-        let headers = this.getHeaders();
+        let headers = getHeaders();
         fetch(`${config.api_url}/api/v1/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
             .then((response) => response.json())
             .then((responseData) => {
@@ -113,7 +95,7 @@ class AppWrapper extends Component {
 
     handleAdd(event, bookingLabelSingular, bookingLabelPlural) {
 
-        let headers = this.getHeaders();
+        let headers = getHeaders();
         const that = this;
 
         fetch(`${config.api_url}/api/v1/bookings/${bookingLabelPlural}`, {
@@ -151,14 +133,6 @@ class AppWrapper extends Component {
 
     handleIsDateFilterEnabled(isDateFilterEnabled) {
         this.props.dispatch(action.toggleDateFilterEnabled(isDateFilterEnabled));
-    }
-
-    handleSubmitDate(event) {
-        if (!this.props.dateFilter.isDateFilterEnabled) {
-            return;
-        }
-        this.handleReport();
-        event.preventDefault();
     }
 
     handleLogin(event) {
@@ -237,7 +211,6 @@ class AppWrapper extends Component {
                     handleVerify: this.handleVerify.bind(this),
                     handleReport: this.handleReport.bind(this),
                     handleIsDateFilterEnabled: this.handleIsDateFilterEnabled.bind(this),
-                    handleSubmitDate: this.handleSubmitDate.bind(this),
                 },
                 report: this.props.report,
                 dateFilter: this.props.dateFilter,

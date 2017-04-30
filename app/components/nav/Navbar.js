@@ -6,8 +6,6 @@ import {connect} from 'react-redux';
 
 let Navbar = (props) => {
 
-    console.log('props:', props);
-
     let navItems = null;
     let navLoginItems = (
         <ul className="nav navbar-nav">
@@ -46,7 +44,7 @@ let Navbar = (props) => {
                 </div>
                 <div className="collapse navbar-collapse" id="navbar-main">
                     {navItems}
-                    <DateFilterForm onDateFilterFormSubmit={props.onDateFilterFormSubmit}/>
+                    <DateFilterForm {...props}/>
                     {navLoginItems}
                 </div>
             </div>
@@ -55,7 +53,8 @@ let Navbar = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-   isLoggedIn: state.auth.isLoggedIn
+    isLoggedIn: state.auth.isLoggedIn,
+    dateFilter: state.dateFilter,
 });
 Navbar = connect(mapStateToProps)(Navbar);
 

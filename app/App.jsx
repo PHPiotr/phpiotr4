@@ -10,16 +10,11 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.onDateFilterFormSubmit = this.onDateFilterFormSubmit.bind(this);
     }
 
     componentWillUnmount() {
         this.props.socket.removeListener(config.event.auth_failed);
         this.props.socket.removeListener(config.event.token_received);
-    }
-
-    onDateFilterFormSubmit(event) {
-        this.props.callbacks.handleSubmitDate(event);
     }
 
     render() {
@@ -33,7 +28,7 @@ class App extends Component {
 
         return (
             <div>
-                <Navbar onDateFilterFormSubmit={this.onDateFilterFormSubmit} />
+                <Navbar />
                 <div className="container-fluid">
                     {propsChildren}
                 </div>

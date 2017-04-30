@@ -1,3 +1,6 @@
+import fetch from 'isomorphic-fetch';
+import config from '../config';
+
 export const setLoggedIn = () => ({
     type: 'SET_LOGGED_IN'
 });
@@ -19,10 +22,46 @@ export const setLoginFailed = (loginErrorMessage, loginErrors) => ({
     loginErrors,
 });
 
-export const getReport = (data) => ({
-    type: 'GET_REPORT',
-    data,
+export const FETCH_REPORT_REQUEST = 'FETCH_REPORT_REQUEST';
+const fetchReportRequest = () => ({
+    type: 'FETCH_REPORT_REQUEST',
 });
+export const FETCH_REPORT_SUCCESS = 'FETCH_REPORT_SUCCESS';
+const fetchReportSuccess = (data) => ({
+    type: 'FETCH_REPORT_SUCCESS',
+    data,
+    receivedAt: Date.now()
+});
+export const FETCH_REPORT_FAILURE = 'FETCH_REPORT_FAILURE';
+const fetchReportFailure = (error) => ({
+    type: 'FETCH_REPORT_FAILURE',
+    error
+});
+const fetchReport = (fromDate, toDate, headers) => {
+    return (dispatch) => {
+        dispatch(fetchReportRequest());
+        return fetch(`${config.api_url}/api/v1/report?from=${fromDate}&to=${toDate}`, {headers})
+            .then(response => response.json())
+            .then(json => dispatch(fetchReportSuccess(json)))
+            .catch(error => dispatch(fetchReportFailure(error)))
+    }
+};
+function shouldFetchReport(state) {
+    if (state.report.isFetching) {
+        return false
+    }
+    return true;
+}
+export const fetchReportIfNeeded = (fromDate, toDate, headers) => {
+
+    return (dispatch, getState) => {
+        if (shouldFetchReport(getState())) {
+            return dispatch(fetchReport(fromDate, toDate, headers))
+        } else {
+            return Promise.resolve();
+        }
+    }
+}
 
 export const setBookings = (bookingLabelPlural, data) => ({
     type: 'SET_BOOKINGS',

@@ -1,17 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setDate, setDateType} from '../../actionCreators';
+import {setDate, setDateType, fetchReportIfNeeded} from '../../actions';
+import getHeaders from '../../getHeaders';
 
-let DateFilterForm = (props, ownProps) => {
+let DateFilterForm = (props) => {
 
-    console.log('props, ownProps:', props, ownProps);
+
 
     if (!props.dateFilter.isDateFilterEnabled) {
         return null;
     }
 
     return (
-        <form onSubmit={props.onDateFilterFormSubmit}>
+        <form onSubmit={props.onSubmit}>
             <div className="form-group">
                 <input onFocus={props.onFocus} onBlur={props.onBlur} onChange={props.onChange}
                        type={props.dateFilter.fromDateFieldType} name="from" className="form-control"
@@ -33,7 +34,7 @@ const mapStateToProps = (state) => ({
     dateFilter: state.dateFilter
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     onFocus(event) {
         const target = event.target;
         const fieldType = `${target.name}DateFieldType`;
@@ -59,6 +60,15 @@ const mapDispatchToProps = (dispatch) => ({
     },
     onChange(event) {
         dispatch(setDate(`${event.target.name}Date`, event.target.value));
+    },
+    onSubmit(event) {
+        event.preventDefault();
+        if (!ownProps.dateFilter.isDateFilterEnabled) {
+            return;
+        }
+        dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders())).then(() => {
+            console.log('fetched on submit');
+        })
     }
 });
 DateFilterForm = connect(mapStateToProps, mapDispatchToProps)(DateFilterForm);
