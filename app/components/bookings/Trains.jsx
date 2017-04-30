@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import Nav from '../nav/Nav.jsx';
+import Nav from '../presentation/Nav.jsx';
 import Pagination from '../nav/Pagination.jsx';
 import Auth from '../hoc/Auth.jsx';
 import moment from 'moment';

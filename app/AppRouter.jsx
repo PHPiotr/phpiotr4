@@ -2,7 +2,7 @@ import React from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppWrapper from './AppWrapper.jsx';
 import App from './App.jsx';
-import Report from './components/Report.jsx';
+import Report from './components/containers/Report.js';
 import Buses from './components/bookings/Buses.jsx';
 import Planes from './components/bookings/Planes.jsx';
 import Trains from './components/bookings/Trains.jsx';

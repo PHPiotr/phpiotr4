@@ -1,5 +1,5 @@
 import React from 'react';
-import DateFilterForm from '../helper/DateFilterForm';
+import DateFilterForm from '../containers/DateFilter';
 import {Link} from 'react-router';
 import NavLink from './NavLink.jsx';
 import {connect} from 'react-redux';

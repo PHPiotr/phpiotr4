@@ -57,10 +57,6 @@ class AppWrapper extends Component {
             });
     }
 
-    handleReport() {
-        this.props.dispatch(action.fetchReportIfNeeded(this.props.dateFilter.fromDate, this.props.dateFilter.toDate, getHeaders()));
-    }
-
     handleList(bookings, type, page) {
         let headers = getHeaders();
         fetch(`${config.api_url}/api/v1/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
@@ -209,7 +205,6 @@ class AppWrapper extends Component {
                     handleLogout: this.handleLogout.bind(this),
                     handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
                     handleVerify: this.handleVerify.bind(this),
-                    handleReport: this.handleReport.bind(this),
                     handleIsDateFilterEnabled: this.handleIsDateFilterEnabled.bind(this),
                 },
                 report: this.props.report,
