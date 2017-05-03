@@ -1,8 +1,4 @@
 const initialState = {
-    buses: {},
-    planes: {},
-    trains: {},
-    hostels: {},
 
     bus: {},
     plane: {},
@@ -27,9 +23,6 @@ const initialState = {
 
 const bookings = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_BOOKINGS':
-            return {...state, [action.bookingLabelPlural]: action.data};
-
         case 'SET_BOOKING':
             let booking = {...state[action.bookingLabelSingular], [action.fieldName]: action.fieldValue};
             return {...state, [action.bookingLabelSingular]: booking};

@@ -10,7 +10,6 @@ function bookings(WrappedComponent, active) {
         }
 
         componentDidMount() {
-            this.props.callbacks.handleList(this.props.labelPlural, active);
             this.props.socket.on(`insert_${this.props.labelSingular}`, this.getBookings);
         }
 
@@ -19,7 +18,6 @@ function bookings(WrappedComponent, active) {
         }
 
         getBookings() {
-            this.props.callbacks.handleList(this.props.labelPlural, active);
         }
 
         render() {

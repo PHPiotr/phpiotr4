@@ -57,18 +57,6 @@ class AppWrapper extends Component {
             });
     }
 
-    handleList(bookings, type, page) {
-        let headers = getHeaders();
-        fetch(`${config.api_url}/api/v1/bookings/${bookings}?type=${type}&page=${page || 1}`, {headers: headers})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.props.dispatch(action.setBookings(bookings, responseData));
-            })
-            .catch((error) => {
-                console.log('Error fetching and parsing data', error);
-            });
-    }
-
     handleChange(event, bookingLabelSingular) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -127,10 +115,6 @@ class AppWrapper extends Component {
         event.preventDefault();
     }
 
-    handleIsDateFilterEnabled(isDateFilterEnabled) {
-        this.props.dispatch(action.toggleDateFilterEnabled(isDateFilterEnabled));
-    }
-
     handleLogin(event) {
 
         if (this.props.auth.isLoggedIn) {
@@ -179,33 +163,16 @@ class AppWrapper extends Component {
         this.props.router.push('/login');
     }
 
-    formatPrice(input) {
-        let stringInput = '' + input;
-        let dotIndex = stringInput.indexOf('.');
-        if (-1 === dotIndex) {
-            return stringInput + '.00';
-        }
-        let afterDot = stringInput.substring(dotIndex + 1);
-        let afterDotLength = afterDot.length;
-        if (1 === afterDotLength) {
-            return stringInput + '0';
-        }
-        return stringInput;
-    }
-
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
-                    formatPrice: this.formatPrice.bind(this),
                     handleChange: this.handleChange.bind(this),
                     handleFocus: this.handleFocus.bind(this),
                     handleAdd: this.handleAdd.bind(this),
-                    handleList: this.handleList.bind(this),
                     handleLogin: this.handleLogin.bind(this),
                     handleLogout: this.handleLogout.bind(this),
                     handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
                     handleVerify: this.handleVerify.bind(this),
-                    handleIsDateFilterEnabled: this.handleIsDateFilterEnabled.bind(this),
                 },
                 report: this.props.report,
                 dateFilter: this.props.dateFilter,
