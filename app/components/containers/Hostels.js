@@ -19,6 +19,7 @@ const Hostels = (props) => (
 const mapStateToProps = (state) => ({
     hostels: state.hostels,
     bookingsLabel: 'hostels',
+    bookingLabel: 'hostel',
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {

@@ -16,10 +16,13 @@ const Buses = (props) => (
     </div>
 );
 
-const mapStateToProps = (state) => ({
-    buses: state.buses,
-    bookingsLabel: 'buses',
-});
+const mapStateToProps = (state, ownProps) => {
+    return {
+        buses: state.buses,
+        bookingsLabel: 'buses',
+        bookingLabel: 'bus',
+    }
+};
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {
         dispatch(fetchBusesIfNeeded(type || 'current', page || 1, getHeaders()));

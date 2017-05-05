@@ -3,8 +3,6 @@ import NavLink from '../nav/NavLink.jsx';
 
 const Pagination = (props) => {
 
-    console.log('pagination:', props);
-
     if (props[props.bookingsLabel].data === undefined) {
         return null;
     }

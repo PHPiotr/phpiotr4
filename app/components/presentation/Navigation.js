@@ -2,7 +2,6 @@ import React from 'react';
 import NavLink from '../nav/NavLink.jsx';
 
 const Navigation = (props) => {
-    console.log('navigation:', props);
     return (
         <div className="well well-sm clearfix">
             <ul className="nav nav-pills">
@@ -10,7 +9,7 @@ const Navigation = (props) => {
                          to={`/bookings/${props.bookingsLabel}/current`}>Current</NavLink>
                 <NavLink onClick={props.fetchBookings.bind(this, 'past')}
                          to={`/bookings/${props.bookingsLabel}/past`}>Past</NavLink>
-                <NavLink to={`/bookings/new/${props.bookingsLabel}`}>Add</NavLink>
+                <NavLink to={`/bookings/${props.bookingLabel}`}>Add</NavLink>
             </ul>
         </div>
     );

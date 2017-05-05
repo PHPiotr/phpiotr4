@@ -58,61 +58,11 @@ class AppWrapper extends Component {
     }
 
     handleChange(event, bookingLabelSingular) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        if (bookingLabelSingular == 'login') {
-            this.props.dispatch(action.onChangeLoginField(name, value));
-            return;
-        }
-        this.props.dispatch(action.setBooking(bookingLabelSingular, name, value));
+        this.props.dispatch(action.handleChange(event, bookingLabelSingular))
     }
 
     handleFocus(event, bookingLabelSingular) {
-        if (bookingLabelSingular == 'login') {
-            this.props.dispatch(action.onFocusLoginField(event.target.name));
-            return;
-        }
-        this.props.dispatch(action.setBookingErrorMessage(bookingLabelSingular, ''));
-        this.props.dispatch(action.setBookingInputError(bookingLabelSingular, undefined, event.target.name));
-    }
-
-    handleAdd(event, bookingLabelSingular, bookingLabelPlural) {
-
-        let headers = getHeaders();
-        const that = this;
-
-        fetch(`${config.api_url}/api/v1/bookings/${bookingLabelPlural}`, {
-            method: 'post',
-            headers: headers,
-            body: JSON.stringify(that.props.bookings[bookingLabelSingular])
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data.ok) {
-                    that.props.dispatch(action.setBookingInserted(bookingLabelSingular, data[bookingLabelSingular]));
-                    setTimeout(function () {
-                        that.props.dispatch(action.setBookingInserted(bookingLabelSingular, {}));
-                    }, 5000);
-                } else {
-                    if (data.err) {
-                        this.props.dispatch(action.setBookingErrorMessage(bookingLabelSingular, data.err.message));
-                        this.props.dispatch(action.setBookingErrors(bookingLabelSingular, data.err.errors));
-                    }
-                }
-            })
-            .catch((error) => {
-
-            });
-
-        event.preventDefault();
+        this.props.dispatch(action.handleFocus(event, bookingLabelSingular))
     }
 
     handleLogin(event) {
@@ -168,7 +118,6 @@ class AppWrapper extends Component {
                 callbacks: {
                     handleChange: this.handleChange.bind(this),
                     handleFocus: this.handleFocus.bind(this),
-                    handleAdd: this.handleAdd.bind(this),
                     handleLogin: this.handleLogin.bind(this),
                     handleLogout: this.handleLogout.bind(this),
                     handleIsLoggedIn: this.handleIsLoggedIn.bind(this),

@@ -19,6 +19,7 @@ const Planes = (props) => (
 const mapStateToProps = (state) => ({
     planes: state.planes,
     bookingsLabel: 'planes',
+    bookingLabel: 'plane',
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {

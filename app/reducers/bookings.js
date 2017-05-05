@@ -1,3 +1,5 @@
+import {ADD_BOOKING_REQUEST, ADD_BOOKING_SUCCESS, ADD_BOOKING_FAILURE} from '../actions';
+
 const initialState = {
 
     bus: {},
@@ -23,6 +25,14 @@ const initialState = {
 
 const bookings = (state = initialState, action) => {
     switch (action.type) {
+        // case ADD_BOOKING_REQUEST:
+        //     return {...state, isFetching: true};
+        // case ADD_BOOKING_SUCCESS:
+        //     return {
+        //         ...state, ...{data: action.data}, ...{isFetching: false, receivedAt: action.receivedAt}
+        //     };
+        // case ADD_BOOKING_FAILURE:
+        //     return {...state, ...{isFetching: false, error: action.error}};
         case 'SET_BOOKING':
             let booking = {...state[action.bookingLabelSingular], [action.fieldName]: action.fieldValue};
             return {...state, [action.bookingLabelSingular]: booking};
