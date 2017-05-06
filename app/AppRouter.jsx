@@ -11,16 +11,14 @@ import Bus from './components/containers/Bus';
 import Plane from './components/containers/Plane';
 import Train from './components/containers/Train';
 import Hostel from './components/containers/Hostel';
-import Login from './components/auth/Login.jsx';
-import Logout from './components/auth/Logout.jsx';
-import Register from './components/auth/Register.jsx';
+import Login from './components/containers/Login';
+import Logout from './components/containers/Logout';
 
 const AppRouter = () => (
     <Router history={browserHistory}>
         <Route component={AppWrapper}>
             <Route path="(/:from)(/:to)" component={App}>
                 <Route name="login" path="login" component={Login}/>
-                <Route name="register" path="register" component={Register}/>
                 <IndexRoute component={Report}/>
                 <Route name="logout" path="logout" component={Logout}/>
                 <Route name="buses" path="bookings/buses" component={Buses}>

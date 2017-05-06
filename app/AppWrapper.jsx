@@ -57,51 +57,6 @@ class AppWrapper extends Component {
             });
     }
 
-    handleChange(event, bookingLabelSingular) {
-        this.props.dispatch(action.handleChange(event, bookingLabelSingular))
-    }
-
-    handleFocus(event, bookingLabelSingular) {
-        this.props.dispatch(action.handleFocus(event, bookingLabelSingular))
-    }
-
-    handleLogin(event) {
-
-        if (this.props.auth.isLoggedIn) {
-            return this.props.router.push('/');
-        }
-
-        const login = this.props.auth.login;
-
-        fetch(`${config.api_url}/api/v1/auth/login`, {
-            method: 'post',
-            headers: config.api_headers,
-            body: JSON.stringify(login)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.code != 406) {
-                        throw new Error('Response was not ok');
-                    }
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data.ok) {
-                    this.props.dispatch(action.setLoggedIn());
-                } else {
-                    if (data.errors) {
-                        this.props.dispatch(action.setLoginFailed(data.message, data.errors));
-                    }
-                }
-            })
-            .catch((error) => {
-                socket.emit(config.event.auth_failed);
-            });
-
-        event.preventDefault();
-    }
-
     handleIsLoggedIn() {
         return this.props.auth.isLoggedIn;
     }
@@ -116,9 +71,6 @@ class AppWrapper extends Component {
     render() {
         return this.props.children && React.cloneElement(this.props.children, {
                 callbacks: {
-                    handleChange: this.handleChange.bind(this),
-                    handleFocus: this.handleFocus.bind(this),
-                    handleLogin: this.handleLogin.bind(this),
                     handleLogout: this.handleLogout.bind(this),
                     handleIsLoggedIn: this.handleIsLoggedIn.bind(this),
                     handleVerify: this.handleVerify.bind(this),
@@ -140,6 +92,7 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
     bookings: state.bookings,
     auth: state.auth,
+    socket: socket,
 });
 
 AppWrapper = connect(mapStateToProps)(AppWrapper);

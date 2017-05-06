@@ -30,9 +30,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchReportOnLoad(fromDate, toDate) {
-        dispatch(fetchReportIfNeeded(fromDate, toDate, getHeaders())).then(() => {
-
-        })
+        dispatch(fetchReportIfNeeded(fromDate, toDate, getHeaders()));
     },
     handleIsDateFilterEnabled(isEnabled) {
         dispatch(toggleDateFilterEnabled(isEnabled));

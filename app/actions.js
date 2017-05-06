@@ -1,6 +1,80 @@
 import fetch from 'isomorphic-fetch';
 import config from '../config';
 
+const shouldLogin = (state) => {
+    return true;
+};
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+const loginRequest = () => ({
+    type: LOGIN_REQUEST
+});
+
+const loginSuccess = (data) => {
+    return (dispatch) => {
+        dispatch(setLoggedIn());
+        return {
+            type: LOGIN_SUCCESS,
+            data
+        };
+    };
+};
+
+const loginFailure = (error, json) => {
+    if (json === undefined) {
+        return {
+            type: LOGIN_FAILURE,
+            error
+        };
+    }
+    return (dispatch) => {
+        dispatch(setLoginFailed(json.message, json.errors));
+        return {
+            type: LOGIN_FAILURE,
+            error: json
+        };
+    };
+};
+
+const login = (event, socket, data, headers) => {
+    event.preventDefault();
+    return (dispatch) => {
+        dispatch(loginRequest());
+        return fetch(`${config.api_url}/api/v1/auth/login`, {
+            method: 'post',
+            headers: headers,
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.ok) {
+                    return dispatch(loginSuccess(json));
+                }
+                if (json.errors) {
+                    return dispatch(loginFailure(json.errors, json));
+                }
+                throw Error('Something bad happened.');
+            })
+            .catch(error => {
+                dispatch(loginFailure(error));
+                socket.emit(config.event.auth_failed);
+            })
+    };
+};
+
+export const loginIfNeeded = (event, socket, data, headers) => {
+    return (dispatch, getState) => {
+        console.log('getState:', getState());
+        if (shouldLogin(getState())) {
+            return dispatch(login(event, socket, data, headers))
+        }
+        return Promise.resolve();
+    }
+};
+
 export const setLoggedIn = () => ({
     type: 'SET_LOGGED_IN'
 });
@@ -258,10 +332,6 @@ export const setDateType = (dateTypeName, dateTypeValue) => ({
 
 export const handleFocus = (event, bookingLabelSingular) => {
     return (dispatch) => {
-        if (bookingLabelSingular == 'login') {
-            dispatch(onFocusLoginField(event.target.name));
-            return Promise.resolve();
-        }
         dispatch(setBookingErrorMessage(bookingLabelSingular, ''));
         dispatch(setBookingInputError(bookingLabelSingular, undefined, event.target.name));
         return Promise.resolve();
@@ -273,10 +343,7 @@ export const handleChange = (event, bookingLabelSingular) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        if (bookingLabelSingular == 'login') {
-            dispatch(onChangeLoginField(name, value));
-            return;
-        }
+
         dispatch(setBooking(bookingLabelSingular, name, value));
 
         return Promise.resolve();
