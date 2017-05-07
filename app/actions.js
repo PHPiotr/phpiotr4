@@ -5,6 +5,57 @@ const shouldLogin = (state) => {
     return true;
 };
 
+export const VERIFY_REQUEST = 'VERIFY_REQUEST';
+export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
+export const VERIFY_FAILURE = 'VERIFY_FAILURE';
+
+const shouldVerfify = () => {
+    return true;
+};
+
+const verifyRequest = () => ({
+    type: VERIFY_REQUEST
+});
+const verifySuccess = (data) => ({
+    type: VERIFY_SUCCESS,
+    data
+});
+const verifyFailure = (error) => ({
+    type: VERIFY_FAILURE,
+    error
+});
+
+const verify = (headers) => {
+    return (dispatch) => {
+        dispatch(verifyRequest());
+        return fetch(`${config.api_url}/api/v1/auth/verify`, {
+            headers: headers
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log('hi', json);
+                if (json.success) {
+                    return dispatch(verifySuccess(json));
+                } else {
+                    throw Error('Verify failure');
+                }
+            })
+            .catch((error) => {
+                dispatch(verifyFailure(error));
+            });
+    };
+};
+
+export const verifyIfNeeded = (headers) => {
+    return (dispatch) => {
+
+        if (!shouldVerfify()) {
+            return Promise.resolve();
+        }
+        return dispatch(verify(headers));
+    };
+};
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -14,12 +65,9 @@ const loginRequest = () => ({
 });
 
 const loginSuccess = (data) => {
-    return (dispatch) => {
-        dispatch(setLoggedIn());
-        return {
-            type: LOGIN_SUCCESS,
-            data
-        };
+    return {
+        type: LOGIN_SUCCESS,
+        data
     };
 };
 
@@ -40,8 +88,8 @@ const loginFailure = (error, json) => {
 };
 
 const login = (event, socket, data, headers) => {
-    event.preventDefault();
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        console.log('loginRequest', getState());
         dispatch(loginRequest());
         return fetch(`${config.api_url}/api/v1/auth/login`, {
             method: 'post',

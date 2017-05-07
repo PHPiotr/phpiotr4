@@ -19,7 +19,6 @@ class App extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                callbacks: this.props.callbacks,
                 auth: this.props.auth,
                 report: this.props.report,
                 bookings: this.props.bookings,
