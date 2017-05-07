@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import NavLink from './NavLink.jsx';
+import NavLink from './NavLink';
 
 class Pagination extends Component {
 

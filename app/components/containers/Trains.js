@@ -1,5 +1,5 @@
 import React from 'react';
-import Auth from '../hoc/Auth.jsx';
+import Auth from './Auth';
 import getHeaders from '../../getHeaders';
 import {connect} from 'react-redux';
 import {fetchTrainsIfNeeded} from '../../actions';

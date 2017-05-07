@@ -11,7 +11,7 @@ var config = {
             'react-hot-loader/patch',
             'webpack/hot/only-dev-server',
             'webpack-hot-middleware/client',
-            './AppContainer.jsx',
+            './AppContainer',
         ],
         vendor: [
             "babel-polyfill",

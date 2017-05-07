@@ -9,7 +9,7 @@ export const VERIFY_REQUEST = 'VERIFY_REQUEST';
 export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
 export const VERIFY_FAILURE = 'VERIFY_FAILURE';
 
-const shouldVerfify = () => {
+const shouldVerify = () => {
     return true;
 };
 
@@ -33,7 +33,6 @@ const verify = (headers) => {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log('hi', json);
                 if (json.success) {
                     return dispatch(verifySuccess(json));
                 } else {
@@ -49,7 +48,7 @@ const verify = (headers) => {
 export const verifyIfNeeded = (headers) => {
     return (dispatch) => {
 
-        if (!shouldVerfify()) {
+        if (!shouldVerify()) {
             return Promise.resolve();
         }
         return dispatch(verify(headers));

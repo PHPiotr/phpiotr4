@@ -1,5 +1,5 @@
 import React from 'react';
-import NavLink from '../nav/NavLink.jsx';
+import NavLink from '../nav/NavLink';
 
 const Navigation = (props) => {
     return (

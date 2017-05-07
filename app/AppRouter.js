@@ -1,7 +1,6 @@
 import React from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import AppWrapper from './AppWrapper.jsx';
-import App from './App.jsx';
+import App from './App';
 import Report from './components/containers/Report';
 import Buses from './components/containers/Buses';
 import Planes from './components/containers/Planes';
@@ -16,7 +15,6 @@ import Logout from './components/containers/Logout';
 
 const AppRouter = () => (
     <Router history={browserHistory}>
-        <Route component={AppWrapper}>
             <Route path="(/:from)(/:to)" component={App}>
                 <Route name="login" path="login" component={Login}/>
                 <IndexRoute component={Report}/>
@@ -57,7 +55,6 @@ const AppRouter = () => (
                     <Route name="hostel" path=":id" component={Hostel} />
                 </Route>
             </Route>
-        </Route>
     </Router>
 );
 

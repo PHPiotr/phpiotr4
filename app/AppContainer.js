@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import configureStore from './configureStore';
 import {AppContainer} from 'react-hot-loader';
-import AppRouter from './AppRouter.jsx';
+import AppRouter from './AppRouter';
 
 const render = (Component) => {
     ReactDOM.render(
@@ -19,7 +19,7 @@ const render = (Component) => {
 render(AppRouter);
 
 if (module.hot) {
-    module.hot.accept('./AppRouter.jsx', () => {
+    module.hot.accept('./AppRouter', () => {
         render(AppRouter);
     });
 }

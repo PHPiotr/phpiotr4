@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import {verifyIfNeeded, VERIFY_SUCCESS, setLoggedOut} from '../../actions';
+import {verifyIfNeeded, VERIFY_SUCCESS, setLoggedIn, setLoggedOut} from '../../actions';
 import getHeaders from '../../getHeaders';
 
 function auth(WrappedComponent) {
@@ -31,7 +31,10 @@ function auth(WrappedComponent) {
             dispatch(verifyIfNeeded(getHeaders())).then((json) => {
                 if (json === undefined || json.type === undefined || json.type !== VERIFY_SUCCESS) {
                     dispatch(setLoggedOut());
-                    ownProps.router.push('/login');
+                    return ownProps.router.push('/login');
+                }
+                if (!ownProps.auth.isLoggedIn) {
+                    dispatch(setLoggedIn());
                 }
             });
         }

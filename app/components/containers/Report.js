@@ -1,4 +1,4 @@
-import Auth from '../hoc/Auth.jsx';
+import Auth from './Auth';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import getHeaders from '../../getHeaders';

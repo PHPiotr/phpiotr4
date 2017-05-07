@@ -1,5 +1,5 @@
 import React from 'react';
-import Auth from '../hoc/Auth.jsx';
+import Auth from './Auth';
 import {handleFocus, handleChange, addBookingIfNeeded, fetchBusesIfNeeded} from '../../actions';
 import {connect} from 'react-redux';
 import getHeaders from '../../getHeaders';

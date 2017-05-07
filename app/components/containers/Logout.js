@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Auth from '../hoc/Auth.jsx';
+import Auth from './Auth';
 import config from '../../../config';
 import cookie from 'cookie-monster';
 import {setLoggedOut} from '../../actions';
