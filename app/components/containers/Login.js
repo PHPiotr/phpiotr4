@@ -13,8 +13,7 @@ const Login = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
-    socket: state.socket,
+    auth: state.auth
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -26,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(loginIfNeeded(event, ownProps.socket, ownProps.auth.login, getHeaders()))
+        dispatch(loginIfNeeded(event, ownProps.auth.login, getHeaders()))
             .then((json) => {
                 if (json.data.ok) {
                     let token = json.data.token;

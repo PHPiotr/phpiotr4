@@ -86,7 +86,7 @@ const loginFailure = (error, json) => {
     };
 };
 
-const login = (event, socket, data, headers) => {
+const login = (event, data, headers) => {
     return (dispatch, getState) => {
         console.log('loginRequest', getState());
         dispatch(loginRequest());
@@ -107,16 +107,15 @@ const login = (event, socket, data, headers) => {
             })
             .catch(error => {
                 dispatch(loginFailure(error));
-                socket.emit(config.event.auth_failed);
             })
     };
 };
 
-export const loginIfNeeded = (event, socket, data, headers) => {
+export const loginIfNeeded = (event, data, headers) => {
     return (dispatch, getState) => {
         console.log('getState:', getState());
         if (shouldLogin(getState())) {
-            return dispatch(login(event, socket, data, headers))
+            return dispatch(login(event, data, headers))
         }
         return Promise.resolve();
     }
