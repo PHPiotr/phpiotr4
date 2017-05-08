@@ -11,10 +11,19 @@ const configureStore = () => {
         middlewares.push(createLogger());
     }
 
-    return createStore(
+    const store = createStore(
         reducers,
         applyMiddleware(...middlewares)
     );
+
+    if (module.hot) {
+        module.hot.accept('./reducers', () => {
+            const nextRootReducer = require('./reducers/index').default;
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+
+    return store;
 };
 
 export default configureStore;
