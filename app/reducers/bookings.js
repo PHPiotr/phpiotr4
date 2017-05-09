@@ -1,4 +1,4 @@
-import {ADD_BOOKING_REQUEST, ADD_BOOKING_SUCCESS, ADD_BOOKING_FAILURE} from '../actions';
+import {ADD_BOOKING_REQUEST, ADD_BOOKING_SUCCESS, ADD_BOOKING_FAILURE} from '../actions/index';
 
 const initialState = {
 
@@ -46,7 +46,6 @@ const bookings = (state = initialState, action) => {
             return {...state, [errorMessageType]: errorMessageValue};
 
         case 'SET_BOOKING_INPUT_ERROR':
-            console.log('action wtf: ', action, state);
             let inputError = { ...state[`${action.bookingLabelSingular}Errors`], [action.fieldName]: action.errorsValue};
             return {...state, [`${action.bookingLabelSingular}Errors`]: inputError};
 

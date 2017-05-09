@@ -1,4 +1,4 @@
-import {FETCH_PLANES_REQUEST, FETCH_PLANES_SUCCESS, FETCH_PLANES_FAILURE} from '../../actions';
+import {PLANES_REQUEST, PLANES_SUCCESS, PLANES_FAILURE} from '../../actions/planes';
 
 const initialState = {
     isFetching: false,
@@ -6,13 +6,13 @@ const initialState = {
 
 const planes = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_PLANES_REQUEST:
+        case PLANES_REQUEST:
             return {...state, isFetching: true};
-        case FETCH_PLANES_SUCCESS:
+        case PLANES_SUCCESS:
             return {
                 ...state, ...{data: action.data}, ...{isFetching: false, receivedAt: action.receivedAt}
             };
-        case FETCH_PLANES_FAILURE:
+        case PLANES_FAILURE:
             return {...state, ...{isFetching: false, error: action.error}};
         default:
             return state;

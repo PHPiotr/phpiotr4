@@ -2,7 +2,7 @@ import React from 'react';
 import Auth from './Auth';
 import getHeaders from '../../getHeaders';
 import {connect} from 'react-redux';
-import {fetchHostelsIfNeeded} from '../../actions';
+import {fetchHostelsIfNeeded} from '../../actions/hostels';
 import {withRouter} from 'react-router';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';

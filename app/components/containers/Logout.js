@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Auth from './Auth';
-import config from '../../../config';
+import {api_headers, token_key} from '../../../config';
 import cookie from 'cookie-monster';
-import {setLoggedOut} from '../../actions';
+import {logout} from '../../actions/login';
 
 class Logout extends Component {
 
@@ -18,12 +17,15 @@ class Logout extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     logout() {
-        dispatch(setLoggedOut())
-        delete config.api_headers['Authorization'];
-        cookie.removeItem(config.token_key);
+        if (!ownProps.auth.isLoggedIn) {
+            return false;
+        }
+        dispatch(logout());
+        delete api_headers['Authorization'];
+        cookie.removeItem(token_key);
         ownProps.router.push('/login');
     }
 });
 
-export default Auth(connect(null, mapDispatchToProps)(Logout));
+export default connect(null, mapDispatchToProps)(Logout);
 

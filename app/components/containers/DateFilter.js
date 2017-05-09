@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setDate, setDateType, fetchReportIfNeeded} from '../../actions';
+import {fetchReportIfNeeded} from '../../actions/report';
+import {setDate, setDateType} from '../../actions/index';
 import getHeaders from '../../getHeaders';
 import DateFilterForm from '../presentation/DateFilterForm';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Auth from './Auth';
-import {handleFocus, handleChange, addBookingIfNeeded, fetchBusesIfNeeded} from '../../actions';
+import {fetchBusesIfNeeded} from '../../actions/buses';
+import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import getHeaders from '../../getHeaders';
 import BusForm from '../presentation/BusForm';

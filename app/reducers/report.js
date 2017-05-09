@@ -1,4 +1,4 @@
-import {FETCH_REPORT_REQUEST, FETCH_REPORT_SUCCESS, FETCH_REPORT_FAILURE} from '../actions';
+import {REPORT_REQUEST, REPORT_SUCCESS, REPORT_FAILURE} from '../actions/report';
 
 const initialState = {
     total_cost: 0,
@@ -22,13 +22,11 @@ const initialState = {
 
 const report = (state = initialState, action) => {
     switch (action.type) {
-        case 'GET_REPORT':
-            return {...state, ...action.data};
-        case FETCH_REPORT_REQUEST:
+        case REPORT_REQUEST:
             return {...state, isFetching: true};
-        case FETCH_REPORT_SUCCESS:
+        case REPORT_SUCCESS:
             return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
-        case FETCH_REPORT_FAILURE:
+        case REPORT_FAILURE:
             return {...state, ...{isFetching: false, error: action.error}};
         default:
             return state;

@@ -1,4 +1,4 @@
-import {FETCH_TRAINS_REQUEST, FETCH_TRAINS_SUCCESS, FETCH_TRAINS_FAILURE} from '../../actions';
+import {TRAINS_REQUEST, TRAINS_SUCCESS, TRAINS_FAILURE} from '../../actions/trains';
 
 const initialState = {
     isFetching: false,
@@ -6,13 +6,13 @@ const initialState = {
 
 const trains = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_TRAINS_REQUEST:
+        case TRAINS_REQUEST:
             return {...state, isFetching: true};
-        case FETCH_TRAINS_SUCCESS:
+        case TRAINS_SUCCESS:
             return {
                 ...state, ...{data: action.data}, ...{isFetching: false, receivedAt: action.receivedAt}
             };
-        case FETCH_TRAINS_FAILURE:
+        case TRAINS_FAILURE:
             return {...state, ...{isFetching: false, error: action.error}};
         default:
             return state;

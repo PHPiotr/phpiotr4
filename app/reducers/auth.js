@@ -1,12 +1,38 @@
+import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE} from '../actions/login';
+import {VERIFY_REQUEST, VERIFY_SUCCESS, VERIFY_FAILURE} from '../actions/verify';
+
 const initialState = {
     login: {},
     loginErrorMessage: '',
     loginErrors: {},
     isLoggedIn: false,
+    isLoggingIn: false,
+    isVerifying: false,
 };
 
 const auth = (state = initialState, action) => {
     switch (action.type) {
+
+        case VERIFY_REQUEST:
+            return {...state, isVerifying: true};
+        case VERIFY_SUCCESS:
+            return {...state, isLoggedIn: true, isVerifying: false};
+        case VERIFY_FAILURE:
+            return {...state, isLoggedIn: false, isVerifying: false};
+
+        case LOGIN_REQUEST:
+            return {...state, isLoggingIn: true};
+        case LOGIN_SUCCESS: //SET_LOGGED_IN
+            return {...state, ...initialState, isLoggedIn: true};
+        case LOGIN_FAILURE:
+            return {
+                ...state,
+                loginErrorMessage: action.loginErrorMessage,
+                loginErrors: action.loginErrors,
+                isLoggedIn: false,
+                isLoggingIn: false
+            };
+
         case 'SET_LOGGED_IN':
             return {...state, ...initialState, isLoggedIn: true};
         case 'SET_LOGIN_FAILED':

@@ -2,7 +2,8 @@ import Auth from './Auth';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import getHeaders from '../../getHeaders';
-import {fetchReportIfNeeded, toggleDateFilterEnabled} from '../../actions';
+import {fetchReportIfNeeded} from '../../actions/report';
+import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
 
 class Report extends Component {

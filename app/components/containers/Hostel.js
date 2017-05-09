@@ -1,6 +1,7 @@
 import React from 'react';
 import Auth from './Auth';
-import {handleFocus, handleChange, addBookingIfNeeded, fetchHostelsIfNeeded} from '../../actions';
+import {fetchHostelsIfNeeded} from '../../actions/hostels';
+import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import getHeaders from '../../getHeaders';
 import HostelForm from '../presentation/HostelForm';

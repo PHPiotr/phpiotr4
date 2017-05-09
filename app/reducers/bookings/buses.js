@@ -1,4 +1,4 @@
-import {FETCH_BUSES_REQUEST, FETCH_BUSES_SUCCESS, FETCH_BUSES_FAILURE} from '../../actions';
+import {BUSES_REQUEST, BUSES_SUCCESS, BUSES_FAILURE} from '../../actions/buses';
 
 const initialState = {
     isFetching: false,
@@ -6,13 +6,13 @@ const initialState = {
 
 const buses = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_BUSES_REQUEST:
+        case BUSES_REQUEST:
             return {...state, isFetching: true};
-        case FETCH_BUSES_SUCCESS:
+        case BUSES_SUCCESS:
             return {
                 ...state, ...{data: action.data}, ...{isFetching: false, receivedAt: action.receivedAt}
             };
-        case FETCH_BUSES_FAILURE:
+        case BUSES_FAILURE:
             return {...state, ...{isFetching: false, error: action.error}};
         default:
             return state;
