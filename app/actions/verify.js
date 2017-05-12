@@ -9,10 +9,10 @@ const shouldVerify = (state) => {
     if (state === undefined) {
         return true;
     }
-    if (state.auth.isVerifying) {
-        return false;
+    if (!state.auth.isVerifying) {
+        return true;
     }
-    return true;
+    return false;
 };
 
 const verifyRequest = () => ({
