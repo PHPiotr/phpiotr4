@@ -2,6 +2,9 @@ import {PLANES_REQUEST, PLANES_SUCCESS, PLANES_FAILURE} from '../../actions/plan
 
 const initialState = {
     isFetching: false,
+    data: {
+        current: ''
+    }
 };
 
 const planes = (state = initialState, action) => {

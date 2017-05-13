@@ -8,12 +8,17 @@ const PlanesTable = (props) => {
     }
 
     let planes = props.planes.data;
+
+    if (planes.flights_length === undefined) {
+        return null;
+    }
+
     let flights_length = planes.flights_length;
 
     if (!flights_length) {
         return (
             <div className="row-fluid">
-                <p>{`No ${planes.title}`}</p>
+                <p>{`No ${planes.title.toLowerCase()}`}</p>
             </div>
         );
     }

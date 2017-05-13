@@ -2,6 +2,9 @@ import {TRAINS_REQUEST, TRAINS_SUCCESS, TRAINS_FAILURE} from '../../actions/trai
 
 const initialState = {
     isFetching: false,
+    data: {
+        current: ''
+    }
 };
 
 const trains = (state = initialState, action) => {

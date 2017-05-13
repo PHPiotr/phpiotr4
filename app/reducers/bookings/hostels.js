@@ -2,6 +2,9 @@ import {HOSTELS_REQUEST, HOSTELS_SUCCESS, HOSTELS_FAILURE} from '../../actions/h
 
 const initialState = {
     isFetching: false,
+    data: {
+        current: ''
+    }
 };
 
 const hostels = (state = initialState, action) => {

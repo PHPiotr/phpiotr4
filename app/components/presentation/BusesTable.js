@@ -9,12 +9,17 @@ const BusesTable = (props) => {
 
     let buses = props.buses.data;
 
+    if (buses.journeys_length === undefined) {
+        return null;
+    }
+
     let journeys_length = buses.journeys_length !== undefined ? buses.journeys_length : 0;
+
 
     if (!journeys_length) {
         return (
             <div className="row-fluid">
-                <p>{`No ${buses.title}`}</p>
+                <p>{`No ${buses.title.toLowerCase()}`}</p>
             </div>
         );
     }

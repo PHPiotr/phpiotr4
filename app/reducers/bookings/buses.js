@@ -2,6 +2,9 @@ import {BUSES_REQUEST, BUSES_SUCCESS, BUSES_FAILURE} from '../../actions/buses';
 
 const initialState = {
     isFetching: false,
+    data: {
+        current: ''
+    }
 };
 
 const buses = (state = initialState, action) => {

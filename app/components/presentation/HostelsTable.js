@@ -9,12 +9,17 @@ const HostelsTable = (props) => {
     }
 
     let hostels = props.hostels.data;
+
+    if (hostels.bookings_length === undefined) {
+        return null;
+    }
+
     let bookings_length = hostels.bookings_length;
 
     if (!bookings_length) {
         return (
             <div className="row-fluid">
-                <p>{`No ${hostels.title}`}</p>
+                <p>{`No ${hostels.title.toLowerCase()}`}</p>
             </div>
         );
     }
