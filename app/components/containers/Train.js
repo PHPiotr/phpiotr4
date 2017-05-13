@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Auth from './Auth';
+import {setIsAdd} from '../../actions/index';
 import {fetchTrainsIfNeeded} from '../../actions/trains';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
@@ -7,12 +8,22 @@ import getHeaders from '../../getHeaders';
 import TrainForm from '../presentation/TrainForm';
 import Navigation from '../presentation/Navigation';
 
-const Train = (props) => (
-    <div>
-        <Navigation {...props} />
-        <TrainForm {...props} />
-    </div>
-);
+class Train extends Component {
+    componentWillMount() {
+        this.props.isAdding(true);
+    }
+    componentWillUnmount() {
+        this.props.isAdding(false);
+    }
+    render() {
+        return (
+            <div>
+                <Navigation {...this.props} />
+                <TrainForm {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
     train: state.bookings.train,
@@ -36,6 +47,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchBookings(type, page) {
         dispatch(fetchTrainsIfNeeded(type || 'current', page || 1, getHeaders()));
     },
+    isAdding(isAdd) {
+        dispatch(setIsAdd(isAdd, 'train'));
+    }
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Train));

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Auth from './Auth';
+import {setIsAdd} from '../../actions/index';
 import {fetchBusesIfNeeded} from '../../actions/buses';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
@@ -7,12 +8,22 @@ import getHeaders from '../../getHeaders';
 import BusForm from '../presentation/BusForm';
 import Navigation from '../presentation/Navigation';
 
-const Bus = (props) => (
-    <div>
-        <Navigation {...props} />
-        <BusForm {...props} />
-    </div>
-);
+class Bus extends Component {
+    componentWillMount() {
+        this.props.isAdding(true);
+    }
+    componentWillUnmount() {
+        this.props.isAdding(false);
+    }
+    render() {
+        return (
+            <div>
+                <Navigation {...this.props} />
+                <BusForm {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
     bus: state.bookings.bus,
@@ -36,6 +47,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchBookings(type, page) {
         dispatch(fetchBusesIfNeeded(type || 'current', page || 1, getHeaders()));
     },
+    isAdding(isAdd) {
+        dispatch(setIsAdd(isAdd, 'bus'));
+    }
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Bus));

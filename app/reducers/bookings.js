@@ -1,11 +1,19 @@
-import {ADD_BOOKING_REQUEST, ADD_BOOKING_SUCCESS, ADD_BOOKING_FAILURE} from '../actions/index';
+import {ADD_BOOKING_REQUEST, ADD_BOOKING_SUCCESS, ADD_BOOKING_FAILURE, SET_IS_ADD} from '../actions/index';
 
 const initialState = {
 
-    bus: {},
-    plane: {},
-    train: {},
-    hostel: {},
+    bus: {
+        isAdd: false
+    },
+    plane: {
+        isAdd: false
+    },
+    train: {
+        isAdd: false
+    },
+    hostel: {
+        isAdd: false
+    },
 
     busErrorMessage: '',
     planeErrorMessage: '',
@@ -55,6 +63,9 @@ const bookings = (state = initialState, action) => {
         case 'SET_BOOKING_INSERTED':
             return {...initialState, [`${action.bookingLabelSingular}Inserted`]: action.bookingInserted};
 
+        case SET_IS_ADD:
+            let bookingIsAdd = {...state[action.bookingLabelSingular], isAdd: action.isAdd};
+            return {...state, [action.bookingLabelSingular]: bookingIsAdd};
         default:
             return state;
     }

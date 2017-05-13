@@ -16,10 +16,10 @@ let Navbar = (props) => {
     if (props.isLoggedIn) {
         navItems = (
             <ul className="nav navbar-nav">
-                <NavLink className="btn btn-link" to="/bookings/buses">Buses</NavLink>
-                <NavLink className="btn btn-link" to="/bookings/planes">Planes</NavLink>
-                <NavLink className="btn btn-link" to="/bookings/trains">Trains</NavLink>
-                <NavLink className="btn btn-link" to="/bookings/hostels">Hostels</NavLink>
+                <NavLink current={props.isBusBeingAdded} className="btn btn-link" to="/bookings/buses">Buses</NavLink>
+                <NavLink current={props.isPlaneBeingAdded} className="btn btn-link" to="/bookings/planes">Planes</NavLink>
+                <NavLink current={props.isTrainBeingAdded} className="btn btn-link" to="/bookings/trains">Trains</NavLink>
+                <NavLink current={props.isHostelBeingAdded} className="btn btn-link" to="/bookings/hostels">Hostels</NavLink>
             </ul>
         );
         navLoginItems = (
@@ -52,10 +52,17 @@ let Navbar = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.auth.isLoggedIn,
-    dateFilter: state.dateFilter,
-});
+const mapStateToProps = (state) => {
+    const bookings = state.bookings;
+    return {
+        isLoggedIn: state.auth.isLoggedIn,
+        dateFilter: state.dateFilter,
+        isBusBeingAdded: bookings.bus.isAdd,
+        isPlaneBeingAdded: bookings.plane.isAdd,
+        isTrainBeingAdded: bookings.train.isAdd,
+        isHostelBeingAdded: bookings.hostel.isAdd,
+    }
+};
 Navbar = connect(mapStateToProps)(Navbar);
 
 export default Navbar;

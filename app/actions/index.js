@@ -124,3 +124,10 @@ export const addBookingIfNeeded = (event, singular, plural, headers) => {
         return Promise.resolve();
     }
 }
+
+export const SET_IS_ADD = 'SET_IS_ADD';
+export const setIsAdd = (isAdd, bookingLabelSingular) => ({
+    type: SET_IS_ADD,
+    isAdd,
+    bookingLabelSingular
+});

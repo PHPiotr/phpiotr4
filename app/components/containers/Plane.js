@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Auth from './Auth';
+import {setIsAdd} from '../../actions/index';
 import {fetchPlanesIfNeeded} from '../../actions/planes';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
@@ -7,12 +8,22 @@ import getHeaders from '../../getHeaders';
 import PlaneForm from '../presentation/PlaneForm';
 import Navigation from '../presentation/Navigation';
 
-const Plane = (props) => (
-    <div>
-        <Navigation {...props} />
-        <PlaneForm {...props} />
-    </div>
-);
+class Plane extends Component {
+    componentWillMount() {
+        this.props.isAdding(true);
+    }
+    componentWillUnmount() {
+        this.props.isAdding(false);
+    }
+    render() {
+        return (
+            <div>
+                <Navigation {...this.props} />
+                <PlaneForm {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
     plane: state.bookings.plane,
@@ -36,6 +47,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchBookings(type, page) {
         dispatch(fetchPlanesIfNeeded(type || 'current', page || 1, getHeaders()));
     },
+    isAdding(isAdd) {
+        dispatch(setIsAdd(isAdd, 'plane'));
+    }
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Plane));
