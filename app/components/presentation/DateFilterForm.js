@@ -6,6 +6,10 @@ const DateFilterForm = (props) => {
         return null;
     }
 
+    if (!props.isLoggedIn) {
+        return null;
+    }
+
     return (
         <form onSubmit={props.onSubmit}>
             <div className="form-group">
