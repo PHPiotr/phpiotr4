@@ -49,7 +49,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     },
     handleIsDateFilterEnabled(isEnabled) {
-        dispatch(toggleDateFilterEnabled(isEnabled));
+        if (ownProps.auth.isLoggedIn) {
+            dispatch(toggleDateFilterEnabled(isEnabled));
+        }
     }
 });
 
