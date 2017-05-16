@@ -32,6 +32,7 @@ const mapStateToProps = (state) => ({
     fromDate: state.dateFilter.fromDate,
     toDate: state.dateFilter.toDate,
     isLoggedIn: state.auth.isLoggedIn,
+    isDateFilterEnabled: state.dateFilter.isDateFilterEnabled
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchReportOnLoad(fromDate, toDate) {
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             if (json.type !== VERIFY_SUCCESS) {
                 return ownProps.router.push('/login');
             }
+            dispatch(toggleDateFilterEnabled(true));
             dispatch(fetchReportIfNeeded(fromDate, toDate, getHeaders()));
         });
     },

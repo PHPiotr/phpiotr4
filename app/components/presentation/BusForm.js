@@ -21,8 +21,6 @@ const BusForm = (props) => {
                 <InputGroup focusHandler={props.handleFocus} error={props.busErrors.return_arrival_time}
                             value={props.bus.return_arrival_time} type="time" handler={props.handleChange}
                             name="return_arrival_time"/>
-                <InputGroup focusHandler={props.handleFocus} error={props.busErrors.return_seat}
-                            value={props.bus.return_seat} handler={props.handleChange} name="return_seat"/>
             </div>
         );
     }

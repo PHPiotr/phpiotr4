@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchReportIfNeeded} from '../../actions/report';
 import {setDate, setDateType} from '../../actions/index';
+import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
 import getHeaders from '../../getHeaders';
 import DateFilterForm from '../presentation/DateFilterForm';
 
@@ -41,7 +42,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (!ownProps.dateFilter.isDateFilterEnabled) {
             return;
         }
-        dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders()));
+        dispatch(verifyIfNeeded(getHeaders())).then((json) => {
+            if (json === undefined) {
+                return ownProps.router.push('/login');
+            }
+            if (json.type === undefined) {
+                return ownProps.router.push('/login');
+            }
+            if (json.type !== VERIFY_SUCCESS) {
+                return ownProps.router.push('/login');
+            }
+            dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders()));
+        });
     }
 });
 const DateFilter = connect(mapStateToProps, mapDispatchToProps)(DateFilterForm);
