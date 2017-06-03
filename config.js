@@ -1,6 +1,6 @@
 module.exports = {
 
-    'api_url': 'http://localhost:8080',
+    'api_url': 'https://boo-kings.herokuapp.com',
     'api_headers': {
         'Content-Type': 'application/json'
     },
