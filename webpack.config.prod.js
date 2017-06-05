@@ -6,28 +6,40 @@ var config = {
     devtool: 'source-map',
     entry: {
         app: [
-            './AppContainer',
+            './app/AppContainer',
         ]
     },
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: '[name].[hash].js',
-        publicPath: '/',
+        publicPath: '/build/'
     },
     module: {
-        rules: []
+        loaders: [
+            { test: /\.js?$/,
+                loader: 'babel',
+                exclude: /node_modules/ },
+            { test: /\.scss?$/,
+                loader: 'style!css!sass!less',
+                include: path.join(__dirname, 'app', 'css', 'styles') },
+            { test: /\.png$/,
+                loader: 'file' },
+            { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: 'file'}
+        ]
     },
     plugins: [
-        new webpack.NamedModulesPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.WatchIgnorePlugin([
-            path.join(__dirname, 'node_modules')
-        ]),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor'],
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            compress: {
+                warnings: false
+            }
         }),
-        new HtmlWebpackPlugin({
-            template: './index.html'
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
         })
     ]
 };
