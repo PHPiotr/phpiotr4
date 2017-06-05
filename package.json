@@ -7,7 +7,18 @@
   "scripts": {
     "test": "mocha './app/tests/**/*.js' --compilers js:babel-core/register",
     "start": "node bin/www",
-    "build": "node_modules/.bin/webpack --config=webpack.config.prod.js"
+    "build": "node_modules/.bin/webpack --config=webpack.config.prod.js",
+    "dev-server": "better-npm-run dev-server"
+  },
+  "betterScripts": {
+    "dev-server": {
+      "command": "node bin/www",
+      "env": {
+        "NODE_PATH": ".",
+        "NODE_ENV": "development",
+        "PORT": 3000
+      }
+    }
   },
   "keywords": [
     "jwt",
@@ -85,6 +96,7 @@
     "babel-preset-stage-2": "^6.13.0",
     "css-loader": "^0.23.1",
     "deep-freeze": "0.0.1",
+    "dotenv-webpack": "^1.5.0",
     "es6-promise-promise": "^1.0.0",
     "eslint": "^3.18.0",
     "eslint-config-standard": "^7.1.0",

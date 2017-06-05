@@ -5,10 +5,9 @@ import 'babel-polyfill';
 import 'react-css-modules';
 import 'bootstrap-css';
 import './css/style.css';
-import {api_url} from '../config';
 import Navbar from './components/nav/Navbar';
 
-const socket = io.connect(api_url);
+const socket = io.connect(process.env.API_URL);
 
 const App = (props) => {
 

@@ -34,11 +34,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                     let time = now.getTime();
                     let expireTime = time + 1000 * config.token_expires_in;
                     now.setTime(expireTime);
-                    cookie.setItem(config.token_key, token, {expires: now.toGMTString()});
+                    cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
                     ownProps.router.push('/');
                 } else {
                     delete config.api_headers['Authorization'];
-                    cookie.removeItem(config.token_key);
+                    cookie.removeItem(process.env.TOKEN_KEY);
                     ownProps.router.push('/login');
                 }
             });

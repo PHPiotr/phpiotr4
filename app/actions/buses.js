@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import {api_url} from '../../config';
 
 export const BUSES_REQUEST = 'BUSES_REQUEST';
 export const BUSES_SUCCESS = 'BUSES_SUCCESS';
@@ -29,7 +28,7 @@ const fetchBusesFailure = (error) => ({
 const fetchBuses = (type, page, headers) => {
     return (dispatch) => {
         dispatch(fetchBusesRequest());
-        return fetch(`${api_url}/api/v1/bookings/buses?type=${type}&page=${page}`, {headers})
+        return fetch(`${process.env.API_URL}/api/v1/bookings/buses?type=${type}&page=${page}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchBusesSuccess(json)))
             .catch(error => dispatch(fetchBusesFailure(error)))

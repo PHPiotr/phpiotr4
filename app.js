@@ -25,7 +25,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // view engine setup
 app.set('view engine', 'pug');
-app.set('superSecret', config.secret);
+app.set('superSecret', process.env.AUTH_SECRET);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

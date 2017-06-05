@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import {api_url} from '../../config';
 
 export const TRAINS_REQUEST = 'TRAINS_REQUEST';
 export const TRAINS_SUCCESS = 'TRAINS_SUCCESS';
@@ -29,7 +28,7 @@ const fetchTrainsFailure = (error) => ({
 const fetchTrains = (type, page, headers) => {
     return (dispatch) => {
         dispatch(fetchTrainsRequest());
-        return fetch(`${api_url}/api/v1/bookings/trains?type=${type}&page=${page}`, {headers})
+        return fetch(`${process.env.API_URL}/api/v1/bookings/trains?type=${type}&page=${page}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchTrainsSuccess(json)))
             .catch(error => dispatch(fetchTrainsFailure(error)))

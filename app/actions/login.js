@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import {api_url} from '../../config';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -39,7 +38,7 @@ const loginFailure = (json) => {
 const login = (event, data, headers) => {
     return (dispatch) => {
         dispatch(loginRequest());
-        return fetch(`${api_url}/api/v1/auth/login`, {
+        return fetch(`${process.env.API_URL}/api/v1/auth/login`, {
             method: 'post',
             headers: headers,
             body: JSON.stringify(data)

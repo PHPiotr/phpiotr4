@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 var config = {
@@ -82,6 +83,10 @@ var config = {
         }),
         new HtmlWebpackPlugin({
             template: './index.html'
+        }),
+        new Dotenv({
+            path: './.env',
+            safe: false
         })
     ]
 };

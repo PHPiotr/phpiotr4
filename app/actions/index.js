@@ -87,7 +87,7 @@ const addBooking = (event, singular, plural, headers) => {
     return (dispatch, getState) => {
         dispatch(addBookingRequest(singular));
 
-        fetch(`${config.api_url}/api/v1/bookings/${plural}`, {
+        fetch(`${process.env.API_URL}/api/v1/bookings/${plural}`, {
             method: 'post',
             headers: headers,
             body: JSON.stringify(getState().bookings[singular])
