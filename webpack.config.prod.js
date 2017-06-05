@@ -3,7 +3,7 @@ const path = require('path');
 
 var config = {
     context: path.resolve(__dirname, 'app'),
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     entry: {
         app: [
             './AppContainer',
@@ -25,6 +25,9 @@ var config = {
         ]),
         new webpack.optimize.CommonsChunkPlugin({
             names: ['vendor'],
+        }),
+        new HtmlWebpackPlugin({
+            template: './index.html'
         })
     ]
 };
