@@ -11,17 +11,19 @@ var config = require('./config.js');
 var app = express();
 var server = require('http').Server(app);
 
-var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
 
-var compiler = webpack(webpackConfig);
-
-app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler));
+if (process.env.NODE_ENV !== 'production') {
+    var webpackConfig = require('./webpack.config');
+    var compiler = webpack(webpackConfig);
+    var webpackDevMiddleware = require('webpack-dev-middleware');
+    app.use(webpackDevMiddleware(compiler, {
+        publicPath: webpackConfig.output.publicPath
+    }));
+    app.use(require('webpack-hot-middleware')(compiler));
+} else {
+    var webpackConfig = require('./webpack.config.prod');
+}
 
 // view engine setup
 app.set('view engine', 'pug');
