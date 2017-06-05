@@ -6,8 +6,7 @@
   "main": "bin/www",
   "scripts": {
     "test": "mocha './app/tests/**/*.js' --compilers js:babel-core/register",
-    "start": "node bin/www",
-    "build": "node_modules/.bin/webpack --config=webpack.config.prod.js",
+    "start": "node_modules/.bin/webpack --config=webpack.config.prod.js",
     "dev-server": "better-npm-run dev-server"
   },
   "betterScripts": {
