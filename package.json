@@ -13,7 +13,7 @@
     "build": "NODE_ENV=production webpack --config ./webpack.config.prod.js --progress --colors",
     "dev-server": "better-npm-run dev-server",
     "prod-server": "better-npm-run prod-server",
-    "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js --progress"
+    "heroku-postbuild": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress"
   },
   "betterScripts": {
     "dev-server": {
