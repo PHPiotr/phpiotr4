@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
 import 'babel-polyfill';
@@ -9,25 +9,38 @@ import Navbar from './components/nav/Navbar';
 
 const socket = null;//io.connect(process.env.API_URL);
 
-const App = (props) => {
+class App extends Component {
 
-    let propsChildren = props.children && React.cloneElement(props.children, {
-            auth: props.auth,
-            socket: socket,
-        });
+    componentWillMount()
+    {
+        this.props.onLoad();
+    }
 
-    return (
-        <div>
-            <Navbar />
-            <div className="container-fluid">
-                {propsChildren}
+    render() {
+        let propsChildren = this.props.children && React.cloneElement(this.props.children, {
+                auth: this.props.auth,
+                socket: socket,
+            });
+        return (
+            <div>
+                <Navbar />
+                <div className="container-fluid">
+                    {propsChildren}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
 });
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onLoad() {
+        if (ownProps.router.location.query.d !== undefined) {
+            return ownProps.router.push(ownProps.router.location.query.d);
+        }
+    }
+});
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

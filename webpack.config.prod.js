@@ -9,7 +9,7 @@ var config = {
     entry: './AppContainer',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'js/bundle.js',
+        filename: 'js/[name].[chunkhash].js'
     },
     module: {
         rules: [
@@ -50,11 +50,21 @@ var config = {
             }
         }),
         new ExtractTextPlugin({
-            filename: 'css/bundle.css',
+            filename: 'css/[name].[chunkhash].css',
+            disable: false,
             allChunks: true
         }),
         new HtmlWebpackPlugin({
             template: './index.html'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function(module) {
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest'
         })
     ]
 };

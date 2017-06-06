@@ -1,4 +1,5 @@
 var express = require('express');
+var static = require('serve-static');
 var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -32,18 +33,21 @@ if (process.env.NODE_ENV !== 'production') {
     }));
     app.use(require('webpack-hot-middleware')(compiler));
     app.get('/*', (req,res) => {
-        res.sendFile(path.resolve(__dirname, 'app/index.html'))
+        if (req.originalUrl === '/') {
+            return res.sendFile(path.join(__dirname, 'index.html'));
+        }
+        res.redirect('/?d=' + req.originalUrl);
     })
 } else {
-    app.get('/js/*', (req,res) => {
-        res.sendFile(path.resolve(__dirname, 'build/js/bundle.js'));
-    })
-    app.get('/css/*', (req,res) => {
-        res.sendFile(path.resolve(__dirname, 'build/css/bundle.css'));
-    })
-    app.get('/*', (req,res) => {
-        res.sendFile(path.resolve(__dirname, 'build/index.html'));
-    })
+    app.use('/js', static(path.join(__dirname, 'build/js')));
+    app.use('/css', static(path.join(__dirname, 'build/css')));
+
+    app.get('/*', (req, res) => {
+        if (req.originalUrl === '/') {
+            return res.sendFile(path.join(__dirname, 'build', 'index.html'));
+        }
+        res.redirect('/');
+    });
 }
 
 module.exports = {app: app, server: server};

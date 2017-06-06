@@ -5,7 +5,6 @@ const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 var config = {
-    context: path.resolve(__dirname, 'app'),
     devtool: 'eval',
     entry: {
         app: [
@@ -13,30 +12,12 @@ var config = {
             'react-hot-loader/patch',
             'webpack/hot/only-dev-server',
             'webpack-hot-middleware/client',
-            './AppContainer',
-        ],
-        vendor: [
-            "babel-polyfill",
-            "bootstrap-css",
-            "cookie-monster",
-            "history",
-            "hoist-non-react-statics",
-            "moment",
-            "react",
-            "react-addons-css-transition-group",
-            "react-addons-update",
-            "react-css-modules",
-            "react-dnd",
-            "react-dnd-html5-backend",
-            "react-dom",
-            "react-router",
-            "socket.io-client",
-            "whatwg-fetch"
+            './app/AppContainer',
         ]
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: '[name].[hash].js',
+        path: path.resolve(__dirname),
+        filename: '[name].js',
         publicPath: '/',
     },
     module: {
@@ -81,11 +62,18 @@ var config = {
             Promise: 'es6-promise-promise'
         }),
         new ExtractTextPlugin({
-            filename: 'style.[contenthash].css',
+            filename: '[name].css',
+            disable: false,
             allChunks: true
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor'],
+            name: 'vendor',
+            minChunks: function(module) {
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
         }),
         new HtmlWebpackPlugin({
             template: './index.html'
