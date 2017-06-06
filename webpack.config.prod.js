@@ -4,9 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 var config = {
-    context: path.resolve(__dirname, 'app'),
     devtool: 'source-map',
-    entry: './AppContainer',
+    entry: './app/AppContainer',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'js/[name].[chunkhash].js'
