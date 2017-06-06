@@ -43,7 +43,10 @@ var config = {
         }}),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+                'NODE_ENV': JSON.stringify('production'),
+                'API_PREFIX': JSON.stringify('/api/v1'),
+                'API_URL': JSON.stringify('https://boo-kings.herokuapp.com'),
+                'TOKEN_KEY': JSON.stringify('BEARER_TOKEN')
             }
         }),
         new ExtractTextPlugin({
