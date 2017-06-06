@@ -7,8 +7,10 @@
   "scripts": {
     "test": "mocha './app/tests/**/*.js' --compilers js:babel-core/register",
     "start": "node bin/www",
-    "build": "node_modules/.bin/webpack --config=webpack.config.prod.js",
-    "dev-server": "better-npm-run dev-server"
+    "build": "NODE_ENV=production webpack --config ./webpack.config.prod.js --progress --colors",
+    "dev-server": "better-npm-run dev-server",
+    "prod-server": "better-npm-run prod-server",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.prod.js --progress"
   },
   "betterScripts": {
     "dev-server": {
@@ -16,6 +18,14 @@
       "env": {
         "NODE_PATH": ".",
         "NODE_ENV": "development",
+        "PORT": 3000
+      }
+    },
+    "prod-server": {
+      "command": "node bin/www",
+      "env": {
+        "NODE_PATH": ".",
+        "NODE_ENV": "production",
         "PORT": 3000
       }
     }
@@ -84,7 +94,6 @@
     "socket.io-react": "^1.1.2",
     "uuid": "^3.0.1",
     "vinyl-source-stream": "^1.1.0",
-    "webpack": "^2.3.1",
     "whatwg-fetch": "^2.0.2"
   },
   "devDependencies": {
@@ -120,6 +129,7 @@
     "rimraf": "^2.6.1",
     "style-loader": "^0.13.2",
     "url-loader": "^0.5.8",
+    "webpack": "^2.3.1",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.15.0"

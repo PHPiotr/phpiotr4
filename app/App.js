@@ -7,7 +7,7 @@ import 'bootstrap-css';
 import './css/style.css';
 import Navbar from './components/nav/Navbar';
 
-const socket = io.connect(process.env.API_URL);
+const socket = null;//io.connect(process.env.API_URL);
 
 const App = (props) => {
 

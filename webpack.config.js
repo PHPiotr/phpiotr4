@@ -6,9 +6,10 @@ const path = require('path');
 
 var config = {
     context: path.resolve(__dirname, 'app'),
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     entry: {
         app: [
+            'babel-polyfill',
             'react-hot-loader/patch',
             'webpack/hot/only-dev-server',
             'webpack-hot-middleware/client',
@@ -68,6 +69,11 @@ var config = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('development')
+            }
+        }),
         new webpack.WatchIgnorePlugin([
             path.join(__dirname, 'node_modules')
         ]),
