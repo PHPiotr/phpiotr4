@@ -1,11 +1,12 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 var config = {
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
     entry: {
         app: [
             'babel-polyfill',
@@ -47,6 +48,7 @@ var config = {
         ]
     },
     plugins: [
+        new ManifestPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
@@ -69,14 +71,19 @@ var config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: function(module) {
+                if(module.resource && (/^.*\.(css|scss|less)$/).test(module.resource)) {
+                    return false;
+                }
                 return module.context && module.context.indexOf('node_modules') !== -1;
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
+            minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            template: './index.html'
+            template: './index.html',
+            raven: null
         }),
         new Dotenv({
             path: './.env',
