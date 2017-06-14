@@ -5,10 +5,14 @@ import LoginForm from '../presentation/LoginForm';
 import getHeaders from '../../getHeaders';
 import config from '../../../config';
 import cookie from 'cookie-monster';
+import Spinner from '../presentation/Spinner';
 
 const Login = (props) => {
     return (
-        <LoginForm {...props} />
+        <div>
+            <Spinner isFetching={props.auth.isLoggingIn}/>
+            <LoginForm {...props} />
+        </div>
     );
 }
 
