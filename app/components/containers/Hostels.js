@@ -7,6 +7,7 @@ import {withRouter} from 'react-router';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import HostelsTable from '../presentation/HostelsTable';
+import Spinner from '../presentation/Spinner';
 
 const Hostels = (props) => {
     if (!props.isLoggedIn) {
@@ -14,6 +15,7 @@ const Hostels = (props) => {
     }
     return (
         <div>
+            <Spinner isFetching={props.hostels.isFetching} />
             <Navigation {...props} />
             <HostelsTable {...props} />
             <Pagination {...props} />

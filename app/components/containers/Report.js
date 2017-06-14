@@ -5,6 +5,7 @@ import {fetchReportIfNeeded} from '../../actions/report';
 import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
 import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
+import Spinner from '../presentation/Spinner';
 
 class Report extends Component {
 
@@ -21,7 +22,13 @@ class Report extends Component {
         if (!this.props.isLoggedIn) {
             return null;
         }
-        return <ReportTable report={this.props.report}/>;
+        let report = this.props.report;
+        return (
+            <div>
+                <Spinner isFetching={report.isFetching} />
+                <ReportTable report={report}/>
+            </div>
+        );
     }
 }
 

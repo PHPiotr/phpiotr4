@@ -7,6 +7,7 @@ import {withRouter} from 'react-router';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import PlanesTable from '../presentation/PlanesTable';
+import Spinner from '../presentation/Spinner';
 
 const Planes = (props) => {
     if (!props.isLoggedIn) {
@@ -14,6 +15,7 @@ const Planes = (props) => {
     }
     return (
         <div>
+            <Spinner isFetching={props.planes.isFetching} />
             <Navigation {...props} />
             <PlanesTable {...props} />
             <Pagination {...props} />
