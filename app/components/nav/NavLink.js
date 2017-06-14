@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router';
 
 const NavLink = (props) => {
