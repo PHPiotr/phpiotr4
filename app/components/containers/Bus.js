@@ -32,6 +32,7 @@ const mapStateToProps = (state) => ({
     busInserted: state.bookings.busInserted,
     bookingsLabel: 'buses',
     bookingLabel: 'bus',
+    pricePlaceholder: '0.00',
 });
 
 const mapDispatchToProps = (dispatch) => ({

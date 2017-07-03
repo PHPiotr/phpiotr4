@@ -51,6 +51,7 @@ class InputGroup extends Component {
                     <input
                         id={this.id}
                         type={this.props.type}
+                        placeholder={this.props.placeholder}
                         name={this.props.name}
                         className={this.props.inputClass}
                         onChange={this.props.handler}
@@ -66,6 +67,7 @@ class InputGroup extends Component {
 
 InputGroup.defaultProps = {
     type: 'text',
+    placeholder: '',
     value: '',
     inputWrapperClass: 'col-sm-2',
     groupClass: 'form-group',

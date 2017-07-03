@@ -62,7 +62,7 @@ const PlaneForm = (props) => {
             <InputGroup focusHandler={props.handleFocus} error={props.planeErrors.seat}
                         value={props.plane.seat} handler={props.handleChange} name="seat"/>
             <InputGroup focusHandler={props.handleFocus} error={props.planeErrors.price}
-                        value={props.plane.price} handler={props.handleChange} name="price"/>
+                        placeholder={props.pricePlaceholder} value={props.plane.price} handler={props.handleChange} name="price"/>
             <InputGroup focusHandler={props.handleFocus} error={props.planeErrors.currency}
                         value={props.plane.currency} handler={props.handleChange} name="currency"/>
             <InputGroup focusHandler={props.handleFocus} error={props.planeErrors.checked_in}

@@ -43,7 +43,7 @@ const TrainForm = (props) => {
                         value={props.train.departure_date} type="date" handler={props.handleChange}
                         name="departure_date"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.price}
-                        value={props.train.price} handler={props.handleChange} name="price"/>
+                        placeholder={props.pricePlaceholder} value={props.train.price} handler={props.handleChange} name="price"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.currency}
                         value={props.train.currency} handler={props.handleChange} name="currency"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.is_return}

@@ -57,7 +57,7 @@ const BusForm = (props) => {
                         value={props.bus.arrival_time} type="time" handler={props.handleChange}
                         name="arrival_time"/>
             <InputGroup focusHandler={props.handleFocus} error={props.busErrors.price}
-                        value={props.bus.price} handler={props.handleChange} name="price"/>
+                        placeholder={props.pricePlaceholder} value={props.bus.price} handler={props.handleChange} name="price"/>
             <InputGroup focusHandler={props.handleFocus} error={props.busErrors.currency}
                         value={props.bus.currency} handler={props.handleChange} name="currency"/>
             <InputGroup focusHandler={props.handleFocus} error={props.busErrors.is_return}
