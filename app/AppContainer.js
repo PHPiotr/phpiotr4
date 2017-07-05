@@ -20,9 +20,7 @@ if (process.env.NODE_ENV === 'development') {
     render(AppRouter);
 
     if (module.hot) {
-        module.hot.accept('./AppRouter', () => {
-            render(AppRouter);
-        });
+        module.hot.accept();
     }
 } else {
     let render = (Component) => {
