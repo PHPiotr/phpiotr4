@@ -11,7 +11,7 @@ class BookingCell extends Component {
         }
         return (
             <td>
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered table-hover table-sm table-responsive">
                     <tbody>
                     <tr>
                         <th></th>

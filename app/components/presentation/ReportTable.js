@@ -4,10 +4,10 @@ import BookingCell from '../helper/BookingCell.jsx';
 const ReportTable = (props) => {
     const report = props.report;
     return (
-        <table className="table table-bordered table-hover table-condensed">
-            <thead>
+        <table className="table table-bordered table-sm">
+            <thead className="thead-default">
             <tr>
-                <td className="info">£ {report.total_cost}</td>
+                <td className="table-info">£ {report.total_cost}</td>
                 <th>Buses</th>
                 <th>Planes</th>
                 <th>Trains</th>

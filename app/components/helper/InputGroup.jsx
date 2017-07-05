@@ -45,7 +45,7 @@ class InputGroup extends Component {
             error_class = ' has-error';
         }
         return (
-            <div className={`clearfix ${this.props.groupClass} ${error_class}`}>
+            <div className={`${this.props.groupClass} ${error_class}`}>
                 <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
                 <div className={this.props.inputWrapperClass}>
                     <input
@@ -70,8 +70,8 @@ InputGroup.defaultProps = {
     placeholder: '',
     value: '',
     inputWrapperClass: 'col-sm-2',
-    groupClass: 'form-group',
-    labelClass: 'col-sm-2 control-label',
+    groupClass: 'form-group row',
+    labelClass: 'col-sm-2 col-form-label',
     inputClass: 'form-control',
     hasError: '',
 };

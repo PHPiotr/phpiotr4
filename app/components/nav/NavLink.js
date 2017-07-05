@@ -16,7 +16,7 @@ const NavLink = (props) => {
     }
 
     return (
-        <li className={active}><Link to={props.to} onClick={props.onClick} activeClassName="active">{props.children}</Link></li>
+        <li className={`nav-item ${active}`}><Link to={props.to} onClick={props.onClick} activeClassName="active" className="nav-link">{props.children}</Link></li>
     );
 }
 

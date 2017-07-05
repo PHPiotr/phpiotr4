@@ -16,14 +16,18 @@ const LoginForm = (props) => {
         );
     }
     return (
-        <form onSubmit={props.handleSubmit} className="form-horizontal">
-            {loginError}
-            <InputGroup focusHandler={props.handleFocus} error={auth.loginErrors.username}
-                        value={auth.login.username} handler={props.handleChange} name="username"/>
-            <InputGroup type="password" focusHandler={props.handleFocus} error={auth.loginErrors.password}
-                        value={auth.login.password} handler={props.handleChange} name="password"/>
-            <ButtonGroup>Log in</ButtonGroup>
-        </form>
+        <div className="vertical-center">
+            <div className="container-fluid align-content-center">
+                <form onSubmit={props.handleSubmit}>
+                    {loginError}
+                    <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" focusHandler={props.handleFocus} error={auth.loginErrors.username}
+                                value={auth.login.username} handler={props.handleChange} name="username"/>
+                    <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" type="password" focusHandler={props.handleFocus} error={auth.loginErrors.password}
+                                value={auth.login.password} handler={props.handleChange} name="password"/>
+                    <ButtonGroup buttonWrapperClass="">Log in</ButtonGroup>
+                </form>
+            </div>
+        </div>
     );
 };
 

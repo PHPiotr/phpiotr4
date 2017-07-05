@@ -8,7 +8,7 @@ const Spinner = ({isFetching}) => {
     }
 
     return (
-        <div className="modal fade in" tabIndex="-1" role="dialog">
+        <div className="modal fade show" tabIndex="-1" role="dialog">
             <div className="modal-dialog modal-sm" role="document">
                 <div className="modal-content">
                     <div className="modal-header">

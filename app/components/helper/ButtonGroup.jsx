@@ -18,8 +18,8 @@ class ButtonGroup extends Component {
 ButtonGroup.defaultProps = {
     type: 'submit',
     groupClass: 'form-group',
-    buttonWrapperClass: 'col-sm-offset-2 col-sm-10',
-    buttonClass: 'btn btn-default'
+    buttonWrapperClass: 'offset-sm-2 col-sm-10',
+    buttonClass: 'btn'
 };
 
 ButtonGroup.propTypes = {
