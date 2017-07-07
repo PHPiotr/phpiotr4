@@ -5,13 +5,10 @@ class BookingCell extends Component {
 
     render() {
         if (0 === this.props.details.length) {
-            return (
-                <td>-</td>
-            );
+            return null;
         }
         return (
-            <td>
-                <table className="table table-bordered table-hover table-sm table-responsive">
+                <table className="table table-hover table-sm booking-details">
                     <tbody>
                     <tr>
                         <th></th>
@@ -22,7 +19,6 @@ class BookingCell extends Component {
                     {this.getDetails()}
                     </tbody>
                 </table>
-            </td>
         );
     }
 
@@ -68,7 +64,7 @@ class BookingCell extends Component {
         if (0 === number) {
             return '0.00';
         }
-        return '£ ' + (number / 100).toFixed(2);
+        return '£' + (number / 100).toFixed(2);
     }
 
 }

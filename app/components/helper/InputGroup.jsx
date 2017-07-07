@@ -40,7 +40,7 @@ class InputGroup extends Component {
         let error_class = '';
         if (this.props.error) {
             error_span = (
-                <span className="label label-danger">{this.props.error.message}</span>
+                <span className="badge badge-danger">{this.props.error.message}</span>
             );
             error_class = ' has-error';
         }

@@ -27,6 +27,10 @@
     align-items: center;
 }
 
+.table.booking-details {
+    font-size: 0.7em;
+}
+
 @media (min-width: 768px) {
     .navbar-right {
         float: right;
