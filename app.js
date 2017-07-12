@@ -3,7 +3,6 @@ var static = require('serve-static');
 var path = require('path');
 var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
-var config = require('./config.js');
 
 var app = express();
 var server = require('http').Server(app);

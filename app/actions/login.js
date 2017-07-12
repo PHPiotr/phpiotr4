@@ -21,8 +21,8 @@ const loginRequest = () => ({
 const loginSuccess = (json) => {
     return {
         type: LOGIN_SUCCESS,
-        ok: true,
         token: json.token,
+        expiresIn: parseInt(json.expiresIn)
     };
 };
 
@@ -37,19 +37,19 @@ const loginFailure = (json) => {
 
 const login = (event, data, headers) => {
     return (dispatch) => {
+        headers['Authorization'] = 'Basic ' + btoa(data.username + ':' + data.password);
         dispatch(loginRequest());
-        return fetch(`${process.env.API_URL}/api/v1/auth/login`, {
-            method: 'post',
+        return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/auth/login`, {
+            method: 'get',
             headers: headers,
-            body: JSON.stringify(data)
         })
             .then(response => response.json())
             .then(json => {
-                if (json.ok) {
-                    return dispatch(loginSuccess(json));
-                }
-                if (json.errors) {
-                    return dispatch(loginFailure(json));
+                if (json) {
+                    if (json.token) {
+                        return dispatch(loginSuccess(json));
+                    }
+                    return dispatch(loginFailure({message: 'Please provide valid credentials'}));
                 }
                 throw Error('Something bad happened.');
             })

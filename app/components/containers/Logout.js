@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {api_headers} from '../../../config';
 import cookie from 'cookie-monster';
 import {logout} from '../../actions/login';
 
@@ -21,7 +20,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             return false;
         }
         dispatch(logout());
-        delete api_headers['Authorization'];
         cookie.removeItem(process.env.TOKEN_KEY);
         ownProps.router.push('/login');
     }

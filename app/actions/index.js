@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import config from '../../config';
 
 export const setBooking = (bookingLabelSingular, fieldName, fieldValue) => ({
     type: 'SET_BOOKING',

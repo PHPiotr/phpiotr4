@@ -4,7 +4,6 @@ import {VERIFY_REQUEST, VERIFY_SUCCESS, VERIFY_FAILURE} from '../actions/verify'
 const initialState = {
     login: {},
     loginErrorMessage: '',
-    loginErrors: {},
     isLoggedIn: false,
     isLoggingIn: false,
     isVerifying: false,
@@ -22,13 +21,12 @@ const auth = (state = initialState, action) => {
 
         case LOGIN_REQUEST:
             return {...state, isLoggingIn: true};
-        case LOGIN_SUCCESS: //SET_LOGGED_IN
+        case LOGIN_SUCCESS:
             return {...state, ...initialState, isLoggedIn: true};
         case LOGIN_FAILURE:
             return {
                 ...state,
                 loginErrorMessage: action.loginErrorMessage,
-                loginErrors: action.loginErrors,
                 isLoggedIn: false,
                 isLoggingIn: false
             };
@@ -39,13 +37,12 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 loginErrorMessage: action.loginErrorMessage,
-                loginErrors: action.loginErrors,
                 isLoggedIn: false
             }
         case 'SET_LOGGED_OUT':
             return {...state, ...initialState};
         case 'ON_FOCUS_LOGIN_FIELD':
-            return {...state, loginErrorMessage: '', loginErrors: {...state.loginErrors, [action.fieldName]: ''}};
+            return {...state, loginErrorMessage: ''};
         case 'ON_CHANGE_LOGIN_FIELD':
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
         default:

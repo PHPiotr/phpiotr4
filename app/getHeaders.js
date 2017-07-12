@@ -1,14 +1,11 @@
-import config from '../config';
 import cookie from 'cookie-monster';
 
 const getHeaders = () => {
-    let currentCookie = cookie.getItem(process.env.TOKEN_KEY);
-    if (!currentCookie) {
-        delete config.api_headers['Authorization'];
-    } else {
-        config.api_headers['Authorization'] = `Bearer ${currentCookie}`;
+    let token = cookie.getItem(process.env.TOKEN_KEY);
+    if (token) {
+        return {'Authorization': `Bearer ${token}`};
     }
-    return config.api_headers;
-}
+    return {};
+};
 
 export default getHeaders;
