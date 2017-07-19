@@ -3,13 +3,47 @@ var static = require('serve-static');
 var path = require('path');
 var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
+var sendgrid = require('sendgrid');
+var bodyParser = require('body-parser');
 
 var app = express();
 var server = require('http').Server(app);
 
-app.set('superSecret', process.env.AUTH_SECRET);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.get('/activation/:id/:hash', (req, res) => {
+
+});
+
+app.post('/send_activation_link', (req, res) => {
+
+    var helper = sendgrid.mail;
+    var from_email = new helper.Email('no-reply@phpiotr.herokuapp.com');
+    var to_email = new helper.Email(req.body.email);
+    var subject = 'Activate your account';
+    var link = `${req.protocol}://${req.get('host')}/activation/${req.body.id}/${req.body.hash}`;
+    var content = new helper.Content(
+        'text/html',
+        `Hello ${req.body.username}! Click the following link in order to activate your account: <a href="${link}">${link}</a>a>`);
+    var mail = new helper.Mail(from_email, subject, to_email, content);
+
+    var sg = sendgrid(process.env.SENDGRID_API_KEY);
+    var request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON(),
+    });
+
+    sg.API(request, function (error, response) {
+        if (error) {
+            throw new Error(error);
+        }
+        res.json(response);
+    });
+});
 
 if (process.env.NODE_ENV !== 'production') {
     var webpack = require('webpack');

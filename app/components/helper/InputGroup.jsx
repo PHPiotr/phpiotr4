@@ -14,6 +14,7 @@ class InputGroup extends Component {
 
         if (this.props.label) {
             this.label = this.props.label;
+            return;
         }
 
         let splitted = this.props.name.split('_');

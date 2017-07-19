@@ -1,4 +1,11 @@
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE} from '../actions/login';
+import {
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    REGISTRATION_REQUEST,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FAILURE
+} from '../actions/login';
 import {VERIFY_REQUEST, VERIFY_SUCCESS, VERIFY_FAILURE} from '../actions/verify';
 
 const initialState = {
@@ -6,7 +13,11 @@ const initialState = {
     loginErrorMessage: '',
     isLoggedIn: false,
     isLoggingIn: false,
+    registration: {},
+    registrationErrorMessage: '',
+    isRegistering: false,
     isVerifying: false,
+    registrationSuccessMessage: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -30,6 +41,22 @@ const auth = (state = initialState, action) => {
                 isLoggedIn: false,
                 isLoggingIn: false
             };
+        case REGISTRATION_REQUEST:
+            return {...state, isRegistering: true};
+        case REGISTRATION_SUCCESS:
+            console.log('hello action:', action);
+            return {
+                ...state,
+                isRegistering: false,
+                registrationSuccessMessage: action.registrationSuccessMessage,
+                registration: {}
+            };
+        case REGISTRATION_FAILURE:
+            return {
+                ...state,
+                isRegistering: false,
+                registrationErrorMessage: action.registrationErrorMessage
+            };
 
         case 'SET_LOGGED_IN':
             return {...state, ...initialState, isLoggedIn: true};
@@ -45,6 +72,15 @@ const auth = (state = initialState, action) => {
             return {...state, loginErrorMessage: ''};
         case 'ON_CHANGE_LOGIN_FIELD':
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
+        case 'ON_FOCUS_REGISTRATION_FIELD':
+            return {...state, registrationErrorMessage: '', registrationSuccessMessage: ''};
+        case 'ON_CHANGE_REGISTRATION_FIELD':
+            return {
+                ...state,
+                registrationErrorMessage: '',
+                registrationSuccessMessage: '',
+                registration: {...state.registration, [action.fieldName]: action.fieldValue}
+            };
         default:
             return state;
     }
