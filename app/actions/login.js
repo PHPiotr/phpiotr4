@@ -47,13 +47,14 @@ const registrationFailure = (json) => {
 
 const registration = () => {
     let resp;
+    let headers = getHeaders();
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
         return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {
             method: 'post',
             body: JSON.stringify(getState().auth.registration),
-            headers: getHeaders()
+            headers: headers
         })
             .then(response => response.json())
             .then(json => {
@@ -68,12 +69,12 @@ const registration = () => {
                 return fetch('send_activation_link', {
                     method: 'post',
                     body: JSON.stringify({
-                        hash: json.hash,
-                        email: json.user.email,
-                        username: json.user.username,
-                        id: json.user._id
+                        hash: resp.hash,
+                        email: resp.user.email,
+                        username: resp.user.username,
+                        id: resp.user._id
                     }),
-                    headers: getHeaders()
+                    headers: headers
                 })
                     .then(response => response.json())
                     .then(response => {

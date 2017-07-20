@@ -44,7 +44,6 @@ const auth = (state = initialState, action) => {
         case REGISTRATION_REQUEST:
             return {...state, isRegistering: true};
         case REGISTRATION_SUCCESS:
-            console.log('hello action:', action);
             return {
                 ...state,
                 isRegistering: false,
