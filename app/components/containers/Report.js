@@ -45,20 +45,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchReportOnLoad(fromDate, toDate) {
         dispatch(verifyIfNeeded(getHeaders())).then((json) => {
             if (json === undefined) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             if (json.type === undefined) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             if (json.type !== VERIFY_SUCCESS) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             dispatch(toggleDateFilterEnabled(true));
             dispatch(fetchReportIfNeeded(fromDate, toDate, getHeaders()));
         });
     },
     handleIsDateFilterEnabled(isEnabled) {
-        if (ownProps.auth.isLoggedIn) {
+        if (ownProps.auth && ownProps.auth.isLoggedIn) {
             dispatch(toggleDateFilterEnabled(isEnabled));
         }
     }

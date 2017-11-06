@@ -106,16 +106,6 @@ export const registerIfNeeded = () => {
     }
 };
 
-const shouldLogin = (state) => {
-    if (state.auth.isLoggingIn) {
-        return false;
-    }
-    if (state.auth.isLoggedIn) {
-        return false;
-    }
-    return true;
-};
-
 const loginRequest = () => ({
     type: LOGIN_REQUEST
 });
@@ -137,9 +127,20 @@ const loginFailure = (json) => {
     };
 };
 
-const login = (event, data, headers) => {
+export const loginIfNeeded = (event, headers) => {
+    return (dispatch, getState) => {
+        const {auth} = getState();
+        const {isLoggingIn, isLoggedIn} = auth;
+        if (!isLoggingIn && !isLoggedIn) {
+            return dispatch(login(event, auth.login, headers));
+        }
+        return Promise.resolve();
+    }
+};
+
+const login = (event, {username, password}, headers) => {
     return (dispatch) => {
-        headers['Authorization'] = 'Basic ' + btoa(data.username + ':' + data.password);
+        headers['Authorization'] = 'Basic ' + btoa(username + ':' + password);
         dispatch(loginRequest());
         return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/auth/login`, {
             method: 'get',
@@ -159,15 +160,6 @@ const login = (event, data, headers) => {
                 dispatch(loginFailure(error));
             })
     };
-};
-
-export const loginIfNeeded = (event, data, headers) => {
-    return (dispatch, getState) => {
-        if (shouldLogin(getState())) {
-            return dispatch(login(event, data, headers))
-        }
-        return Promise.resolve();
-    }
 };
 
 export const change = (fieldName, fieldValue, type = ON_CHANGE_LOGIN_FIELD) => ({

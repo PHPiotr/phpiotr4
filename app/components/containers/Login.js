@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(loginIfNeeded(event, ownProps.auth.login, getHeaders()))
+        dispatch(loginIfNeeded(event, getHeaders()))
             .then((json) => {
                 if (json.token) {
                     let token = json.token;
@@ -37,10 +37,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                     let expireTime = time + 1000 * json.expiresIn;
                     now.setTime(expireTime);
                     cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
-                    ownProps.router.push('/');
+                    ownProps.history.push('/');
                 } else {
                     cookie.removeItem(process.env.TOKEN_KEY);
-                    ownProps.router.push('/login');
+                    ownProps.history.push('/login');
                 }
             });
     },

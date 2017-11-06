@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import io from 'socket.io-client';
 import 'babel-polyfill';
 import 'react-css-modules';
 import 'bootstrap-css';
 import './css/style.css';
 import Navbar from './components/nav/Navbar';
-
-const socket = io.connect(process.env.API_URL);
 
 class App extends Component {
 
@@ -19,7 +16,6 @@ class App extends Component {
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
                 auth: this.props.auth,
-                socket: socket,
             });
         return (
             <div>

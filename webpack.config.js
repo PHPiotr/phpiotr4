@@ -65,7 +65,7 @@ var config = {
         }),
         new ExtractTextPlugin({
             filename: '[name].css',
-            disable: false,
+            disable: true,
             allChunks: true
         }),
         new webpack.optimize.CommonsChunkPlugin({

@@ -27,11 +27,11 @@ app.get('/activation/:id/:hash', (req, res) => {
             'Authorization': `Bearer ${req.params.hash}`
         }
     })
-    .then(function(response) {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-    });
+        .then(function(response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+        });
     res.redirect('/');
 });
 
@@ -71,21 +71,21 @@ if (process.env.NODE_ENV !== 'production') {
         publicPath: webpackConfig.output.publicPath
     }));
     app.use(require('webpack-hot-middleware')(compiler));
-    app.get('/*', (req,res) => {
-        if (req.originalUrl === '/') {
-            return res.sendFile(path.join(__dirname, 'index.html'));
-        }
-        res.redirect('/?d=' + req.originalUrl);
+    app.get('*', (req, res, next) => {
+        const filename = path.join(compiler.outputPath, 'index.html');
+        compiler.outputFileSystem.readFile(filename, function(err, result) {
+            if (err) {
+                return next(err);
+            }
+            res.set('content-type', 'text/html');
+            res.send(result);
+            res.end();
+        });
     })
 } else {
-    app.use('/js', static(path.join(__dirname, 'build/js')));
-    app.use('/css', static(path.join(__dirname, 'build/css')));
-
+    app.use(static('build'));
     app.get('/*', (req, res) => {
-        if (req.originalUrl === '/') {
-            return res.sendFile(path.join(__dirname, 'build', 'index.html'));
-        }
-        res.redirect('/');
+        return res.sendFile(path.join(__dirname, 'build', 'index.html'));
     });
 }
 
