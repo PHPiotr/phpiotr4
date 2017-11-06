@@ -25,7 +25,7 @@ class Train extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     train: state.bookings.train,
     trainErrors: state.bookings.trainErrors,
     trainErrorMessage: state.bookings.trainErrorMessage,
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
     pricePlaceholder: '0.00',
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
         dispatch(handleFocus(event, 'train'));
     },
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'train'));
-    }
+    },
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Train));

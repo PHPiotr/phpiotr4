@@ -22,8 +22,8 @@ function auth(WrappedComponent) {
     Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Auth, WrappedComponent);
 
-    const mapStateToProps = (state) => ({
-        isLoggedIn: state.auth.isLoggedIn
+    const mapStateToProps = state => ({
+        isLoggedIn: state.auth.isLoggedIn,
     });
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -39,7 +39,7 @@ function auth(WrappedComponent) {
                     return ownProps.router.push('/login');
                 }
             });
-        }
+        },
     });
 
     return connect(mapStateToProps, mapDispatchToProps)(Auth);

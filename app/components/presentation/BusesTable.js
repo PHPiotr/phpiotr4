@@ -43,40 +43,40 @@ const BusesTable = (props) => {
             <div className="row-fluid">
                 <table className="table table-hover table-condensed table-bordered">
                     <thead>
-                    <tr>
-                        <th>Total</th>
-                        <th>Average</th>
-                        <th>Bookings</th>
-                        <th>Single</th>
-                        <th>Return</th>
-                    </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th>Average</th>
+                            <th>Bookings</th>
+                            <th>Single</th>
+                            <th>Return</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td className="info">£ {formatPrice(buses.total_cost)}</td>
-                        <td>£ {formatPrice(buses.average_cost)}</td>
-                        <td>{buses.journeys_length}</td>
-                        <td>{buses.journeys_length - buses.return_journeys_length}</td>
-                        <td>{buses.return_journeys_length}</td>
-                    </tr>
+                        <tr>
+                            <td className="info">£ {formatPrice(buses.total_cost)}</td>
+                            <td>£ {formatPrice(buses.average_cost)}</td>
+                            <td>{buses.journeys_length}</td>
+                            <td>{buses.journeys_length - buses.return_journeys_length}</td>
+                            <td>{buses.return_journeys_length}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div className="row-fluid">
                 <table className="table table-hover table-condensed table-bordered">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>Code</th>
-                        <th className="text-right">Price</th>
-                        <th>Going out</th>
-                        <th>Coming back</th>
-                        <th>Departs from</th>
-                        <th>Arrives to</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>Code</th>
+                            <th className="text-right">Price</th>
+                            <th>Going out</th>
+                            <th>Coming back</th>
+                            <th>Departs from</th>
+                            <th>Arrives to</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {journeys}
+                        {journeys}
                     </tbody>
                 </table>
             </div>

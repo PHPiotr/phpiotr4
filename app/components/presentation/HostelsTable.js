@@ -43,36 +43,36 @@ const HostelsTable = (props) => {
             <div className="row-fluid">
                 <table className="table table-hover table-condensed table-bordered">
                     <thead>
-                    <tr>
-                        <th>Total</th>
-                        <th>Average</th>
-                        <th>Bookings</th>
-                    </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th>Average</th>
+                            <th>Bookings</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td className="info">£ {formatPrice(hostels.total_cost)}</td>
-                        <td>£ {formatPrice(hostels.average_cost)}</td>
-                        <td>{hostels.bookings_length}</td>
-                    </tr>
+                        <tr>
+                            <td className="info">£ {formatPrice(hostels.total_cost)}</td>
+                            <td>£ {formatPrice(hostels.average_cost)}</td>
+                            <td>{hostels.bookings_length}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div className="row-fluid">
                 <table className="table table-hover table-condensed table-bordered">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>Booking number</th>
-                        <th className="text-right">Price</th>
-                        <th>Checkin date</th>
-                        <th>Checkout date</th>
-                        <th>Hostel name</th>
-                        <th>Hostel address</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>Booking number</th>
+                            <th className="text-right">Price</th>
+                            <th>Checkin date</th>
+                            <th>Checkout date</th>
+                            <th>Hostel name</th>
+                            <th>Hostel address</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {bookings}
+                        {bookings}
                     </tbody>
                 </table>
             </div>

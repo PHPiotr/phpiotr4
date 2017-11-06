@@ -6,23 +6,23 @@ export const PLANES_FAILURE = 'PLANES_FAILURE';
 
 const shouldFetchPlanes = (state) => {
     if (state.planes.isFetching) {
-        return false
+        return false;
     }
     return true;
 };
 
 const fetchPlanesRequest = () => ({
-    type: PLANES_REQUEST
+    type: PLANES_REQUEST,
 });
 
-const fetchPlanesSuccess = (data) => ({
+const fetchPlanesSuccess = data => ({
     type: PLANES_SUCCESS,
     data,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
 });
 
-const fetchPlanesFailure = (error) => ({
-    type: PLANES_FAILURE, error
+const fetchPlanesFailure = error => ({
+    type: PLANES_FAILURE, error,
 });
 
 const fetchPlanes = (type, page, headers) => {
@@ -31,15 +31,15 @@ const fetchPlanes = (type, page, headers) => {
         return fetch(`${process.env.API_URL}/api/v1/bookings/planes?type=${type}&page=${page}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchPlanesSuccess(json)))
-            .catch(error => dispatch(fetchPlanesFailure(error)))
-    }
+            .catch(error => dispatch(fetchPlanesFailure(error)));
+    };
 };
 
 export const fetchPlanesIfNeeded = (type, page, headers) => {
     return (dispatch, getState) => {
         if (shouldFetchPlanes(getState())) {
-            return dispatch(fetchPlanes(type, page, headers))
+            return dispatch(fetchPlanes(type, page, headers));
         }
         return Promise.resolve();
-    }
+    };
 };

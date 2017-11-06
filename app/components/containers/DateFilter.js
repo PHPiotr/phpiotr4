@@ -1,4 +1,3 @@
-import React from 'react';
 import {connect} from 'react-redux';
 import {fetchReportIfNeeded} from '../../actions/report';
 import {setDate, setDateType} from '../../actions/index';
@@ -6,8 +5,8 @@ import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
 import getHeaders from '../../getHeaders';
 import DateFilterForm from '../presentation/DateFilterForm';
 
-const mapStateToProps = (state) => ({
-    dateFilter: state.dateFilter
+const mapStateToProps = state => ({
+    dateFilter: state.dateFilter,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -54,7 +53,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }
             dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders()));
         });
-    }
+    },
 });
 const DateFilter = connect(mapStateToProps, mapDispatchToProps)(DateFilterForm);
 

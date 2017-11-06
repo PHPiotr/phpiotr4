@@ -25,7 +25,7 @@ class Bus extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     bus: state.bookings.bus,
     busErrors: state.bookings.busErrors,
     busErrorMessage: state.bookings.busErrorMessage,
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
     pricePlaceholder: '0.00',
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
         dispatch(handleFocus(event, 'bus'));
     },
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'bus'));
-    }
+    },
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Bus));

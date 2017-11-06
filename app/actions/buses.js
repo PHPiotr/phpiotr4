@@ -6,23 +6,23 @@ export const BUSES_FAILURE = 'BUSES_FAILURE';
 
 const shouldFetchBuses = (state) => {
     if (state.buses.isFetching) {
-        return false
+        return false;
     }
     return true;
 };
 
 const fetchBusesRequest = () => ({
-    type: BUSES_REQUEST
+    type: BUSES_REQUEST,
 });
 
-const fetchBusesSuccess = (data) => ({
+const fetchBusesSuccess = data => ({
     type: BUSES_SUCCESS,
     data,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
 });
 
-const fetchBusesFailure = (error) => ({
-    type: BUSES_FAILURE, error
+const fetchBusesFailure = error => ({
+    type: BUSES_FAILURE, error,
 });
 
 const fetchBuses = (type, page, headers) => {
@@ -31,15 +31,15 @@ const fetchBuses = (type, page, headers) => {
         return fetch(`${process.env.API_URL}/api/v1/bookings/buses?type=${type}&page=${page}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchBusesSuccess(json)))
-            .catch(error => dispatch(fetchBusesFailure(error)))
-    }
+            .catch(error => dispatch(fetchBusesFailure(error)));
+    };
 };
 
 export const fetchBusesIfNeeded = (type, page, headers) => {
     return (dispatch, getState) => {
         if (shouldFetchBuses(getState())) {
-            return dispatch(fetchBuses(type, page, headers))
+            return dispatch(fetchBuses(type, page, headers));
         }
         return Promise.resolve();
-    }
+    };
 };

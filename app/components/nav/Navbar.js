@@ -1,6 +1,6 @@
 import React from 'react';
 import DateFilterForm from '../containers/DateFilter';
-import {Link, withRouter} from 'react-router';
+import {Link, withRouter} from 'react-router-dom';
 import NavLink from './NavLink';
 import {connect} from 'react-redux';
 import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
@@ -40,8 +40,8 @@ let Navbar = (props) => {
     return (
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                    data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
             <Link className="navbar-brand" to="/">PHPiotr 4.0</Link>
@@ -56,15 +56,15 @@ let Navbar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const bookings = state.bookings;
+    const {dateFilter, auth: {isLoggedIn}, bookings: {bus, plane, train, hostel}} = state;
     return {
-        isLoggedIn: state.auth.isLoggedIn,
-        dateFilter: state.dateFilter,
-        isBusBeingAdded: bookings.bus.isAdd,
-        isPlaneBeingAdded: bookings.plane.isAdd,
-        isTrainBeingAdded: bookings.train.isAdd,
-        isHostelBeingAdded: bookings.hostel.isAdd,
-    }
+        isLoggedIn,
+        dateFilter,
+        isBusBeingAdded: bus.isAdd,
+        isPlaneBeingAdded: plane.isAdd,
+        isTrainBeingAdded: train.isAdd,
+        isHostelBeingAdded: hostel.isAdd,
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -72,16 +72,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         verify() {
             dispatch(verifyIfNeeded(getHeaders())).then((json) => {
                 if (json === undefined) {
-                    return ownProps.router.push('/login');
+                    return ownProps.history.push('/login');
                 }
                 if (json.type === undefined) {
-                    return ownProps.router.push('/login');
+                    return ownProps.history.push('/login');
                 }
                 if (json.type !== VERIFY_SUCCESS) {
-                    return ownProps.router.push('/login');
+                    return ownProps.history.push('/login');
                 }
             });
-        }
+        },
     };
 };
 Navbar = withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

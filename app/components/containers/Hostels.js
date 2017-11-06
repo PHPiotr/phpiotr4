@@ -21,13 +21,13 @@ const Hostels = (props) => {
             <Pagination {...props} />
         </div>
     );
-}
+};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     hostels: state.hostels,
     bookingsLabel: 'hostels',
     bookingLabel: 'hostel',
-    isLoggedIn: state.auth.isLoggedIn
+    isLoggedIn: state.auth.isLoggedIn,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {

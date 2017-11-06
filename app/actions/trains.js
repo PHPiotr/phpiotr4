@@ -6,23 +6,23 @@ export const TRAINS_FAILURE = 'TRAINS_FAILURE';
 
 const shouldFetchTrains = (state) => {
     if (state.trains.isFetching) {
-        return false
+        return false;
     }
     return true;
 };
 
 const fetchTrainsRequest = () => ({
-    type: TRAINS_REQUEST
+    type: TRAINS_REQUEST,
 });
 
-const fetchTrainsSuccess = (data) => ({
+const fetchTrainsSuccess = data => ({
     type: TRAINS_SUCCESS,
     data,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
 });
 
-const fetchTrainsFailure = (error) => ({
-    type: TRAINS_FAILURE, error
+const fetchTrainsFailure = error => ({
+    type: TRAINS_FAILURE, error,
 });
 
 const fetchTrains = (type, page, headers) => {
@@ -31,15 +31,15 @@ const fetchTrains = (type, page, headers) => {
         return fetch(`${process.env.API_URL}/api/v1/bookings/trains?type=${type}&page=${page}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchTrainsSuccess(json)))
-            .catch(error => dispatch(fetchTrainsFailure(error)))
-    }
+            .catch(error => dispatch(fetchTrainsFailure(error)));
+    };
 };
 
 export const fetchTrainsIfNeeded = (type, page, headers) => {
     return (dispatch, getState) => {
         if (shouldFetchTrains(getState())) {
-            return dispatch(fetchTrains(type, page, headers))
+            return dispatch(fetchTrains(type, page, headers));
         }
         return Promise.resolve();
-    }
+    };
 };

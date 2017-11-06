@@ -25,7 +25,7 @@ class Hostel extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     hostel: state.bookings.hostel,
     hostelErrors: state.bookings.hostelErrors,
     hostelErrorMessage: state.bookings.hostelErrorMessage,
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
     pricePlaceholder: '0.00',
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
         dispatch(handleFocus(event, 'hostel'));
     },
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'hostel'));
-    }
+    },
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Hostel));

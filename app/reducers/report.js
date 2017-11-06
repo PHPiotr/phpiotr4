@@ -17,19 +17,19 @@ const initialState = {
     hostels: [],
     hostels_avg: 0,
     hostels_cost: 0,
-    isFetching: false
+    isFetching: false,
 };
 
 const report = (state = initialState, action) => {
     switch (action.type) {
-        case REPORT_REQUEST:
-            return {...state, isFetching: true};
-        case REPORT_SUCCESS:
-            return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
-        case REPORT_FAILURE:
-            return {...state, ...{isFetching: false, error: action.error}};
-        default:
-            return state;
+    case REPORT_REQUEST:
+        return {...state, isFetching: true};
+    case REPORT_SUCCESS:
+        return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
+    case REPORT_FAILURE:
+        return {...state, ...{isFetching: false, error: action.error}};
+    default:
+        return state;
     }
 };
 

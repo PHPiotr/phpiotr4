@@ -28,7 +28,7 @@ export const setBookingInputError = (bookingLabelSingular, errorsValue, fieldNam
     fieldName,
 });
 
-export const toggleDateFilterEnabled = (isDateFilterEnabled) => ({
+export const toggleDateFilterEnabled = isDateFilterEnabled => ({
     type: 'TOGGLE_DATE_FILTER_ENABLED',
     isDateFilterEnabled,
 });
@@ -48,7 +48,7 @@ export const handleFocus = (event, bookingLabelSingular) => {
         dispatch(setBookingErrorMessage(bookingLabelSingular, ''));
         dispatch(setBookingInputError(bookingLabelSingular, undefined, event.target.name));
         return Promise.resolve();
-    }
+    };
 };
 
 export const handleChange = (event, bookingLabelSingular) => {
@@ -60,25 +60,25 @@ export const handleChange = (event, bookingLabelSingular) => {
         dispatch(setBooking(bookingLabelSingular, name, value));
 
         return Promise.resolve();
-    }
+    };
 };
 
 export const ADD_BOOKING_REQUEST = 'ADD_BOOKING_REQUEST';
-const addBookingRequest = (bookingSingularLabel) => ({
+const addBookingRequest = bookingSingularLabel => ({
     type: ADD_BOOKING_REQUEST,
-    bookingSingularLabel
+    bookingSingularLabel,
 });
 export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
 const addBookingSuccess = (data, bookingSingularLabel) => ({
     type: ADD_BOOKING_SUCCESS,
     data,
-    bookingSingularLabel
+    bookingSingularLabel,
 });
 export const ADD_BOOKING_FAILURE = 'ADD_BOOKING_FAILURE';
 const addBookingFailure = (error, bookingSingularLabel) => ({
     type: ADD_BOOKING_FAILURE,
     error,
-    bookingSingularLabel
+    bookingSingularLabel,
 });
 
 const addBooking = (event, singular, plural, headers) => {
@@ -89,10 +89,10 @@ const addBooking = (event, singular, plural, headers) => {
         fetch(`${process.env.API_URL}/api/v1/bookings/${plural}`, {
             method: 'post',
             headers: headers,
-            body: JSON.stringify(getState().bookings[singular])
+            body: JSON.stringify(getState().bookings[singular]),
         })
             .then(response => response.json())
-            .then(json => {
+            .then((json) => {
                 dispatch(addBookingSuccess(json, singular));
 
                 if (json.ok) {
@@ -103,30 +103,27 @@ const addBooking = (event, singular, plural, headers) => {
                     dispatch(setBookingErrors(singular, json.err.errors));
                 }
             })
-            .catch(error => dispatch(addBookingFailure(error)))
+            .catch(error => dispatch(addBookingFailure(error)));
 
         return Promise.resolve();
-    }
+    };
 };
 
-function shouldAddBooking(state, singular) {
-    // if (state.bookings[singular].isFetching) {
-    //     return false
-    // }
+function shouldAddBooking() {
     return true;
 }
 export const addBookingIfNeeded = (event, singular, plural, headers) => {
     return (dispatch, getState) => {
         if (shouldAddBooking(getState(), singular)) {
-            return dispatch(addBooking(event, singular, plural, headers))
+            return dispatch(addBooking(event, singular, plural, headers));
         }
         return Promise.resolve();
-    }
-}
+    };
+};
 
 export const SET_IS_ADD = 'SET_IS_ADD';
 export const setIsAdd = (isAdd, bookingLabelSingular) => ({
     type: SET_IS_ADD,
     isAdd,
-    bookingLabelSingular
+    bookingLabelSingular,
 });

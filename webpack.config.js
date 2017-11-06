@@ -14,7 +14,7 @@ var config = {
             'webpack/hot/only-dev-server',
             'webpack-hot-middleware/client',
             './app/AppContainer',
-        ]
+        ],
     },
     output: {
         path: path.resolve(__dirname),
@@ -26,26 +26,26 @@ var config = {
             {
                 test: /\.(js|jsx)$/,
                 use: 'babel-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: 'style-loader',
                     use: 'css-loader',
-                })
+                }),
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/,
                 use: [
                     {
                         loader: 'url-loader',
-                        options: { limit: 4000}
+                        options: { limit: 4000},
                     },
-                    'image-webpack-loader'
-                ]
-            }
-        ]
+                    'image-webpack-loader',
+                ],
+            },
+        ],
     },
     plugins: [
         new ManifestPlugin(),
@@ -54,19 +54,19 @@ var config = {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            }
+                'NODE_ENV': JSON.stringify('development'),
+            },
         }),
         new webpack.WatchIgnorePlugin([
-            path.join(__dirname, 'node_modules')
+            path.join(__dirname, 'node_modules'),
         ]),
         new webpack.ProvidePlugin({
-            Promise: 'es6-promise-promise'
+            Promise: 'es6-promise-promise',
         }),
         new ExtractTextPlugin({
             filename: '[name].css',
             disable: true,
-            allChunks: true
+            allChunks: true,
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
@@ -75,21 +75,21 @@ var config = {
                     return false;
                 }
                 return module.context && module.context.indexOf('node_modules') !== -1;
-            }
+            },
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
-            minChunks: Infinity
+            minChunks: Infinity,
         }),
         new HtmlWebpackPlugin({
             template: './index.html',
-            raven: null
+            raven: null,
         }),
         new Dotenv({
             path: './.env',
-            safe: false
-        })
-    ]
+            safe: false,
+        }),
+    ],
 };
 
 module.exports = config;

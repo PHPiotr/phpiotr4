@@ -6,26 +6,26 @@ describe('dateFilter', () => {
 
     it('should change type of "from" field (on focus) from "text" to "date"', () => {
         const action = {
-            dateTypeName: "fromDateFieldType",
-            dateTypeValue: "date",
-            type: "SET_DATE_TYPE",
+            dateTypeName: 'fromDateFieldType',
+            dateTypeValue: 'date',
+            type: 'SET_DATE_TYPE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
+            toDate: '',
+            toDateFieldType: 'text',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "date",
+            fromDate: '',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
-        }
+            toDate: '',
+            toDateFieldType: 'text',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -36,26 +36,26 @@ describe('dateFilter', () => {
 
     it('should set "from" date', () => {
         const action = {
-            dateFieldName: "fromDate",
-            dateFieldValue: "2017-05-01",
-            type: "SET_DATE",
+            dateFieldName: 'fromDate',
+            dateFieldValue: '2017-05-01',
+            type: 'SET_DATE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "date",
+            fromDate: '',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
+            toDate: '',
+            toDateFieldType: 'text',
         };
 
         const afterState = {
-            fromDate: "2017-05-01",
-            fromDateFieldType: "date",
+            fromDate: '2017-05-01',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
-        }
+            toDate: '',
+            toDateFieldType: 'text',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -66,26 +66,26 @@ describe('dateFilter', () => {
 
     it('should set "from" date as empty string', () => {
         const action = {
-            dateFieldName: "fromDate",
-            dateFieldValue: "",
-            type: "SET_DATE",
+            dateFieldName: 'fromDate',
+            dateFieldValue: '',
+            type: 'SET_DATE',
         };
 
         const beforeState = {
-            fromDate: "2017-05-01",
-            fromDateFieldType: "date",
+            fromDate: '2017-05-01',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "date",
+            fromDate: '',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
-        }
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -96,26 +96,26 @@ describe('dateFilter', () => {
 
     it('should change (on blur) empty input[name="from"] "type" attr from "date" to "text"', () => {
         const action = {
-            dateTypeName: "fromDateFieldType",
-            dateTypeValue: "text",
-            type: "SET_DATE_TYPE",
+            dateTypeName: 'fromDateFieldType',
+            dateTypeValue: 'text',
+            type: 'SET_DATE_TYPE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "date",
+            fromDate: '',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
-        }
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -126,26 +126,26 @@ describe('dateFilter', () => {
 
     it('should change type of "to" field (on focus) from "text" to "date"', () => {
         const action = {
-            dateTypeName: "toDateFieldType",
-            dateTypeValue: "date",
-            type: "SET_DATE_TYPE",
+            dateTypeName: 'toDateFieldType',
+            dateTypeValue: 'date',
+            type: 'SET_DATE_TYPE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
+            toDate: '',
+            toDateFieldType: 'text',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "date",
-        }
+            toDate: '',
+            toDateFieldType: 'date',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -156,26 +156,26 @@ describe('dateFilter', () => {
 
     it('should set "to" date', () => {
         const action = {
-            dateFieldName: "toDate",
-            dateFieldValue: "2017-05-31",
-            type: "SET_DATE",
+            dateFieldName: 'toDate',
+            dateFieldValue: '2017-05-31',
+            type: 'SET_DATE',
         };
 
         const beforeState = {
-            fromDate: "2017-05-01",
-            fromDateFieldType: "date",
+            fromDate: '2017-05-01',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "date",
+            toDate: '',
+            toDateFieldType: 'date',
         };
 
         const afterState = {
-            fromDate: "2017-05-01",
-            fromDateFieldType: "date",
+            fromDate: '2017-05-01',
+            fromDateFieldType: 'date',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
-        }
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -186,26 +186,26 @@ describe('dateFilter', () => {
 
     it('should set "to" date as empty string', () => {
         const action = {
-            dateFieldName: "toDate",
-            dateFieldValue: "",
-            type: "SET_DATE",
+            dateFieldName: 'toDate',
+            dateFieldValue: '',
+            type: 'SET_DATE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "2017-05-31",
-            toDateFieldType: "date",
+            toDate: '2017-05-31',
+            toDateFieldType: 'date',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "date",
-        }
+            toDate: '',
+            toDateFieldType: 'date',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);
@@ -216,26 +216,26 @@ describe('dateFilter', () => {
 
     it('should change (on blur) empty input[name="to"] "type" attr from "date" to "text"', () => {
         const action = {
-            dateTypeName: "toDateFieldType",
-            dateTypeValue: "text",
-            type: "SET_DATE_TYPE",
+            dateTypeName: 'toDateFieldType',
+            dateTypeValue: 'text',
+            type: 'SET_DATE_TYPE',
         };
 
         const beforeState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "date",
+            toDate: '',
+            toDateFieldType: 'date',
         };
 
         const afterState = {
-            fromDate: "",
-            fromDateFieldType: "text",
+            fromDate: '',
+            fromDateFieldType: 'text',
             isDateFilterEnabled: true,
-            toDate: "",
-            toDateFieldType: "text",
-        }
+            toDate: '',
+            toDateFieldType: 'text',
+        };
 
         deepFreeze(action);
         deepFreeze(beforeState);

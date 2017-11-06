@@ -6,7 +6,7 @@ export const REPORT_FAILURE = 'REPORT_FAILURE';
 
 const shouldFetchReport = (state) => {
     if (state.report.isFetching) {
-        return false
+        return false;
     }
     return true;
 };
@@ -15,15 +15,15 @@ const fetchReportRequest = () => ({
     type: REPORT_REQUEST,
 });
 
-const fetchReportSuccess = (data) => ({
+const fetchReportSuccess = data => ({
     type: REPORT_SUCCESS,
     data,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
 });
 
-const fetchReportFailure = (error) => ({
+const fetchReportFailure = error => ({
     type: REPORT_FAILURE,
-    error
+    error,
 });
 
 const fetchReport = (fromDate, toDate, headers) => {
@@ -32,15 +32,15 @@ const fetchReport = (fromDate, toDate, headers) => {
         return fetch(`${process.env.API_URL}/api/v1/report?from=${fromDate}&to=${toDate}`, {headers})
             .then(response => response.json())
             .then(json => dispatch(fetchReportSuccess(json)))
-            .catch(error => dispatch(fetchReportFailure(error)))
-    }
+            .catch(error => dispatch(fetchReportFailure(error)));
+    };
 };
 
 export const fetchReportIfNeeded = (fromDate, toDate, headers) => {
     return (dispatch, getState) => {
         if (shouldFetchReport(getState())) {
-            return dispatch(fetchReport(fromDate, toDate, headers))
+            return dispatch(fetchReport(fromDate, toDate, headers));
         }
         return Promise.resolve();
-    }
+    };
 };

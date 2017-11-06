@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link, withRouter} from 'react-router';
 
 const NavLink = (props) => {
@@ -18,6 +18,6 @@ const NavLink = (props) => {
     return (
         <li className={`nav-item ${active}`}><Link to={props.to} onClick={props.onClick} activeClassName="active" className="nav-link">{props.children}</Link></li>
     );
-}
+};
 
 export default withRouter(NavLink);

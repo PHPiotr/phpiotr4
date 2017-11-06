@@ -20,11 +20,11 @@ const LoginForm = (props) => {
             <form onSubmit={props.handleSubmit}>
                 {loginError}
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label"
-                            focusHandler={props.handleFocus}
-                            value={auth.login.username} handler={props.handleChange} name="username"/>
+                    focusHandler={props.handleFocus}
+                    value={auth.login.username} handler={props.handleChange} name="username"/>
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" type="password"
-                            focusHandler={props.handleFocus}
-                            value={auth.login.password} handler={props.handleChange} name="password"/>
+                    focusHandler={props.handleFocus}
+                    value={auth.login.password} handler={props.handleChange} name="password"/>
                 <ButtonGroup buttonWrapperClass="">Log in</ButtonGroup>
             </form>
         </div>

@@ -15,26 +15,26 @@ const shouldVerify = (state) => {
 };
 
 const verifyRequest = () => ({
-    type: VERIFY_REQUEST
+    type: VERIFY_REQUEST,
 });
 
-const verifySuccess = (data) => ({
+const verifySuccess = data => ({
     type: VERIFY_SUCCESS,
-    data
+    data,
 });
 
-const verifyFailure = (error) => ({
+const verifyFailure = error => ({
     type: VERIFY_FAILURE,
-    error
+    error,
 });
 
 const verify = (headers) => {
     return (dispatch) => {
         dispatch(verifyRequest());
         return fetch(`${process.env.API_URL}/api/v1/auth/verify`, {
-            headers: headers
+            headers: headers,
         })
-            .then((response) => response.json())
+            .then(response => response.json())
             .then((json) => {
                 if (json.success) {
                     return dispatch(verifySuccess(json));

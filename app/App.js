@@ -15,8 +15,8 @@ class App extends Component {
 
     render() {
         let propsChildren = this.props.children && React.cloneElement(this.props.children, {
-                auth: this.props.auth,
-            });
+            auth: this.props.auth,
+        });
         return (
             <div>
                 <Navbar />
@@ -28,7 +28,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     auth: state.auth,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (ownProps.router.location.query.d !== undefined) {
             return ownProps.router.push(ownProps.router.location.query.d);
         }
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

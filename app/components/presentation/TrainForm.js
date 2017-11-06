@@ -13,8 +13,8 @@ const TrainForm = (props) => {
         returnJourneyInputs = (
             <div>
                 <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.return_departure_date}
-                            value={props.train.return_departure_date} type="date" handler={props.handleChange}
-                            name="return_departure_date"/>
+                    value={props.train.return_departure_date} type="date" handler={props.handleChange}
+                    name="return_departure_date"/>
             </div>
         );
     }
@@ -36,19 +36,19 @@ const TrainForm = (props) => {
             {trainInsert}
             {trainError}
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.from}
-                        value={props.train.from} handler={props.handleChange} name="from"/>
+                value={props.train.from} handler={props.handleChange} name="from"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.to}
-                        value={props.train.to} handler={props.handleChange} name="to"/>
+                value={props.train.to} handler={props.handleChange} name="to"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.departure_date}
-                        value={props.train.departure_date} type="date" handler={props.handleChange}
-                        name="departure_date"/>
+                value={props.train.departure_date} type="date" handler={props.handleChange}
+                name="departure_date"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.price}
-                        placeholder={props.pricePlaceholder} value={props.train.price} handler={props.handleChange} name="price"/>
+                placeholder={props.pricePlaceholder} value={props.train.price} handler={props.handleChange} name="price"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.currency}
-                        value={props.train.currency} handler={props.handleChange} name="currency"/>
+                value={props.train.currency} handler={props.handleChange} name="currency"/>
             <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.is_return}
-                        value={props.train.is_return} type="checkbox" handler={props.handleChange}
-                        name="is_return"/>
+                value={props.train.is_return} type="checkbox" handler={props.handleChange}
+                name="is_return"/>
             {returnJourneyInputs}
             <ButtonGroup>Add</ButtonGroup>
         </form>

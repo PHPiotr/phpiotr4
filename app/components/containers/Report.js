@@ -34,12 +34,12 @@ class Report extends Component {
 
 Report.displayName = 'Report';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     report: state.report,
     fromDate: state.dateFilter.fromDate,
     toDate: state.dateFilter.toDate,
     isLoggedIn: state.auth.isLoggedIn,
-    isDateFilterEnabled: state.dateFilter.isDateFilterEnabled
+    isDateFilterEnabled: state.dateFilter.isDateFilterEnabled,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchReportOnLoad(fromDate, toDate) {
@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (ownProps.auth && ownProps.auth.isLoggedIn) {
             dispatch(toggleDateFilterEnabled(isEnabled));
         }
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Report);

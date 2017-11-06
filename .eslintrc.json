@@ -1,16 +1,16 @@
 {
   "env": {
     "browser": true,
+    "commonjs": true,
     "es6": true
-  },
-  "globals": {
-    "module": 1
   },
   "extends": "eslint:recommended",
   "parserOptions": {
+    "ecmaVersion": 2017,
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
-      "jsx": true
+      "jsx": true,
+      "modules": true
     },
     "sourceType": "module"
   },
@@ -18,6 +18,8 @@
     "react"
   ],
   "rules": {
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
+    "comma-dangle": ["error", "always-multiline"],
     "indent": [
       "error",
       4
@@ -26,26 +28,26 @@
       "error",
       "unix"
     ],
+    "no-console": "off",
+    "no-case-declarations": "off",
     "quotes": [
       "error",
       "single"
     ],
     "semi": [
-      "error"
+      "error",
+      "always"
     ],
-    "no-extra-semi": [
-      "warn"
-    ],
-    "no-console": [
-      "warn"
-    ],
-    "indent": [
-      "warn"
-    ],
-    "no-unused-vars": [
-      "warn"
-    ],
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2
+  },
+  "globals": {
+    "process": true,
+    "it": true,
+    "describe": true,
+    "__dirname": true,
+    "beforeEach": true,
+    "afterEach": true
   }
 }

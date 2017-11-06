@@ -13,10 +13,10 @@ const Login = (props) => {
             <LoginForm {...props} />
         </div>
     );
-}
+};
 
-const mapStateToProps = (state) => ({
-    auth: state.auth
+const mapStateToProps = state => ({
+    auth: state.auth,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

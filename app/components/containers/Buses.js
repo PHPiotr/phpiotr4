@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
         buses: state.buses,
         bookingsLabel: 'buses',
         bookingLabel: 'bus',
-        isLoggedIn: state.auth.isLoggedIn
-    }
+        isLoggedIn: state.auth.isLoggedIn,
+    };
 };
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {

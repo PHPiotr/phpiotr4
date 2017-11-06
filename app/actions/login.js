@@ -25,14 +25,14 @@ const shouldRegister = (state) => {
 };
 
 const registrationRequest = () => ({
-    type: REGISTRATION_REQUEST
+    type: REGISTRATION_REQUEST,
 });
 
 const registrationSuccess = (json) => {
     return {
         type: REGISTRATION_SUCCESS,
         registrationSuccessMessage: 'Account created. We have sent you an email with activation instructions.',
-        hash: json.hash
+        hash: json.hash,
     };
 };
 
@@ -54,10 +54,10 @@ const registration = () => {
         return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {
             method: 'post',
             body: JSON.stringify(getState().auth.registration),
-            headers: headers
+            headers: headers,
         })
             .then(response => response.json())
-            .then(json => {
+            .then((json) => {
                 if (!json) {
                     throw Error('Something bad happened.');
                 }
@@ -72,12 +72,12 @@ const registration = () => {
                         hash: resp.hash,
                         email: resp.user.email,
                         username: resp.user.username,
-                        id: resp.user._id
+                        id: resp.user._id,
                     }),
-                    headers: headers
+                    headers: headers,
                 })
                     .then(response => response.json())
-                    .then(response => {
+                    .then((response) => {
                         if (!response) {
                             throw Error('Something bad happened.');
                         }
@@ -87,34 +87,34 @@ const registration = () => {
                         }
                         dispatch(registrationSuccess(resp));
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         dispatch(registrationFailure(error));
-                    })
+                    });
             })
-            .catch(error => {
+            .catch((error) => {
                 dispatch(registrationFailure(error));
-            })
+            });
     };
 };
 
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
         if (shouldRegister(getState())) {
-            return dispatch(registration())
+            return dispatch(registration());
         }
         return Promise.resolve();
-    }
+    };
 };
 
 const loginRequest = () => ({
-    type: LOGIN_REQUEST
+    type: LOGIN_REQUEST,
 });
 
 const loginSuccess = (json) => {
     return {
         type: LOGIN_SUCCESS,
         token: json.token,
-        expiresIn: parseInt(json.expiresIn)
+        expiresIn: parseInt(json.expiresIn),
     };
 };
 
@@ -135,7 +135,7 @@ export const loginIfNeeded = (event, headers) => {
             return dispatch(login(event, auth.login, headers));
         }
         return Promise.resolve();
-    }
+    };
 };
 
 const login = (event, {username, password}, headers) => {
@@ -147,7 +147,7 @@ const login = (event, {username, password}, headers) => {
             headers: headers,
         })
             .then(response => response.json())
-            .then(json => {
+            .then((json) => {
                 if (json) {
                     if (json.token) {
                         return dispatch(loginSuccess(json));
@@ -156,9 +156,9 @@ const login = (event, {username, password}, headers) => {
                 }
                 throw Error('Something bad happened.');
             })
-            .catch(error => {
+            .catch((error) => {
                 dispatch(loginFailure(error));
-            })
+            });
     };
 };
 
@@ -171,9 +171,9 @@ export const change = (fieldName, fieldValue, type = ON_CHANGE_LOGIN_FIELD) => (
 export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
     type,
     fieldName,
-    fieldValue
+    fieldValue,
 });
 
 export const logout = () => ({
-    type: 'SET_LOGGED_OUT'
+    type: 'SET_LOGGED_OUT',
 });

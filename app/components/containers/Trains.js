@@ -21,13 +21,13 @@ const Trains = (props) => {
             <Pagination {...props} />
         </div>
     );
-}
+};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     trains: state.trains,
     bookingsLabel: 'trains',
     bookingLabel: 'train',
-    isLoggedIn: state.auth.isLoggedIn
+    isLoggedIn: state.auth.isLoggedIn,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {

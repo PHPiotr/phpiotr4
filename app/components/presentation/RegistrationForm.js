@@ -32,22 +32,22 @@ const RegistrationForm = (props) => {
                 {registrationSuccess}
                 {registrationError}
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label"
-                            focusHandler={props.handleFocus}
-                            value={auth.registration.username} handler={props.handleChange} name="username"/>
+                    focusHandler={props.handleFocus}
+                    value={auth.registration.username} handler={props.handleChange} name="username"/>
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label"
-                            focusHandler={props.handleFocus}
-                            value={auth.registration.email} handler={props.handleChange} name="email"/>
+                    focusHandler={props.handleFocus}
+                    value={auth.registration.email} handler={props.handleChange} name="email"/>
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" type="password"
-                            focusHandler={props.handleFocus}
-                            value={auth.registration.password} handler={props.handleChange} name="password"/>
+                    focusHandler={props.handleFocus}
+                    value={auth.registration.password} handler={props.handleChange} name="password"/>
                 <InputGroup label="Confirm password" inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label"
-                            type="password" focusHandler={props.handleFocus}
-                            value={auth.registration.repeatPassword} handler={props.handleChange}
-                            name="repeatPassword"/>
+                    type="password" focusHandler={props.handleFocus}
+                    value={auth.registration.repeatPassword} handler={props.handleChange}
+                    name="repeatPassword"/>
                 <ButtonGroup buttonWrapperClass="">Register</ButtonGroup>
             </form>
         </div>
     );
-}
+};
 
 export default RegistrationForm;

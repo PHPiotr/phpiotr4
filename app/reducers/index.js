@@ -16,7 +16,7 @@ const reducers = combineReducers({
     buses,
     planes,
     trains,
-    hostels
-})
+    hostels,
+});
 
-export default reducers
+export default reducers;

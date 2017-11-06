@@ -25,7 +25,7 @@ class Plane extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     plane: state.bookings.plane,
     planeErrors: state.bookings.planeErrors,
     planeErrorMessage: state.bookings.planeErrorMessage,
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
     pricePlaceholder: '0.00',
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
         dispatch(handleFocus(event, 'plane'));
     },
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'plane'));
-    }
+    },
 });
 
 export default Auth(connect(mapStateToProps, mapDispatchToProps)(Plane));
