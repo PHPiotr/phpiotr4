@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import 'babel-polyfill';
 import 'react-css-modules';
 import 'bootstrap-css';
@@ -31,12 +32,12 @@ class App extends Component {
 const mapStateToProps = state => ({
     auth: state.auth,
 });
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch, {location: {query}, history}) => ({
     onLoad() {
-        if (ownProps.router.location.query.d !== undefined) {
-            return ownProps.router.push(ownProps.router.location.query.d);
+        if (query && query.d) {
+            return history.push(query.d);
         }
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

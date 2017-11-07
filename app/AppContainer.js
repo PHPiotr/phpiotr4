@@ -5,6 +5,7 @@ import configureStore from './configureStore';
 import {AppContainer} from 'react-hot-loader';
 import {BrowserRouter as Router} from 'react-router-dom';
 import AppRouter from './AppRouter';
+import App from './App';
 
 if (process.env.NODE_ENV === 'development') {
     let render = (Component) => {
@@ -12,7 +13,9 @@ if (process.env.NODE_ENV === 'development') {
             <AppContainer>
                 <Provider store={configureStore}>
                     <Router>
-                        <Component/>
+                        <App>
+                            <Component/>
+                        </App>
                     </Router>
                 </Provider>
             </AppContainer>,
@@ -30,7 +33,9 @@ if (process.env.NODE_ENV === 'development') {
         ReactDOM.render(
             <Provider store={configureStore}>
                 <Router>
-                    <Component/>
+                    <App>
+                        <Component/>
+                    </App>
                 </Router>
             </Provider>,
             document.getElementById('root')
