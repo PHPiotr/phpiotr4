@@ -3,7 +3,7 @@ import getHeaders from '../../getHeaders';
 import {connect} from 'react-redux';
 import {fetchBusesIfNeeded} from '../../actions/buses';
 import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
-import {withRouter} from 'react-router';
+import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import BusesTable from '../presentation/BusesTable';

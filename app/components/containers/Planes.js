@@ -3,7 +3,7 @@ import getHeaders from '../../getHeaders';
 import {connect} from 'react-redux';
 import {fetchPlanesIfNeeded} from '../../actions/planes';
 import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
-import {withRouter} from 'react-router';
+import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import PlanesTable from '../presentation/PlanesTable';
