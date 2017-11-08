@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Auth from './Auth';
 import {setIsAdd} from '../../actions/index';
 import {fetchHostelsIfNeeded} from '../../actions/hostels';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
@@ -53,4 +52,4 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default Auth(connect(mapStateToProps, mapDispatchToProps)(Hostel));
+export default connect(mapStateToProps, mapDispatchToProps)(Hostel);

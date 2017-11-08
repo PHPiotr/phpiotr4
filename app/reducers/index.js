@@ -7,6 +7,7 @@ import buses from './bookings/buses';
 import planes from './bookings/planes';
 import trains from './bookings/trains';
 import hostels from './bookings/hostels';
+import appReducer from './appReducer';
 
 const reducers = combineReducers({
     auth,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
     planes,
     trains,
     hostels,
+    appReducer,
 });
 
 export default reducers;

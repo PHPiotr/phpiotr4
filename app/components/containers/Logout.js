@@ -1,11 +1,12 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
 import cookie from 'cookie-monster';
-import {logout} from '../../actions/login';
+import {logoutIfNeeded} from '../../actions/login';
 
 class Logout extends Component {
 
     componentWillMount() {
+        console.log('componentWillMount class Logout extends Component');
         this.props.logout();
     }
 
@@ -14,14 +15,15 @@ class Logout extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch, {history}) => ({
     logout() {
-        if (!ownProps.auth.isLoggedIn) {
-            return false;
-        }
-        dispatch(logout());
-        cookie.removeItem(process.env.TOKEN_KEY);
-        ownProps.router.push('/login');
+        dispatch(logoutIfNeeded())
+            .then((shouldLogout) => {
+                if (shouldLogout) {
+                    cookie.removeItem(process.env.TOKEN_KEY);
+                    history.push('/login');
+                }
+            });
     },
 });
 

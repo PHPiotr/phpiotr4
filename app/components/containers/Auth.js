@@ -28,17 +28,17 @@ function auth(WrappedComponent) {
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
         verify() {
-            dispatch(verifyIfNeeded(getHeaders())).then((json) => {
-                if (json === undefined) {
-                    return ownProps.router.push('/login');
-                }
-                if (json.type === undefined) {
-                    return ownProps.router.push('/login');
-                }
-                if (json.type !== VERIFY_SUCCESS) {
-                    return ownProps.router.push('/login');
-                }
-            });
+            // dispatch(verifyIfNeeded(getHeaders())).then((json) => {
+            //     if (json === undefined) {
+            //         return ownProps.history.push('/login');
+            //     }
+            //     if (json.type === undefined) {
+            //         return ownProps.history.push('/login');
+            //     }
+            //     if (json.type !== VERIFY_SUCCESS) {
+            //         return ownProps.history.push('/login');
+            //     }
+            // });
         },
     });
 

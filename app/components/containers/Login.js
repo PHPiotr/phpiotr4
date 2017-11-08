@@ -38,9 +38,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                     now.setTime(expireTime);
                     cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
                     ownProps.history.push('/');
-                } else {
-                    cookie.removeItem(process.env.TOKEN_KEY);
-                    ownProps.history.push('/login');
                 }
             });
     },

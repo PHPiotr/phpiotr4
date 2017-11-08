@@ -33,13 +33,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchBookings(type, page) {
         dispatch(verifyIfNeeded(getHeaders())).then((json) => {
             if (json === undefined) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             if (json.type === undefined) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             if (json.type !== VERIFY_SUCCESS) {
-                return ownProps.router.push('/login');
+                return ownProps.history.push('/login');
             }
             dispatch(fetchPlanesIfNeeded(type || 'current', page || 1, getHeaders()));
         });

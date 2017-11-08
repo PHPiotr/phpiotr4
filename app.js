@@ -60,7 +60,7 @@ app.post('/send_activation_link', (req, res) => {
 
 if (process.env.NODE_ENV !== 'production') {
     var webpack = require('webpack');
-    var webpackConfig = require('./webpack.config');
+    var webpackConfig = require('./webpack.config.dev');
     var compiler = webpack(webpackConfig);
     var webpackDevMiddleware = require('webpack-dev-middleware');
     app.use(webpackDevMiddleware(compiler, {

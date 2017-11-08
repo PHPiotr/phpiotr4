@@ -1,7 +1,10 @@
 import React from 'react';
 import DateFilterForm from '../containers/DateFilter';
 import {Link, withRouter} from 'react-router-dom';
-import NavLink from './NavLink';
+import {AppBar, IconButton, Drawer, Typography, Toolbar} from 'material-ui';
+import {Menu} from 'material-ui-icons';
+import {toggleIsDrawerOpen} from '../../actions/appActions';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import {connect} from 'react-redux';
 import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
 import getHeaders from '../../getHeaders';
@@ -10,54 +13,49 @@ let Navbar = (props) => {
 
     let navItems = null;
     let navLoginItems = (
-        <ul className="navbar-nav mr-auto">
-            <NavLink className="btn btn-link" to="/login">Login</NavLink>
-            <NavLink className="btn btn-link" to="/register">Register</NavLink>
-        </ul>
+        <List>
+            <ListItem button><Link to={'/login'}>Login</Link></ListItem>
+            <ListItem button><Link to={'/register'}>Register</Link></ListItem>
+        </List>
     );
     if (props.isLoggedIn) {
-
-        let navItemsClass = 'navbar-nav';
-        if (!props.dateFilter.isDateFilterEnabled) {
-            navItemsClass += ' mr-auto';
-        }
-
         navItems = (
-            <ul className={navItemsClass}>
-                <NavLink onClick={props.verify} current={props.isBusBeingAdded} className="btn btn-link" to="/bookings/buses">Buses</NavLink>
-                <NavLink onClick={props.verify} current={props.isPlaneBeingAdded} className="btn btn-link" to="/bookings/planes">Planes</NavLink>
-                <NavLink onClick={props.verify} current={props.isTrainBeingAdded} className="btn btn-link" to="/bookings/trains">Trains</NavLink>
-                <NavLink onClick={props.verify} current={props.isHostelBeingAdded} className="btn btn-link" to="/bookings/hostels">Hostels</NavLink>
-            </ul>
+            <List>
+                <ListItem button><Link onClick={props.verify} to={'/bookings/buses'}>Buses</Link></ListItem>
+                <ListItem button><Link onClick={props.verify} to={'/bookings/planes'}>Planes</Link></ListItem>
+                <ListItem button><Link onClick={props.verify} to={'/bookings/trains'}>Trains</Link></ListItem>
+                <ListItem button><Link onClick={props.verify} to={'/bookings/hostels'}>Hostels</Link></ListItem>
+            </List>
         );
         navLoginItems = (
-            <ul className="navbar-nav navbar-right">
-                <NavLink className="btn btn-link" to="/logout">Logout</NavLink>
-            </ul>
+            <List>
+                <ListItem button><Link to={'/logout'}>Logout</Link></ListItem>
+            </List>
         );
     }
 
     return (
-        <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-            <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <Link className="navbar-brand" to="/">PHPiotr 4.0</Link>
-
-            <div className="collapse navbar-collapse" id="navbar-main">
-                {navItems}
-                <DateFilterForm {...props}/>
-                {navLoginItems}
-            </div>
-        </nav>
+        <AppBar>
+            <Toolbar>
+                <IconButton onClick={props.toggleIsDrawerOpen}><Menu style={{color: 'white'}} /></IconButton>
+                <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
+            </Toolbar>
+            <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
+                <Typography type="subheading" color="inherit">
+                    {navItems}
+                    <DateFilterForm {...props}/>
+                    {navLoginItems}
+                </Typography>
+            </Drawer>
+        </AppBar>
     );
 };
 
 const mapStateToProps = (state) => {
-    const {dateFilter, auth: {isLoggedIn}, bookings: {bus, plane, train, hostel}} = state;
+    const {appReducer: {isDrawerOpen, appBarTitle}, dateFilter, auth: {isLoggedIn}, bookings: {bus, plane, train, hostel}} = state;
     return {
+        isDrawerOpen,
+        appBarTitle,
         isLoggedIn,
         dateFilter,
         isBusBeingAdded: bus.isAdd,
@@ -81,6 +79,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                     return ownProps.history.push('/login');
                 }
             });
+        },
+        toggleIsDrawerOpen() {
+            console.log(11111);
+            dispatch(toggleIsDrawerOpen());
         },
     };
 };

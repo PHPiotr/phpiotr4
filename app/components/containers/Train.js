@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Auth from './Auth';
 import {setIsAdd} from '../../actions/index';
 import {fetchTrainsIfNeeded} from '../../actions/trains';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
@@ -53,4 +52,4 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default Auth(connect(mapStateToProps, mapDispatchToProps)(Train));
+export default connect(mapStateToProps, mapDispatchToProps)(Train);

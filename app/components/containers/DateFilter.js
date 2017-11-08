@@ -41,18 +41,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (!ownProps.dateFilter.isDateFilterEnabled) {
             return;
         }
-        dispatch(verifyIfNeeded(getHeaders())).then((json) => {
-            if (json === undefined) {
-                return ownProps.router.push('/login');
-            }
-            if (json.type === undefined) {
-                return ownProps.router.push('/login');
-            }
-            if (json.type !== VERIFY_SUCCESS) {
-                return ownProps.router.push('/login');
-            }
-            dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders()));
-        });
+        // dispatch(verifyIfNeeded(getHeaders())).then((json) => {
+        //     if (json === undefined) {
+        //         return ownProps.history.push('/login');
+        //     }
+        //     if (json.type === undefined) {
+        //         return ownProps.history.push('/login');
+        //     }
+        //     if (json.type !== VERIFY_SUCCESS) {
+        //         return ownProps.history.push('/login');
+        //     }
+        //     dispatch(fetchReportIfNeeded(ownProps.dateFilter.fromDate, ownProps.dateFilter.toDate, getHeaders()));
+        // });
     },
 });
 const DateFilter = connect(mapStateToProps, mapDispatchToProps)(DateFilterForm);

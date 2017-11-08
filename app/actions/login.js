@@ -174,6 +174,13 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
     fieldValue,
 });
 
-export const logout = () => ({
-    type: 'SET_LOGGED_OUT',
-});
+export const logoutIfNeeded = () => {
+    return (dispatch, getState) => {
+        const {auth: {isLoggedIn}} = getState();
+        if (!isLoggedIn) {
+            return Promise.resolve();
+        }
+        dispatch({type: 'SET_LOGGED_OUT'});
+        return Promise.resolve(true);
+    };
+};
