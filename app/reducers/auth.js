@@ -5,6 +5,8 @@ import {
     REGISTRATION_REQUEST,
     REGISTRATION_SUCCESS,
     REGISTRATION_FAILURE,
+    SET_TOKEN,
+    SET_IS_LOGGED_IN,
 } from '../actions/login';
 
 const initialState = {
@@ -54,9 +56,10 @@ const auth = (state = initialState, action) => {
             isRegistering: false,
             registrationErrorMessage: action.registrationErrorMessage,
         };
-
-    case 'SET_LOGGED_IN':
-        return {...state, ...initialState, isLoggedIn: true};
+    case SET_IS_LOGGED_IN:
+        return {...state, isLoggedIn: action.payload};
+    case SET_TOKEN:
+        return {...state, token: action.payload};
     case 'SET_LOGIN_FAILED':
         return {
             ...state,

@@ -13,6 +13,9 @@ export const ON_FOCUS_LOGIN_FIELD = 'ON_FOCUS_LOGIN_FIELD';
 export const ON_CHANGE_REGISTRATION_FIELD = 'ON_CHANGE_REGISTRATION_FIELD';
 export const ON_FOCUS_REGISTRATION_FIELD = 'ON_FOCUS_REGISTRATION_FIELD';
 
+export const SET_TOKEN = 'SET_TOKEN';
+export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
+
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
         if (shouldRegister(getState())) {
@@ -113,12 +116,10 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
 });
 
 export const logoutIfNeeded = () => {
-    return (dispatch, getState) => {
-        const {auth: {isLoggedIn}} = getState();
-        if (!isLoggedIn) {
-            return Promise.resolve();
-        }
+    return (dispatch) => {
         dispatch({type: 'SET_LOGGED_OUT'});
         return Promise.resolve(true);
     };
 };
+export const setToken = payload => ({type: SET_TOKEN, payload});
+export const setIsLoggedIn = payload => ({type: SET_IS_LOGGED_IN, payload});

@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
+import {logoutIfNeeded, setToken, setIsLoggedIn} from '../../actions/login';
+import cookie from 'cookie-monster';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
 
         componentWillMount() {
-            this.props.verify();
+            const {verify, token, isLoggedIn} = this.props;
+            verify(token, isLoggedIn);
         }
 
         render() {
@@ -20,23 +23,19 @@ function auth(WrappedComponent) {
     Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Auth, WrappedComponent);
 
-    const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({
-        isLoggedIn, token,
-    });
-
-    const mapDispatchToProps = () => ({
-        verify() {
-            // dispatch(verifyIfNeeded(getHeaders())).then((json) => {
-            //     if (json === undefined) {
-            //         return ownProps.history.push('/login');
-            //     }
-            //     if (json.type === undefined) {
-            //         return ownProps.history.push('/login');
-            //     }
-            //     if (json.type !== VERIFY_SUCCESS) {
-            //         return ownProps.history.push('/login');
-            //     }
-            // });
+    const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
+    const mapDispatchToProps = (dispatch, {history}) => ({
+        verify(tokenFromStore, isLoggedIn) {
+            if (!tokenFromStore) {
+                const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
+                if (!tokenFromCookie) {
+                    dispatch(logoutIfNeeded()).then(() => history.push('/login'));
+                }
+                dispatch(setToken(tokenFromCookie));
+            }
+            if (!isLoggedIn) {
+                dispatch(setIsLoggedIn(true));
+            }
         },
     });
 
