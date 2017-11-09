@@ -1,45 +1,27 @@
-import fetch from 'isomorphic-fetch';
+import {getBookings} from '../services/bookingServices';
 
 export const BUSES_REQUEST = 'BUSES_REQUEST';
 export const BUSES_SUCCESS = 'BUSES_SUCCESS';
 export const BUSES_FAILURE = 'BUSES_FAILURE';
 
-const shouldFetchBuses = (state) => {
-    if (state.buses.isFetching) {
-        return false;
-    }
-    return true;
-};
-
-const fetchBusesRequest = () => ({
-    type: BUSES_REQUEST,
-});
-
-const fetchBusesSuccess = data => ({
-    type: BUSES_SUCCESS,
-    data,
-    receivedAt: Date.now(),
-});
-
-const fetchBusesFailure = error => ({
-    type: BUSES_FAILURE, error,
-});
-
-const fetchBuses = (type, page, headers) => {
-    return (dispatch) => {
+export const fetchBusesIfNeeded = (type, page) => {
+    return (dispatch, getState) => {
+        const {auth: {token}, buses: {isFetching}} = getState();
+        if (isFetching) {
+            return Promise.resolve();
+        }
         dispatch(fetchBusesRequest());
-        return fetch(`${process.env.API_URL}/api/v1/bookings/buses?type=${type}&page=${page}`, {headers})
-            .then(response => response.json())
+        return getBookings(token, 'buses', type, page)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText, response.status);
+                }
+                return response.json();
+            })
             .then(json => dispatch(fetchBusesSuccess(json)))
             .catch(error => dispatch(fetchBusesFailure(error)));
     };
 };
-
-export const fetchBusesIfNeeded = (type, page, headers) => {
-    return (dispatch, getState) => {
-        if (shouldFetchBuses(getState())) {
-            return dispatch(fetchBuses(type, page, headers));
-        }
-        return Promise.resolve();
-    };
-};
+const fetchBusesRequest = () => ({type: BUSES_REQUEST});
+const fetchBusesSuccess = data => ({type: BUSES_SUCCESS, data, receivedAt: Date.now()});
+const fetchBusesFailure = error => ({type: BUSES_FAILURE, error});

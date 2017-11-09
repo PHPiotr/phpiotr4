@@ -4,10 +4,8 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppBar, IconButton, Drawer, Typography, Toolbar} from 'material-ui';
 import {Menu} from 'material-ui-icons';
 import {toggleIsDrawerOpen} from '../../actions/appActions';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, {ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
-import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
-import getHeaders from '../../getHeaders';
 
 let Navbar = (props) => {
 
@@ -21,10 +19,10 @@ let Navbar = (props) => {
     if (props.isLoggedIn) {
         navItems = (
             <List>
-                <ListItem button><Link onClick={props.verify} to={'/bookings/buses'}>Buses</Link></ListItem>
-                <ListItem button><Link onClick={props.verify} to={'/bookings/planes'}>Planes</Link></ListItem>
-                <ListItem button><Link onClick={props.verify} to={'/bookings/trains'}>Trains</Link></ListItem>
-                <ListItem button><Link onClick={props.verify} to={'/bookings/hostels'}>Hostels</Link></ListItem>
+                <ListItem button><Link to={'/bookings/buses'}>Buses</Link></ListItem>
+                <ListItem button><Link to={'/bookings/planes'}>Planes</Link></ListItem>
+                <ListItem button><Link to={'/bookings/trains'}>Trains</Link></ListItem>
+                <ListItem button><Link to={'/bookings/hostels'}>Hostels</Link></ListItem>
             </List>
         );
         navLoginItems = (
@@ -65,23 +63,9 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        verify() {
-            dispatch(verifyIfNeeded(getHeaders())).then((json) => {
-                if (json === undefined) {
-                    return ownProps.history.push('/login');
-                }
-                if (json.type === undefined) {
-                    return ownProps.history.push('/login');
-                }
-                if (json.type !== VERIFY_SUCCESS) {
-                    return ownProps.history.push('/login');
-                }
-            });
-        },
         toggleIsDrawerOpen() {
-            console.log(11111);
             dispatch(toggleIsDrawerOpen());
         },
     };

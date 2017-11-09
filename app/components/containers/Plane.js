@@ -3,7 +3,6 @@ import {setIsAdd} from '../../actions/index';
 import {fetchPlanesIfNeeded} from '../../actions/planes';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
-import getHeaders from '../../getHeaders';
 import PlaneForm from '../presentation/PlaneForm';
 import Navigation from '../presentation/Navigation';
 
@@ -42,10 +41,10 @@ const mapDispatchToProps = dispatch => ({
         dispatch(handleChange(event, 'plane'));
     },
     handleSubmit(event) {
-        dispatch(addBookingIfNeeded(event, 'plane', 'planes', getHeaders()));
+        dispatch(addBookingIfNeeded(event, 'plane', 'planes'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchPlanesIfNeeded(type || 'current', page || 1, getHeaders()));
+        dispatch(fetchPlanesIfNeeded(type || 'current', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'plane'));

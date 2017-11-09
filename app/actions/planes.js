@@ -1,45 +1,27 @@
-import fetch from 'isomorphic-fetch';
+import {getBookings} from '../services/bookingServices';
 
 export const PLANES_REQUEST = 'PLANES_REQUEST';
 export const PLANES_SUCCESS = 'PLANES_SUCCESS';
 export const PLANES_FAILURE = 'PLANES_FAILURE';
 
-const shouldFetchPlanes = (state) => {
-    if (state.planes.isFetching) {
-        return false;
-    }
-    return true;
-};
-
-const fetchPlanesRequest = () => ({
-    type: PLANES_REQUEST,
-});
-
-const fetchPlanesSuccess = data => ({
-    type: PLANES_SUCCESS,
-    data,
-    receivedAt: Date.now(),
-});
-
-const fetchPlanesFailure = error => ({
-    type: PLANES_FAILURE, error,
-});
-
-const fetchPlanes = (type, page, headers) => {
-    return (dispatch) => {
+export const fetchPlanesIfNeeded = (type, page) => {
+    return (dispatch, getState) => {
+        const {auth: {token}, planes: {isFetching}} = getState();
+        if (isFetching) {
+            return Promise.resolve();
+        }
         dispatch(fetchPlanesRequest());
-        return fetch(`${process.env.API_URL}/api/v1/bookings/planes?type=${type}&page=${page}`, {headers})
-            .then(response => response.json())
+        return getBookings(token, 'planes', type, page)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText, response.status);
+                }
+                return response.json();
+            })
             .then(json => dispatch(fetchPlanesSuccess(json)))
             .catch(error => dispatch(fetchPlanesFailure(error)));
     };
 };
-
-export const fetchPlanesIfNeeded = (type, page, headers) => {
-    return (dispatch, getState) => {
-        if (shouldFetchPlanes(getState())) {
-            return dispatch(fetchPlanes(type, page, headers));
-        }
-        return Promise.resolve();
-    };
-};
+const fetchPlanesRequest = () => ({type: PLANES_REQUEST});
+const fetchPlanesSuccess = data => ({type: PLANES_SUCCESS, data, receivedAt: Date.now()});
+const fetchPlanesFailure = error => ({type: PLANES_FAILURE, error});

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
-import getHeaders from '../../getHeaders';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
@@ -22,11 +20,11 @@ function auth(WrappedComponent) {
     Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Auth, WrappedComponent);
 
-    const mapStateToProps = state => ({
-        isLoggedIn: state.auth.isLoggedIn,
+    const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({
+        isLoggedIn, token,
     });
 
-    const mapDispatchToProps = (dispatch, ownProps) => ({
+    const mapDispatchToProps = () => ({
         verify() {
             // dispatch(verifyIfNeeded(getHeaders())).then((json) => {
             //     if (json === undefined) {

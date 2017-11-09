@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import getHeaders from '../../getHeaders';
 import {fetchReportIfNeeded} from '../../actions/report';
-import {verifyIfNeeded, VERIFY_SUCCESS} from '../../actions/verify';
 import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
 import Spinner from '../presentation/Spinner';
@@ -11,7 +9,7 @@ class Report extends Component {
 
     componentWillMount() {
         this.props.handleIsDateFilterEnabled(true);
-        this.props.fetchReportOnLoad(this.props.fromDate, this.props.toDate);
+        this.props.fetchReportOnLoad();
     }
 
     componentWillUnmount() {
@@ -42,20 +40,9 @@ const mapStateToProps = state => ({
     isDateFilterEnabled: state.dateFilter.isDateFilterEnabled,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    fetchReportOnLoad(fromDate, toDate) {
-        dispatch(verifyIfNeeded(getHeaders())).then((json) => {
-            if (json === undefined) {
-                return ownProps.history.push('/login');
-            }
-            if (json.type === undefined) {
-                return ownProps.history.push('/login');
-            }
-            if (json.type !== VERIFY_SUCCESS) {
-                return ownProps.history.push('/login');
-            }
-            dispatch(toggleDateFilterEnabled(true));
-            dispatch(fetchReportIfNeeded(fromDate, toDate, getHeaders()));
-        });
+    fetchReportOnLoad() {
+        dispatch(toggleDateFilterEnabled(true));
+        dispatch(fetchReportIfNeeded());
     },
     handleIsDateFilterEnabled(isEnabled) {
         if (ownProps.auth && ownProps.auth.isLoggedIn) {

@@ -3,7 +3,6 @@ import {setIsAdd} from '../../actions/index';
 import {fetchHostelsIfNeeded} from '../../actions/hostels';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
-import getHeaders from '../../getHeaders';
 import HostelForm from '../presentation/HostelForm';
 import Navigation from '../presentation/Navigation';
 
@@ -42,10 +41,10 @@ const mapDispatchToProps = dispatch => ({
         dispatch(handleChange(event, 'hostel'));
     },
     handleSubmit(event) {
-        dispatch(addBookingIfNeeded(event, 'hostel', 'hostels', getHeaders()));
+        dispatch(addBookingIfNeeded(event, 'hostel', 'hostels'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchHostelsIfNeeded(type || 'current', page || 1, getHeaders()));
+        dispatch(fetchHostelsIfNeeded(type || 'current', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'hostel'));

@@ -1,4 +1,9 @@
-import fetch from 'isomorphic-fetch';
+import {postBookings} from '../services/bookingServices';
+
+export const ADD_BOOKING_REQUEST = 'ADD_BOOKING_REQUEST';
+export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
+export const ADD_BOOKING_FAILURE = 'ADD_BOOKING_FAILURE';
+export const SET_IS_ADD = 'SET_IS_ADD';
 
 export const setBooking = (bookingLabelSingular, fieldName, fieldValue) => ({
     type: 'SET_BOOKING',
@@ -63,35 +68,17 @@ export const handleChange = (event, bookingLabelSingular) => {
     };
 };
 
-export const ADD_BOOKING_REQUEST = 'ADD_BOOKING_REQUEST';
-const addBookingRequest = bookingSingularLabel => ({
-    type: ADD_BOOKING_REQUEST,
-    bookingSingularLabel,
-});
-export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
-const addBookingSuccess = (data, bookingSingularLabel) => ({
-    type: ADD_BOOKING_SUCCESS,
-    data,
-    bookingSingularLabel,
-});
-export const ADD_BOOKING_FAILURE = 'ADD_BOOKING_FAILURE';
-const addBookingFailure = (error, bookingSingularLabel) => ({
-    type: ADD_BOOKING_FAILURE,
-    error,
-    bookingSingularLabel,
-});
-
-const addBooking = (event, singular, plural, headers) => {
-    event.preventDefault();
+export const addBookingIfNeeded = (singular, plural) => {
     return (dispatch, getState) => {
+        const {bookings, auth: {token}} = getState();
         dispatch(addBookingRequest(singular));
-
-        fetch(`${process.env.API_URL}/api/v1/bookings/${plural}`, {
-            method: 'post',
-            headers: headers,
-            body: JSON.stringify(getState().bookings[singular]),
-        })
-            .then(response => response.json())
+        return postBookings(token, plural, JSON.stringify(bookings[singular]))
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText, response.status);
+                }
+                return response.json();
+            })
             .then((json) => {
                 dispatch(addBookingSuccess(json, singular));
 
@@ -104,24 +91,23 @@ const addBooking = (event, singular, plural, headers) => {
                 }
             })
             .catch(error => dispatch(addBookingFailure(error)));
-
-        return Promise.resolve();
     };
 };
+const addBookingRequest = bookingSingularLabel => ({
+    type: ADD_BOOKING_REQUEST,
+    bookingSingularLabel,
+});
+const addBookingSuccess = (data, bookingSingularLabel) => ({
+    type: ADD_BOOKING_SUCCESS,
+    data,
+    bookingSingularLabel,
+});
+const addBookingFailure = (error, bookingSingularLabel) => ({
+    type: ADD_BOOKING_FAILURE,
+    error,
+    bookingSingularLabel,
+});
 
-function shouldAddBooking() {
-    return true;
-}
-export const addBookingIfNeeded = (event, singular, plural, headers) => {
-    return (dispatch, getState) => {
-        if (shouldAddBooking(getState(), singular)) {
-            return dispatch(addBooking(event, singular, plural, headers));
-        }
-        return Promise.resolve();
-    };
-};
-
-export const SET_IS_ADD = 'SET_IS_ADD';
 export const setIsAdd = (isAdd, bookingLabelSingular) => ({
     type: SET_IS_ADD,
     isAdd,

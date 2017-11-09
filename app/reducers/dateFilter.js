@@ -3,7 +3,7 @@ import moment from 'moment';
 const initialState = {
     fromDateFieldType: 'date',
     toDateFieldType: 'text',
-    fromDate: moment().format('YYYY-MM-DD'),
+    fromDate: moment('2017-01-01').format('YYYY-MM-DD'),
     toDate: '',
     isDateFilterEnabled: false,
 };

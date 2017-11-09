@@ -3,7 +3,6 @@ import {setIsAdd} from '../../actions/index';
 import {fetchTrainsIfNeeded} from '../../actions/trains';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
-import getHeaders from '../../getHeaders';
 import TrainForm from '../presentation/TrainForm';
 import Navigation from '../presentation/Navigation';
 
@@ -42,10 +41,10 @@ const mapDispatchToProps = dispatch => ({
         dispatch(handleChange(event, 'train'));
     },
     handleSubmit(event) {
-        dispatch(addBookingIfNeeded(event, 'train', 'trains', getHeaders()));
+        dispatch(addBookingIfNeeded(event, 'train', 'trains'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchTrainsIfNeeded(type || 'current', page || 1, getHeaders()));
+        dispatch(fetchTrainsIfNeeded(type || 'current', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'train'));

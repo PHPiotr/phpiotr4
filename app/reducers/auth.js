@@ -6,7 +6,6 @@ import {
     REGISTRATION_SUCCESS,
     REGISTRATION_FAILURE,
 } from '../actions/login';
-import {VERIFY_REQUEST, VERIFY_SUCCESS, VERIFY_FAILURE} from '../actions/verify';
 
 const initialState = {
     login: {},
@@ -18,22 +17,21 @@ const initialState = {
     isRegistering: false,
     isVerifying: false,
     registrationSuccessMessage: '',
+    token: '',
+    expiresIn: 0,
 };
 
 const auth = (state = initialState, action) => {
     switch (action.type) {
-
-    case VERIFY_REQUEST:
-        return {...state, isVerifying: true};
-    case VERIFY_SUCCESS:
-        return {...state, isLoggedIn: true, isVerifying: false};
-    case VERIFY_FAILURE:
-        return {...state, isLoggedIn: false, isVerifying: false};
-
     case LOGIN_REQUEST:
         return {...state, isLoggingIn: true};
     case LOGIN_SUCCESS:
-        return {...state, ...initialState, isLoggedIn: true};
+        return {
+            ...state,
+            isLoggedIn: true,
+            token: action.payload.token,
+            expiresIn: action.payload.expiresIn,
+        };
     case LOGIN_FAILURE:
         return {
             ...state,
