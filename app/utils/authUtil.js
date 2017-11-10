@@ -26,9 +26,9 @@ export const ensureIsLoggedIn = (tokenFromStore, isLoggedIn, dispatch, history) 
 
 export const ensureIsNotLoggedIn = (tokenFromStore, history) => {
     if (tokenFromStore) {
-        return history.push('/');
+        return history.goBack();
     }
     if (cookie.getItem(process.env.TOKEN_KEY)) {
-        return history.push('/');
+        return history.goBack();
     }
 };
