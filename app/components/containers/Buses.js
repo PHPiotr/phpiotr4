@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchBusesIfNeeded} from '../../actions/buses';
 import {withRouter} from 'react-router-dom';
@@ -7,19 +7,27 @@ import Pagination from '../presentation/Pagination';
 import BusesTable from '../presentation/BusesTable';
 import Spinner from '../presentation/Spinner';
 
-const Buses = (props) => {
-    if (!props.isLoggedIn) {
-        return null;
+class Buses extends Component {
+
+    componentWillMount() {
+        if (!this.props.isLoggedIn) {
+            return null;
+        }
+        const {params} = this.props.match;
+        this.props.fetchBookings(params.current, params.page);
     }
-    return (
-        <div>
-            <Spinner isFetching={props.buses.isFetching} />
-            <Navigation {...props} />
-            <BusesTable {...props.buses.data} />
-            <Pagination {...props} />
-        </div>
-    );
-};
+
+    render() {
+        return (
+            <div>
+                <Spinner isFetching={this.props.buses.isFetching} />
+                <Navigation {...this.props} />
+                <BusesTable {...this.props.buses.data} />
+                <Pagination {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
     return {

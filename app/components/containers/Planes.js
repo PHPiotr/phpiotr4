@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchPlanesIfNeeded} from '../../actions/planes';
 import {withRouter} from 'react-router-dom';
@@ -7,19 +7,27 @@ import Pagination from '../presentation/Pagination';
 import PlanesTable from '../presentation/PlanesTable';
 import Spinner from '../presentation/Spinner';
 
-const Planes = (props) => {
-    if (!props.isLoggedIn) {
-        return null;
+class Planes extends Component {
+
+    componentWillMount() {
+        if (!this.props.isLoggedIn) {
+            return null;
+        }
+        const {params} = this.props.match;
+        this.props.fetchBookings(params.current, params.page);
     }
-    return (
-        <div>
-            <Spinner isFetching={props.planes.isFetching} />
-            <Navigation {...props} />
-            <PlanesTable {...props.planes.data} />
-            <Pagination {...props} />
-        </div>
-    );
-};
+
+    render() {
+        return (
+            <div>
+                <Spinner isFetching={this.props.planes.isFetching}/>
+                <Navigation {...this.props} />
+                <PlanesTable {...this.props.planes.data} />
+                <Pagination {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = ({planes, auth: {isLoggedIn}}) => ({
     planes,

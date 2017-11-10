@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchHostelsIfNeeded} from '../../actions/hostels';
 import {withRouter} from 'react-router-dom';
@@ -7,19 +7,27 @@ import Pagination from '../presentation/Pagination';
 import HostelsTable from '../presentation/HostelsTable';
 import Spinner from '../presentation/Spinner';
 
-const Hostels = (props) => {
-    if (!props.isLoggedIn) {
-        return null;
+class Hostels extends Component {
+
+    componentWillMount() {
+        if (!this.props.isLoggedIn) {
+            return null;
+        }
+        const {params} = this.props.match;
+        this.props.fetchBookings(params.current, params.page);
     }
-    return (
-        <div>
-            <Spinner isFetching={props.hostels.isFetching} />
-            <Navigation {...props} />
-            <HostelsTable {...props.hostels.data} />
-            <Pagination {...props} />
-        </div>
-    );
-};
+
+    render() {
+        return (
+            <div>
+                <Spinner isFetching={this.props.hostels.isFetching} />
+                <Navigation {...this.props} />
+                <HostelsTable {...this.props.hostels.data} />
+                <Pagination {...this.props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
     hostels,
