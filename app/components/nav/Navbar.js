@@ -1,5 +1,4 @@
 import React from 'react';
-import DateFilterForm from '../containers/DateFilter';
 import {Link, withRouter} from 'react-router-dom';
 import {AppBar, IconButton, Drawer, Typography, Toolbar} from 'material-ui';
 import {Menu} from 'material-ui-icons';
@@ -36,13 +35,14 @@ let Navbar = (props) => {
         <AppBar>
             <Toolbar>
                 <IconButton onClick={props.toggleIsDrawerOpen}><Menu style={{color: 'white'}} /></IconButton>
-                <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
+                <Typography type="title" color="inherit">
+                    <Link style={{color: '#fff', textDecoration: 'none'}} to={'/'}>{props.appBarTitle}</Link>
+                </Typography>
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
                 <Typography type="subheading" color="inherit">
-                    {navItems}
-                    <DateFilterForm {...props}/>
-                    {navLoginItems}
+                    <div onClick={props.toggleIsDrawerOpen}>{navItems}</div>
+                    <div onClick={props.toggleIsDrawerOpen}>{navLoginItems}</div>
                 </Typography>
             </Drawer>
         </AppBar>

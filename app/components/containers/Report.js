@@ -4,6 +4,7 @@ import {fetchReportIfNeeded} from '../../actions/report';
 import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
 import Spinner from '../presentation/Spinner';
+import DateFilterForm from '../containers/DateFilter';
 
 class Report extends Component {
 
@@ -24,6 +25,7 @@ class Report extends Component {
         return (
             <div>
                 <Spinner isFetching={report.isFetching} />
+                <DateFilterForm {...this.props}/>
                 <ReportTable report={report}/>
             </div>
         );
@@ -32,12 +34,13 @@ class Report extends Component {
 
 Report.displayName = 'Report';
 
-const mapStateToProps = state => ({
-    report: state.report,
-    fromDate: state.dateFilter.fromDate,
-    toDate: state.dateFilter.toDate,
-    isLoggedIn: state.auth.isLoggedIn,
-    isDateFilterEnabled: state.dateFilter.isDateFilterEnabled,
+const mapStateToProps = ({report, dateFilter, auth: {isLoggedIn}}) => ({
+    report,
+    dateFilter,
+    isLoggedIn,
+    fromDate: dateFilter.fromDate,
+    toDate: dateFilter.toDate,
+    isDateFilterEnabled: dateFilter.isDateFilterEnabled,
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchReportOnLoad() {

@@ -3,6 +3,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import {logoutIfNeeded, setToken, setIsLoggedIn} from '../../actions/login';
 import cookie from 'cookie-monster';
+import jwtDecode from 'jwt-decode';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
@@ -26,13 +27,23 @@ function auth(WrappedComponent) {
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
     const mapDispatchToProps = (dispatch, {history}) => ({
         verify(tokenFromStore, isLoggedIn) {
+            let token = tokenFromStore;
             if (!tokenFromStore) {
                 const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
                 if (!tokenFromCookie) {
-                    dispatch(logoutIfNeeded()).then(() => history.push('/login'));
+                    return dispatch(logoutIfNeeded()).then(() => history.push('/login'));
                 }
                 dispatch(setToken(tokenFromCookie));
+                token = tokenFromCookie;
             }
+            const {exp} = jwtDecode(token);
+            const expiration = exp * 1000;
+            const now = (new Date()).getTime();
+            if (expiration < now) {
+                cookie.removeItem(process.env.TOKEN_KEY);
+                return dispatch(logoutIfNeeded()).then(() => history.push('/login'));
+            }
+
             if (!isLoggedIn) {
                 dispatch(setIsLoggedIn(true));
             }

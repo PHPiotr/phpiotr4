@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 
 class BookingCell extends Component {
 
@@ -8,17 +9,19 @@ class BookingCell extends Component {
             return null;
         }
         return (
-                <table className="table table-hover table-sm booking-details">
-                    <tbody>
-                    <tr>
-                        <th></th>
-                        <th>When</th>
-                        <th>Where</th>
-                        <th>Price</th>
-                    </tr>
+            <Table className="table table-hover table-sm booking-details">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>No.</TableCell>
+                        <TableCell>When</TableCell>
+                        <TableCell>Where</TableCell>
+                        <TableCell>Price</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
                     {this.getDetails()}
-                    </tbody>
-                </table>
+                </TableBody>
+            </Table>
         );
     }
 
@@ -27,23 +30,23 @@ class BookingCell extends Component {
         if (that.props.isHostel) {
             return that.props.details.map(function (row, i) {
                 return (
-                    <tr key={i}>
-                        <td><strong>{i + 1}.</strong></td>
-                        <td>{that.formatDate(row.checkin_date) + '-' + that.formatDate(row.checkout_date)}</td>
-                        <td>{row.hostel_name}</td>
-                        <td>{that.getPrice(row.price)}</td>
-                    </tr>
+                    <TableRow key={i}>
+                        <TableCell>{i + 1}.</TableCell>
+                        <TableCell>{that.formatDate(row.checkin_date) + '-' + that.formatDate(row.checkout_date)}</TableCell>
+                        <TableCell>{row.hostel_name}</TableCell>
+                        <TableCell>{that.getPrice(row.price)}</TableCell>
+                    </TableRow>
                 );
             })
         }
         return that.props.details.map(function (row, i) {
             return (
-                <tr key={i}>
-                    <td><strong>{i + 1}.</strong></td>
-                    <td>{that.formatDate(row.departure_date)}{row.is_return ? '-' + that.formatDate(row.return_departure_date) : null}</td>
-                    <td>{that.truncate(row.from) + '-' + that.truncate(row.to)}</td>
-                    <td>{that.getPrice(row.price)}</td>
-                </tr>
+                <TableRow key={i}>
+                    <TableCell>{i + 1}.</TableCell>
+                    <TableCell>{that.formatDate(row.departure_date)}{row.is_return ? '-' + that.formatDate(row.return_departure_date) : null}</TableCell>
+                    <TableCell>{that.truncate(row.from) + '-' + that.truncate(row.to)}</TableCell>
+                    <TableCell>{that.getPrice(row.price)}</TableCell>
+                </TableRow>
             );
         });
     }

@@ -1,84 +1,66 @@
 import React from 'react';
 import formatPrice from '../helper/formatPrice';
 import moment from 'moment';
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Typography from 'material-ui/Typography';
 
-const PlanesTable = (props) => {
-    if (props.planes.data === undefined) {
-        return null;
-    }
+const PlanesTable = ({flights, flights_length, return_flights_length, title, current_page, max_per_page, total_cost, average_cost}) => {
 
-    let planes = props.planes.data;
-
-    if (planes.flights_length === undefined) {
-        return null;
-    }
-
-    let flights_length = planes.flights_length;
-
+    flights_length || 0;
     if (!flights_length) {
-        return (
-            <div className="row-fluid">
-                <p>{`No ${planes.title.toLowerCase()}`}</p>
-            </div>
-        );
+        return title ? <Typography type="title">{`No ${title.toLowerCase()}`}</Typography> : null;
     }
-
-    let indexCalc = (planes.current_page - 1) * planes.max_per_page;
-
-    let flights = planes.flights.map((flight, flightIndex) => (
-        <tr key={flight.confirmation_code}>
-            <td className="text-right">{`${flightIndex + 1 + indexCalc}.`}</td>
-            <td>{flight.confirmation_code}</td>
-            <td className="text-right">{`£ ${formatPrice(flight.price)}`}</td>
-            <td>{moment(flight.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
-            <td>{flight.return_departure_date ? moment(flight.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
-            <td>{flight.from}</td>
-            <td>{flight.to}</td>
-        </tr>
+    const index = (current_page - 1) * max_per_page;
+    const items = flights.map((b, i) => (
+        <TableRow key={b.confirmation_code}>
+            <TableCell>{`${i + 1 + index}.`}</TableCell>
+            <TableCell>{b.confirmation_code}</TableCell>
+            <TableCell>{formatPrice(b.price)}</TableCell>
+            <TableCell>{moment(b.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</TableCell>
+            <TableCell>{!!b.return_departure_date && moment(b.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</TableCell>
+            <TableCell>{b.from}</TableCell>
+            <TableCell>{b.to}</TableCell>
+        </TableRow>
     ));
 
     return (
         <div>
-            <div className="row-fluid">
-                <table className="table table-hover table-condensed table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Total</th>
-                            <th>Average</th>
-                            <th>Bookings</th>
-                            <th>Single</th>
-                            <th>Return</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="info">£ {formatPrice(planes.total_cost)}</td>
-                            <td>£ {formatPrice(planes.average_cost)}</td>
-                            <td>{planes.flights_length}</td>
-                            <td>{planes.flights_length - planes.return_flights_length}</td>
-                            <td>{planes.return_flights_length}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div className="row-fluid">
-                <table className="table table-hover table-condensed table-bordered">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Code</th>
-                            <th className="t ext-right">Price</th>
-                            <th>Going out</th>
-                            <th>Coming back</th>
-                            <th>Departs from</th>
-                            <th>Arrives to</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {flights}
-                    </tbody>
-                </table>
-            </div>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Total</TableCell>
+                        <TableCell>Average</TableCell>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>Single</TableCell>
+                        <TableCell>Return</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>£ {formatPrice(total_cost)}</TableCell>
+                        <TableCell>£ {formatPrice(average_cost)}</TableCell>
+                        <TableCell>{flights_length}</TableCell>
+                        <TableCell>{flights_length - return_flights_length}</TableCell>
+                        <TableCell>{return_flights_length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>No.</TableCell>
+                        <TableCell>Code</TableCell>
+                        <TableCell>£</TableCell>
+                        <TableCell>Out</TableCell>
+                        <TableCell>Back</TableCell>
+                        <TableCell>Trom</TableCell>
+                        <TableCell>To</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {items}
+                </TableBody>
+            </Table>
         </div>
     );
 };

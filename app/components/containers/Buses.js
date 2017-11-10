@@ -15,18 +15,18 @@ const Buses = (props) => {
         <div>
             <Spinner isFetching={props.buses.isFetching} />
             <Navigation {...props} />
-            <BusesTable {...props} />
+            <BusesTable {...props.buses.data} />
             <Pagination {...props} />
         </div>
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
     return {
-        buses: state.buses,
+        buses,
+        isLoggedIn,
         bookingsLabel: 'buses',
         bookingLabel: 'bus',
-        isLoggedIn: state.auth.isLoggedIn,
     };
 };
 const mapDispatchToProps = dispatch => ({

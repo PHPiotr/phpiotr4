@@ -1,110 +1,101 @@
 import React from 'react';
 import BookingCell from '../helper/BookingCell.jsx';
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Typography from 'material-ui/Typography';
 
 const ReportTable = (props) => {
     const report = props.report;
     return (
         <div>
-            <h1>Total cost: £{report.total_cost}</h1>
-
-            <div className="row">
-                <div className="col-xl-3 col-lg-6 col-md-12 col col-sm-12">
-                    <table className="table table-bordered table-sm ">
-                        <thead className="thead-default">
-                            <tr>
-                                <th>Buses</th>
-                                <td className="table-info">£{report.buses_cost}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Average</td>
-                                <td>£{report.buses_avg}</td>
-                            </tr>
-                            <tr>
-                                <td>Journeys</td>
-                                <td>{report.buses_singles_quantity}</td>
-                            </tr>
-                            <tr>
-                                <td>Bookings</td>
-                                <td>{report.buses.length}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <BookingCell colSpan="2" details={report.buses}/>
-                </div>
-                <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-                    <table className="table table-bordered table-sm ">
-                        <thead className="thead-default">
-                            <tr>
-                                <th>Planes</th>
-                                <td className="table-info">£{report.planes_cost}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Average</td>
-                                <td>£{report.planes_avg}</td>
-                            </tr>
-                            <tr>
-                                <td>Journeys</td>
-                                <td>{report.planes_singles_quantity}</td>
-                            </tr>
-                            <tr>
-                                <td>Bookings</td>
-                                <td>{report.planes.length}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <BookingCell colSpan="2" details={report.planes}/>
-                </div>
-                <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-                    <table className="table table-bordered table-sm ">
-                        <thead className="thead-default">
-                            <tr>
-                                <th>Trains</th>
-                                <td className="table-info">£ {report.trains_cost}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Average</td>
-                                <td>£{report.trains_avg}</td>
-                            </tr>
-                            <tr>
-                                <td>Journeys</td>
-                                <td>{report.trains_singles_quantity}</td>
-                            </tr>
-                            <tr>
-                                <td>Bookings</td>
-                                <td>{report.trains.length}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <BookingCell details={report.trains}/>
-                </div>
-                <div className="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-                    <table className="table table-bordered table-sm ">
-                        <thead className="thead-default">
-                            <tr>
-                                <th>Hostels</th>
-                                <td className="table-info">£ {report.hostels_cost}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Average</td>
-                                <td>£{report.hostels_avg}</td>
-                            </tr>
-                            <tr>
-                                <td>Bookings</td>
-                                <td>{report.hostels.length}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <BookingCell details={report.hostels} isHostel={true}/>
-                </div>
-            </div>
+            <Typography type="title">Total: £{report.total_cost}</Typography>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Buses</TableCell>
+                        <TableCell>£{report.buses_cost}</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>Average</TableCell>
+                        <TableCell>£{report.buses_avg}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Journeys</TableCell>
+                        <TableCell>{report.buses_singles_quantity}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>{report.buses.length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <BookingCell colSpan="2" details={report.buses}/>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Planes</TableCell>
+                        <TableCell>£{report.planes_cost}</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>Average</TableCell>
+                        <TableCell>£{report.planes_avg}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Journeys</TableCell>
+                        <TableCell>{report.planes_singles_quantity}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>{report.planes.length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <BookingCell colSpan="2" details={report.planes}/>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Trains</TableCell>
+                        <TableCell>£ {report.trains_cost}</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>Average</TableCell>
+                        <TableCell>£{report.trains_avg}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Journeys</TableCell>
+                        <TableCell>{report.trains_singles_quantity}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>{report.trains.length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <BookingCell details={report.trains}/>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Hostels</TableCell>
+                        <TableCell>£ {report.hostels_cost}</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>Average</TableCell>
+                        <TableCell>£{report.hostels_avg}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>{report.hostels.length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <BookingCell details={report.hostels} isHostel={true}/>
         </div>
     );
 };

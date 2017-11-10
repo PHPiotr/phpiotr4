@@ -15,6 +15,7 @@ export const ON_FOCUS_REGISTRATION_FIELD = 'ON_FOCUS_REGISTRATION_FIELD';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
+export const LOGOUT = 'LOGOUT';
 
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
@@ -117,7 +118,7 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
 
 export const logoutIfNeeded = () => {
     return (dispatch) => {
-        dispatch({type: 'SET_LOGGED_OUT'});
+        dispatch({type: LOGOUT});
         return Promise.resolve(true);
     };
 };

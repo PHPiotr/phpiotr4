@@ -15,17 +15,17 @@ const Hostels = (props) => {
         <div>
             <Spinner isFetching={props.hostels.isFetching} />
             <Navigation {...props} />
-            <HostelsTable {...props} />
+            <HostelsTable {...props.hostels.data} />
             <Pagination {...props} />
         </div>
     );
 };
 
-const mapStateToProps = state => ({
-    hostels: state.hostels,
+const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
+    hostels,
+    isLoggedIn,
     bookingsLabel: 'hostels',
     bookingLabel: 'hostel',
-    isLoggedIn: state.auth.isLoggedIn,
 });
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {

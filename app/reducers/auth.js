@@ -7,6 +7,7 @@ import {
     REGISTRATION_FAILURE,
     SET_TOKEN,
     SET_IS_LOGGED_IN,
+    LOGOUT,
 } from '../actions/login';
 
 const initialState = {
@@ -66,7 +67,7 @@ const auth = (state = initialState, action) => {
             loginErrorMessage: action.loginErrorMessage,
             isLoggedIn: false,
         };
-    case 'SET_LOGGED_OUT':
+    case LOGOUT:
         return {...state, ...initialState};
     case 'ON_FOCUS_LOGIN_FIELD':
         return {...state, loginErrorMessage: ''};

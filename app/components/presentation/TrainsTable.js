@@ -1,82 +1,64 @@
 import React from 'react';
 import formatPrice from '../helper/formatPrice';
 import moment from 'moment';
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Typography from 'material-ui/Typography';
 
-const TrainsTable = (props) => {
-    if (props.trains.data === undefined) {
-        return null;
-    }
+const TrainsTable = ({journeys, journeys_length, return_journeys_length, title, current_page, max_per_page, total_cost, average_cost}) => {
 
-    let trains = props.trains.data;
-
-    if (trains.journeys_length === undefined) {
-        return null;
-    }
-
-    let journeys_length = trains.journeys_length;
-
+    journeys_length || 0;
     if (!journeys_length) {
-        return (
-            <div className="row-fluid">
-                <p>{`No ${trains.title.toLowerCase()}`}</p>
-            </div>
-        );
+        return title ? <Typography type="title">{`No ${title.toLowerCase()}`}</Typography> : null;
     }
-
-    let indexCalc = (trains.current_page - 1) * trains.max_per_page;
-
-    let journeys = trains.journeys.map((journey, journeyIndex) => (
-        <tr key={journey._id}>
-            <td className="text-right">{`${journeyIndex + 1 + indexCalc}.`}</td>
-            <td className="text-right">{`£ ${formatPrice(journey.price)}`}</td>
-            <td>{moment(journey.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</td>
-            <td>{journey.return_departure_date ? moment(journey.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY') : ''}</td>
-            <td>{journey.from}</td>
-            <td>{journey.to}</td>
-        </tr>
+    const index = (current_page - 1) * max_per_page;
+    const items = journeys.map((b, i) => (
+        <TableRow key={b._id}>
+            <TableCell>{`${i + 1 + index}.`}</TableCell>
+            <TableCell>{formatPrice(b.price)}</TableCell>
+            <TableCell>{moment(b.departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</TableCell>
+            <TableCell>{!!b.return_departure_date && moment(b.return_departure_date, 'DD/MM/YYYY').format('DD/MM/YYYY')}</TableCell>
+            <TableCell>{b.from}</TableCell>
+            <TableCell>{b.to}</TableCell>
+        </TableRow>
     ));
 
     return (
         <div>
-            <div className="row-fluid">
-                <table className="table table-hover table-condensed table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Total</th>
-                            <th>Average</th>
-                            <th>Bookings</th>
-                            <th>Single</th>
-                            <th>Return</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="info">£ {formatPrice(trains.total_cost)}</td>
-                            <td>£ {formatPrice(trains.average_cost)}</td>
-                            <td>{trains.journeys_length}</td>
-                            <td>{trains.journeys_length - trains.return_journeys_length}</td>
-                            <td>{trains.return_journeys_length}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div className="row-fluid">
-                <table className="table table-hover table-condensed table-bordered">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th className="text-right">Price</th>
-                            <th>Going out</th>
-                            <th>Coming back</th>
-                            <th>Departs from</th>
-                            <th>Arrives to</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {journeys}
-                    </tbody>
-                </table>
-            </div>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Total</TableCell>
+                        <TableCell>Average</TableCell>
+                        <TableCell>Bookings</TableCell>
+                        <TableCell>Single</TableCell>
+                        <TableCell>Return</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>£ {formatPrice(total_cost)}</TableCell>
+                        <TableCell>£ {formatPrice(average_cost)}</TableCell>
+                        <TableCell>{journeys_length}</TableCell>
+                        <TableCell>{journeys_length - return_journeys_length}</TableCell>
+                        <TableCell>{return_journeys_length}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>No.</TableCell>
+                        <TableCell>£</TableCell>
+                        <TableCell>Out</TableCell>
+                        <TableCell>Back</TableCell>
+                        <TableCell>From</TableCell>
+                        <TableCell>To</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {items}
+                </TableBody>
+            </Table>
         </div>
     );
 };
