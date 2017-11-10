@@ -1,4 +1,5 @@
 import {getAuthLogin, postUsers, postActivationLink} from '../services/authService';
+import cookie from 'cookie-monster';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -119,6 +120,7 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
 export const logoutIfNeeded = () => {
     return (dispatch) => {
         dispatch({type: LOGOUT});
+        cookie.removeItem(process.env.TOKEN_KEY);
         return Promise.resolve(true);
     };
 };

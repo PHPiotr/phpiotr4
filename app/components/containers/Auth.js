@@ -40,7 +40,6 @@ function auth(WrappedComponent) {
             const expiration = exp * 1000;
             const now = (new Date()).getTime();
             if (expiration < now) {
-                cookie.removeItem(process.env.TOKEN_KEY);
                 return dispatch(logoutIfNeeded()).then(() => history.push('/login'));
             }
 
