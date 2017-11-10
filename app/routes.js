@@ -13,12 +13,13 @@ import Login from './components/containers/Login';
 import Registration from './components/containers/Registration';
 import Logout from './components/containers/Logout';
 import Auth from './components/containers/Auth';
+import NoAuth from './components/containers/NoAuth';
 
 const routes = () => (
     <Switch>
         <Route exact path="/" component={Auth(Report)}/>
-        <Route name="login" path="/login" component={Login}/>
-        <Route name="register" path="/register" component={Registration}/>
+        <Route name="login" path="/login" component={NoAuth(Login)}/>
+        <Route name="register" path="/register" component={NoAuth(Registration)}/>
         <Route name="logout" path="/logout" component={Auth(Logout)}/>
         <Route name="buses" path="/bookings/buses/:current?/:page?" component={Auth(Buses)}/>
         <Route name="bus" path="/bookings/bus/:id?" component={Auth(Bus)}/>

@@ -1,18 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginIfNeeded, change, focus} from '../../actions/login';
 import LoginForm from '../presentation/LoginForm';
 import cookie from 'cookie-monster';
 import Spinner from '../presentation/Spinner';
 
-const Login = (props) => {
-    return (
-        <div>
-            <Spinner isFetching={props.auth.isLoggingIn}/>
-            <LoginForm {...props} />
-        </div>
-    );
-};
+class Login extends Component {
+
+    render() {
+        const {props} = this;
+        return (
+            <div>
+                <Spinner isFetching={props.auth.isLoggingIn}/>
+                <LoginForm {...props} />
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = state => ({
     auth: state.auth,
