@@ -4,6 +4,9 @@ import {withRouter} from 'react-router-dom';
 import Navbar from '../nav/Navbar';
 import Card from 'material-ui/Card';
 
-const App = ({children}) => <div><Navbar/><Card style={{paddingTop: 70}}>{children && React.cloneElement(children, {})}</Card></div>;
+const App = ({children}) => [
+    <Navbar key={1}/>,
+    <Card key={2} style={{paddingTop: 70}}>{children && React.cloneElement(children, {})}</Card>,
+];
 
 export default withRouter(connect()(App));

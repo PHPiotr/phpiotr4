@@ -5,6 +5,7 @@ import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
 import Spinner from '../presentation/Spinner';
 import DateFilterForm from '../containers/DateFilter';
+import Typography from 'material-ui/Typography';
 
 class Report extends Component {
 
@@ -21,10 +22,13 @@ class Report extends Component {
         if (!this.props.isLoggedIn) {
             return null;
         }
-        let report = this.props.report;
+        const report = this.props.report;
+        if (report.isFetching) {
+            return <Spinner isFetching={report.isFetching} />;
+        }
         return (
             <div>
-                <Spinner isFetching={report.isFetching} />
+                <Typography style={{padding: '23px'}} type="headline">Total: £{report.total_cost}</Typography>
                 <DateFilterForm {...this.props}/>
                 <ReportTable report={report}/>
             </div>

@@ -12,8 +12,9 @@ const DateFilterForm = (props) => {
     }
 
     return (
-        <form onSubmit={props.onSubmit}>
+        <form style={{padding: '0 0 23px'}} onSubmit={props.onSubmit}>
             <TextField
+                style={{marginLeft: '23px'}}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
                 onChange={props.onChange}
@@ -23,6 +24,7 @@ const DateFilterForm = (props) => {
                 value={props.dateFilter.fromDate}
             />
             <TextField
+                style={{marginLeft: '23px'}}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
                 onChange={props.onChange}
@@ -31,7 +33,7 @@ const DateFilterForm = (props) => {
                 label="To"
                 value={props.dateFilter.toDate}
             />
-            <Button type="submit">Search</Button>
+            <Button raised style={{marginLeft: '23px'}} type="submit">Search</Button>
         </form>
     );
 };

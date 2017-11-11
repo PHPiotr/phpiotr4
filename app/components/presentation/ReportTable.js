@@ -1,27 +1,25 @@
 import React from 'react';
 import BookingCell from '../helper/BookingCell.jsx';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
-import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 
 const ReportTable = (props) => {
     const report = props.report;
     return (
         <div>
-            <Typography type="title">Total: £{report.total_cost}</Typography>
             <Grid container>
                 <Grid item xs={12} sm={12} md={12} lg={6} xl={3}>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell>Buses</TableCell>
-                                <TableCell>{report.buses_cost}</TableCell>
+                                <TableCell>£{report.buses_cost}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Average</TableCell>
-                                <TableCell>{report.buses_avg}</TableCell>
+                                <TableCell>£{report.buses_avg}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Journeys</TableCell>
@@ -40,13 +38,13 @@ const ReportTable = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Planes</TableCell>
-                                <TableCell>{report.planes_cost}</TableCell>
+                                <TableCell>£{report.planes_cost}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Average</TableCell>
-                                <TableCell>{report.planes_avg}</TableCell>
+                                <TableCell>£{report.planes_avg}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Journeys</TableCell>
@@ -65,7 +63,7 @@ const ReportTable = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Trains</TableCell>
-                                <TableCell>{report.trains_cost}</TableCell>
+                                <TableCell>£{report.trains_cost}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -90,13 +88,13 @@ const ReportTable = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Hostels</TableCell>
-                                <TableCell>{report.hostels_cost}</TableCell>
+                                <TableCell>£{report.hostels_cost}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Average</TableCell>
-                                <TableCell>{report.hostels_avg}</TableCell>
+                                <TableCell>£{report.hostels_avg}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Bookings</TableCell>
