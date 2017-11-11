@@ -15,7 +15,7 @@ class BookingCell extends Component {
                         <TableCell>No.</TableCell>
                         <TableCell>When</TableCell>
                         <TableCell>Where</TableCell>
-                        <TableCell>Price</TableCell>
+                        <TableCell>£</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -67,7 +67,7 @@ class BookingCell extends Component {
         if (0 === number) {
             return '0.00';
         }
-        return '£' + (number / 100).toFixed(2);
+        return (number / 100).toFixed(2);
     }
 
 }
