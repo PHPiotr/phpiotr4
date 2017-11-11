@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const TrainForm = (props) => {
     let returnJourneyInputs = null;
@@ -50,7 +50,7 @@ const TrainForm = (props) => {
                 value={props.train.is_return} type="checkbox" handler={props.handleChange}
                 name="is_return"/>
             {returnJourneyInputs}
-            <ButtonGroup>Add</ButtonGroup>
+            <Button type="submit">Add</Button>
         </form>
     );
 };

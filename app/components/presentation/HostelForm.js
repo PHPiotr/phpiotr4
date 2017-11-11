@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const HostelForm = (props) => {
     let hostelErrorMessage = props.hostelErrorMessage;
@@ -40,7 +40,7 @@ const HostelForm = (props) => {
                 placeholder={props.pricePlaceholder} value={props.hostel.price} handler={props.handleChange} name="price"/>
             <InputGroup focusHandler={props.handleFocus} error={props.hostelErrors.currency}
                 value={props.hostel.currency} handler={props.handleChange} name="currency"/>
-            <ButtonGroup>Add</ButtonGroup>
+            <Button type="submit">Add</Button>
         </form>
     );
 };

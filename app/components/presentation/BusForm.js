@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const BusForm = (props) => {
     let returnJourneyInputs = null;
@@ -64,7 +64,9 @@ const BusForm = (props) => {
                 value={props.bus.is_return} type="checkbox" handler={props.handleChange}
                 name="is_return"/>
             {returnJourneyInputs}
-            <ButtonGroup>Add</ButtonGroup>
+            <div>
+                <Button type="submit">Add</Button>
+            </div>
         </form>
     );
 };

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
 
 class InputGroup extends Component {
 
@@ -29,7 +30,6 @@ class InputGroup extends Component {
     }
 
     setId() {
-
         if (this.props.id) {
             this.id = this.props.id;
         }
@@ -37,30 +37,19 @@ class InputGroup extends Component {
     }
 
     render() {
-        let error_span = null;
-        let error_class = '';
-        if (this.props.error) {
-            error_span = (
-                <span className="badge badge-danger">{this.props.error.message}</span>
-            );
-            error_class = ' has-error';
-        }
         return (
-            <div className={`${this.props.groupClass} ${error_class}`}>
-                <label htmlFor={this.id} className={this.props.labelClass}>{this.label}</label>
-                <div className={this.props.inputWrapperClass}>
-                    <input
-                        id={this.id}
-                        type={this.props.type}
-                        placeholder={this.props.placeholder}
-                        name={this.props.name}
-                        className={this.props.inputClass}
-                        onChange={this.props.handler}
-                        onFocus={this.props.focusHandler}
-                        value={this.props.value}
-                    />
-                    {error_span}
-                </div>
+            <div>
+                <TextField
+                    error={this.props.error}
+                    label={this.label}
+                    id={this.id}
+                    type={this.props.type}
+                    name={this.props.name}
+                    onChange={this.props.handler}
+                    onFocus={this.props.focusHandler}
+                    value={this.props.value}
+                />
+                {this.props.error && this.props.error.message}
             </div>
         );
     }
@@ -68,19 +57,14 @@ class InputGroup extends Component {
 
 InputGroup.defaultProps = {
     type: 'text',
-    placeholder: '',
     value: '',
-    inputWrapperClass: 'col-sm-2',
-    groupClass: 'form-group row',
-    labelClass: 'col-sm-2 col-form-label',
-    inputClass: 'form-control',
-    hasError: '',
 };
 
 InputGroup.propTypes = {
     label: PropTypes.string,
     name: PropTypes.string.isRequired,
-    handler: PropTypes.func.isRequired
+    handler: PropTypes.func.isRequired,
+    focusHandler: PropTypes.func,
 };
 
 export default InputGroup;

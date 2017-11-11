@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const LoginForm = (props) => {
     if (props.auth.isLoggedIn) {
@@ -25,7 +25,7 @@ const LoginForm = (props) => {
                 <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" type="password"
                     focusHandler={props.handleFocus}
                     value={auth.login.password} handler={props.handleChange} name="password"/>
-                <ButtonGroup buttonWrapperClass="">Log in</ButtonGroup>
+                <Button type="submit">Log in</Button>
             </form>
         </div>
     );

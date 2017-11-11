@@ -44,7 +44,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(handleChange(event, 'train'));
     },
     handleSubmit(event) {
-        dispatch(addBookingIfNeeded(event, 'train', 'trains'));
+        event.preventDefault();
+        dispatch(addBookingIfNeeded('train', 'trains'));
     },
     fetchBookings(type, page) {
         dispatch(fetchTrainsIfNeeded(type || 'current', page || 1));

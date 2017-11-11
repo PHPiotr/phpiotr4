@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const PlaneForm = (props) => {
     let returnFlightInputs = null;
@@ -72,7 +72,7 @@ const PlaneForm = (props) => {
                 value={props.plane.is_return} type="checkbox" handler={props.handleChange}
                 name="is_return"/>
             {returnFlightInputs}
-            <ButtonGroup>Add</ButtonGroup>
+            <Button type="submit">Add</Button>
         </form>
     );
 };

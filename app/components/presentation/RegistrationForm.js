@@ -1,6 +1,6 @@
 import React from 'react';
 import InputGroup from '../helper/InputGroup.jsx';
-import ButtonGroup from '../helper/ButtonGroup.jsx';
+import Button from 'material-ui/Button';
 
 const RegistrationForm = (props) => {
     if (props.auth.isLoggedIn) {
@@ -44,7 +44,7 @@ const RegistrationForm = (props) => {
                     type="password" focusHandler={props.handleFocus}
                     value={auth.registration.repeatPassword} handler={props.handleChange}
                     name="repeatPassword"/>
-                <ButtonGroup buttonWrapperClass="">Register</ButtonGroup>
+                <Button type="submit">Register</Button>
             </form>
         </div>
     );

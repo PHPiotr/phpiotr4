@@ -25,7 +25,7 @@ const Navigation = (props) => {
     }
 
     return (
-        <Tabs fullWidth centered value={props.isAdd ? 'add' : (props.match.params.current || 'current')} onChange={handleOnChange}>
+        <Tabs style={{marginBottom: '23px'}} fullWidth centered value={props.isAdd ? 'add' : (props.match.params.current || 'current')} onChange={handleOnChange}>
             <Tab value={'current'} label="Current" href={`/bookings/${props.bookingsLabel}/current`}/>
             <Tab value={'past'} label="Past" href={`/bookings/${props.bookingsLabel}/past`}/>
             <Tab value={'add'} label="Add" href={`/bookings/${props.bookingLabel}`}/>
