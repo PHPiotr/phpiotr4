@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
     bookingsLabel: 'trains',
     bookingLabel: 'train',
     pricePlaceholder: '0.00',
+    isAdd: state.bookings.train.isAdd,
 });
 
 const mapDispatchToProps = dispatch => ({

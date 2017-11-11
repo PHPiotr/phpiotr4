@@ -33,6 +33,7 @@ const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
     return {
         buses,
         isLoggedIn,
+        isAdd: false,
         bookingsLabel: 'buses',
         bookingLabel: 'bus',
     };

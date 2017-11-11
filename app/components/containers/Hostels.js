@@ -32,6 +32,7 @@ class Hostels extends Component {
 const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
     hostels,
     isLoggedIn,
+    isAdd: false,
     bookingsLabel: 'hostels',
     bookingLabel: 'hostel',
 });

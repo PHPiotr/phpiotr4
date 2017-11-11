@@ -32,6 +32,7 @@ class Trains extends Component {
 const mapStateToProps = ({trains, auth: {isLoggedIn}}) => ({
     trains,
     isLoggedIn,
+    isAdd: false,
     bookingsLabel: 'trains',
     bookingLabel: 'train',
 });
