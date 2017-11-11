@@ -6,6 +6,7 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import BusesTable from '../presentation/BusesTable';
 import Spinner from '../presentation/Spinner';
+import Typography from 'material-ui/Typography';
 
 class Buses extends Component {
 
@@ -20,6 +21,7 @@ class Buses extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Buses</Typography>
                 <Spinner isFetching={this.props.buses.isFetching} />
                 <Navigation {...this.props} />
                 <BusesTable {...this.props.buses.data} />

@@ -6,6 +6,7 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import TrainsTable from '../presentation/TrainsTable';
 import Spinner from '../presentation/Spinner';
+import Typography from 'material-ui/Typography';
 
 class Trains extends Component {
 
@@ -20,6 +21,7 @@ class Trains extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Trains</Typography>
                 <Spinner isFetching={this.props.trains.isFetching} />
                 <Navigation {...this.props} />
                 <TrainsTable {...this.props.trains.data} />

@@ -5,6 +5,7 @@ import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
 import Navigation from '../presentation/Navigation';
+import Typography from 'material-ui/Typography';
 
 class Train extends Component {
     componentWillMount() {
@@ -16,6 +17,7 @@ class Train extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Trains</Typography>
                 <Navigation {...this.props} />
                 <TrainForm {...this.props} />
             </div>

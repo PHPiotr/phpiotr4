@@ -6,7 +6,6 @@ import {logoutIfNeeded} from '../../actions/login';
 class Logout extends Component {
 
     componentWillMount() {
-        console.log('componentWillMount class Logout extends Component');
         this.props.logout();
     }
 
@@ -17,13 +16,8 @@ class Logout extends Component {
 
 const mapDispatchToProps = (dispatch, {history}) => ({
     logout() {
-        dispatch(logoutIfNeeded())
-            .then((shouldLogout) => {
-                if (shouldLogout) {
-                    cookie.removeItem(process.env.TOKEN_KEY);
-                    history.push('/login');
-                }
-            });
+        cookie.removeItem(process.env.TOKEN_KEY);
+        dispatch(logoutIfNeeded()).then(() => history.push('/login'));
     },
 });
 

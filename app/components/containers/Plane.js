@@ -5,6 +5,7 @@ import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index
 import {connect} from 'react-redux';
 import PlaneForm from '../presentation/PlaneForm';
 import Navigation from '../presentation/Navigation';
+import Typography from 'material-ui/Typography';
 
 class Plane extends Component {
     componentWillMount() {
@@ -16,6 +17,7 @@ class Plane extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Planes</Typography>
                 <Navigation {...this.props} />
                 <PlaneForm {...this.props} />
             </div>

@@ -5,6 +5,7 @@ import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index
 import {connect} from 'react-redux';
 import HostelForm from '../presentation/HostelForm';
 import Navigation from '../presentation/Navigation';
+import Typography from 'material-ui/Typography';
 
 class Hostel extends Component {
     componentWillMount() {
@@ -16,6 +17,7 @@ class Hostel extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Hostels</Typography>
                 <Navigation {...this.props} />
                 <HostelForm {...this.props} />
             </div>

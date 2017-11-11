@@ -5,6 +5,7 @@ import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index
 import {connect} from 'react-redux';
 import BusForm from '../presentation/BusForm';
 import Navigation from '../presentation/Navigation';
+import Typography from 'material-ui/Typography';
 
 class Bus extends Component {
     componentWillMount() {
@@ -16,6 +17,7 @@ class Bus extends Component {
     render() {
         return (
             <div>
+                <Typography style={{padding: '23px'}} type="headline">Buses</Typography>
                 <Navigation {...this.props} />
                 <BusForm {...this.props} />
             </div>
