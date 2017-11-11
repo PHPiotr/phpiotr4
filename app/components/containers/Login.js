@@ -1,27 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {loginIfNeeded, change, focus} from '../../actions/login';
 import LoginForm from '../presentation/LoginForm';
 import cookie from 'cookie-monster';
-import Spinner from '../presentation/Spinner';
+import {LinearProgress} from 'material-ui/Progress';
 
-class Login extends Component {
+const Login = props => props.auth.isLoggingIn ? <LinearProgress/> : <LoginForm {...props}/>;
 
-    render() {
-        const {props} = this;
-        return (
-            <div>
-                <Spinner isFetching={props.auth.isLoggingIn}/>
-                <LoginForm {...props} />
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = state => ({
-    auth: state.auth,
-});
-
+const mapStateToProps = state => ({auth: state.auth});
 const mapDispatchToProps = (dispatch, {history}) => ({
     handleFocus(event) {
         dispatch(focus(event.target.name, event.target.value));

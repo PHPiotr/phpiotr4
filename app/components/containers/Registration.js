@@ -8,21 +8,11 @@ import {
     ON_FOCUS_REGISTRATION_FIELD,
 } from '../../actions/login';
 import RegistrationForm from '../presentation/RegistrationForm';
-import Spinner from '../presentation/Spinner';
+import {LinearProgress} from 'material-ui/Progress';
 
-const Registration = (props) => {
-    return (
-        <div>
-            <Spinner isFetching={props.auth.isRegistering}/>
-            <RegistrationForm {...props} />
-        </div>
-    );
-};
+const Registration = (props) => props.auth.isRegistering ? <LinearProgress/> : <RegistrationForm {...props} />;
 
-const mapStateToProps = state => ({
-    auth: state.auth,
-});
-
+const mapStateToProps = state => ({auth: state.auth});
 const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
         dispatch(focus(event.target.name, event.target.value, ON_FOCUS_REGISTRATION_FIELD));

@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import HostelsTable from '../presentation/HostelsTable';
-import Spinner from '../presentation/Spinner';
+import {LinearProgress} from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 
 class Hostels extends Component {
@@ -19,10 +19,14 @@ class Hostels extends Component {
     }
 
     render() {
+
+        if (this.props.hostels.isFetching) {
+            return <LinearProgress/>;
+        }
+
         return (
             <div>
                 <Typography style={{padding: '23px'}} type="headline">Hostels</Typography>
-                <Spinner isFetching={this.props.hostels.isFetching} />
                 <Navigation {...this.props} />
                 <HostelsTable {...this.props.hostels.data} />
                 <Pagination {...this.props} />

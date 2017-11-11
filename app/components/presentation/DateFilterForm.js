@@ -24,7 +24,7 @@ const DateFilterForm = (props) => {
                 value={props.dateFilter.fromDate}
             />
             <TextField
-                style={{marginLeft: '23px'}}
+                style={{marginLeft: '23px', marginBottom: '23px'}}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
                 onChange={props.onChange}

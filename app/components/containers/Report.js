@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchReportIfNeeded} from '../../actions/report';
 import {toggleDateFilterEnabled} from '../../actions/index';
 import ReportTable from '../presentation/ReportTable';
-import Spinner from '../presentation/Spinner';
+import {LinearProgress} from 'material-ui/Progress';
 import DateFilterForm from '../containers/DateFilter';
 import Typography from 'material-ui/Typography';
 
@@ -24,7 +24,7 @@ class Report extends Component {
         }
         const report = this.props.report;
         if (report.isFetching) {
-            return <Spinner isFetching={report.isFetching} />;
+            return <LinearProgress />;
         }
         return (
             <div>

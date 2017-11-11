@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import PlanesTable from '../presentation/PlanesTable';
-import Spinner from '../presentation/Spinner';
+import {LinearProgress} from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 
 class Planes extends Component {
@@ -19,10 +19,14 @@ class Planes extends Component {
     }
 
     render() {
+
+        if (this.props.planes.isFetching) {
+            return <LinearProgress/>;
+        }
+
         return (
             <div>
                 <Typography style={{padding: '23px'}} type="headline">Planes</Typography>
-                <Spinner isFetching={this.props.planes.isFetching}/>
                 <Navigation {...this.props} />
                 <PlanesTable {...this.props.planes.data} />
                 <Pagination {...this.props} />
