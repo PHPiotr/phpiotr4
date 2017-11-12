@@ -43,6 +43,8 @@ const Navbar = (props) => {
                             </List>
                         ) : (
                             <List>
+                                <ListItem button><Link className={classes.link} to={'/'}>Report</Link></ListItem>
+                                <Divider/>
                                 <ListItem button><Link className={classes.link} to={'/bookings/buses'}>Buses</Link></ListItem>
                                 <ListItem button><Link className={classes.link} to={'/bookings/planes'}>Planes</Link></ListItem>
                                 <ListItem button><Link className={classes.link} to={'/bookings/trains'}>Trains</Link></ListItem>
