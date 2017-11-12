@@ -18,7 +18,7 @@ const styles = ({palette}) => ({
     link: {
         textDecoration: 'none',
         color: palette.primary,
-    }
+    },
 });
 
 const Navbar = (props) => {
