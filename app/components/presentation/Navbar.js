@@ -5,31 +5,25 @@ import {Menu} from 'material-ui-icons';
 import {toggleIsDrawerOpen} from '../../actions/appActions';
 import List, {ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
+import {withStyles} from 'material-ui/styles';
+import Divider from 'material-ui/Divider';
+
+const styles = ({palette}) => ({
+    list: {
+        width: 250,
+    },
+    listFull: {
+        width: 'auto',
+    },
+    link: {
+        textDecoration: 'none',
+        color: palette.primary,
+    }
+});
 
 const Navbar = (props) => {
 
-    let navItems = null;
-    let navLoginItems = (
-        <List>
-            <ListItem button><Link to={'/login'}>Login</Link></ListItem>
-            <ListItem button><Link to={'/register'}>Register</Link></ListItem>
-        </List>
-    );
-    if (props.isLoggedIn) {
-        navItems = (
-            <List>
-                <ListItem button><Link to={'/bookings/buses'}>Buses</Link></ListItem>
-                <ListItem button><Link to={'/bookings/planes'}>Planes</Link></ListItem>
-                <ListItem button><Link to={'/bookings/trains'}>Trains</Link></ListItem>
-                <ListItem button><Link to={'/bookings/hostels'}>Hostels</Link></ListItem>
-            </List>
-        );
-        navLoginItems = (
-            <List>
-                <ListItem button><Link to={'/logout'}>Logout</Link></ListItem>
-            </List>
-        );
-    }
+    const {classes} = props;
 
     return (
         <AppBar>
@@ -41,8 +35,23 @@ const Navbar = (props) => {
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
                 <Typography type="subheading" color="inherit">
-                    <div onClick={props.toggleIsDrawerOpen}>{navItems}</div>
-                    <div onClick={props.toggleIsDrawerOpen}>{navLoginItems}</div>
+                    <div className={classes.list} onClick={props.toggleIsDrawerOpen}>{
+                        !props.isLoggedIn ? (
+                            <List>
+                                <ListItem button><Link className={classes.link} to={'/login'}>Login</Link></ListItem>
+                                <ListItem button><Link className={classes.link} to={'/register'}>Register</Link></ListItem>
+                            </List>
+                        ) : (
+                            <List>
+                                <ListItem button><Link className={classes.link} to={'/bookings/buses'}>Buses</Link></ListItem>
+                                <ListItem button><Link className={classes.link} to={'/bookings/planes'}>Planes</Link></ListItem>
+                                <ListItem button><Link className={classes.link} to={'/bookings/trains'}>Trains</Link></ListItem>
+                                <ListItem button><Link className={classes.link} to={'/bookings/hostels'}>Hostels</Link></ListItem>
+                                <Divider/>
+                                <ListItem button><Link className={classes.link} to={'/logout'}>Logout</Link></ListItem>
+                            </List>
+                        )
+                    }</div>
                 </Typography>
             </Drawer>
         </AppBar>
@@ -71,4 +80,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Navbar)));
