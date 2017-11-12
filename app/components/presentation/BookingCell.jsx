@@ -40,17 +40,18 @@ const BookingCell = ({details, isHostel}) => {
                 </TableRow>
             );
         })
+    } else {
+        details.map(function (row, i) {
+            rows.push(
+                <TableRow key={i}>
+                    <TableCell>{i + 1}.</TableCell>
+                    <TableCell>{formatDate(row.departure_date)}{row.is_return ? '-' + formatDate(row.return_departure_date) : null}</TableCell>
+                    <TableCell>{truncate(row.from) + '-' + truncate(row.to)}</TableCell>
+                    <TableCell>{getPrice(row.price)}</TableCell>
+                </TableRow>
+            );
+        });
     }
-    details.map(function (row, i) {
-        rows.push(
-            <TableRow key={i}>
-                <TableCell>{i + 1}.</TableCell>
-                <TableCell>{formatDate(row.departure_date)}{row.is_return ? '-' + formatDate(row.return_departure_date) : null}</TableCell>
-                <TableCell>{truncate(row.from) + '-' + truncate(row.to)}</TableCell>
-                <TableCell>{getPrice(row.price)}</TableCell>
-            </TableRow>
-        );
-    });
 
     return (
         <Table>
