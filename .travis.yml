@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - stable
 sudo: false
-before_deploy: 'git add . && git ci -m "Test fixing deploy on heroku"'
+before_deploy: 'git add . && git commit -m "Test fixing deploy on heroku"'
 deploy:
   provider: heroku
   app: phpiotr
