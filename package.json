@@ -78,6 +78,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.13.0",
     "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
     "cssnano": "3.10.0",
     "deep-freeze": "^0.0.1",
