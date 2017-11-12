@@ -9,13 +9,12 @@
   "main": "bin/www",
   "scripts": {
     "start": "nf start",
+    "start:prod": "NODE_ENV=production nf start",
     "lint": "eslint --fix -c .eslintrc.json .",
     "lint:watch": "node node_modules/eslint-watch/bin/esw -w --fix",
     "test": "NODE_ENV=production mocha './app/tests/**/*.js' --require babel-core/register",
     "test:watch": "npm run tests -- --watch",
     "build": "better-npm-run build",
-    "dev-server": "better-npm-run dev-server",
-    "prod-server": "better-npm-run prod-server",
     "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js --progress"
   },
   "betterScripts": {
