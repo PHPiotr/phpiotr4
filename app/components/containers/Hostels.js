@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchHostelsIfNeeded} from '../../actions/hostels';
+import {fetchHostelsIfNeeded} from '../../actions/hostels/hostelsActions';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';

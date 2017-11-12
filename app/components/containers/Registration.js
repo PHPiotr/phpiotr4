@@ -10,7 +10,7 @@ import {
 import RegistrationForm from '../presentation/RegistrationForm';
 import {LinearProgress} from 'material-ui/Progress';
 
-const Registration = (props) => props.auth.isRegistering ? <LinearProgress/> : <RegistrationForm {...props} />;
+const Registration = props => props.auth.isRegistering ? <LinearProgress/> : <RegistrationForm {...props} />;
 
 const mapStateToProps = state => ({auth: state.auth});
 const mapDispatchToProps = dispatch => ({

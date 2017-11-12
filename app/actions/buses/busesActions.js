@@ -1,8 +1,5 @@
-import {getBookings} from '../services/bookingServices';
-
-export const BUSES_REQUEST = 'BUSES_REQUEST';
-export const BUSES_SUCCESS = 'BUSES_SUCCESS';
-export const BUSES_FAILURE = 'BUSES_FAILURE';
+import {getBookings} from '../../services/bookingServices';
+import * as busesActionTypes from './busesActionTypes';
 
 export const fetchBusesIfNeeded = (type, page) => {
     return (dispatch, getState) => {
@@ -22,6 +19,6 @@ export const fetchBusesIfNeeded = (type, page) => {
             .catch(error => dispatch(fetchBusesFailure(error)));
     };
 };
-const fetchBusesRequest = () => ({type: BUSES_REQUEST});
-const fetchBusesSuccess = data => ({type: BUSES_SUCCESS, data, receivedAt: Date.now()});
-const fetchBusesFailure = error => ({type: BUSES_FAILURE, error});
+const fetchBusesRequest = () => ({type: busesActionTypes.BUSES_REQUEST});
+const fetchBusesSuccess = data => ({type: busesActionTypes.BUSES_SUCCESS, data, receivedAt: Date.now()});
+const fetchBusesFailure = error => ({type: busesActionTypes.BUSES_FAILURE, error});

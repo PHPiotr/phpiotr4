@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {ensureIsNotLoggedIn} from '../../utils/authUtil';
 
 function noAuth(WrappedComponent) {
-    class Auth extends Component {
+    class NoAuth extends Component {
 
         componentWillMount() {
             const {verify, token} = this.props;
@@ -19,8 +19,8 @@ function noAuth(WrappedComponent) {
         }
     }
 
-    Auth.displayName = `NoAuth(${getDisplayName(WrappedComponent)})`;
-    hoistNonReactStatic(Auth, WrappedComponent);
+    NoAuth.displayName = `NoAuth(${getDisplayName(WrappedComponent)})`;
+    hoistNonReactStatic(NoAuth, WrappedComponent);
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
     const mapDispatchToProps = (dispatch, {history}) => ({
@@ -29,7 +29,7 @@ function noAuth(WrappedComponent) {
         },
     });
 
-    return connect(mapStateToProps, mapDispatchToProps)(Auth);
+    return connect(mapStateToProps, mapDispatchToProps)(NoAuth);
 }
 
 function getDisplayName(WrappedComponent) {

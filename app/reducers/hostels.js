@@ -1,22 +1,24 @@
-import {HOSTELS_REQUEST, HOSTELS_SUCCESS, HOSTELS_FAILURE} from '../../actions/hostels';
+import * as hostelsActionTypes from '../actions/hostels/hostelsActionTypes';
 
 const initialState = {
     isFetching: false,
-    data: {
-        current: '',
-    },
+    data: {},
+    current: {},
 };
 
 const hostels = (state = initialState, action) => {
     switch (action.type) {
-    case HOSTELS_REQUEST:
+    case hostelsActionTypes.HOSTELS_REQUEST:
         return {...state, isFetching: true};
-    case HOSTELS_SUCCESS:
+    case hostelsActionTypes.HOSTELS_SUCCESS:
         return {
             ...state, ...{data: action.data}, ...{isFetching: false, receivedAt: action.receivedAt},
         };
-    case HOSTELS_FAILURE:
+    case hostelsActionTypes.HOSTELS_FAILURE:
         return {...state, ...{isFetching: false, error: action.error}};
+    case hostelsActionTypes.ADD_HOSTEL_REQUEST:
+    case hostelsActionTypes.ADD_HOSTEL_SUCCESS:
+    case hostelsActionTypes.ADD_HOSTEL_FAILURE:
     default:
         return state;
     }

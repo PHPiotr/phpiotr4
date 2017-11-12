@@ -1,72 +1,114 @@
 import React from 'react';
-import InputGroup from '../helper/InputGroup.jsx';
 import Button from 'material-ui/Button';
+import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
 
-const BusForm = (props) => {
-    let returnJourneyInputs = null;
-    let busErrorMessage = props.busErrorMessage;
-    let busInserted = props.busInserted;
-    let busInsert = null;
-    let busError = null;
-
-    if (props.bus.is_return) {
-        returnJourneyInputs = (
-            <div>
-                <InputGroup focusHandler={props.handleFocus} error={props.busErrors.return_departure_date}
-                    value={props.bus.return_departure_date} type="date" handler={props.handleChange}
-                    name="return_departure_date"/>
-                <InputGroup focusHandler={props.handleFocus} error={props.busErrors.return_departure_time}
-                    value={props.bus.return_departure_time} type="time" handler={props.handleChange}
-                    name="return_departure_time"/>
-                <InputGroup focusHandler={props.handleFocus} error={props.busErrors.return_arrival_time}
-                    value={props.bus.return_arrival_time} type="time" handler={props.handleChange}
-                    name="return_arrival_time"/>
-            </div>
-        );
-    }
-
-    if (busErrorMessage) {
-        busError = (
-            <div className="alert alert-danger" role="alert">{busErrorMessage}</div>
-        );
-    }
-
-    if (Object.keys(busInserted).length > 0) {
-        busInsert = (
-            <div className="alert alert-success" role="alert">New bus was just inserted</div>
-        );
-    }
-
+const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
     return (
-        <form onSubmit={props.handleSubmit} className="form-horizontal">
-            {busInsert}
-            {busError}
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.booking_number}
-                value={props.bus.booking_number} handler={props.handleChange} name="booking_number"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.from}
-                value={props.bus.from} handler={props.handleChange} name="from"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.to} value={props.bus.to}
-                handler={props.handleChange} name="to"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.departure_date}
-                value={props.bus.departure_date} type="date" handler={props.handleChange}
-                name="departure_date"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.departure_time}
-                value={props.bus.departure_time} type="time" handler={props.handleChange}
-                name="departure_time"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.arrival_time}
-                value={props.bus.arrival_time} type="time" handler={props.handleChange}
-                name="arrival_time"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.price}
-                placeholder={props.pricePlaceholder} value={props.bus.price} handler={props.handleChange} name="price"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.currency}
-                value={props.bus.currency} handler={props.handleChange} name="currency"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.busErrors.is_return}
-                value={props.bus.is_return} type="checkbox" handler={props.handleChange}
-                name="is_return"/>
-            {returnJourneyInputs}
-            <div>
+        <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+            <FormControl component="fieldset">
+                <TextField
+                    error={busErrors.booking_number && !!busErrors.booking_number.message}
+                    helperText={'Code'}
+                    id={'booking-number'}
+                    type={'text'}
+                    name={'booking_number'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.booking_number}
+                />
+                <TextField
+                    error={busErrors.from && !!busErrors.from.message}
+                    helperText={'From'}
+                    id={'from'}
+                    type={'text'}
+                    name={'from'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.from}
+                />
+                <TextField
+                    error={busErrors.to && !!busErrors.to.message}
+                    helperText={'To'}
+                    id={'to'}
+                    type={'text'}
+                    name={'to'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.to}
+                />
+                <TextField
+                    error={busErrors.departure_date && !!busErrors.departure_date.message}
+                    helperText={'Departure date'}
+                    id={'departure-date'}
+                    type={'date'}
+                    name={'departure_date'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.departure_date}
+                />
+                <TextField
+                    error={busErrors.departure_time && !!busErrors.departure_time.message}
+                    helperText={'Departure time'}
+                    id={'departure-time'}
+                    type={'time'}
+                    name={'departure_time'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.departure_time}
+                />
+                <TextField
+                    error={busErrors.price && !!busErrors.price.message}
+                    helperText={'Price'}
+                    id={'price'}
+                    type={'text'}
+                    name={'price'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={bus.price}
+                />
+                <FormGroup>
+                    <FormControlLabel
+                        label={'Is return?'}
+                        control={
+                            <Checkbox
+                                error={busErrors.is_return && !!busErrors.is_return.message}
+                                checked={bus.is_return}
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                value={bus.is_return ? '1' : '0'}
+                                name="is_return"
+                            />
+                        }
+                    />
+                </FormGroup>
+                {!!bus.is_return && [
+                    <TextField
+                        error={busErrors.return_departure_date && !!busErrors.return_departure_date.message}
+                        helperText={'Return departure date'}
+                        id={'return-departure-date'}
+                        type={'date'}
+                        name={'return_departure_date'}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        value={bus.return_departure_date}
+                        key={1}
+                    />,
+                    <TextField
+                        error={busErrors.return_departure_time && !!busErrors.return_departure_time.message}
+                        helperText={'Return departure time'}
+                        id={'return-departure-time'}
+                        type={'time'}
+                        name={'return_departure_time'}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        value={bus.return_departure_time}
+                        key={2}
+                    />,
+                ]}
                 <Button type="submit">Add</Button>
-            </div>
+            </FormControl>
         </form>
     );
 };

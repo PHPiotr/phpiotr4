@@ -1,33 +1,37 @@
 import React from 'react';
-import InputGroup from '../helper/InputGroup.jsx';
 import Button from 'material-ui/Button';
+import {FormControl} from 'material-ui/Form';
+import TextField from 'material-ui/TextField';
 
-const LoginForm = (props) => {
-    if (props.auth.isLoggedIn) {
+const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login}, handleFocus, handleChange, handleSubmit}) => {
+    if (isLoggedIn) {
         return null;
     }
-
-    const auth = props.auth;
-    const loginErrorMessage = auth.loginErrorMessage;
-    let loginError = null;
-    if (loginErrorMessage) {
-        loginError = (
-            <div className="alert alert-danger" role="alert">{loginErrorMessage}</div>
-        );
-    }
     return (
-        <div className="container-fluid">
-            <form onSubmit={props.handleSubmit}>
-                {loginError}
-                <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label"
-                    focusHandler={props.handleFocus}
-                    value={auth.login.username} handler={props.handleChange} name="username"/>
-                <InputGroup inputWrapperClass="col-sm-12" labelClass="col-sm-12 col-form-label" type="password"
-                    focusHandler={props.handleFocus}
-                    value={auth.login.password} handler={props.handleChange} name="password"/>
+        <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+            <FormControl component="fieldset">
+                {loginErrorMessage}
+                <TextField
+                    helperText={'Login'}
+                    id={'username'}
+                    type={'text'}
+                    name={'username'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={login.username || ''}
+                />
+                <TextField
+                    helperText={'Password'}
+                    id={'password'}
+                    type={'password'}
+                    name={'password'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={login.password || ''}
+                />
                 <Button type="submit">Log in</Button>
-            </form>
-        </div>
+            </FormControl>
+        </form>
     );
 };
 

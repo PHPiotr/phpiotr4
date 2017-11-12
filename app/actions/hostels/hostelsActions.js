@@ -1,4 +1,4 @@
-import {getBookings} from '../services/bookingServices';
+import {getBookings} from '../../services/bookingServices';
 
 export const HOSTELS_REQUEST = 'HOSTELS_REQUEST';
 export const HOSTELS_SUCCESS = 'HOSTELS_SUCCESS';

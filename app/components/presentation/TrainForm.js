@@ -1,56 +1,82 @@
 import React from 'react';
-import InputGroup from '../helper/InputGroup.jsx';
 import Button from 'material-ui/Button';
+import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
 
-const TrainForm = (props) => {
-    let returnJourneyInputs = null;
-    let trainErrorMessage = props.trainErrorMessage;
-    let trainInserted = props.trainInserted;
-    let trainInsert = null;
-    let trainError = null;
-
-    if (props.train.is_return) {
-        returnJourneyInputs = (
-            <div>
-                <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.return_departure_date}
-                    value={props.train.return_departure_date} type="date" handler={props.handleChange}
-                    name="return_departure_date"/>
-            </div>
-        );
-    }
-
-    if (trainErrorMessage) {
-        trainError = (
-            <div className="alert alert-danger" role="alert">{trainErrorMessage}</div>
-        );
-    }
-
-    if (Object.keys(trainInserted).length > 0) {
-        trainInsert = (
-            <div className="alert alert-success" role="alert">New train was just inserted</div>
-        );
-    }
-
+const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}) => {
     return (
-        <form onSubmit={props.handleSubmit} className="form-horizontal">
-            {trainInsert}
-            {trainError}
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.from}
-                value={props.train.from} handler={props.handleChange} name="from"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.to}
-                value={props.train.to} handler={props.handleChange} name="to"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.departure_date}
-                value={props.train.departure_date} type="date" handler={props.handleChange}
-                name="departure_date"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.price}
-                placeholder={props.pricePlaceholder} value={props.train.price} handler={props.handleChange} name="price"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.currency}
-                value={props.train.currency} handler={props.handleChange} name="currency"/>
-            <InputGroup focusHandler={props.handleFocus} error={props.trainErrors.is_return}
-                value={props.train.is_return} type="checkbox" handler={props.handleChange}
-                name="is_return"/>
-            {returnJourneyInputs}
-            <Button type="submit">Add</Button>
+        <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+            <FormControl component="fieldset">
+                <TextField
+                    error={trainErrors.from && !!trainErrors.from.message}
+                    helperText={'From'}
+                    id={'from'}
+                    type={'text'}
+                    name={'from'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    vałlue={train.from}
+                />
+                <TextField
+                    error={trainErrors.to && !!trainErrors.to.message}
+                    helperText={'To'}
+                    id={'to'}
+                    type={'text'}
+                    name={'to'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={train.to}
+                />
+                <TextField
+                    error={trainErrors.departure_date && !!trainErrors.departure_date.message}
+                    helperText={'Departure date'}
+                    id={'departure-date'}
+                    type={'date'}
+                    name={'departure_date'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={train.departure_date}
+                />
+                <TextField
+                    error={trainErrors.price && !!trainErrors.price.message}
+                    helperText={'Price'}
+                    id={'price'}
+                    type={'text'}
+                    name={'price'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={train.price}
+                />
+                <FormGroup>
+                    <FormControlLabel
+                        label={'Is return?'}
+                        control={
+                            <Checkbox
+                                error={trainErrors.is_return && !!trainErrors.is_return.message}
+                                checked={train.is_return}
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                value={train.is_return ? '1' : '0'}
+                                name="is_return"
+                            />
+                        }
+                    />
+                </FormGroup>
+                {!!train.is_return && (
+                    <TextField
+                        error={trainErrors.return_departure_date && !!trainErrors.return_departure_date.message}
+                        helperText={'Return departure date'}
+                        id={'return-departure-date'}
+                        type={'date'}
+                        name={'return_departure_date'}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        value={train.return_departure_date}
+                    />
+                )}
+                <Button type="submit">Add</Button>
+            </FormControl>
         </form>
     );
 };

@@ -7,22 +7,22 @@ const Navigation = (props) => {
         event.preventDefault();
         let url;
         switch (type) {
-            case 'add':
-                url = `/bookings/${props.bookingLabel}`;
-                break;
+        case 'add':
+            url = `/bookings/${props.bookingLabel}`;
+            break;
 
-            case 'current':
-            case 'past':
-                url = `/bookings/${props.bookingsLabel}/${type}`;
-                break;
+        case 'current':
+        case 'past':
+            url = `/bookings/${props.bookingsLabel}/${type}`;
+            break;
 
-            default:
-                url = `/bookings/${props.bookingsLabel}/current`;
+        default:
+            url = `/bookings/${props.bookingsLabel}/current`;
         }
         if (props.history.location.pathname !== url) {
             props.history.push(url);
         }
-    }
+    };
 
     return (
         <Tabs style={{marginBottom: '23px'}} fullWidth centered value={props.isAdd ? 'add' : (props.match.params.current || 'current')} onChange={handleOnChange}>

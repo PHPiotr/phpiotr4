@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {setIsAdd} from '../../actions/index';
-import {fetchPlanesIfNeeded} from '../../actions/planes';
+import {fetchPlanesIfNeeded} from '../../actions/planes/planesActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import PlaneForm from '../presentation/PlaneForm';

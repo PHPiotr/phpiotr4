@@ -20,7 +20,7 @@ const routes = () => (
         <Route exact path="/" component={Auth(Report)}/>
         <Route name="login" path="/login" component={NoAuth(Login)}/>
         <Route name="register" path="/register" component={NoAuth(Registration)}/>
-        <Route name="logout" path="/logout" component={Logout}/>
+        <Route name="logout" path="/logout" component={Auth(Logout)}/>
         <Route name="buses" path="/bookings/buses/:current?/:page?" component={Auth(Buses)}/>
         <Route name="bus" path="/bookings/bus/:id?" component={Auth(Bus)}/>
         <Route name="planes" path="/bookings/planes/:current?/:page?" component={Auth(Planes)}/>

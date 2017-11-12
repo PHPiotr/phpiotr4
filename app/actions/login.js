@@ -118,9 +118,9 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
 });
 
 export const logoutIfNeeded = () => {
+    cookie.removeItem(process.env.TOKEN_KEY);
     return (dispatch) => {
         dispatch({type: LOGOUT});
-        cookie.removeItem(process.env.TOKEN_KEY);
         return Promise.resolve(true);
     };
 };

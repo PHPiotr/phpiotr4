@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchPlanesIfNeeded} from '../../actions/planes';
+import {fetchPlanesIfNeeded} from '../../actions/planes/planesActions';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';

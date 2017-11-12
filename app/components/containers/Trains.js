@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchTrainsIfNeeded} from '../../actions/trains';
+import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';

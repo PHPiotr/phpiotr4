@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import cookie from 'cookie-monster';
 import {logoutIfNeeded} from '../../actions/login';
 
 class Logout extends Component {
@@ -16,7 +15,6 @@ class Logout extends Component {
 
 const mapDispatchToProps = (dispatch, {history}) => ({
     logout() {
-        cookie.removeItem(process.env.TOKEN_KEY);
         dispatch(logoutIfNeeded()).then(() => history.push('/login'));
     },
 });

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {setIsAdd} from '../../actions/index';
-import {fetchTrainsIfNeeded} from '../../actions/trains';
+import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
