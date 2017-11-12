@@ -42,11 +42,6 @@ export const setDate = (dateFieldName, dateFieldValue) => ({
     dateFieldName,
     dateFieldValue,
 });
-export const setDateType = (dateTypeName, dateTypeValue) => ({
-    type: 'SET_DATE_TYPE',
-    dateTypeName,
-    dateTypeValue,
-});
 
 export const handleFocus = (event, bookingLabelSingular) => {
     return (dispatch) => {

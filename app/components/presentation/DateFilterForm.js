@@ -15,22 +15,18 @@ const DateFilterForm = (props) => {
         <form style={{padding: '0 0 23px'}} onSubmit={props.onSubmit}>
             <TextField
                 style={{marginLeft: '23px'}}
-                onFocus={props.onFocus}
-                onBlur={props.onBlur}
                 onChange={props.onChange}
-                type={props.dateFilter.fromDateFieldType}
+                type="date"
                 name="from"
-                label="From"
+                helperText="From"
                 value={props.dateFilter.fromDate}
             />
             <TextField
                 style={{marginLeft: '23px', marginBottom: '23px'}}
-                onFocus={props.onFocus}
-                onBlur={props.onBlur}
                 onChange={props.onChange}
-                type={props.dateFilter.toDateFieldType}
+                type="date"
                 name="to"
-                label="To"
+                helperText="To"
                 value={props.dateFilter.toDate}
             />
             <Button raised style={{marginLeft: '23px'}} type="submit">Search</Button>
