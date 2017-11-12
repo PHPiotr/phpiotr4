@@ -1,5 +1,5 @@
 import React from 'react';
-import formatPrice from '../helper/formatPrice';
+import formatPrice from '../../utils/formatPriceUtil';
 import moment from 'moment';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Typography from 'material-ui/Typography';

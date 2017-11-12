@@ -6,7 +6,7 @@ import {toggleIsDrawerOpen} from '../../actions/appActions';
 import List, {ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 
-let Navbar = (props) => {
+const Navbar = (props) => {
 
     let navItems = null;
     let navLoginItems = (
@@ -70,6 +70,5 @@ const mapDispatchToProps = (dispatch) => {
         },
     };
 };
-Navbar = withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
 
-export default Navbar;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

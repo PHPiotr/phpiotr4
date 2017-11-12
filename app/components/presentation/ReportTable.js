@@ -1,5 +1,5 @@
 import React from 'react';
-import BookingCell from '../helper/BookingCell.jsx';
+import BookingCell from './BookingCell.jsx';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Grid from 'material-ui/Grid';
 

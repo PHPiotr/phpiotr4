@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Navbar from '../nav/Navbar';
+import Navbar from '../presentation/Navbar';
 import Card from 'material-ui/Card';
 
 const App = ({children}) => [
