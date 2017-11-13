@@ -34,9 +34,13 @@ const BookingCell = ({details, isHostel}) => {
             rows.push(
                 <TableRow key={`${i}hostel`}>
                     <TableCell>{i + 1}.</TableCell>
-                    <TableCell>{formatDate(row.checkin_date) + '-' + formatDate(row.checkout_date)}</TableCell>
-                    <TableCell>{row.hostel_name}</TableCell>
-                    <TableCell>{getPrice(row.price)}</TableCell>
+                    <TableCell>
+                        <Table>
+                            <TableRow><TableCell>{formatDate(row.checkin_date) + '-' + formatDate(row.checkout_date)}</TableCell></TableRow>
+                            <TableRow><TableCell>{row.hostel_name}</TableCell></TableRow>
+                            <TableRow><TableCell>£{getPrice(row.price)}</TableCell></TableRow>
+                        </Table>
+                    </TableCell>
                 </TableRow>
             );
         })
@@ -45,9 +49,13 @@ const BookingCell = ({details, isHostel}) => {
             rows.push(
                 <TableRow key={i}>
                     <TableCell>{i + 1}.</TableCell>
-                    <TableCell>{formatDate(row.departure_date)}{row.is_return ? '-' + formatDate(row.return_departure_date) : null}</TableCell>
-                    <TableCell>{truncate(row.from) + '-' + truncate(row.to)}</TableCell>
-                    <TableCell>{getPrice(row.price)}</TableCell>
+                    <TableCell>
+                        <Table>
+                            <TableRow><TableCell>{formatDate(row.departure_date)}{row.is_return ? '-' + formatDate(row.return_departure_date) : null}</TableCell></TableRow>
+                            <TableRow><TableCell>{truncate(row.from) + '-' + truncate(row.to)}</TableCell></TableRow>
+                            <TableRow><TableCell>£{getPrice(row.price)}</TableCell></TableRow>
+                        </Table>
+                    </TableCell>
                 </TableRow>
             );
         });
@@ -58,9 +66,7 @@ const BookingCell = ({details, isHostel}) => {
             <TableHead>
                 <TableRow>
                     <TableCell>No.</TableCell>
-                    <TableCell>When</TableCell>
-                    <TableCell>Where</TableCell>
-                    <TableCell>£</TableCell>
+                    <TableCell>Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
