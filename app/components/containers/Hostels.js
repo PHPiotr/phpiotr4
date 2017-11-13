@@ -44,7 +44,7 @@ const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
 });
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchHostelsIfNeeded(type || 'current', page || 1));
+        dispatch(fetchHostelsIfNeeded(type || '', page || 1));
     },
 });
 

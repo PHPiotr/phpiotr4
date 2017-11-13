@@ -7,17 +7,13 @@ const Navigation = (props) => {
         event.preventDefault();
         let url;
         switch (type) {
-        case 'add':
-            url = `/bookings/${props.bookingLabel}`;
-            break;
-
         case 'current':
         case 'past':
             url = `/bookings/${props.bookingsLabel}/${type}`;
             break;
 
         default:
-            url = `/bookings/${props.bookingsLabel}/current`;
+            url = `/bookings/${props.bookingsLabel}`;
         }
         if (props.history.location.pathname !== url) {
             props.history.push(url);
@@ -25,10 +21,10 @@ const Navigation = (props) => {
     };
 
     return (
-        <Tabs style={{marginBottom: '23px'}} fullWidth centered value={props.isAdd ? 'add' : (props.match.params.current || 'current')} onChange={handleOnChange}>
+        <Tabs style={{marginBottom: '23px'}} fullWidth centered value={props.match.params.current || 'all'} onChange={handleOnChange}>
+            <Tab value={'all'} label="All" href={`/bookings/${props.bookingsLabel}`}/>
             <Tab value={'current'} label="Current" href={`/bookings/${props.bookingsLabel}/current`}/>
             <Tab value={'past'} label="Past" href={`/bookings/${props.bookingsLabel}/past`}/>
-            <Tab value={'add'} label="Add" href={`/bookings/${props.bookingLabel}`}/>
         </Tabs>
     );
 };

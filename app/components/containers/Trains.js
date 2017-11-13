@@ -43,7 +43,7 @@ const mapStateToProps = ({trains, auth: {isLoggedIn}}) => ({
 });
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchTrainsIfNeeded(type || 'current', page || 1));
+        dispatch(fetchTrainsIfNeeded(type || '', page || 1));
     },
 });
 

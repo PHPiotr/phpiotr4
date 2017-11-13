@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addBookingIfNeeded('hostel', 'hostels'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchHostelsIfNeeded(type || 'current', page || 1));
+        dispatch(fetchHostelsIfNeeded(type || '', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'hostel'));

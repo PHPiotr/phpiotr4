@@ -46,7 +46,7 @@ const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
 };
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchBusesIfNeeded(type || 'current', page || 1));
+        dispatch(fetchBusesIfNeeded(type || '', page || 1));
     },
 });
 
