@@ -6,12 +6,15 @@ import ReportTable from '../presentation/ReportTable';
 import {LinearProgress} from 'material-ui/Progress';
 import DateFilterForm from '../containers/DateFilter';
 import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {HOME} from '../../constants';
 
 class Report extends Component {
 
     componentWillMount() {
         this.props.handleIsDateFilterEnabled(true);
         this.props.fetchReportOnLoad();
+        this.props.setAppBarTitle(HOME);
     }
 
     componentWillUnmount() {
@@ -55,6 +58,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (ownProps.auth && ownProps.auth.isLoggedIn) {
             dispatch(toggleDateFilterEnabled(isEnabled));
         }
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 

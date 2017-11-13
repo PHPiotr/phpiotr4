@@ -6,7 +6,8 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import HostelsTable from '../presentation/HostelsTable';
 import {LinearProgress} from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {HOSTELS} from '../../constants';
 
 class Hostels extends Component {
 
@@ -16,6 +17,7 @@ class Hostels extends Component {
         }
         const {params} = this.props.match;
         this.props.fetchBookings(params.current, params.page);
+        this.props.setAppBarTitle(HOSTELS);
     }
 
     render() {
@@ -26,7 +28,6 @@ class Hostels extends Component {
 
         return (
             <div>
-                <Typography style={{padding: '23px'}} type="headline">Hostels</Typography>
                 <Navigation {...this.props} />
                 <HostelsTable {...this.props.hostels.data} />
                 <Pagination {...this.props} />
@@ -45,6 +46,9 @@ const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
         dispatch(fetchHostelsIfNeeded(type || '', page || 1));
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 

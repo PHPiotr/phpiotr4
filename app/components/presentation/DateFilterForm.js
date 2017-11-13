@@ -1,5 +1,6 @@
 import React from 'react';
 import {TextField, Button} from 'material-ui';
+import {FormControl} from 'material-ui/Form';
 
 const DateFilterForm = (props) => {
 
@@ -12,24 +13,24 @@ const DateFilterForm = (props) => {
     }
 
     return (
-        <form style={{padding: '0 0 23px'}} onSubmit={props.onSubmit}>
-            <TextField
-                style={{marginLeft: '23px'}}
-                onChange={props.onChange}
-                type="date"
-                name="from"
-                helperText="From"
-                value={props.dateFilter.fromDate}
-            />
-            <TextField
-                style={{marginLeft: '23px', marginBottom: '23px'}}
-                onChange={props.onChange}
-                type="date"
-                name="to"
-                helperText="To"
-                value={props.dateFilter.toDate}
-            />
-            <Button raised style={{marginLeft: '23px'}} type="submit">Search</Button>
+        <form style={{padding: '0 23px 23px'}} onSubmit={props.onSubmit}>
+            <FormControl component="fieldset">
+                <TextField
+                    onChange={props.onChange}
+                    type="date"
+                    name="from"
+                    helperText="From"
+                    value={props.dateFilter.fromDate}
+                />
+                <TextField
+                    onChange={props.onChange}
+                    type="date"
+                    name="to"
+                    helperText="To"
+                    value={props.dateFilter.toDate}
+                />
+                <Button raised type="submit">Search</Button>
+            </FormControl>
         </form>
     );
 };

@@ -6,7 +6,8 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import TrainsTable from '../presentation/TrainsTable';
 import {LinearProgress} from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {TRAINS} from '../../constants';
 
 class Trains extends Component {
 
@@ -16,6 +17,7 @@ class Trains extends Component {
         }
         const {params} = this.props.match;
         this.props.fetchBookings(params.current, params.page);
+        this.props.setAppBarTitle(TRAINS);
     }
 
     render() {
@@ -25,7 +27,6 @@ class Trains extends Component {
         }
         return (
             <div>
-                <Typography style={{padding: '23px'}} type="headline">Trains</Typography>
                 <Navigation {...this.props} />
                 <TrainsTable {...this.props.trains.data} />
                 <Pagination {...this.props} />
@@ -44,6 +45,9 @@ const mapStateToProps = ({trains, auth: {isLoggedIn}}) => ({
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
         dispatch(fetchTrainsIfNeeded(type || '', page || 1));
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {AppBar, IconButton, Drawer, Typography, Toolbar} from 'material-ui';
 import {Menu} from 'material-ui-icons';
-import {toggleIsDrawerOpen} from '../../actions/appActions';
+import {toggleIsDrawerOpen} from '../../actions/app/appActions';
 import List, {ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 import {withStyles} from 'material-ui/styles';
@@ -29,9 +29,7 @@ const Navbar = (props) => {
         <AppBar>
             <Toolbar>
                 <IconButton onClick={props.toggleIsDrawerOpen}><Menu style={{color: 'white'}} /></IconButton>
-                <Typography type="title" color="inherit">
-                    <Link style={{color: '#fff', textDecoration: 'none'}} to={'/'}>{props.appBarTitle}</Link>
-                </Typography>
+                <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
                 <Typography type="subheading" color="inherit">
