@@ -47,7 +47,15 @@ const BookingDetails = ({details, isHostel, offset}) => {
                             </ListItem>
                         </List>
                     </TableCell>
-                    <TableCell>£{getPrice(row.price)}</TableCell>
+                    <TableCell>
+                        <List>
+                            <ListItem>
+                                <ListItemText
+                                    primary={`£${getPrice(row.price)}`}
+                                    secondary={row.booking_number} />
+                            </ListItem>
+                        </List>
+                    </TableCell>
                 </TableRow>
             );
         });
@@ -66,7 +74,15 @@ const BookingDetails = ({details, isHostel, offset}) => {
                             </ListItem>
                         </List>
                     </TableCell>
-                    <TableCell>£{getPrice(row.price)}</TableCell>
+                    <TableCell>
+                        <List>
+                            <ListItem>
+                                <ListItemText
+                                    primary={`£${getPrice(row.price)}`}
+                                    secondary={row.booking_number || row.confirmation_code || ''} />
+                            </ListItem>
+                        </List>
+                    </TableCell>
                 </TableRow>
             );
         });
