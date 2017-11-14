@@ -29,7 +29,7 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login}, handleFocus, h
                     onFocus={handleFocus}
                     value={login.password || ''}
                 />
-                <Button type="submit">Log in</Button>
+                <Button style={{marginTop: '20px'}} type="submit">Log in</Button>
             </FormControl>
         </form>
     );
