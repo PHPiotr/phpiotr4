@@ -40,7 +40,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                 <TableRow key={`${i}hostel`}>
                     <TableCell>
                         <List>
-                            <ListItem>
+                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
                                 <ListItemText
                                     primary={`${i + 1 + (offset || 0)}. ${checkIn} - ${checkOut}`}
                                     secondary={row.hostel_name} />
@@ -49,7 +49,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                     </TableCell>
                     <TableCell>
                         <List>
-                            <ListItem>
+                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
                                 <ListItemText
                                     primary={`£${getPrice(row.price)}`}
                                     secondary={row.booking_number} />
@@ -67,7 +67,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                 <TableRow key={i}>
                     <TableCell>
                         <List>
-                            <ListItem>
+                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
                                 <ListItemText
                                     primary={`${i + 1 + (offset || 0)}. ${departDate}${returnDate}`}
                                     secondary={`${row.from} - ${row.to}`} />
@@ -76,7 +76,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                     </TableCell>
                     <TableCell>
                         <List>
-                            <ListItem>
+                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
                                 <ListItemText
                                     primary={`£${getPrice(row.price)}`}
                                     secondary={row.booking_number || row.confirmation_code || ''} />
