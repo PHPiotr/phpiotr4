@@ -2,25 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TableCell, TableRow} from 'material-ui/Table';
 import List, {ListItem, ListItemText} from 'material-ui/List';
+import moment from 'moment';
 
-const BookingDetails = ({details, isHostel}) => {
+const BookingDetails = ({details, isHostel, offset}) => {
 
     if (!details.length) {
         return null;
     }
 
-    const formatDate = (date_string) => {
-        const date = new Date(date_string);
-        const getDate = parseInt(date.getDate(), 10);
-        const day = getDate < 10 ? `0${getDate}` : getDate;
-        const getMonth = parseInt(date.getMonth(), 10) + 1;
-        const month = getMonth < 10 ? `0${getMonth}` : getMonth;
-        const year = date.getFullYear();
+    const formatDate = (date) => {
+        if (typeof date === 'object') {
+            return moment(date).format('DD/MM/YYYY');
+        }
+        if (typeof date === 'string') {
+            return date.match(/\/+/) ? date : moment(date).format('DD/MM/YYYY');
+        }
 
-        return `${day}/${month}/${year}`;
+        return '';
     };
 
-    const getPrice = number => 0 === number ? '0.00' : (number / 100).toFixed(2);
+    const getPrice = (number) => {
+        if (number === 0) {
+            return '0.00';
+        }
+        if (number.toString().match(/\.+/)) {
+            return number.toFixed(2);
+        }
+        return (number / 100).toFixed(2);
+    };
 
     const items = [];
     if (isHostel) {
@@ -33,7 +42,7 @@ const BookingDetails = ({details, isHostel}) => {
                         <List>
                             <ListItem>
                                 <ListItemText
-                                    primary={`${i + 1}. ${checkIn} - ${checkOut}`}
+                                    primary={`${i + 1 + (offset || 0)}. ${checkIn} - ${checkOut}`}
                                     secondary={row.hostel_name} />
                             </ListItem>
                         </List>
@@ -52,7 +61,7 @@ const BookingDetails = ({details, isHostel}) => {
                         <List>
                             <ListItem>
                                 <ListItemText
-                                    primary={`${i + 1}. ${departDate}${returnDate}`}
+                                    primary={`${i + 1 + (offset || 0)}. ${departDate}${returnDate}`}
                                     secondary={`${row.from} - ${row.to}`} />
                             </ListItem>
                         </List>
