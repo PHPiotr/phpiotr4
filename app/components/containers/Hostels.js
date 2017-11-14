@@ -21,18 +21,16 @@ class Hostels extends Component {
     }
 
     render() {
-
+        const items = [];
+        items.push(<Navigation key={1} {...this.props}/>);
         if (this.props.hostels.isFetching) {
-            return <LinearProgress/>;
+            items.push(<LinearProgress key={2} />);
+        } else {
+            items.push(<HostelsTable key={3} {...this.props.hostels.data} />);
+            items.push(<Pagination key={4} {...this.props} />);
         }
 
-        return (
-            <div>
-                <Navigation {...this.props} />
-                <HostelsTable {...this.props.hostels.data} />
-                <Pagination {...this.props} />
-            </div>
-        );
+        return items;
     }
 }
 

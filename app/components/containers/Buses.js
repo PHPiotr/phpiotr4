@@ -21,18 +21,16 @@ class Buses extends Component {
     }
 
     render() {
-
+        const items = [];
+        items.push(<Navigation key={1} {...this.props}/>);
         if (this.props.buses.isFetching) {
-            return <LinearProgress/>;
+            items.push(<LinearProgress key={2} />);
+        } else {
+            items.push(<BusesTable key={3} {...this.props.buses.data} />);
+            items.push(<Pagination key={4} {...this.props} />);
         }
 
-        return (
-            <div>
-                <Navigation {...this.props} />
-                <BusesTable {...this.props.buses.data} />
-                <Pagination {...this.props} />
-            </div>
-        );
+        return items;
     }
 }
 

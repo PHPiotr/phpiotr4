@@ -21,18 +21,16 @@ class Planes extends Component {
     }
 
     render() {
-
-        if (this.props.planes.isFetching) {
-            return <LinearProgress/>;
+        const items = [];
+        items.push(<Navigation key={1} {...this.props}/>);
+        if (this.props.hostels.planes) {
+            items.push(<LinearProgress key={2} />);
+        } else {
+            items.push(<PlanesTable key={3} {...this.props.planes.data} />);
+            items.push(<Pagination key={4} {...this.props} />);
         }
 
-        return (
-            <div>
-                <Navigation {...this.props} />
-                <PlanesTable {...this.props.planes.data} />
-                <Pagination {...this.props} />
-            </div>
-        );
+        return items;
     }
 }
 

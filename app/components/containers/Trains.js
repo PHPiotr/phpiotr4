@@ -21,17 +21,16 @@ class Trains extends Component {
     }
 
     render() {
-
-        if (this.props.trains.isFetching) {
-            return <LinearProgress/>;
+        const items = [];
+        items.push(<Navigation key={1} {...this.props}/>);
+        if (this.props.hostels.trains) {
+            items.push(<LinearProgress key={2} />);
+        } else {
+            items.push(<TrainsTable key={3} {...this.props.trains.data} />);
+            items.push(<Pagination key={4} {...this.props} />);
         }
-        return (
-            <div>
-                <Navigation {...this.props} />
-                <TrainsTable {...this.props.trains.data} />
-                <Pagination {...this.props} />
-            </div>
-        );
+
+        return items;
     }
 }
 
