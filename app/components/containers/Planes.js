@@ -23,7 +23,7 @@ class Planes extends Component {
     render() {
         const items = [];
         items.push(<Navigation key={1} {...this.props}/>);
-        if (this.props.hostels.planes) {
+        if (this.props.planes.isFetching) {
             items.push(<LinearProgress key={2} />);
         } else {
             items.push(<PlanesTable key={3} {...this.props.planes.data} />);

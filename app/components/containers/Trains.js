@@ -23,7 +23,7 @@ class Trains extends Component {
     render() {
         const items = [];
         items.push(<Navigation key={1} {...this.props}/>);
-        if (this.props.hostels.trains) {
+        if (this.props.trains.isFetching) {
             items.push(<LinearProgress key={2} />);
         } else {
             items.push(<TrainsTable key={3} {...this.props.trains.data} />);
