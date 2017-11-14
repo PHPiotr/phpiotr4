@@ -1,14 +1,14 @@
 import React from 'react';
 import formatPrice from '../../utils/formatPriceUtil';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
-import Typography from 'material-ui/Typography';
 import BookingDetails from './BookingDetails';
+import NoContent from './NoContent';
 
-const PlanesTable = ({flights, flights_length, return_flights_length, title, current_page, max_per_page, total_cost, average_cost}) => {
+const PlanesTable = ({flights, flights_length, return_flights_length, current_page, max_per_page, total_cost, average_cost}) => {
 
     flights_length || 0;
     if (!flights_length) {
-        return title ? <Typography type="title">{`No ${title.toLowerCase()}`}</Typography> : null;
+        return <NoContent/>;
     }
 
     return (
