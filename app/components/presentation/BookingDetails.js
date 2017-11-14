@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import {TableCell, TableRow} from 'material-ui/Table';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 
-const BookingCell = ({details, isHostel}) => {
+const BookingDetails = ({details, isHostel}) => {
 
     if (!details.length) {
         return null;
@@ -22,12 +22,12 @@ const BookingCell = ({details, isHostel}) => {
 
     const getPrice = number => 0 === number ? '0.00' : (number / 100).toFixed(2);
 
-    const rows = [];
+    const items = [];
     if (isHostel) {
         details.map(function (row, i) {
             const checkIn = formatDate(row.checkin_date);
             const checkOut = formatDate(row.checkout_date);
-            rows.push(
+            items.push(
                 <TableRow key={`${i}hostel`}>
                     <TableCell>
                         <List>
@@ -38,7 +38,7 @@ const BookingCell = ({details, isHostel}) => {
                             </ListItem>
                         </List>
                     </TableCell>
-                    <TableCell>{getPrice(row.price)}</TableCell>
+                    <TableCell>£{getPrice(row.price)}</TableCell>
                 </TableRow>
             );
         });
@@ -46,7 +46,7 @@ const BookingCell = ({details, isHostel}) => {
         details.map(function (row, i) {
             const departDate = formatDate(row.departure_date);
             const returnDate = row.is_return ? ' - ' + formatDate(row.return_departure_date) : '';
-            rows.push(
+            items.push(
                 <TableRow key={i}>
                     <TableCell>
                         <List>
@@ -57,36 +57,24 @@ const BookingCell = ({details, isHostel}) => {
                             </ListItem>
                         </List>
                     </TableCell>
-                    <TableCell>{getPrice(row.price)}</TableCell>
+                    <TableCell>£{getPrice(row.price)}</TableCell>
                 </TableRow>
             );
         });
     }
 
-    return (
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Details</TableCell>
-                    <TableCell>£</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {rows}
-            </TableBody>
-        </Table>
-    );
+    return items;
 };
 
-BookingCell.propTypes = {
+BookingDetails.propTypes = {
     details: PropTypes.array.isRequired,
     isHostel: PropTypes.bool,
 };
 
-BookingCell.defaultProps = {
+BookingDetails.defaultProps = {
     isHostel: false,
 };
 
-BookingCell.displayName = 'BookingCell';
+BookingDetails.displayName = 'BookingCell';
 
-export default BookingCell;
+export default BookingDetails;

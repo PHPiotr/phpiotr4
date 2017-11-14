@@ -29,7 +29,7 @@ const DateFilterForm = (props) => {
                     helperText="To"
                     value={props.dateFilter.toDate}
                 />
-                <Button raised type="submit">Search</Button>
+                <Button style={{marginTop: '20px'}} raised type="submit">Filter</Button>
             </FormControl>
         </form>
     );
