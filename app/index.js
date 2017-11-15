@@ -27,15 +27,6 @@ const theme = () => {
                 fontSize: '0.75rem',
             },
         },
-        mixins: {
-            listItem: {
-                backgroundColor: 'red',
-            },
-
-        },
-        list: {
-            backgroundColor: 'red',
-        },
     });
 };
 
