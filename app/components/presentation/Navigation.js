@@ -3,10 +3,6 @@ import Tabs, {Tab} from 'material-ui/Tabs';
 
 const Navigation = (props) => {
 
-    if (props.match.params.id) {
-        return null;
-    }
-
     const handleOnChange = (event, type) => {
         event.preventDefault();
         let url;

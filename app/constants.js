@@ -1,5 +1,9 @@
 export const HOME = 'PHPiotr 4.0';
 export const BUSES = 'Buses';
+export const NEW_BUS = 'New bus';
 export const HOSTELS = 'Hostels';
+export const NEW_HOSTEL = 'New hostel';
 export const PLANES = 'Planes';
+export const NEW_PLANE = 'New plane';
 export const TRAINS = 'Trains';
+export const NEW_TRAIN = 'New train';

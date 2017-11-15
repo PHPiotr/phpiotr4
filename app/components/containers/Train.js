@@ -4,24 +4,19 @@ import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
-import Navigation from '../presentation/Navigation';
-import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {NEW_TRAIN} from '../../constants';
 
 class Train extends Component {
     componentWillMount() {
         this.props.isAdding(true);
+        this.props.setAppBarTitle(NEW_TRAIN);
     }
     componentWillUnmount() {
         this.props.isAdding(false);
     }
     render() {
-        return (
-            <div>
-                <Typography style={{padding: '23px'}} type="headline">Trains</Typography>
-                <Navigation {...this.props} />
-                <TrainForm {...this.props} />
-            </div>
-        );
+        return <TrainForm {...this.props}/>;
     }
 }
 
@@ -52,6 +47,9 @@ const mapDispatchToProps = dispatch => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'train'));
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 

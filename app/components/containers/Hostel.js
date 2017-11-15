@@ -4,24 +4,19 @@ import {fetchHostelsIfNeeded} from '../../actions/hostels/hostelsActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import HostelForm from '../presentation/HostelForm';
-import Navigation from '../presentation/Navigation';
-import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {NEW_HOSTEL} from '../../constants';
 
 class Hostel extends Component {
     componentWillMount() {
         this.props.isAdding(true);
+        this.props.setAppBarTitle(NEW_HOSTEL);
     }
     componentWillUnmount() {
         this.props.isAdding(false);
     }
     render() {
-        return (
-            <div>
-                <Typography style={{padding: '23px'}} type="headline">Hostels</Typography>
-                <Navigation {...this.props} />
-                <HostelForm {...this.props} />
-            </div>
-        );
+        return <HostelForm {...this.props}/>;
     }
 }
 
@@ -52,6 +47,9 @@ const mapDispatchToProps = dispatch => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'hostel'));
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 

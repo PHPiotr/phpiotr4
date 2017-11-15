@@ -4,24 +4,19 @@ import {fetchBusesIfNeeded} from '../../actions/buses/busesActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import BusForm from '../presentation/BusForm';
-import Navigation from '../presentation/Navigation';
-import Typography from 'material-ui/Typography';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {NEW_BUS} from '../../constants';
 
 class Bus extends Component {
     componentWillMount() {
         this.props.isAdding(true);
+        this.props.setAppBarTitle(NEW_BUS);
     }
     componentWillUnmount() {
         this.props.isAdding(false);
     }
     render() {
-        return (
-            <div>
-                <Typography style={{padding: '23px'}} type="headline">Buses</Typography>
-                <Navigation {...this.props} />
-                <BusForm {...this.props} />
-            </div>
-        );
+        return <BusForm {...this.props}/>;
     }
 }
 
@@ -52,6 +47,9 @@ const mapDispatchToProps = dispatch => ({
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'bus'));
+    },
+    setAppBarTitle(appBarTitle) {
+        dispatch(setAppBarTitle(appBarTitle));
     },
 });
 
