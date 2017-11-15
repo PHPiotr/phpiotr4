@@ -8,6 +8,7 @@ import TrainsTable from '../presentation/TrainsTable';
 import {LinearProgress} from 'material-ui/Progress';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {TRAINS} from '../../constants';
+import FloatingAddButton from '../presentation/FloatingAddButton';
 
 class Trains extends Component {
 
@@ -28,6 +29,7 @@ class Trains extends Component {
         } else {
             items.push(<TrainsTable key={3} {...this.props.trains.data} />);
             items.push(<Pagination key={4} {...this.props} />);
+            items.push(<FloatingAddButton href={'/bookings/train/new'} key={5}/>);
         }
 
         return items;

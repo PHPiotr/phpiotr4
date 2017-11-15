@@ -8,6 +8,7 @@ import HostelsTable from '../presentation/HostelsTable';
 import {LinearProgress} from 'material-ui/Progress';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {HOSTELS} from '../../constants';
+import FloatingAddButton from '../presentation/FloatingAddButton';
 
 class Hostels extends Component {
 
@@ -28,6 +29,7 @@ class Hostels extends Component {
         } else {
             items.push(<HostelsTable key={3} {...this.props.hostels.data} />);
             items.push(<Pagination key={4} {...this.props} />);
+            items.push(<FloatingAddButton href={'/bookings/hostel/new'} key={5}/>);
         }
 
         return items;

@@ -8,6 +8,7 @@ import PlanesTable from '../presentation/PlanesTable';
 import {LinearProgress} from 'material-ui/Progress';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {PLANES} from '../../constants';
+import FloatingAddButton from '../presentation/FloatingAddButton';
 
 class Planes extends Component {
 
@@ -28,6 +29,7 @@ class Planes extends Component {
         } else {
             items.push(<PlanesTable key={3} {...this.props.planes.data} />);
             items.push(<Pagination key={4} {...this.props} />);
+            items.push(<FloatingAddButton href={'/bookings/plane/new'} key={5}/>);
         }
 
         return items;

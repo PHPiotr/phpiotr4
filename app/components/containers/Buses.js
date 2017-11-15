@@ -8,6 +8,7 @@ import BusesTable from '../presentation/BusesTable';
 import {LinearProgress} from 'material-ui/Progress';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {BUSES} from '../../constants';
+import FloatingAddButton from '../presentation/FloatingAddButton';
 
 class Buses extends Component {
 
@@ -28,6 +29,7 @@ class Buses extends Component {
         } else {
             items.push(<BusesTable key={3} {...this.props.buses.data} />);
             items.push(<Pagination key={4} {...this.props} />);
+            items.push(<FloatingAddButton href={'/bookings/bus/new'} key={5}/>);
         }
 
         return items;
