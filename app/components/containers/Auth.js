@@ -1,14 +1,31 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import {ensureIsLoggedIn} from '../../utils/authUtil';
+import cookie from 'cookie-monster';
+import jwtDecode from 'jwt-decode';
+import {setToken, setIsLoggedIn} from '../../actions/login';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
 
         componentWillMount() {
-            const {verify, token, isLoggedIn} = this.props;
-            verify(token, isLoggedIn);
+            const {verify, token, isLoggedIn, setToken, setLoggedIn} = this.props;
+            try {
+                if (token) {
+                    return verify(token);
+                }
+                const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
+                if (!tokenFromCookie) {
+                    throw Error;
+                }
+                verify(tokenFromCookie);
+                setToken(tokenFromCookie);
+                if (!isLoggedIn) {
+                    setLoggedIn();
+                }
+            } catch (e) {
+                this.props.history.replace('/logout');
+            }
         }
 
         render() {
@@ -24,8 +41,23 @@ function auth(WrappedComponent) {
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
     const mapDispatchToProps = (dispatch, {history}) => ({
-        verify(tokenFromStore, isLoggedIn) {
-            ensureIsLoggedIn(tokenFromStore, isLoggedIn, dispatch, history);
+        verify(token) {
+            const {exp} = jwtDecode(token);
+            if (!exp) {
+                throw Error;
+            }
+            const expiration = exp * 1000;
+            const now = (new Date()).getTime();
+            if (expiration < now) {
+                throw Error;
+            }
+            return true;
+        },
+        setToken(token) {
+            dispatch(setToken(token));
+        },
+        setLoggedIn() {
+            dispatch(setIsLoggedIn(true));
         },
     });
 

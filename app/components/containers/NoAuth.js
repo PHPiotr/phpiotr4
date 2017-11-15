@@ -1,14 +1,26 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import {ensureIsNotLoggedIn} from '../../utils/authUtil';
+import cookie from 'cookie-monster';
+import jwtDecode from 'jwt-decode';
 
 function noAuth(WrappedComponent) {
     class NoAuth extends Component {
 
         componentWillMount() {
             const {verify, token} = this.props;
-            verify(token);
+            if (token) {
+                return verify(token);
+            }
+            try {
+                const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
+                if (tokenFromCookie) {
+                    verify(tokenFromCookie);
+                    cookie.clear();
+                }
+            } catch (e) {
+                this.props.history.replace('/');
+            }
         }
 
         render() {
@@ -23,9 +35,14 @@ function noAuth(WrappedComponent) {
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
-    const mapDispatchToProps = (dispatch, {history}) => ({
-        verify(tokenFromStore) {
-            ensureIsNotLoggedIn(tokenFromStore, history);
+    const mapDispatchToProps = (dispatch) => ({
+        verify(token) {
+            const {exp} = jwtDecode(token);
+            const expiration = exp * 1000;
+            const now = (new Date()).getTime();
+            if (expiration > now) {
+                throw Error;
+            }
         },
     });
 
