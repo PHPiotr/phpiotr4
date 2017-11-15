@@ -40,7 +40,7 @@ function auth(WrappedComponent) {
     hoistNonReactStatic(Auth, WrappedComponent);
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
-    const mapDispatchToProps = (dispatch, {history}) => ({
+    const mapDispatchToProps = dispatch => ({
         verify(token) {
             const {exp} = jwtDecode(token);
             if (!exp) {

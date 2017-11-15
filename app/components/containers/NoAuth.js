@@ -35,7 +35,7 @@ function noAuth(WrappedComponent) {
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
-    const mapDispatchToProps = (dispatch) => ({
+    const mapDispatchToProps = () => ({
         verify(token) {
             const {exp} = jwtDecode(token);
             const expiration = exp * 1000;
