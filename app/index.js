@@ -9,6 +9,7 @@ import Routes from './routes';
 import store from './configureStore';
 import App from './components/containers/App';
 import 'typeface-roboto';
+import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 
 try {
     injectTapEventPlugin();
@@ -16,14 +17,38 @@ try {
     //
 }
 
+const theme = () => {
+    return createMuiTheme({
+        typography: {
+            body1: {
+                fontSize: '0.75rem',
+            },
+            subheading: {
+                fontSize: '0.75rem',
+            },
+        },
+        mixins: {
+            listItem: {
+                backgroundColor: 'red',
+            },
+
+        },
+        list: {
+            backgroundColor: 'red',
+        },
+    });
+};
+
 const rootElementIdAttr = 'root';
 
 const app = () => (
     <Provider store={store}>
         <Router>
-            <App>
-                <Routes/>
-            </App>
+            <MuiThemeProvider theme={theme}>
+                <App>
+                    <Routes/>
+                </App>
+            </MuiThemeProvider>
         </Router>
     </Provider>
 );

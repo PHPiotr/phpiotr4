@@ -10,6 +10,8 @@ const BookingDetails = ({details, isHostel, offset}) => {
         return null;
     }
 
+    const style = {paddingLeft: 0, paddingRight: 0};
+
     const formatDate = (date) => {
         if (typeof date === 'object') {
             return moment(date).format('DD/MM/YYYY');
@@ -40,7 +42,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                 <TableRow key={`${i}hostel`}>
                     <TableCell>
                         <List>
-                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                            <ListItem style={style}>
                                 <ListItemText
                                     primary={`${i + 1 + (offset || 0)}. ${checkIn} - ${checkOut}`}
                                     secondary={row.hostel_name} />
@@ -49,7 +51,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                     </TableCell>
                     <TableCell>
                         <List>
-                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                            <ListItem style={style}>
                                 <ListItemText
                                     primary={`£${getPrice(row.price)}`}
                                     secondary={row.booking_number} />
@@ -67,7 +69,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                 <TableRow key={i}>
                     <TableCell>
                         <List>
-                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                            <ListItem style={style}>
                                 <ListItemText
                                     primary={`${i + 1 + (offset || 0)}. ${departDate}${returnDate}`}
                                     secondary={`${row.from} - ${row.to}`} />
@@ -76,7 +78,7 @@ const BookingDetails = ({details, isHostel, offset}) => {
                     </TableCell>
                     <TableCell>
                         <List>
-                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                            <ListItem style={style}>
                                 <ListItemText
                                     primary={`£${getPrice(row.price)}`}
                                     secondary={row.booking_number || row.confirmation_code || ''} />
