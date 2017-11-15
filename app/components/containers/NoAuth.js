@@ -7,8 +7,17 @@ import jwtDecode from 'jwt-decode';
 function noAuth(WrappedComponent) {
     class NoAuth extends Component {
 
+        verify(token) {
+            const {exp} = jwtDecode(token);
+            const expiration = exp * 1000;
+            const now = (new Date()).getTime();
+            if (expiration > now) {
+                throw Error;
+            }
+        }
+
         componentWillMount() {
-            const {verify, token} = this.props;
+            const {verify, props: {token}} = this;
             if (token) {
                 return verify(token);
             }
@@ -34,19 +43,7 @@ function noAuth(WrappedComponent) {
     NoAuth.displayName = `NoAuth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
-    const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
-    const mapDispatchToProps = () => ({
-        verify(token) {
-            const {exp} = jwtDecode(token);
-            const expiration = exp * 1000;
-            const now = (new Date()).getTime();
-            if (expiration > now) {
-                throw Error;
-            }
-        },
-    });
-
-    return connect(mapStateToProps, mapDispatchToProps)(NoAuth);
+    return connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(NoAuth);
 }
 
 function getDisplayName(WrappedComponent) {

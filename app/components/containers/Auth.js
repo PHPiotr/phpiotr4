@@ -8,8 +8,22 @@ import {setToken, setIsLoggedIn} from '../../actions/login';
 function auth(WrappedComponent) {
     class Auth extends Component {
 
+        verify(token) {
+            const {exp} = jwtDecode(token);
+            if (!exp) {
+                throw Error;
+            }
+            const expiration = exp * 1000;
+            const now = (new Date()).getTime();
+            if (expiration < now) {
+                throw Error;
+            }
+            return true;
+        }
+
         componentWillMount() {
-            const {verify, token, isLoggedIn, setToken, setLoggedIn} = this.props;
+            const {verify} = this;
+            const {token, isLoggedIn, setToken, setLoggedIn} = this.props;
             try {
                 if (token) {
                     return verify(token);
@@ -41,18 +55,6 @@ function auth(WrappedComponent) {
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
     const mapDispatchToProps = dispatch => ({
-        verify(token) {
-            const {exp} = jwtDecode(token);
-            if (!exp) {
-                throw Error;
-            }
-            const expiration = exp * 1000;
-            const now = (new Date()).getTime();
-            if (expiration < now) {
-                throw Error;
-            }
-            return true;
-        },
         setToken(token) {
             dispatch(setToken(token));
         },
