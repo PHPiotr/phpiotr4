@@ -16,8 +16,16 @@ const Pagination = (props) => {
     for (var i = 1; i <= pages_count; i++) {
         pages_counter.push(i);
     }
+
+    const style = {
+        paddingLeft: 0,
+        paddingRight: 0,
+        minWidth: '40px',
+        maxWidth: '40px',
+    };
+
     const pages = pages_counter.map(page => (
-        <BottomNavigationButton key={page} label={page} href={`/bookings/${props.bookingsLabel}/${active}/${page}`}/>
+        <BottomNavigationButton style={style} key={page} label={page} href={`/bookings/${props.bookingsLabel}/${active}/${page}`}/>
     ));
 
     const handleOnChange = (event, value) => {
@@ -31,6 +39,7 @@ const Pagination = (props) => {
 
     return (
         <BottomNavigation
+            style={{justifyContent: 'left'}}
             value={bookings.current_page - 1}
             onChange={handleOnChange}
             showLabels
