@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {AppBar, IconButton, Drawer, Typography, Toolbar} from 'material-ui';
-import {Menu} from 'material-ui-icons';
+import {AppBar, Drawer, Typography, Toolbar} from 'material-ui';
 import {toggleIsDrawerOpen} from '../../actions/app/appActions';
 import List, {ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 import {withStyles} from 'material-ui/styles';
 import Divider from 'material-ui/Divider';
+import ToolbarIconButtonLeft from './ToolbarIconButtonLeft';
 
 const styles = ({palette}) => ({
     list: {
@@ -28,7 +28,7 @@ const Navbar = (props) => {
     return (
         <AppBar>
             <Toolbar>
-                <IconButton onClick={props.toggleIsDrawerOpen}><Menu style={{color: 'white'}} /></IconButton>
+                <ToolbarIconButtonLeft {...props}/>
                 <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
@@ -58,19 +58,12 @@ const Navbar = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    const {appReducer: {isDrawerOpen, appBarTitle}, dateFilter, auth: {isLoggedIn}, bookings: {bus, plane, train, hostel}} = state;
-    return {
-        isDrawerOpen,
-        appBarTitle,
-        isLoggedIn,
-        dateFilter,
-        isBusBeingAdded: bus.isAdd,
-        isPlaneBeingAdded: plane.isAdd,
-        isTrainBeingAdded: train.isAdd,
-        isHostelBeingAdded: hostel.isAdd,
-    };
-};
+const mapStateToProps = ({appReducer: {isDrawerOpen, appBarTitle}, dateFilter, auth: {isLoggedIn}}) => ({
+    isDrawerOpen,
+    appBarTitle,
+    isLoggedIn,
+    dateFilter,
+});
 
 const mapDispatchToProps = (dispatch) => {
     return {
