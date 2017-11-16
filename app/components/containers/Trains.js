@@ -12,7 +12,7 @@ import FloatingAddButton from '../presentation/FloatingAddButton';
 
 class Trains extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         if (!this.props.isLoggedIn) {
             return null;
         }

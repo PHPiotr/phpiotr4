@@ -11,7 +11,7 @@ import {HOME} from '../../constants';
 
 class Report extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.handleIsDateFilterEnabled(true);
         this.props.fetchReportOnLoad();
         this.props.setAppBarTitle(HOME);
