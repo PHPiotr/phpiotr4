@@ -1,18 +1,22 @@
-import {SET_IS_ADD} from '../actions/index';
+import {SET_IS_ADD, SET_BOOKING_INSERTED, SET_BOOKING} from '../actions/index';
 
 const initialState = {
 
     bus: {
         isAdd: false,
+        isAdded: false,
     },
     plane: {
         isAdd: false,
+        isAdded: false,
     },
     train: {
         isAdd: false,
+        isAdded: false,
     },
     hostel: {
         isAdd: false,
+        isAdded: false,
     },
 
     busErrorMessage: '',
@@ -24,16 +28,11 @@ const initialState = {
     planeErrors: {},
     trainErrors: {},
     hostelErrors: {},
-
-    planeInserted: {},
-    busInserted: {},
-    trainInserted: {},
-    hostelInserted: {},
 };
 
 const bookings = (state = initialState, action) => {
     switch (action.type) {
-    case 'SET_BOOKING':
+    case SET_BOOKING:
         let booking = {...state[action.bookingLabelSingular], [action.fieldName]: action.fieldValue};
         return {...state, [action.bookingLabelSingular]: booking};
 
@@ -52,8 +51,9 @@ const bookings = (state = initialState, action) => {
     case 'SET_BOOKING_ERRORS':
         return {...state, [`${action.bookingLabelSingular}Errors`]: action.errorsValue};
 
-    case 'SET_BOOKING_INSERTED':
-        return {...initialState, [`${action.bookingLabelSingular}Inserted`]: action.bookingInserted};
+    case SET_BOOKING_INSERTED:
+        const {payload: {label, isAdded}} = action;
+        return {...state, [label]: {...state[label], isAdded}};
 
     case SET_IS_ADD:
         let bookingIsAdd = {...state[action.bookingLabelSingular], isAdd: action.isAdd};

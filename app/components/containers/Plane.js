@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {setIsAdd} from '../../actions/index';
+import {setIsAdd, setBookingInserted} from '../../actions/index';
 import {fetchPlanesIfNeeded} from '../../actions/planes/planesActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import PlaneForm from '../presentation/PlaneForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {NEW_PLANE} from '../../constants';
+import MessageBar from '../presentation/MessageBar';
 
 class Plane extends Component {
     componentWillMount() {
@@ -16,7 +17,16 @@ class Plane extends Component {
         this.props.isAdding(false);
     }
     render() {
-        return <PlaneForm {...this.props}/>;
+        return (
+            <div>
+                <PlaneForm {...this.props}/>
+                <MessageBar
+                    open={this.props.plane.isAdded}
+                    message="Plane added"
+                    onRequestClose={this.props.onRequestClose}
+                />
+            </div>
+        );
     }
 }
 
@@ -24,7 +34,6 @@ const mapStateToProps = state => ({
     plane: state.bookings.plane,
     planeErrors: state.bookings.planeErrors,
     planeErrorMessage: state.bookings.planeErrorMessage,
-    planeInserted: state.bookings.planeInserted,
     bookingsLabel: 'planes',
     bookingLabel: 'plane',
     pricePlaceholder: '0.00',
@@ -50,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
+    },
+    onRequestClose() {
+        dispatch(setBookingInserted({label: 'plane', isAdded: false}));
     },
 });
 

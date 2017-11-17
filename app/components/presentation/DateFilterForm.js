@@ -20,14 +20,14 @@ const DateFilterForm = (props) => {
                     type="date"
                     name="from"
                     helperText="From"
-                    value={props.dateFilter.fromDate}
+                    value={props.dateFilter.fromDate || ''}
                 />
                 <TextField
                     onChange={props.onChange}
                     type="date"
                     name="to"
                     helperText="To"
-                    value={props.dateFilter.toDate}
+                    value={props.dateFilter.toDate || ''}
                 />
                 <Button style={{marginTop: '20px'}} raised type="submit">Filter</Button>
             </FormControl>

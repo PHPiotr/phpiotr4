@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {setIsAdd} from '../../actions/index';
+import {setIsAdd, setBookingInserted} from '../../actions/index';
 import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {NEW_TRAIN} from '../../constants';
+import MessageBar from '../presentation/MessageBar';
 
 class Train extends Component {
     componentWillMount() {
@@ -16,7 +17,16 @@ class Train extends Component {
         this.props.isAdding(false);
     }
     render() {
-        return <TrainForm {...this.props}/>;
+        return (
+            <div>
+                <TrainForm {...this.props}/>
+                <MessageBar
+                    open={this.props.train.isAdded}
+                    message="Train added"
+                    onRequestClose={this.props.onRequestClose}
+                />
+            </div>
+        );
     }
 }
 
@@ -24,7 +34,6 @@ const mapStateToProps = state => ({
     train: state.bookings.train,
     trainErrors: state.bookings.trainErrors,
     trainErrorMessage: state.bookings.trainErrorMessage,
-    trainInserted: state.bookings.trainInserted,
     bookingsLabel: 'trains',
     bookingLabel: 'train',
     pricePlaceholder: '0.00',
@@ -50,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
+    },
+    onRequestClose() {
+        dispatch(setBookingInserted({label: 'train', isAdded: false}));
     },
 });
 

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {setIsAdd} from '../../actions/index';
+import {setIsAdd, setBookingInserted} from '../../actions/index';
 import {fetchHostelsIfNeeded} from '../../actions/hostels/hostelsActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import HostelForm from '../presentation/HostelForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {NEW_HOSTEL} from '../../constants';
+import MessageBar from '../presentation/MessageBar';
 
 class Hostel extends Component {
     componentWillMount() {
@@ -16,7 +17,16 @@ class Hostel extends Component {
         this.props.isAdding(false);
     }
     render() {
-        return <HostelForm {...this.props}/>;
+        return (
+            <div>
+                <HostelForm {...this.props}/>
+                <MessageBar
+                    open={this.props.hostel.isAdded}
+                    message="Hostel added"
+                    onRequestClose={this.props.onRequestClose}
+                />
+            </div>
+        );
     }
 }
 
@@ -24,7 +34,6 @@ const mapStateToProps = state => ({
     hostel: state.bookings.hostel,
     hostelErrors: state.bookings.hostelErrors,
     hostelErrorMessage: state.bookings.hostelErrorMessage,
-    hostelInserted: state.bookings.hostelInserted,
     bookingsLabel: 'hostels',
     bookingLabel: 'hostel',
     pricePlaceholder: '0.00',
@@ -50,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
+    },
+    onRequestClose() {
+        dispatch(setBookingInserted({label: 'hostel', isAdded: false}));
     },
 });
 

@@ -16,7 +16,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    vałlue={train.from}
+                    vałlue={train.from || ''}
                 />
                 <TextField
                     error={trainErrors.to && !!trainErrors.to.message}
@@ -26,7 +26,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                     name={'to'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.to}
+                    value={train.to || ''}
                 />
                 <TextField
                     error={trainErrors.departure_date && !!trainErrors.departure_date.message}
@@ -36,7 +36,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                     name={'departure_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.departure_date}
+                    value={train.departure_date || ''}
                 />
                 <TextField
                     error={trainErrors.price && !!trainErrors.price.message}
@@ -46,7 +46,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.price}
+                    value={train.price || ''}
                 />
                 <FormGroup>
                     <FormControlLabel
@@ -72,7 +72,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                         name={'return_departure_date'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={train.return_departure_date}
+                        value={train.return_departure_date || ''}
                     />
                 )}
                 <Button type="submit">Add</Button>

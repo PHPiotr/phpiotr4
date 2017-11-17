@@ -16,7 +16,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'booking_number'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.booking_number}
+                    value={bus.booking_number || ''}
                 />
                 <TextField
                     error={busErrors.from && !!busErrors.from.message}
@@ -26,7 +26,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.from}
+                    value={bus.from || ''}
                 />
                 <TextField
                     error={busErrors.to && !!busErrors.to.message}
@@ -36,7 +36,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'to'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.to}
+                    value={bus.to || ''}
                 />
                 <TextField
                     error={busErrors.departure_date && !!busErrors.departure_date.message}
@@ -46,7 +46,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'departure_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.departure_date}
+                    value={bus.departure_date || ''}
                 />
                 <TextField
                     error={busErrors.departure_time && !!busErrors.departure_time.message}
@@ -56,7 +56,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'departure_time'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.departure_time}
+                    value={bus.departure_time || ''}
                 />
                 <TextField
                     error={busErrors.price && !!busErrors.price.message}
@@ -66,7 +66,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.price}
+                    value={bus.price || ''}
                 />
                 <FormGroup>
                     <FormControlLabel
@@ -92,7 +92,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                         name={'return_departure_date'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={bus.return_departure_date}
+                        value={bus.return_departure_date || ''}
                         key={1}
                     />,
                     <TextField
@@ -103,7 +103,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                         name={'return_departure_time'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={bus.return_departure_time}
+                        value={bus.return_departure_time || ''}
                         key={2}
                     />,
                 ]}

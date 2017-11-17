@@ -16,7 +16,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'confirmation_code'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.confirmation_code}
+                    value={plane.confirmation_code || ''}
                 />
                 <TextField
                     error={planeErrors.from && !!planeErrors.from.message}
@@ -26,7 +26,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.from}
+                    value={plane.from || ''}
                 />
                 <TextField
                     error={planeErrors.to && !!planeErrors.to.message}
@@ -36,7 +36,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'to'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.to}
+                    value={plane.to || ''}
                 />
                 <TextField
                     error={planeErrors.departure_date && !!planeErrors.departure_date.message}
@@ -46,7 +46,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'departure_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.departure_date}
+                    value={plane.departure_date || ''}
                 />
                 <TextField
                     error={planeErrors.departure_time && !!planeErrors.departure_time.message}
@@ -56,7 +56,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'departure_time'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.departure_time}
+                    value={plane.departure_time || ''}
                 />
                 <TextField
                     error={planeErrors.arrival_time && !!planeErrors.arrival_time.message}
@@ -66,7 +66,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'arrival_time'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.arrival_time}
+                    value={plane.arrival_time || ''}
                 />
                 <TextField
                     error={planeErrors.seat && !!planeErrors.seat.message}
@@ -76,7 +76,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'seat'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.seat}
+                    value={plane.seat || ''}
                 />
                 <TextField
                     error={planeErrors.price && !!planeErrors.price.message}
@@ -86,7 +86,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.price}
+                    value={plane.price || ''}
                 />
                 <FormGroup>
                     <FormControlLabel
@@ -127,7 +127,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                         name={'return_departure_date'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={plane.return_departure_date}
+                        value={plane.return_departure_date || ''}
                         key={1}
                     />,
                     <TextField
@@ -138,7 +138,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                         name={'return_departure_time'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={plane.return_departure_time}
+                        value={plane.return_departure_time || ''}
                         key={2}
                     />,
                     <TextField
@@ -149,7 +149,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                         name={'return_arrival_time'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={plane.return_arrival_time}
+                        value={plane.return_arrival_time || ''}
                         key={3}
                     />,
                     <TextField
@@ -160,7 +160,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane, planeErrors}
                         name={'return_seat'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={plane.return_seat}
+                        value={plane.return_seat || ''}
                         key={4}
                     />,
                 ]}

@@ -15,7 +15,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'booking_number'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.booking_number}
+                    value={hostel.booking_number || ''}
                 />
                 <TextField
                     error={hostelErrors.hostel_name && !!hostelErrors.hostel_name.message}
@@ -25,7 +25,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'hostel_name'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.hostel_name}
+                    value={hostel.hostel_name || ''}
                 />
                 <TextField
                     error={hostelErrors.hostel_address && !!hostelErrors.hostel_address.message}
@@ -35,7 +35,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'hostel_address'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.hostel_address}
+                    value={hostel.hostel_address || ''}
                 />
                 <TextField
                     error={hostelErrors.checkin_date && !!hostelErrors.checkin_date.message}
@@ -45,7 +45,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'checkin_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.checkin_date}
+                    value={hostel.checkin_date || ''}
                 />
                 <TextField
                     error={hostelErrors.checkout_date && !!hostelErrors.checkout_date.message}
@@ -55,7 +55,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'checkout_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.checkout_date}
+                    value={hostel.checkout_date || ''}
                 />
                 <TextField
                     error={hostelErrors.price && !!hostelErrors.price.message}
@@ -65,7 +65,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel, hostelErro
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.price}
+                    value={hostel.price || ''}
                 />
                 <Button type="submit">Add</Button>
             </FormControl>

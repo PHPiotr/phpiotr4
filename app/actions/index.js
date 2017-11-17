@@ -4,18 +4,16 @@ export const ADD_BOOKING_REQUEST = 'ADD_BOOKING_REQUEST';
 export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
 export const ADD_BOOKING_FAILURE = 'ADD_BOOKING_FAILURE';
 export const SET_IS_ADD = 'SET_IS_ADD';
+export const SET_BOOKING_INSERTED = 'SET_BOOKING_INSERTED';
+export const SET_BOOKING = 'SET_BOOKING';
 
 export const setBooking = (bookingLabelSingular, fieldName, fieldValue) => ({
-    type: 'SET_BOOKING',
+    type: SET_BOOKING,
     bookingLabelSingular,
     fieldName,
     fieldValue,
 });
-export const setBookingInserted = (bookingLabelSingular, bookingInserted) => ({
-    type: 'SET_BOOKING_INSERTED',
-    bookingLabelSingular,
-    bookingInserted,
-});
+export const setBookingInserted = payload => ({type: SET_BOOKING_INSERTED, payload});
 export const setBookingErrorMessage = (bookingLabelSingular, errorMessageValue) => ({
     type: 'SET_BOOKING_ERROR_MESSAGE',
     bookingLabelSingular,
@@ -78,7 +76,7 @@ export const addBookingIfNeeded = (singular, plural) => {
                 dispatch(addBookingSuccess(json, singular));
 
                 if (json.ok) {
-                    return dispatch(setBookingInserted(singular, json[singular]));
+                    return dispatch(setBookingInserted({label: singular, isAdded: true}));
                 }
                 if (json.err) {
                     dispatch(setBookingErrorMessage(singular, json.err.message));
