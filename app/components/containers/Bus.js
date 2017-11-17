@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {setIsAdd, setIsAdded} from '../../actions/index';
-import {fetchBusesIfNeeded} from '../../actions/buses/busesActions';
+import {getBookingsIfNeeded} from '../../actions/index';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import BusForm from '../presentation/BusForm';
@@ -34,7 +34,6 @@ class Bus extends Component {
 
 const mapStateToProps = state => ({
     bus: state.bookings.bus,
-    busErrors: state.bookings.busErrors,
     bookingsLabel: 'buses',
     bookingLabel: 'bus',
     pricePlaceholder: '0.00',
@@ -53,7 +52,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addBookingIfNeeded('bus', 'buses'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchBusesIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('bus', 'buses', type || '', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'bus'));

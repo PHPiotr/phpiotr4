@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchHostelsIfNeeded} from '../../actions/hostels/hostelsActions';
+import {getBookingsIfNeeded} from '../../actions/index';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
@@ -24,10 +24,10 @@ class Hostels extends Component {
     render() {
         const items = [];
         items.push(<Navigation key={1} {...this.props}/>);
-        if (this.props.hostels.isFetching) {
+        if (this.props.hostel.isFetching) {
             items.push(<LinearProgress key={2} />);
         } else {
-            items.push(<HostelsTable key={3} {...this.props.hostels.data} />);
+            items.push(<HostelsTable key={3} {...this.props.hostel.data} />);
             items.push(<Pagination key={4} {...this.props} />);
             items.push(<FloatingAddButton href={'/bookings/hostel/new'} key={5}/>);
         }
@@ -36,8 +36,8 @@ class Hostels extends Component {
     }
 }
 
-const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
-    hostels,
+const mapStateToProps = ({bookings: {hostel}, auth: {isLoggedIn}}) => ({
+    hostel,
     isLoggedIn,
     isAdd: false,
     bookingsLabel: 'hostels',
@@ -45,7 +45,7 @@ const mapStateToProps = ({hostels, auth: {isLoggedIn}}) => ({
 });
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchHostelsIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('hostel', 'hostels', type || '', page || 1));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));

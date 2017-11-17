@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded} from '../../actions/index';
-import {fetchPlanesIfNeeded} from '../../actions/planes/planesActions';
+import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/index';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import PlaneForm from '../presentation/PlaneForm';
@@ -32,7 +31,6 @@ class Plane extends Component {
 
 const mapStateToProps = state => ({
     plane: state.bookings.plane,
-    planeErrors: state.bookings.planeErrors,
     bookingsLabel: 'planes',
     bookingLabel: 'plane',
     pricePlaceholder: '0.00',
@@ -51,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addBookingIfNeeded('plane', 'planes'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchPlanesIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('plane', 'planes', type || '', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'plane'));

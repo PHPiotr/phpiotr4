@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded} from '../../actions/index';
-import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
+import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/index';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
@@ -32,7 +31,6 @@ class Train extends Component {
 
 const mapStateToProps = state => ({
     train: state.bookings.train,
-    trainErrors: state.bookings.trainErrors,
     bookingsLabel: 'trains',
     bookingLabel: 'train',
     pricePlaceholder: '0.00',
@@ -51,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addBookingIfNeeded('train', 'trains'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchTrainsIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('train', 'trains', type || '', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'train'));

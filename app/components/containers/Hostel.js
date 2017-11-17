@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded} from '../../actions/index';
-import {fetchHostelsIfNeeded} from '../../actions/hostels/hostelsActions';
+import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/index';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
 import HostelForm from '../presentation/HostelForm';
@@ -32,7 +31,6 @@ class Hostel extends Component {
 
 const mapStateToProps = state => ({
     hostel: state.bookings.hostel,
-    hostelErrors: state.bookings.hostelErrors,
     bookingsLabel: 'hostels',
     bookingLabel: 'hostel',
     pricePlaceholder: '0.00',
@@ -51,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addBookingIfNeeded('hostel', 'hostels'));
     },
     fetchBookings(type, page) {
-        dispatch(fetchHostelsIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('hostel', 'hostels', type || '', page || 1));
     },
     isAdding(isAdd) {
         dispatch(setIsAdd(isAdd, 'hostel'));

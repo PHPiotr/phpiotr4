@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchBusesIfNeeded} from '../../actions/buses/busesActions';
+import {getBookingsIfNeeded} from '../../actions/index';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
@@ -24,10 +24,10 @@ class Buses extends Component {
     render() {
         const items = [];
         items.push(<Navigation key={1} {...this.props}/>);
-        if (this.props.buses.isFetching) {
+        if (this.props.bus.isFetching) {
             items.push(<LinearProgress key={2} />);
         } else {
-            items.push(<BusesTable key={3} {...this.props.buses.data} />);
+            items.push(<BusesTable key={3} {...this.props.bus.data} />);
             items.push(<Pagination key={4} {...this.props} />);
             items.push(<FloatingAddButton href={'/bookings/bus/new'} key={5}/>);
         }
@@ -36,9 +36,9 @@ class Buses extends Component {
     }
 }
 
-const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
+const mapStateToProps = ({bookings: {bus}, auth: {isLoggedIn}}) => {
     return {
-        buses,
+        bus,
         isLoggedIn,
         isAdd: false,
         bookingsLabel: 'buses',
@@ -47,7 +47,7 @@ const mapStateToProps = ({buses, auth: {isLoggedIn}}) => {
 };
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchBusesIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('bus', 'buses', type || '', page || 1));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));

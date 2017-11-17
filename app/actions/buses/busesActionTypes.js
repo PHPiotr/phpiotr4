@@ -1,6 +1,0 @@
-export const BUSES_REQUEST = 'BUSES_REQUEST';
-export const BUSES_SUCCESS = 'BUSES_SUCCESS';
-export const BUSES_FAILURE = 'BUSES_FAILURE';
-export const ADD_BUS_REQUEST = 'ADD_BUS_REQUEST';
-export const ADD_BUS_SUCCESS = 'ADD_BUS_SUCCESS';
-export const ADD_BUS_FAILURE = 'ADD_BUS_FAILURE';

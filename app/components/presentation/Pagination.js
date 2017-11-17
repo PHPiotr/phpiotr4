@@ -3,10 +3,10 @@ import BottomNavigation, {BottomNavigationButton} from 'material-ui/BottomNaviga
 
 const Pagination = (props) => {
 
-    if (props[props.bookingsLabel].data === undefined) {
+    if (props[props.bookingLabel].data === undefined) {
         return null;
     }
-    const bookings = props[props.bookingsLabel].data || {};
+    const bookings = props[props.bookingLabel].data || {};
     if (!bookings.pages_count || bookings.pages_count <= 1) {
         return null;
     }

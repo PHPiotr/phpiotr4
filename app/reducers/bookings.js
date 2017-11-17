@@ -5,29 +5,45 @@ const initialState = {
     bus: {
         isAdd: false,
         isAdded: false,
+        isAdding: false,
+        isFetching: false,
+        data: {},
         message: '',
         errors: {},
+        error: {},
         current: {},
     },
     plane: {
         isAdd: false,
         isAdded: false,
+        isAdding: false,
+        isFetching: false,
+        data: {},
         message: '',
         errors: {},
+        error: {},
         current: {},
     },
     train: {
         isAdd: false,
         isAdded: false,
+        isAdding: false,
+        isFetching: false,
+        data: {},
         message: '',
         errors: {},
+        error: {},
         current: {},
     },
     hostel: {
         isAdd: false,
         isAdded: false,
+        isAdding: false,
+        isFetching: false,
+        data: {},
         message: '',
         errors: {},
+        error: {},
         current: {},
     },
 };
@@ -47,12 +63,24 @@ const bookings = (state = initialState, action) => {
         const newBooking = {...state[payload.label], errors: newErrors};
         return {...state, [payload.label]: newBooking};
 
+    case indexActionTypes.ADD_BOOKING_REQUEST:
+        return {...state, [payload.label]: {...state[payload.label], isAdding: true}};
+
     case indexActionTypes.ADD_BOOKING_SUCCESS:
-        return {...state, [payload.label]: {...state[payload.label], isAdded: true, current: {}}};
+        return {...state, [payload.label]: {...state[payload.label], isAdded: true, isAdding: false, current: {}}};
 
     case indexActionTypes.ADD_BOOKING_FAILURE:
         const {error: {message, errors}} = payload;
-        return {...state, [payload.label]: {...state[payload.label], message: message || '', errors: errors || {}}};
+        return {...state, [payload.label]: {...state[payload.label], isAdding: false, message: message || '', errors: errors || {}}};
+
+    case indexActionTypes.GET_BOOKINGS_REQUEST:
+        return {...state, [payload.label]: {...state[payload.label], isFetching: true}};
+
+    case indexActionTypes.GET_BOOKINGS_SUCCESS:
+        return {...state, [payload.label]: {...state[payload.label], isFetching: false, data: payload.data}};
+
+    case indexActionTypes.GET_BOOKINGS_FAILURE:
+        return {...state, [payload.label]: {...state[payload.label], isFetching: false, error: payload.error}};
 
     case indexActionTypes.SET_IS_ADDED:
         let {isAdded} = payload;

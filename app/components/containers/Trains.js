@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchTrainsIfNeeded} from '../../actions/trains/trainsActions';
+import {getBookingsIfNeeded} from '../../actions/index';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
@@ -24,10 +24,10 @@ class Trains extends Component {
     render() {
         const items = [];
         items.push(<Navigation key={1} {...this.props}/>);
-        if (this.props.trains.isFetching) {
+        if (this.props.train.isFetching) {
             items.push(<LinearProgress key={2} />);
         } else {
-            items.push(<TrainsTable key={3} {...this.props.trains.data} />);
+            items.push(<TrainsTable key={3} {...this.props.train.data} />);
             items.push(<Pagination key={4} {...this.props} />);
             items.push(<FloatingAddButton href={'/bookings/train/new'} key={5}/>);
         }
@@ -36,8 +36,8 @@ class Trains extends Component {
     }
 }
 
-const mapStateToProps = ({trains, auth: {isLoggedIn}}) => ({
-    trains,
+const mapStateToProps = ({bookings: {train}, auth: {isLoggedIn}}) => ({
+    train,
     isLoggedIn,
     isAdd: false,
     bookingsLabel: 'trains',
@@ -45,7 +45,7 @@ const mapStateToProps = ({trains, auth: {isLoggedIn}}) => ({
 });
 const mapDispatchToProps = dispatch => ({
     fetchBookings(type, page) {
-        dispatch(fetchTrainsIfNeeded(type || '', page || 1));
+        dispatch(getBookingsIfNeeded('train', 'trains', type || '', page || 1));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
