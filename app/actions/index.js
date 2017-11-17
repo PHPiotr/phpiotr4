@@ -32,9 +32,14 @@ export const setDate = (dateFieldName, dateFieldValue) => ({
 });
 
 export const handleFocus = ({target: {name}}, label) => {
-    return (dispatch) => {
-        dispatch(setBookingErrorMessage({label, message: ''}));
-        dispatch(setBookingFieldErrorMessage({label, name, value: null}));
+    return (dispatch, getState) => {
+        const {bookings: {[label]: {message, errors}}} = getState();
+        if (message) {
+            dispatch(setBookingErrorMessage({label, message: ''}));
+        }
+        if (errors[name] && errors[name]['message']) {
+            dispatch(setBookingFieldErrorMessage({label, name, value: null}));
+        }
         return Promise.resolve();
     };
 };
