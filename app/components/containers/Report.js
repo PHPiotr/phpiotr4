@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchReportIfNeeded} from '../../actions/report';
-import {toggleDateFilterEnabled} from '../../actions/index';
+import {toggleDateFilterEnabled} from '../../actions/booking/bookingActions';
 import ReportTable from '../presentation/ReportTable';
 import {LinearProgress} from 'material-ui/Progress';
 import DateFilterForm from '../containers/DateFilter';

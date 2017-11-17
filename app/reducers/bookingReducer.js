@@ -1,51 +1,23 @@
-import * as indexActionTypes from '../actions/index';
+import * as indexActionTypes from '../actions/booking/bookingActionTypes';
+
+const initialBooking = {
+    isAdd: false,
+    isAdded: false,
+    isAdding: false,
+    isFetching: false,
+    data: {},
+    message: '',
+    errors: {},
+    error: {},
+    current: {},
+};
 
 const initialState = {
 
-    bus: {
-        isAdd: false,
-        isAdded: false,
-        isAdding: false,
-        isFetching: false,
-        data: {},
-        message: '',
-        errors: {},
-        error: {},
-        current: {},
-    },
-    plane: {
-        isAdd: false,
-        isAdded: false,
-        isAdding: false,
-        isFetching: false,
-        data: {},
-        message: '',
-        errors: {},
-        error: {},
-        current: {},
-    },
-    train: {
-        isAdd: false,
-        isAdded: false,
-        isAdding: false,
-        isFetching: false,
-        data: {},
-        message: '',
-        errors: {},
-        error: {},
-        current: {},
-    },
-    hostel: {
-        isAdd: false,
-        isAdded: false,
-        isAdding: false,
-        isFetching: false,
-        data: {},
-        message: '',
-        errors: {},
-        error: {},
-        current: {},
-    },
+    bus: {...initialBooking},
+    plane: {...initialBooking},
+    train: {...initialBooking},
+    hostel: {...initialBooking},
 };
 
 const bookings = (state = initialState, action) => {

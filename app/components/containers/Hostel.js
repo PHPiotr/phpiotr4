@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/index';
-import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
+import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/booking/bookingActions';
+import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/booking/bookingActions';
 import {connect} from 'react-redux';
 import HostelForm from '../presentation/HostelForm';
 import {setAppBarTitle} from '../../actions/app/appActions';

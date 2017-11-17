@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getBookingsIfNeeded} from '../../actions/index';
+import {getBookingsIfNeeded} from '../../actions/booking/bookingActions';
 import {withRouter} from 'react-router-dom';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';

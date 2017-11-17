@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded} from '../../actions/index';
-import {getBookingsIfNeeded} from '../../actions/index';
-import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
+import {setIsAdd, setIsAdded} from '../../actions/booking/bookingActions';
+import {getBookingsIfNeeded} from '../../actions/booking/bookingActions';
+import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/booking/bookingActions';
 import {connect} from 'react-redux';
 import BusForm from '../presentation/BusForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
