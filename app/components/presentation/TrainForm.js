@@ -63,7 +63,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                         }
                     />
                 </FormGroup>
-                {!!train.is_return && (
+                {!!train.current.is_return && (
                     <TextField
                         error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
                         helperText={'Return departure date'}

@@ -118,7 +118,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                         }
                     />
                 </FormGroup>
-                {!!plane.is_return && [
+                {!!plane.current.is_return && [
                     <TextField
                         error={plane.errors.return_departure_date && !!plane.errors.return_departure_date.message}
                         helperText={'Return departure date'}

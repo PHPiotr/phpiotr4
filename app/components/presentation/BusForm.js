@@ -83,7 +83,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                         }
                     />
                 </FormGroup>
-                {!!bus.is_return && [
+                {!!bus.current.is_return && [
                     <TextField
                         error={bus.errors.return_departure_date && !!bus.errors.return_departure_date.message}
                         helperText={'Return departure date'}
