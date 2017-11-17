@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {setIsAdd, setBookingInserted} from '../../actions/index';
+import {setIsAdd, setIsAdded} from '../../actions/index';
 import {fetchBusesIfNeeded} from '../../actions/buses/busesActions';
 import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/index';
 import {connect} from 'react-redux';
@@ -35,7 +35,6 @@ class Bus extends Component {
 const mapStateToProps = state => ({
     bus: state.bookings.bus,
     busErrors: state.bookings.busErrors,
-    busErrorMessage: state.bookings.busErrorMessage,
     bookingsLabel: 'buses',
     bookingLabel: 'bus',
     pricePlaceholder: '0.00',
@@ -63,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(setAppBarTitle(appBarTitle));
     },
     onRequestClose() {
-        dispatch(setBookingInserted({label: 'bus', isAdded: false}));
+        dispatch(setIsAdded({label: 'bus', isAdded: false}));
     },
 });
 

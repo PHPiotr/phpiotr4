@@ -4,80 +4,80 @@ import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 
-const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
+const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
     return (
         <form style={{padding: '20px'}} onSubmit={handleSubmit}>
             <FormControl component="fieldset">
                 <TextField
-                    error={busErrors.booking_number && !!busErrors.booking_number.message}
+                    error={bus.errors.booking_number && !!bus.errors.booking_number.message}
                     helperText={'Code'}
                     id={'booking-number'}
                     type={'text'}
                     name={'booking_number'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.booking_number || ''}
+                    value={bus.current.booking_number || ''}
                 />
                 <TextField
-                    error={busErrors.from && !!busErrors.from.message}
+                    error={bus.errors.from && !!bus.errors.from.message}
                     helperText={'From'}
                     id={'from'}
                     type={'text'}
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.from || ''}
+                    value={bus.current.from || ''}
                 />
                 <TextField
-                    error={busErrors.to && !!busErrors.to.message}
+                    error={bus.errors.to && !!bus.errors.to.message}
                     helperText={'To'}
                     id={'to'}
                     type={'text'}
                     name={'to'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.to || ''}
+                    value={bus.current.to || ''}
                 />
                 <TextField
-                    error={busErrors.departure_date && !!busErrors.departure_date.message}
+                    error={bus.errors.departure_date && !!bus.errors.departure_date.message}
                     helperText={'Departure date'}
                     id={'departure-date'}
                     type={'date'}
                     name={'departure_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.departure_date || ''}
+                    value={bus.current.departure_date || ''}
                 />
                 <TextField
-                    error={busErrors.departure_time && !!busErrors.departure_time.message}
+                    error={bus.errors.departure_time && !!bus.errors.departure_time.message}
                     helperText={'Departure time'}
                     id={'departure-time'}
                     type={'time'}
                     name={'departure_time'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.departure_time || ''}
+                    value={bus.current.departure_time || ''}
                 />
                 <TextField
-                    error={busErrors.price && !!busErrors.price.message}
+                    error={bus.errors.price && !!bus.errors.price.message}
                     helperText={'Price'}
                     id={'price'}
                     type={'text'}
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.price || ''}
+                    value={bus.current.price || ''}
                 />
                 <FormGroup>
                     <FormControlLabel
                         label={'Is return?'}
                         control={
                             <Checkbox
-                                error={busErrors.is_return && !!busErrors.is_return.message}
+                                error={bus.errors.is_return && !!bus.errors.is_return.message}
                                 checked={bus.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={bus.is_return ? '1' : '0'}
+                                value={bus.current.is_return ? '1' : '0'}
                                 name="is_return"
                             />
                         }
@@ -85,25 +85,25 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, busErrors}) => {
                 </FormGroup>
                 {!!bus.is_return && [
                     <TextField
-                        error={busErrors.return_departure_date && !!busErrors.return_departure_date.message}
+                        error={bus.errors.return_departure_date && !!bus.errors.return_departure_date.message}
                         helperText={'Return departure date'}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={bus.return_departure_date || ''}
+                        value={bus.current.return_departure_date || ''}
                         key={1}
                     />,
                     <TextField
-                        error={busErrors.return_departure_time && !!busErrors.return_departure_time.message}
+                        error={bus.errors.return_departure_time && !!bus.errors.return_departure_time.message}
                         helperText={'Return departure time'}
                         id={'return-departure-time'}
                         type={'time'}
                         name={'return_departure_time'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={bus.return_departure_time || ''}
+                        value={bus.current.return_departure_time || ''}
                         key={2}
                     />,
                 ]}

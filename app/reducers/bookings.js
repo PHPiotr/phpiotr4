@@ -1,62 +1,65 @@
-import {SET_IS_ADD, SET_BOOKING_INSERTED, SET_BOOKING} from '../actions/index';
+import * as indexActionTypes from '../actions/index';
 
 const initialState = {
 
     bus: {
         isAdd: false,
         isAdded: false,
+        message: '',
+        errors: {},
+        current: {},
     },
     plane: {
         isAdd: false,
         isAdded: false,
+        message: '',
+        errors: {},
+        current: {},
     },
     train: {
         isAdd: false,
         isAdded: false,
+        message: '',
+        errors: {},
+        current: {},
     },
     hostel: {
         isAdd: false,
         isAdded: false,
+        message: '',
+        errors: {},
+        current: {},
     },
-
-    busErrorMessage: '',
-    planeErrorMessage: '',
-    trainErrorMessage: '',
-    hostelErrorMessage: '',
-
-    busErrors: {},
-    planeErrors: {},
-    trainErrors: {},
-    hostelErrors: {},
 };
 
 const bookings = (state = initialState, action) => {
+    const {payload} = action;
     switch (action.type) {
-    case SET_BOOKING:
-        let booking = {...state[action.bookingLabelSingular], [action.fieldName]: action.fieldValue};
-        return {...state, [action.bookingLabelSingular]: booking};
+    case indexActionTypes.SET_BOOKING:
+        let newCurrent = {...state[action.bookingLabelSingular]['current'], [action.fieldName]: action.fieldValue};
+        return {...state, [action.bookingLabelSingular]: {...state[action.bookingLabelSingular], current: newCurrent}};
 
-    case 'SET_BOOKING_ERROR_MESSAGE':
-        let errorMessageType = `${action.bookingLabelSingular}ErrorMessage`;
-        let errorMessageValue = action.errorMessageValue;
-        if (state[errorMessageType] === errorMessageValue) {
-            return state;
-        }
-        return {...state, [errorMessageType]: errorMessageValue};
+    case indexActionTypes.SET_BOOKING_ERROR_MESSAGE:
+        return {...state, [payload.label]: {...state[payload.label], message: payload.message}};
 
-    case 'SET_BOOKING_INPUT_ERROR':
-        let inputError = { ...state[`${action.bookingLabelSingular}Errors`], [action.fieldName]: action.errorsValue};
-        return {...state, [`${action.bookingLabelSingular}Errors`]: inputError};
+    case indexActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE:
+        const newErrors = {...state[payload.label]['errors'], [payload.name]: payload.value};
+        const newBooking = {...state[payload.label], errors: newErrors};
+        return {...state, [payload.label]: newBooking};
 
-    case 'SET_BOOKING_ERRORS':
-        return {...state, [`${action.bookingLabelSingular}Errors`]: action.errorsValue};
+    case indexActionTypes.ADD_BOOKING_SUCCESS:
+        return {...state, [payload.label]: {...state[payload.label], isAdded: true, current: {}}};
 
-    case SET_BOOKING_INSERTED:
-        const {payload: {label, isAdded}} = action;
-        return {...state, [label]: {...state[label], isAdded}};
+    case indexActionTypes.ADD_BOOKING_FAILURE:
+        const {error: {message, errors}} = payload;
+        return {...state, [payload.label]: {...state[payload.label], message: message || '', errors: errors || {}}};
 
-    case SET_IS_ADD:
-        let bookingIsAdd = {...state[action.bookingLabelSingular], isAdd: action.isAdd};
+    case indexActionTypes.SET_IS_ADDED:
+        let {isAdded} = payload;
+        return {...state, [payload.label]: {...state[payload.label], isAdded}};
+
+    case indexActionTypes.SET_IS_ADD:
+        const bookingIsAdd = {...state[action.bookingLabelSingular], isAdd: action.isAdd};
         return {...state, [action.bookingLabelSingular]: bookingIsAdd};
     default:
         return state;

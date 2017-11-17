@@ -4,60 +4,60 @@ import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 
-const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}) => {
+const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
     return (
         <form style={{padding: '20px'}} onSubmit={handleSubmit}>
             <FormControl component="fieldset">
                 <TextField
-                    error={trainErrors.from && !!trainErrors.from.message}
+                    error={train.errors.from && !!train.errors.from.message}
                     helperText={'From'}
                     id={'from'}
                     type={'text'}
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    vałlue={train.from || ''}
+                    vałlue={train.current.from || ''}
                 />
                 <TextField
-                    error={trainErrors.to && !!trainErrors.to.message}
+                    error={train.errors.to && !!train.errors.to.message}
                     helperText={'To'}
                     id={'to'}
                     type={'text'}
                     name={'to'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.to || ''}
+                    value={train.current.to || ''}
                 />
                 <TextField
-                    error={trainErrors.departure_date && !!trainErrors.departure_date.message}
+                    error={train.errors.departure_date && !!train.errors.departure_date.message}
                     helperText={'Departure date'}
                     id={'departure-date'}
                     type={'date'}
                     name={'departure_date'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.departure_date || ''}
+                    value={train.current.departure_date || ''}
                 />
                 <TextField
-                    error={trainErrors.price && !!trainErrors.price.message}
+                    error={train.errors.price && !!train.errors.price.message}
                     helperText={'Price'}
                     id={'price'}
                     type={'text'}
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.price || ''}
+                    value={train.current.price || ''}
                 />
                 <FormGroup>
                     <FormControlLabel
                         label={'Is return?'}
                         control={
                             <Checkbox
-                                error={trainErrors.is_return && !!trainErrors.is_return.message}
+                                error={train.errors.is_return && !!train.errors.is_return.message}
                                 checked={train.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={train.is_return ? '1' : '0'}
+                                value={train.current.is_return ? '1' : '0'}
                                 name="is_return"
                             />
                         }
@@ -65,14 +65,14 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train, trainErrors}
                 </FormGroup>
                 {!!train.is_return && (
                     <TextField
-                        error={trainErrors.return_departure_date && !!trainErrors.return_departure_date.message}
+                        error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
                         helperText={'Return departure date'}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        value={train.return_departure_date || ''}
+                        value={train.current.return_departure_date || ''}
                     />
                 )}
                 <Button type="submit">Add</Button>

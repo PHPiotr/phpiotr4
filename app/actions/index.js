@@ -4,8 +4,12 @@ export const ADD_BOOKING_REQUEST = 'ADD_BOOKING_REQUEST';
 export const ADD_BOOKING_SUCCESS = 'ADD_BOOKING_SUCCESS';
 export const ADD_BOOKING_FAILURE = 'ADD_BOOKING_FAILURE';
 export const SET_IS_ADD = 'SET_IS_ADD';
-export const SET_BOOKING_INSERTED = 'SET_BOOKING_INSERTED';
+export const SET_IS_ADDED = 'SET_IS_ADDED';
 export const SET_BOOKING = 'SET_BOOKING';
+export const SET_BOOKING_ERROR_MESSAGE = 'SET_BOOKING_ERROR_MESSAGE';
+export const SET_BOOKING_FIELD_ERROR_MESSAGE = 'SET_BOOKING_FIELD_ERROR_MESSAGE';
+export const TOGGLE_DATE_FILTER_ENABLED = 'TOGGLE_DATE_FILTER_ENABLED';
+export const SET_DATE = 'SET_DATE';
 
 export const setBooking = (bookingLabelSingular, fieldName, fieldValue) => ({
     type: SET_BOOKING,
@@ -13,38 +17,24 @@ export const setBooking = (bookingLabelSingular, fieldName, fieldValue) => ({
     fieldName,
     fieldValue,
 });
-export const setBookingInserted = payload => ({type: SET_BOOKING_INSERTED, payload});
-export const setBookingErrorMessage = (bookingLabelSingular, errorMessageValue) => ({
-    type: 'SET_BOOKING_ERROR_MESSAGE',
-    bookingLabelSingular,
-    errorMessageValue,
-});
-export const setBookingErrors = (bookingLabelSingular, errorsValue) => ({
-    type: 'SET_BOOKING_ERRORS',
-    bookingLabelSingular,
-    errorsValue,
-});
-export const setBookingInputError = (bookingLabelSingular, errorsValue, fieldName) => ({
-    type: 'SET_BOOKING_INPUT_ERROR',
-    bookingLabelSingular,
-    errorsValue,
-    fieldName,
-});
+export const setIsAdded = payload => ({type: SET_IS_ADDED, payload});
+export const setBookingErrorMessage = payload => ({type: SET_BOOKING_ERROR_MESSAGE, payload});
+export const setBookingFieldErrorMessage = payload => ({type: SET_BOOKING_FIELD_ERROR_MESSAGE, payload});
 
 export const toggleDateFilterEnabled = isDateFilterEnabled => ({
-    type: 'TOGGLE_DATE_FILTER_ENABLED',
+    type: TOGGLE_DATE_FILTER_ENABLED,
     isDateFilterEnabled,
 });
 export const setDate = (dateFieldName, dateFieldValue) => ({
-    type: 'SET_DATE',
+    type: SET_DATE,
     dateFieldName,
     dateFieldValue,
 });
 
-export const handleFocus = (event, bookingLabelSingular) => {
+export const handleFocus = ({target: {name}}, label) => {
     return (dispatch) => {
-        dispatch(setBookingErrorMessage(bookingLabelSingular, ''));
-        dispatch(setBookingInputError(bookingLabelSingular, undefined, event.target.name));
+        dispatch(setBookingErrorMessage({label, message: ''}));
+        dispatch(setBookingFieldErrorMessage({label, name, value: null}));
         return Promise.resolve();
     };
 };
@@ -65,7 +55,7 @@ export const addBookingIfNeeded = (singular, plural) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
         dispatch(addBookingRequest(singular));
-        return postBookings(token, plural, JSON.stringify(bookings[singular]))
+        return postBookings(token, plural, JSON.stringify(bookings[singular]['current']))
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText, response.status);
@@ -73,33 +63,22 @@ export const addBookingIfNeeded = (singular, plural) => {
                 return response.json();
             })
             .then((json) => {
-                dispatch(addBookingSuccess(json, singular));
-
                 if (json.ok) {
-                    return dispatch(setBookingInserted({label: singular, isAdded: true}));
+                    dispatch(addBookingSuccess({label: singular, data: json}));
                 }
                 if (json.err) {
-                    dispatch(setBookingErrorMessage(singular, json.err.message));
-                    dispatch(setBookingErrors(singular, json.err.errors));
+                    dispatch(addBookingFailure({label: singular, error: json.err}));
                 }
             })
-            .catch(error => dispatch(addBookingFailure(error)));
+            .catch(error => dispatch(addBookingFailure({label: singular, error})));
     };
 };
 const addBookingRequest = bookingSingularLabel => ({
     type: ADD_BOOKING_REQUEST,
     bookingSingularLabel,
 });
-const addBookingSuccess = (data, bookingSingularLabel) => ({
-    type: ADD_BOOKING_SUCCESS,
-    data,
-    bookingSingularLabel,
-});
-const addBookingFailure = (error, bookingSingularLabel) => ({
-    type: ADD_BOOKING_FAILURE,
-    error,
-    bookingSingularLabel,
-});
+const addBookingSuccess = payload => ({type: ADD_BOOKING_SUCCESS, payload});
+const addBookingFailure = payload => ({type: ADD_BOOKING_FAILURE, payload});
 
 export const setIsAdd = (isAdd, bookingLabelSingular) => ({
     type: SET_IS_ADD,
