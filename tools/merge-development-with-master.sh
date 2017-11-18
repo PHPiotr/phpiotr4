@@ -16,4 +16,4 @@ git checkout master --force
 git merge --no-ff --no-edit development
 git push origin master
 
-git push "https://${GITHUB_TOKEN}@github.com/PHPiotr/phpiotr4"
+git push "https://${GITHUB_SECRET_TOKEN}@github.com/PHPiotr/phpiotr4"
