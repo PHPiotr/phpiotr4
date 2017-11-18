@@ -16,7 +16,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                     name={'from'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    vałlue={train.current.from || ''}
+                    value={train.current.from || ''}
                 />
                 <TextField
                     error={train.errors.to && !!train.errors.to.message}

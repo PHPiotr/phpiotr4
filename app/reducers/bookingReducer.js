@@ -24,16 +24,24 @@ const bookings = (state = initialState, action) => {
     const {payload} = action;
     switch (action.type) {
     case indexActionTypes.SET_BOOKING:
-        let newCurrent = {...state[action.bookingLabelSingular]['current'], [action.fieldName]: action.fieldValue};
-        return {...state, [action.bookingLabelSingular]: {...state[action.bookingLabelSingular], current: newCurrent}};
+        return {
+            ...state,
+            [payload.label]: {
+                ...state[payload.label],
+                current: {...state[payload.label]['current'], [payload.name]: payload.value},
+            },
+        };
 
     case indexActionTypes.SET_BOOKING_ERROR_MESSAGE:
         return {...state, [payload.label]: {...state[payload.label], message: payload.message}};
 
     case indexActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE:
-        const newErrors = {...state[payload.label]['errors'], [payload.name]: payload.value};
-        const newBooking = {...state[payload.label], errors: newErrors};
-        return {...state, [payload.label]: newBooking};
+        return {...state,
+            [payload.label]: {
+                ...state[payload.label],
+                errors: {...state[payload.label]['errors'], [payload.name]: payload.value},
+            },
+        };
 
     case indexActionTypes.ADD_BOOKING_REQUEST:
         return {...state, [payload.label]: {...state[payload.label], isAdding: true}};
@@ -42,8 +50,15 @@ const bookings = (state = initialState, action) => {
         return {...state, [payload.label]: {...state[payload.label], isAdded: true, isAdding: false, current: {}}};
 
     case indexActionTypes.ADD_BOOKING_FAILURE:
-        const {error: {message, errors}} = payload;
-        return {...state, [payload.label]: {...state[payload.label], isAdding: false, message: message || '', errors: errors || {}}};
+        return {
+            ...state,
+            [payload.label]: {
+                ...state[payload.label],
+                isAdding: false,
+                message: payload.error.message || '',
+                errors: payload.error.errors || {},
+            },
+        };
 
     case indexActionTypes.GET_BOOKINGS_REQUEST:
         return {...state, [payload.label]: {...state[payload.label], isFetching: true}};
@@ -55,12 +70,10 @@ const bookings = (state = initialState, action) => {
         return {...state, [payload.label]: {...state[payload.label], isFetching: false, error: payload.error}};
 
     case indexActionTypes.SET_IS_ADDED:
-        let {isAdded} = payload;
-        return {...state, [payload.label]: {...state[payload.label], isAdded}};
+        return {...state, [payload.label]: {...state[payload.label], isAdded: payload.isAdded}};
 
     case indexActionTypes.SET_IS_ADD:
-        const bookingIsAdd = {...state[action.bookingLabelSingular], isAdd: action.isAdd};
-        return {...state, [action.bookingLabelSingular]: bookingIsAdd};
+        return {...state, [payload.label]: {...state[payload.label], isAdd: payload.isAdd}};
     default:
         return state;
     }

@@ -52,7 +52,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(getBookingsIfNeeded('hostel', 'hostels', type || '', page || 1));
     },
     isAdding(isAdd) {
-        dispatch(setIsAdd(isAdd, 'hostel'));
+        dispatch(setIsAdd({label: 'hostel', isAdd}));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));

@@ -23,7 +23,7 @@ const Pagination = (props) => {
     };
     for (let page = 1; page <= pagesCount; page++) {
         pages.push(<BottomNavigationButton key={page} value={page} label={page} style={style}
-                                           href={`/bookings/${bookingsLabel}/${active}/${page}`}/>);
+            href={`/bookings/${bookingsLabel}/${active}/${page}`}/>);
     }
 
     return (
