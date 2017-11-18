@@ -3,47 +3,31 @@ import BottomNavigation, {BottomNavigationButton} from 'material-ui/BottomNaviga
 
 const Pagination = (props) => {
 
-    if (props[props.bookingLabel].data === undefined) {
+    const {bookingLabel, bookingsLabel} = props;
+    const bookings = props[bookingLabel].data || {};
+    const pagesCount = bookings.pages_count;
+    const active = bookings.active || 'all';
+    if (!pagesCount || pagesCount <= 1) {
         return null;
     }
-    const bookings = props[props.bookingLabel].data || {};
-    if (!bookings.pages_count || bookings.pages_count <= 1) {
-        return null;
-    }
-    const pages_count = bookings.pages_count;
-    const active = bookings.active;
-    const pages_counter = [];
-    for (var i = 1; i <= pages_count; i++) {
-        pages_counter.push(i);
-    }
-
-    const style = {
-        paddingLeft: 0,
-        paddingRight: 0,
-        minWidth: '40px',
-        maxWidth: '40px',
-    };
-
-    const pages = pages_counter.map(page => (
-        <BottomNavigationButton style={style} key={page} label={page} href={`/bookings/${props.bookingsLabel}/${active}/${page}`}/>
-    ));
-
-    const handleOnChange = (event, value) => {
+    const currentPage = bookings.current_page;
+    const style = {paddingLeft: 0, paddingRight: 0, minWidth: '40px', maxWidth: '40px'};
+    const pages = [];
+    const handleOnChange = (event, page) => {
         event.preventDefault();
-        props.fetchBookings(active, value + 1);
-        const url = `/bookings/${props.bookingsLabel}/${active}/${value + 1}`;
-        if (props.history.location.pathname !== url) {
-            props.history.push(url);
+        if (page === currentPage) {
+            return;
         }
+        props.fetchBookings(active, page);
+        props.history.push(`/bookings/${bookingsLabel}/${active}/${page}`);
     };
+    for (let page = 1; page <= pagesCount; page++) {
+        pages.push(<BottomNavigationButton key={page} value={page} label={page} style={style}
+                                           href={`/bookings/${bookingsLabel}/${active}/${page}`}/>);
+    }
 
     return (
-        <BottomNavigation
-            style={{justifyContent: 'left'}}
-            value={bookings.current_page - 1}
-            onChange={handleOnChange}
-            showLabels
-        >
+        <BottomNavigation style={{justifyContent: 'left'}} value={currentPage} onChange={handleOnChange} showLabels>
             {pages}
         </BottomNavigation>
     );
