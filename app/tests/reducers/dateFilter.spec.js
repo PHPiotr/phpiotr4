@@ -6,8 +6,7 @@ describe('dateFilter', () => {
 
     it('should set "from" date', () => {
         const action = {
-            dateFieldName: 'fromDate',
-            dateFieldValue: '2017-05-01',
+            payload: {name: 'fromDate', value: '2017-05-01'},
             type: 'SET_DATE',
         };
 
@@ -32,8 +31,7 @@ describe('dateFilter', () => {
 
     it('should set "from" date as empty string', () => {
         const action = {
-            dateFieldName: 'fromDate',
-            dateFieldValue: '',
+            payload: {name: 'fromDate', value: ''},
             type: 'SET_DATE',
         };
 
@@ -58,8 +56,7 @@ describe('dateFilter', () => {
 
     it('should set "to" date', () => {
         const action = {
-            dateFieldName: 'toDate',
-            dateFieldValue: '2017-05-31',
+            payload: {name: 'toDate', value: '2017-05-31'},
             type: 'SET_DATE',
         };
 
@@ -84,8 +81,7 @@ describe('dateFilter', () => {
 
     it('should set "to" date as empty string', () => {
         const action = {
-            dateFieldName: 'toDate',
-            dateFieldValue: '',
+            payload: {name: 'toDate', value: ''},
             type: 'SET_DATE',
         };
 

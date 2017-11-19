@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onChange(event) {
-        dispatch(setDate(`${event.target.name}Date`, event.target.value));
+        dispatch(setDate({name: `${event.target.name}Date`, value: event.target.value}));
     },
     onSubmit(event) {
         event.preventDefault();

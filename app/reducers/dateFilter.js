@@ -1,15 +1,17 @@
+import {TOGGLE_DATE_FILTER_ENABLED, SET_DATE} from '../actions/booking/bookingActionTypes';
+
 const initialState = {
     fromDate: '',
     toDate: '',
     isDateFilterEnabled: false,
 };
 
-const dateFilter = (state = initialState, action) => {
-    switch (action.type) {
-    case 'TOGGLE_DATE_FILTER_ENABLED':
-        return {...state, isDateFilterEnabled: action['isDateFilterEnabled']};
-    case 'SET_DATE':
-        return {...state, [action['dateFieldName']]: action['dateFieldValue']};
+const dateFilter = (state = initialState, {type, payload}) => {
+    switch (type) {
+    case TOGGLE_DATE_FILTER_ENABLED:
+        return {...state, isDateFilterEnabled: payload};
+    case SET_DATE:
+        return {...state, [payload.name]: payload.value};
     default:
         return state;
     }
