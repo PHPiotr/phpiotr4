@@ -6,7 +6,7 @@ import {
     focus,
     ON_CHANGE_REGISTRATION_FIELD,
     ON_FOCUS_REGISTRATION_FIELD,
-} from '../../actions/login';
+} from '../../actions/auth/authActions';
 import RegistrationForm from '../presentation/RegistrationForm';
 import {LinearProgress} from 'material-ui/Progress';
 

@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import {logoutIfNeeded} from '../../actions/login';
+import {logoutIfNeeded} from '../../actions/auth/authActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {HOME} from '../../constants';
 

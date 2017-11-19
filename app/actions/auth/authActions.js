@@ -1,22 +1,6 @@
-import {getAuthLogin, postUsers, postActivationLink} from '../services/authService';
+import {getAuthLogin, postUsers, postActivationLink} from '../../services/authService';
 import cookie from 'cookie-monster';
-
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
-export const REGISTRATION_REQUEST = 'REGISTRATION_REQUEST';
-export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
-export const REGISTRATION_FAILURE = 'REGISTRATION_FAILURE';
-
-export const ON_CHANGE_LOGIN_FIELD = 'ON_CHANGE_LOGIN_FIELD';
-export const ON_FOCUS_LOGIN_FIELD = 'ON_FOCUS_LOGIN_FIELD';
-export const ON_CHANGE_REGISTRATION_FIELD = 'ON_CHANGE_REGISTRATION_FIELD';
-export const ON_FOCUS_REGISTRATION_FIELD = 'ON_FOCUS_REGISTRATION_FIELD';
-
-export const SET_TOKEN = 'SET_TOKEN';
-export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
-export const LOGOUT = 'LOGOUT';
+import * as authActionTypes from './authActionTypes';
 
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
@@ -52,18 +36,18 @@ const registration = () => {
     };
 };
 const registrationRequest = () => ({
-    type: REGISTRATION_REQUEST,
+    type: authActionTypes.REGISTRATION_REQUEST,
 });
 const registrationSuccess = (json) => {
     return {
-        type: REGISTRATION_SUCCESS,
+        type: authActionTypes.REGISTRATION_SUCCESS,
         registrationSuccessMessage: 'Account created. We have sent you an email with activation instructions.',
         hash: json.hash,
     };
 };
 const registrationFailure = (json) => {
     return {
-        type: REGISTRATION_FAILURE,
+        type: authActionTypes.REGISTRATION_FAILURE,
         ok: false,
         registrationErrorMessage: json.message,
         registrationErrors: json.errors,
@@ -101,17 +85,17 @@ const logUserIn = ({username, password}) => {
             .catch(error => dispatch(loginFailure(error)));
     };
 };
-const loginRequest = () => ({type: LOGIN_REQUEST});
-const loginSuccess = ({token, expiresIn}) => ({type: LOGIN_SUCCESS, payload: {token, expiresIn}});
-const loginFailure = ({message, errors}) => ({type: LOGIN_FAILURE, ok: false,  loginErrorMessage: message, loginErrors: errors});
+const loginRequest = () => ({type: authActionTypes.LOGIN_REQUEST});
+const loginSuccess = ({token, expiresIn}) => ({type: authActionTypes.LOGIN_SUCCESS, payload: {token, expiresIn}});
+const loginFailure = ({message, errors}) => ({type: authActionTypes.LOGIN_FAILURE, ok: false,  loginErrorMessage: message, loginErrors: errors});
 
-export const change = (fieldName, fieldValue, type = ON_CHANGE_LOGIN_FIELD) => ({
+export const change = (fieldName, fieldValue, type = authActionTypes.ON_CHANGE_LOGIN_FIELD) => ({
     type,
     fieldName,
     fieldValue,
 });
 
-export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
+export const focus = (fieldName, fieldValue, type = authActionTypes.ON_FOCUS_LOGIN_FIELD) => ({
     type,
     fieldName,
     fieldValue,
@@ -120,9 +104,9 @@ export const focus = (fieldName, fieldValue, type = ON_FOCUS_LOGIN_FIELD) => ({
 export const logoutIfNeeded = () => {
     cookie.removeItem(process.env.TOKEN_KEY);
     return (dispatch) => {
-        dispatch({type: LOGOUT});
+        dispatch({type: authActionTypes.LOGOUT});
         return Promise.resolve(true);
     };
 };
-export const setToken = payload => ({type: SET_TOKEN, payload});
-export const setIsLoggedIn = payload => ({type: SET_IS_LOGGED_IN, payload});
+export const setToken = payload => ({type: authActionTypes.SET_TOKEN, payload});
+export const setIsLoggedIn = payload => ({type: authActionTypes.SET_IS_LOGGED_IN, payload});
