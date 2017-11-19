@@ -12,5 +12,5 @@ git fetch
 git reset --hard
 git checkout master --force
 git merge --no-ff --no-edit development
-git remote add origin https://${GITHUB_SECRET_TOKEN}@github.com/PHPiotr/phpiotr4
-git push --quiet --set-upstream origin master
+git remote add travis-origin https://${GITHUB_SECRET_TOKEN}@github.com/PHPiotr/phpiotr4
+git push --quiet --set-upstream travis-origin master
