@@ -3,7 +3,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import cookie from 'cookie-monster';
 import jwtDecode from 'jwt-decode';
-import {setToken, setIsLoggedIn} from '../../actions/login';
+import {setToken, setIsLoggedIn} from '../../actions/auth/authActions';
 
 function auth(WrappedComponent) {
     class Auth extends Component {

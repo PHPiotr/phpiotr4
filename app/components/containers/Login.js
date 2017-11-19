@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {loginIfNeeded, change, focus} from '../../actions/login';
+import {loginIfNeeded, change, focus} from '../../actions/auth/authActions';
 import LoginForm from '../presentation/LoginForm';
 import cookie from 'cookie-monster';
 import {LinearProgress} from 'material-ui/Progress';
