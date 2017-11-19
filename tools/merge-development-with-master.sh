@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-echo Test: merging development with master...
 if [ "$TRAVIS_BRANCH" != "development" ]; then
-  echo Test: travis branch is not development...
   exit 0;
 fi
 
@@ -14,6 +12,5 @@ git fetch
 git reset --hard
 git checkout master --force
 git merge --no-ff --no-edit development
-git push origin master
-
-git push "https://PHPiotr:${GITHUB_SECRET_TOKEN}@github.com/PHPiotr/phpiotr4"
+git remote add origin https://${GITHUB_SECRET_TOKEN}@github.com/PHPiotr/phpiotr4
+git push --quiet --set-upstream origin master
