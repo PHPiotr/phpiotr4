@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchReportIfNeeded} from '../../actions/report';
+import {fetchReportIfNeeded, toggleDetailsOpen} from '../../actions/report';
 import {toggleDateFilterEnabled} from '../../actions/booking/bookingActions';
 import ReportTable from '../presentation/ReportTable';
 import {LinearProgress} from 'material-ui/Progress';
@@ -25,7 +25,7 @@ class Report extends Component {
         if (!this.props.isLoggedIn) {
             return null;
         }
-        const report = this.props.report;
+        const {report, toggleDetailsOpen} = this.props;
         if (report.isFetching) {
             return <LinearProgress />;
         }
@@ -33,7 +33,7 @@ class Report extends Component {
             <div>
                 <Typography style={{padding: '23px'}} type="headline">Total: £{report.total_cost}</Typography>
                 <DateFilterForm {...this.props}/>
-                <ReportTable report={report}/>
+                <ReportTable report={report} toggleDetailsOpen={toggleDetailsOpen}/>
             </div>
         );
     }
@@ -61,6 +61,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
+    },
+    toggleDetailsOpen(payload) {
+        dispatch(toggleDetailsOpen(payload));
     },
 });
 
