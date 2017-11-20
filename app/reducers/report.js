@@ -1,4 +1,4 @@
-import {REPORT_REQUEST, REPORT_SUCCESS, REPORT_FAILURE} from '../actions/report';
+import {REPORT_REQUEST, REPORT_SUCCESS, REPORT_FAILURE, TOGGLE_DETAILS_OPEN} from '../actions/report';
 
 const initialState = {
     total_cost: 0,
@@ -18,6 +18,10 @@ const initialState = {
     hostels_avg: 0,
     hostels_cost: 0,
     isFetching: false,
+    busesDetailsOpen: false,
+    planesDetailsOpen: false,
+    trainsDetailsOpen: false,
+    hostelsDetailsOpen: false,
 };
 
 const report = (state = initialState, action) => {
@@ -28,6 +32,8 @@ const report = (state = initialState, action) => {
         return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
     case REPORT_FAILURE:
         return {...state, ...{isFetching: false, error: action.error}};
+    case TOGGLE_DETAILS_OPEN:
+        return {...state, [`${action.payload}DetailsOpen`]: !state[`${action.payload}DetailsOpen`]};
     default:
         return state;
     }
