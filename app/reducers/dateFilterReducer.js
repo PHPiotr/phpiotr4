@@ -1,4 +1,4 @@
-import {TOGGLE_DATE_FILTER_ENABLED, SET_DATE} from '../actions/booking/bookingActionTypes';
+import * as dateFilterActionTypes from '../actions/dateFilter/dateFilterActionTypes';
 
 const initialState = {
     fromDate: '',
@@ -8,9 +8,9 @@ const initialState = {
 
 const dateFilter = (state = initialState, {type, payload}) => {
     switch (type) {
-    case TOGGLE_DATE_FILTER_ENABLED:
+    case dateFilterActionTypes.TOGGLE_DATE_FILTER_ENABLED:
         return {...state, isDateFilterEnabled: payload};
-    case SET_DATE:
+    case dateFilterActionTypes.SET_DATE:
         return {...state, [payload.name]: payload.value};
     default:
         return state;

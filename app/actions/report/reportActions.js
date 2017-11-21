@@ -1,9 +1,5 @@
-import {getReport} from '../services/reportService';
-
-export const REPORT_REQUEST = 'GET_REPORT_REQUEST';
-export const REPORT_SUCCESS = 'GET_REPORT_SUCCESS';
-export const REPORT_FAILURE = 'GET_REPORT_FAILURE';
-export const TOGGLE_DETAILS_OPEN = 'TOGGLE_DETAILS_OPEN';
+import {getReport} from '../../services/reportService';
+import * as reportActionTypes from './reportActionTypes';
 
 export const fetchReportIfNeeded = () => {
     return (dispatch, getState) => {
@@ -23,7 +19,7 @@ export const fetchReportIfNeeded = () => {
             .catch(error => dispatch(fetchReportFailure(error)));
     };
 };
-const fetchReportRequest = () => ({type: REPORT_REQUEST});
-const fetchReportSuccess = data => ({type: REPORT_SUCCESS, data, receivedAt: Date.now()});
-const fetchReportFailure = error => ({type: REPORT_FAILURE, error});
-export const toggleDetailsOpen = payload => ({type: TOGGLE_DETAILS_OPEN, payload});
+const fetchReportRequest = () => ({type: reportActionTypes.REPORT_REQUEST});
+const fetchReportSuccess = data => ({type: reportActionTypes.REPORT_SUCCESS, data, receivedAt: Date.now()});
+const fetchReportFailure = error => ({type: reportActionTypes.REPORT_FAILURE, error});
+export const toggleDetailsOpen = payload => ({type: reportActionTypes.TOGGLE_DETAILS_OPEN, payload});

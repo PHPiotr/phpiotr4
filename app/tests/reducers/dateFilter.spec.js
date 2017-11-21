@@ -1,5 +1,6 @@
 import expect from 'expect';
-import dateFilter from '../../reducers/dateFilter';
+import dateFilter from '../../reducers/dateFilterReducer';
+import * as dateFilterActionTypes from '../../actions/dateFilter/dateFilterActionTypes';
 import deepFreeze from 'deep-freeze';
 
 describe('dateFilter', () => {
@@ -7,7 +8,7 @@ describe('dateFilter', () => {
     it('should set "from" date', () => {
         const action = {
             payload: {name: 'fromDate', value: '2017-05-01'},
-            type: 'SET_DATE',
+            type: dateFilterActionTypes.SET_DATE,
         };
 
         const beforeState = {
@@ -32,7 +33,7 @@ describe('dateFilter', () => {
     it('should set "from" date as empty string', () => {
         const action = {
             payload: {name: 'fromDate', value: ''},
-            type: 'SET_DATE',
+            type: dateFilterActionTypes.SET_DATE,
         };
 
         const beforeState = {
@@ -57,7 +58,7 @@ describe('dateFilter', () => {
     it('should set "to" date', () => {
         const action = {
             payload: {name: 'toDate', value: '2017-05-31'},
-            type: 'SET_DATE',
+            type: dateFilterActionTypes.SET_DATE,
         };
 
         const beforeState = {
@@ -82,7 +83,7 @@ describe('dateFilter', () => {
     it('should set "to" date as empty string', () => {
         const action = {
             payload: {name: 'toDate', value: ''},
-            type: 'SET_DATE',
+            type: dateFilterActionTypes.SET_DATE,
         };
 
         const beforeState = {
