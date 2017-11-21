@@ -36,7 +36,7 @@ const BusesTable = ({journeys, journeys_length, return_journeys_length, current_
                     <TableCell>Returns</TableCell>
                     <TableCell>{return_journeys_length}</TableCell>
                 </TableRow>
-                <BookingDetails details={journeys} offset={(current_page - 1) * max_per_page}/>
+                <BookingDetails label="bus" details={journeys} offset={(current_page - 1) * max_per_page}/>
             </TableBody>
         </Table>
     );

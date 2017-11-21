@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded} from '../../actions/booking/bookingActions';
-import {getBookingsIfNeeded} from '../../actions/booking/bookingActions';
-import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/booking/bookingActions';
+import * as bookingActions from '../../actions/booking/bookingActions';
 import {connect} from 'react-redux';
 import BusForm from '../presentation/BusForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
-import {NEW_BUS} from '../../constants';
+import {NEW_BUS, EDIT_BUS} from '../../constants';
 import MessageBar from '../presentation/MessageBar';
 
 class Bus extends Component {
-    componentWillMount() {
-        this.props.isAdding(true);
-        this.props.setAppBarTitle(NEW_BUS);
+
+    componentDidMount() {
+        this.props.init();
     }
 
     componentWillUnmount() {
@@ -40,28 +38,40 @@ const mapStateToProps = state => ({
     isAdd: state.bookings.bus.isAdd,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
+    init() {
+        dispatch(bookingActions.setIsAdd({label: 'bus', isAdd: true}));
+        if (id === 'new') {
+            return dispatch(setAppBarTitle(NEW_BUS));
+        }
+        dispatch(bookingActions.getBookingIfNeeded('bus', 'buses', id))
+            .then(({payload: {current}}) => {
+                const bookingNumber = current.booking_number;
+                dispatch(setAppBarTitle(`${EDIT_BUS}: ${bookingNumber}`));
+            });
+    },
     handleFocus(event) {
-        dispatch(handleFocus(event, 'bus'));
+        dispatch(bookingActions.handleFocus(event, 'bus'));
     },
     handleChange(event) {
-        dispatch(handleChange(event, 'bus'));
+        console.log(ownProps);
+        dispatch(bookingActions.handleChange(event, 'bus'));
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(addBookingIfNeeded('bus', 'buses'));
+        dispatch(bookingActions.addBookingIfNeeded('bus', 'buses'));
     },
     fetchBookings(type, page) {
-        dispatch(getBookingsIfNeeded('bus', 'buses', type || '', page || 1));
+        dispatch(bookingActions.getBookingsIfNeeded('bus', 'buses', type || '', page || 1));
     },
     isAdding(isAdd) {
-        dispatch(setIsAdd({label: 'bus', isAdd}));
+        dispatch(bookingActions.setIsAdd({label: 'bus', isAdd}));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
     },
     onRequestClose() {
-        dispatch(setIsAdded({label: 'bus', isAdded: false}));
+        dispatch(bookingActions.setIsAdded({label: 'bus', isAdded: false}));
     },
 });
 

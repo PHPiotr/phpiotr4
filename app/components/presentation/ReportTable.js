@@ -33,7 +33,7 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                                 </TableCell>
                                 <TableCell>{report.buses.length}</TableCell>
                             </TableRow>
-                            {report.busesDetailsOpen && <BookingDetails details={report.buses}/>}
+                            {report.busesDetailsOpen && <BookingDetails label="bus" details={report.buses}/>}
                         </TableBody>
                     </Table>
                 ) : <NoContent/>}
@@ -61,7 +61,7 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                                 </TableCell>
                                 <TableCell>{report.planes.length}</TableCell>
                             </TableRow>
-                            {report.planesDetailsOpen && <BookingDetails details={report.planes}/>}
+                            {report.planesDetailsOpen && <BookingDetails label="plane" details={report.planes}/>}
                         </TableBody>
                     </Table>
                 ) : <NoContent text="No planes"/>}
@@ -89,7 +89,7 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                                 </TableCell>
                                 <TableCell>{report.trains.length}</TableCell>
                             </TableRow>
-                            {report.trainsDetailsOpen && <BookingDetails details={report.trains}/>}
+                            {report.trainsDetailsOpen && <BookingDetails label="train" details={report.trains}/>}
                         </TableBody>
                     </Table>
                 ) : <NoContent text="No trains"/>}
@@ -119,7 +119,7 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                                 <TableCell>{report.hostels.length}</TableCell>
                             </TableRow>
                             {report.hostelsDetailsOpen &&
-                            <BookingDetails details={report.hostels} isHostel={true}/>}
+                            <BookingDetails label="hostel" details={report.hostels} isHostel={true}/>}
                         </TableBody>
                     </Table>
                 ) : <NoContent text="No hostels"/>}

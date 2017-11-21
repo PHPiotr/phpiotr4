@@ -36,7 +36,7 @@ const PlanesTable = ({flights, flights_length, return_flights_length, current_pa
                     <TableCell>Returns</TableCell>
                     <TableCell>{return_flights_length}</TableCell>
                 </TableRow>
-                <BookingDetails details={flights} offset={(current_page - 1) * max_per_page}/>
+                <BookingDetails label="plane" details={flights} offset={(current_page - 1) * max_per_page}/>
             </TableBody>
         </Table>
     );
