@@ -36,7 +36,8 @@ const bookings = (state = initialState, action) => {
         return {...state, [payload.label]: {...state[payload.label], message: payload.message}};
 
     case indexActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE:
-        return {...state,
+        return {
+            ...state,
             [payload.label]: {
                 ...state[payload.label],
                 errors: {...state[payload.label]['errors'], [payload.name]: payload.value},
@@ -73,7 +74,14 @@ const bookings = (state = initialState, action) => {
         return {...state, [payload.label]: {...state[payload.label], isAdded: payload.isAdded}};
 
     case indexActionTypes.SET_IS_ADD:
-        return {...state, [payload.label]: {...state[payload.label], isAdd: payload.isAdd}};
+        return {...state,
+            [payload.label]: {
+                ...state[payload.label],
+                isAdd: payload.isAdd,
+                current: payload.isAdd ? state[payload.label]['current'] : {},
+                errors: payload.isAdd ? state[payload.label]['errors'] : {},
+            },
+        };
     default:
         return state;
     }

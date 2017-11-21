@@ -24,6 +24,8 @@ const auth = (state = initialState, action) => {
             isLoggedIn: true,
             token: action.payload.token,
             expiresIn: action.payload.expiresIn,
+            login: {},
+            isLoggingIn: false,
         };
     case authActionTypes.LOGIN_FAILURE:
         return {
