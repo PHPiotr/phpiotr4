@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {fetchReportIfNeeded} from '../../actions/report';
-import {setDate} from '../../actions/booking/bookingActions';
+import {fetchReportIfNeeded} from '../../actions/report/reportActions';
+import {setDate} from '../../actions/dateFilter/dateFilterActions';
 import DateFilterForm from '../presentation/DateFilterForm';
 
 const mapStateToProps = state => ({

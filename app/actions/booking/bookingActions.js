@@ -1,9 +1,6 @@
 import {postBookings, getBookings} from '../../services/bookingServices';
 import * as bookingActionTypes from './bookingActionTypes';
 
-export const toggleDateFilterEnabled = payload => ({type: bookingActionTypes.TOGGLE_DATE_FILTER_ENABLED, payload});
-export const setDate = payload => ({type: bookingActionTypes.SET_DATE, payload});
-
 export const setIsAdded = payload => ({type: bookingActionTypes.SET_IS_ADDED, payload});
 export const setBookingErrorMessage = payload => ({type: bookingActionTypes.SET_BOOKING_ERROR_MESSAGE, payload});
 export const setBookingFieldErrorMessage = payload => ({type: bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE, payload});

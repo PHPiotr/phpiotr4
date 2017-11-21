@@ -1,4 +1,4 @@
-import {REPORT_REQUEST, REPORT_SUCCESS, REPORT_FAILURE, TOGGLE_DETAILS_OPEN} from '../actions/report';
+import * as reportActionTypes from '../actions/report/reportActionTypes';
 
 const initialState = {
     total_cost: 0,
@@ -26,13 +26,13 @@ const initialState = {
 
 const report = (state = initialState, action) => {
     switch (action.type) {
-    case REPORT_REQUEST:
+    case reportActionTypes.REPORT_REQUEST:
         return {...state, isFetching: true};
-    case REPORT_SUCCESS:
+    case reportActionTypes.REPORT_SUCCESS:
         return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
-    case REPORT_FAILURE:
+    case reportActionTypes.REPORT_FAILURE:
         return {...state, ...{isFetching: false, error: action.error}};
-    case TOGGLE_DETAILS_OPEN:
+    case reportActionTypes.TOGGLE_DETAILS_OPEN:
         return {...state, [`${action.payload}DetailsOpen`]: !state[`${action.payload}DetailsOpen`]};
     default:
         return state;
