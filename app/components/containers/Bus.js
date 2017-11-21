@@ -54,7 +54,6 @@ const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
         dispatch(bookingActions.handleFocus(event, 'bus'));
     },
     handleChange(event) {
-        console.log(ownProps);
         dispatch(bookingActions.handleChange(event, 'bus'));
     },
     handleSubmit(event) {
