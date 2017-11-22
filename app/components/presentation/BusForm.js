@@ -66,7 +66,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus, submitLabel}) =>
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.current.price || ''}
+                    value={(parseFloat(bus.current.price || 0)).toFixed(2)}
                 />
                 <FormGroup>
                     <FormControlLabel
