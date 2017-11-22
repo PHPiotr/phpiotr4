@@ -20,6 +20,6 @@ export default (number) => {
     if (number.toString().match(/\.+/)) {
         return typeof number.toFixed === 'function' ? number.toFixed(2) : number;
     }
-    return (number / 100).toFixed(2);
+    return (number).toFixed(2);
 };
 
