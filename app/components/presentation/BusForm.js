@@ -4,7 +4,7 @@ import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 
-const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
+const BusForm = ({handleSubmit, handleChange, handleFocus, bus, submitLabel}) => {
     return (
         <form style={{padding: '20px'}} onSubmit={handleSubmit}>
             <FormControl component="fieldset">
@@ -107,7 +107,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                         key={2}
                     />,
                 ]}
-                <Button type="submit">Add</Button>
+                <Button type="submit">Save</Button>
             </FormControl>
         </form>
     );

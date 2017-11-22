@@ -58,7 +58,11 @@ const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(bookingActions.addBookingIfNeeded('bus', 'buses'));
+        if (id === 'new') {
+            dispatch(bookingActions.addBookingIfNeeded('bus', 'buses'));
+        } else {
+            dispatch(bookingActions.editBookingIfNeeded('bus', 'buses'));
+        }
     },
     fetchBookings(type, page) {
         dispatch(bookingActions.getBookingsIfNeeded('bus', 'buses', type || '', page || 1));

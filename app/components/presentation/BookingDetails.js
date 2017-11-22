@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TableCell, TableRow} from 'material-ui/Table';
 import List, {ListItem, ListItemText} from 'material-ui/List';
-import moment from 'moment';
 import {withRouter} from 'react-router-dom';
+import formatDate from '../../utils/formatDateUtil';
+import getPrice from '../../utils/formatPriceUtil';
 
 const BookingDetails = ({label, details, isHostel, offset, history}) => {
 
@@ -12,31 +13,8 @@ const BookingDetails = ({label, details, isHostel, offset, history}) => {
     }
 
     const style = {paddingLeft: 0, paddingRight: 0};
-
-    const formatDate = (date) => {
-        if (typeof date === 'object') {
-            return moment(date).format('DD/MM/YYYY');
-        }
-        if (typeof date === 'string') {
-            return date.match(/\/+/) ? date : moment(date).format('DD/MM/YYYY');
-        }
-
-        return '';
-    };
-
-    const getPrice = (number) => {
-        if (number === 0) {
-            return '0.00';
-        }
-        if (number.toString().match(/\.+/)) {
-            return number.toFixed(2);
-        }
-        return (number / 100).toFixed(2);
-    };
-
     const handleClick = id => history.push(`/bookings/${label}/${id}`);
     const rowStyle = {cursor: 'pointer'};
-
     const items = [];
     if (isHostel) {
         details.map(function (row, i) {

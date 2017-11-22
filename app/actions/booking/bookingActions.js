@@ -63,21 +63,18 @@ export const editBookingIfNeeded = (singular, plural) => {
         if (bookingSingular.isAdding) {
             return Promise.resolve();
         }
+        const current = {...bookingSingular.current};
+        const id = current.booking_number || current.confirmation_code;
+        delete current._id;
+        current.booking_number && delete current.booking_number;
+        current.confirmation_code && delete current.confirmation_code;
         dispatch(editBookingRequest({label: singular}));
-        return putBookings(token, plural, JSON.stringify(bookingSingular.current))
+        return putBookings(token, plural, id, JSON.stringify(current))
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText, response.status);
                 }
-                return response.json();
-            })
-            .then((json) => {
-                if (json.ok) {
-                    dispatch(editBookingSuccess({label: singular, data: json[singular]}));
-                }
-                if (json.err) {
-                    dispatch(editBookingFailure({label: singular, error: json.err}));
-                }
+                return dispatch(editBookingSuccess({label: singular}));
             })
             .catch(error => dispatch(editBookingFailure({label: singular, error})));
     };
