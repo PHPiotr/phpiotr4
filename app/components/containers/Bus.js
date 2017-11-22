@@ -22,7 +22,7 @@ class Bus extends Component {
                 <BusForm {...this.props}/>
                 <MessageBar
                     open={this.props.bus.isAdded}
-                    message="Bus added"
+                    message="Bus saved"
                     onRequestClose={this.props.onRequestClose}
                 />
             </div>

@@ -73,7 +73,7 @@ const bookings = (state = initialState, action) => {
         return {...state, [payload.label]: {...state[payload.label], isAdding: true}};
 
     case indexActionTypes.EDIT_BOOKING_SUCCESS:
-        return {...state, [payload.label]: {...state[payload.label], isAdded: true, isAdding: false, current: {}}};
+        return {...state, [payload.label]: {...state[payload.label], isAdded: true, isAdding: false}};
 
     case indexActionTypes.EDIT_BOOKING_FAILURE:
         return {
