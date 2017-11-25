@@ -75,7 +75,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                         value={train.current.return_departure_date || ''}
                     />
                 )}
-                <Button type="submit">Add</Button>
+                <Button type="submit">Save</Button>
             </FormControl>
         </form>
     );

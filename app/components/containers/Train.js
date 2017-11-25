@@ -1,27 +1,28 @@
 import React, {Component} from 'react';
-import {setIsAdd, setIsAdded, getBookingsIfNeeded} from '../../actions/booking/bookingActions';
-import {handleFocus, handleChange, addBookingIfNeeded} from '../../actions/booking/bookingActions';
+import * as bookingActions from '../../actions/booking/bookingActions';
 import {connect} from 'react-redux';
 import TrainForm from '../presentation/TrainForm';
 import {setAppBarTitle} from '../../actions/app/appActions';
-import {NEW_TRAIN} from '../../constants';
+import {NEW_TRAIN, EDIT_TRAIN} from '../../constants';
 import MessageBar from '../presentation/MessageBar';
 
 class Train extends Component {
-    componentWillMount() {
-        this.props.isAdding(true);
-        this.props.setAppBarTitle(NEW_TRAIN);
+
+    componentDidMount() {
+        this.props.init();
     }
+
     componentWillUnmount() {
         this.props.isAdding(false);
     }
+
     render() {
         return (
             <div>
                 <TrainForm {...this.props}/>
                 <MessageBar
                     open={this.props.train.isAdded}
-                    message="Train added"
+                    message="Train saved"
                     onRequestClose={this.props.onRequestClose}
                 />
             </div>
@@ -37,28 +38,40 @@ const mapStateToProps = state => ({
     isAdd: state.bookings.train.isAdd,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
+    init() {
+        dispatch(bookingActions.setIsAdd({label: 'train', isAdd: true}));
+        if (id === 'new') {
+            return dispatch(setAppBarTitle(NEW_TRAIN));
+        }
+        dispatch(bookingActions.getBookingIfNeeded('train', 'trains', id))
+            .then(() => dispatch(setAppBarTitle(`${EDIT_TRAIN}: ${id}`)));
+    },
     handleFocus(event) {
-        dispatch(handleFocus(event, 'train'));
+        dispatch(bookingActions.handleFocus(event, 'train'));
     },
     handleChange(event) {
-        dispatch(handleChange(event, 'train'));
+        dispatch(bookingActions.handleChange(event, 'train'));
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(addBookingIfNeeded('train', 'trains'));
+        if (id === 'new') {
+            dispatch(bookingActions.addBookingIfNeeded('train', 'trains'));
+        } else {
+            dispatch(bookingActions.editBookingIfNeeded('train', 'trains'));
+        }
     },
     fetchBookings(type, page) {
-        dispatch(getBookingsIfNeeded('train', 'trains', type || '', page || 1));
+        dispatch(bookingActions.getBookingsIfNeeded('train', 'trains', type || '', page || 1));
     },
     isAdding(isAdd) {
-        dispatch(setIsAdd({label: 'train', isAdd}));
+        dispatch(bookingActions.setIsAdd({label: 'train', isAdd}));
     },
     setAppBarTitle(appBarTitle) {
         dispatch(setAppBarTitle(appBarTitle));
     },
     onRequestClose() {
-        dispatch(setIsAdded({label: 'train', isAdded: false}));
+        dispatch(bookingActions.setIsAdded({label: 'train', isAdded: false}));
     },
 });
 

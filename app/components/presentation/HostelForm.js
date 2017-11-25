@@ -65,7 +65,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={(parseFloat(hostel.current.price || 0)).toFixed(2)}
+                    value={hostel.current.price || 0}
                 />
                 <Button type="submit">Save</Button>
             </FormControl>

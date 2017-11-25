@@ -45,10 +45,7 @@ const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
             return dispatch(setAppBarTitle(NEW_BUS));
         }
         dispatch(bookingActions.getBookingIfNeeded('bus', 'buses', id))
-            .then(({payload: {current}}) => {
-                const bookingNumber = current.booking_number;
-                dispatch(setAppBarTitle(`${EDIT_BUS}: ${bookingNumber}`));
-            });
+            .then(() => dispatch(setAppBarTitle(`${EDIT_BUS}: ${id}`)));
     },
     handleFocus(event) {
         dispatch(bookingActions.handleFocus(event, 'bus'));

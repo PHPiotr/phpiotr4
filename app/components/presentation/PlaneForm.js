@@ -164,7 +164,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                         key={4}
                     />,
                 ]}
-                <Button type="submit">Add</Button>
+                <Button type="submit">Save</Button>
             </FormControl>
         </form>
     );

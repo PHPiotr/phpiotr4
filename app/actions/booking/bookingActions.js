@@ -64,10 +64,8 @@ export const editBookingIfNeeded = (singular, plural) => {
             return Promise.resolve();
         }
         const current = {...bookingSingular.current};
-        const id = current.booking_number || current.confirmation_code;
+        const id = current._id;
         delete current._id;
-        current.booking_number && delete current.booking_number;
-        current.confirmation_code && delete current.confirmation_code;
         dispatch(editBookingRequest({label: singular}));
         return putBookings(token, plural, id, JSON.stringify(current))
             .then((response) => {

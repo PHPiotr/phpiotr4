@@ -21,7 +21,7 @@ const BookingDetails = ({label, details, isHostel, offset, history}) => {
             const checkIn = formatDate(row.checkin_date);
             const checkOut = formatDate(row.checkout_date);
             items.push(
-                <TableRow style={rowStyle} key={`${i}hostel`} onClick={() => handleClick(row.booking_number)}>
+                <TableRow style={rowStyle} key={`${i}hostel`} onClick={() => handleClick(row._id)}>
                     <TableCell>
                         <List>
                             <ListItem style={style}>
@@ -48,7 +48,7 @@ const BookingDetails = ({label, details, isHostel, offset, history}) => {
             const departDate = formatDate(row.departure_date);
             const returnDate = row.is_return ? ' - ' + formatDate(row.return_departure_date) : '';
             items.push(
-                <TableRow style={rowStyle} key={i} onClick={() => handleClick(row.booking_number || row.confirmation_code)}>
+                <TableRow style={rowStyle} key={i} onClick={() => handleClick(row._id)}>
                     <TableCell>
                         <List>
                             <ListItem style={style}>
