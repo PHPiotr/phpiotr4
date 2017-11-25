@@ -54,10 +54,10 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                         control={
                             <Checkbox
                                 error={train.errors.is_return && !!train.errors.is_return.message}
-                                checked={train.is_return}
+                                checked={!!train.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={train.current.is_return ? '1' : '0'}
+                                value={!!train.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }

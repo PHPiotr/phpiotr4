@@ -74,10 +74,10 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                         control={
                             <Checkbox
                                 error={bus.errors.is_return && !!bus.errors.is_return.message}
-                                checked={bus.is_return}
+                                checked={!!bus.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={bus.current.is_return ? '1' : '0'}
+                                value={!!bus.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }

@@ -94,7 +94,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                         control={
                             <Checkbox
                                 error={plane.errors.checked_in && !!plane.errors.checked_in.message}
-                                checked={plane.checked_in}
+                                checked={!!plane.current.checked_in}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
                                 value={plane.current.checked_in ? '1' : '0'}
@@ -109,10 +109,10 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                         control={
                             <Checkbox
                                 error={plane.errors.is_return && !!plane.errors.is_return.message}
-                                checked={plane.is_return}
+                                checked={!!plane.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={plane.current.is_return ? '1' : '0'}
+                                value={!!plane.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }
