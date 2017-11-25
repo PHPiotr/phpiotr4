@@ -86,7 +86,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={plane.current.price || ''}
+                    value={plane.current.price || '0.00'}
                 />
                 <FormGroup>
                     <FormControlLabel

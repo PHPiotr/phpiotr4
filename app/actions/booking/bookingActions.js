@@ -96,6 +96,12 @@ export const getBookingIfNeeded = (singular, plural, id) => {
                 }
                 return response.json();
             })
+            .then(json => {
+                return {
+                    ...json,
+                    price: json.price ? (parseFloat(json.price)).toFixed(2) : null,
+                };
+            })
             .then(json => dispatch(getBookingSuccess({label: singular, current: json})))
             .catch(error => dispatch(getBookingFailure({label: singular, error})));
     };

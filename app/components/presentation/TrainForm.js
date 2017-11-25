@@ -46,7 +46,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={train.current.price || ''}
+                    value={train.current.price || '0.00'}
                 />
                 <FormGroup>
                     <FormControlLabel
