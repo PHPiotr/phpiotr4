@@ -65,9 +65,9 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={hostel.current.price || ''}
+                    value={hostel.current.price || '0.00'}
                 />
-                <Button type="submit">Add</Button>
+                <Button type="submit">Save</Button>
             </FormControl>
         </form>
     );

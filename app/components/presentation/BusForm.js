@@ -66,7 +66,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                     name={'price'}
                     onChange={handleChange}
                     onFocus={handleFocus}
-                    value={bus.current.price || ''}
+                    value={bus.current.price || '0.00'}
                 />
                 <FormGroup>
                     <FormControlLabel
@@ -74,10 +74,10 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                         control={
                             <Checkbox
                                 error={bus.errors.is_return && !!bus.errors.is_return.message}
-                                checked={bus.is_return}
+                                checked={!!bus.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={bus.current.is_return ? '1' : '0'}
+                                value={bus.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }
@@ -107,7 +107,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                         key={2}
                     />,
                 ]}
-                <Button type="submit">Add</Button>
+                <Button type="submit">Save</Button>
             </FormControl>
         </form>
     );

@@ -28,7 +28,7 @@ const HostelsTable = ({bookings, bookings_length, current_page, max_per_page, to
                     <TableCell>Bookings</TableCell>
                     <TableCell>{bookings_length}</TableCell>
                 </TableRow>
-                <BookingDetails details={bookings} isHostel={true} offset={(current_page - 1) * max_per_page}/>
+                <BookingDetails label="hostel" details={bookings} isHostel={true} offset={(current_page - 1) * max_per_page}/>
             </TableBody>
         </Table>
     );

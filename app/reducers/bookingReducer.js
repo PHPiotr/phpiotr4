@@ -23,12 +23,20 @@ const initialState = {
 const bookings = (state = initialState, action) => {
     const {payload} = action;
     switch (action.type) {
-    case indexActionTypes.SET_BOOKING:
+    case indexActionTypes.SET_BOOKING_PROPERTY:
         return {
             ...state,
             [payload.label]: {
                 ...state[payload.label],
                 current: {...state[payload.label]['current'], [payload.name]: payload.value},
+            },
+        };
+    case indexActionTypes.SET_BOOKING:
+        return {
+            ...state,
+            [payload.label]: {
+                ...state[payload.label],
+                current: payload.current,
             },
         };
 
@@ -56,6 +64,40 @@ const bookings = (state = initialState, action) => {
             [payload.label]: {
                 ...state[payload.label],
                 isAdding: false,
+                message: payload.error.message || '',
+                errors: payload.error.errors || {},
+            },
+        };
+
+    case indexActionTypes.EDIT_BOOKING_REQUEST:
+        return {...state, [payload.label]: {...state[payload.label], isAdding: true}};
+
+    case indexActionTypes.EDIT_BOOKING_SUCCESS:
+        return {...state, [payload.label]: {...state[payload.label], isAdded: true, isAdding: false}};
+
+    case indexActionTypes.EDIT_BOOKING_FAILURE:
+        return {
+            ...state,
+            [payload.label]: {
+                ...state[payload.label],
+                isAdding: false,
+                message: payload.error.message || '',
+                errors: payload.error.errors || {},
+            },
+        };
+
+    case indexActionTypes.GET_BOOKING_REQUEST:
+        return {...state, [payload.label]: {...state[payload.label], isFetching: true}};
+
+    case indexActionTypes.GET_BOOKING_SUCCESS:
+        return {...state, [payload.label]: {...state[payload.label], isFetching: false, current: payload.current}};
+
+    case indexActionTypes.GET_BOOKING_FAILURE:
+        return {
+            ...state,
+            [payload.label]: {
+                ...state[payload.label],
+                isFetching: false,
                 message: payload.error.message || '',
                 errors: payload.error.errors || {},
             },
