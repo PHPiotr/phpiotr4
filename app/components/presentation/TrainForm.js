@@ -57,7 +57,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                                 checked={!!train.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={!!train.current.is_return ? '1' : ''}
+                                value={train.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }

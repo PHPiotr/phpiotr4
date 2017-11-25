@@ -112,7 +112,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                                 checked={!!plane.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={!!plane.current.is_return ? '1' : ''}
+                                value={plane.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }

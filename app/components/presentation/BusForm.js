@@ -77,7 +77,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                                 checked={!!bus.current.is_return}
                                 onChange={handleChange}
                                 onFocus={handleFocus}
-                                value={!!bus.current.is_return ? '1' : ''}
+                                value={bus.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
                         }
