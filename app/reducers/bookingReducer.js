@@ -122,6 +122,7 @@ const bookings = (state = initialState, action) => {
                 isAdd: payload.isAdd,
                 current: payload.isAdd ? state[payload.label]['current'] : {},
                 errors: payload.isAdd ? state[payload.label]['errors'] : {},
+                isAdded: payload.isAdd ? state.isAdded : false,
             },
         };
     default:
