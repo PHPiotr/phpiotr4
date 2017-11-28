@@ -42,12 +42,12 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                 <Typography style={{padding: '23px'}} type="headline">Planes</Typography>
                 {report.planes.length ? (
                     <Table>
-                        <TableHead>
+                        <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
                                 <TableCell>£{report.planes_cost}</TableCell>
                             </TableRow>
-                        </TableHead>
+                        </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Avg / singles</TableCell>
@@ -70,12 +70,12 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                 <Typography style={{padding: '23px'}} type="headline">Trains</Typography>
                 {report.trains.length ? (
                     <Table>
-                        <TableHead>
+                        <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
                                 <TableCell>£{report.trains_cost}</TableCell>
                             </TableRow>
-                        </TableHead>
+                        </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Avg / singles</TableCell>
@@ -98,12 +98,12 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                 <Typography style={{padding: '23px'}} type="headline">Hostels</Typography>
                 {report.hostels.length ? (
                     <Table>
-                        <TableHead>
+                        <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
                                 <TableCell>£{report.hostels_cost}</TableCell>
                             </TableRow>
-                        </TableHead>
+                        </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Average</TableCell>
