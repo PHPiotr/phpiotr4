@@ -26,16 +26,16 @@ const initialState = {
 
 const report = (state = initialState, action) => {
     switch (action.type) {
-    case reportActionTypes.REPORT_REQUEST:
-        return {...state, isFetching: true};
-    case reportActionTypes.REPORT_SUCCESS:
-        return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
-    case reportActionTypes.REPORT_FAILURE:
-        return {...state, ...{isFetching: false, error: action.error}};
-    case reportActionTypes.TOGGLE_DETAILS_OPEN:
-        return {...state, [`${action.payload}DetailsOpen`]: !state[`${action.payload}DetailsOpen`]};
-    default:
-        return state;
+        case reportActionTypes.REPORT_REQUEST:
+            return {...state, isFetching: true};
+        case reportActionTypes.REPORT_SUCCESS:
+            return {...state, ...action.data, ...{isFetching: false, receivedAt: action.receivedAt}};
+        case reportActionTypes.REPORT_FAILURE:
+            return {...state, ...{isFetching: false, error: action.error}};
+        case reportActionTypes.TOGGLE_DETAILS_OPEN:
+            return {...state, [`${action.payload}DetailsOpen`]: !state[`${action.payload}DetailsOpen`]};
+        default:
+            return state;
     }
 };
 
