@@ -7,13 +7,13 @@ const Navigation = (props) => {
         event.preventDefault();
         let url;
         switch (type) {
-        case 'current':
-        case 'past':
-            url = `/bookings/${props.bookingsLabel}/${type}`;
-            break;
+            case 'current':
+            case 'past':
+                url = `/bookings/${props.bookingsLabel}/${type}`;
+                break;
 
-        default:
-            url = `/bookings/${props.bookingsLabel}`;
+            default:
+                url = `/bookings/${props.bookingsLabel}`;
         }
         if (props.history.location.pathname !== url) {
             props.history.push(url);
