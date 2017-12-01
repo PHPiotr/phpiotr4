@@ -4,6 +4,7 @@ const Webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 require('babel-polyfill');
 
@@ -15,6 +16,11 @@ module.exports = merge(common, {
         publicPath: '/',
     },
     plugins: [
+        new CopyWebpackPlugin([
+            {from: path.resolve(__dirname, 'app/static/img'), to: 'static/img'}
+        ], {
+            copyUnmodified: true
+        }),
         new Webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
