@@ -3,7 +3,7 @@ import dateFilter from '../../reducers/dateFilterReducer';
 import * as dateFilterActionTypes from '../../actions/dateFilter/dateFilterActionTypes';
 import deepFreeze from 'deep-freeze';
 
-describe('dateFilter', () => {
+describe('dateFilterReducer', () => {
 
     it('should set "from" date', () => {
         const action = {

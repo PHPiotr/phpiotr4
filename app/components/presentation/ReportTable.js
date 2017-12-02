@@ -1,6 +1,6 @@
 import React from 'react';
 import BookingDetails from './BookingDetails';
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Table, {TableBody, TableCell, TableRow} from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid';
 import ExpandIcon from 'material-ui-icons/ExpandMore';
