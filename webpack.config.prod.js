@@ -17,9 +17,9 @@ module.exports = merge(common, {
     },
     plugins: [
         new CopyWebpackPlugin([
-            {from: path.resolve(__dirname, 'app/static/img'), to: 'static/img'}
+            {from: path.resolve(__dirname, 'app/static/img'), to: 'static/img'},
         ], {
-            copyUnmodified: true
+            copyUnmodified: true,
         }),
         new Webpack.DefinePlugin({
             'process.env': {
