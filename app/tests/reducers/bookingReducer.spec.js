@@ -75,4 +75,100 @@ describe('bookingReducer', () => {
             });
         });
     });
+
+    describe('should handle edition of bookings', () => {
+        labels.forEach((label) => {
+            it(`${bookingActionTypes.EDIT_BOOKING_REQUEST} should start editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload: {label}};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.EDIT_BOOKING_FAILURE} should fail editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_FAILURE, payload: {label, error: {}}};
+                const before = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                const after = {...initialState, [label]: {...initialState[label], isAdding: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.EDIT_BOOKING_SUCCESS} should succeed editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_SUCCESS, payload: {label}};
+                const before = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                const after = {
+                    ...initialState,
+                    [label]: {
+                        ...initialState[label],
+                        isAdding: false,
+                        isAdded: true,
+                        current: {},
+                    },
+                };
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+        });
+    });
+
+    describe('should handle edition of bookings', () => {
+        labels.forEach((label) => {
+            it(`${bookingActionTypes.EDIT_BOOKING_REQUEST} should start editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload: {label}};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.EDIT_BOOKING_FAILURE} should fail editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_FAILURE, payload: {label, error: {}}};
+                const before = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                const after = {...initialState, [label]: {...initialState[label], isAdding: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.EDIT_BOOKING_SUCCESS} should succeed editing ${label}`, () => {
+
+                const action = {type: bookingActionTypes.EDIT_BOOKING_SUCCESS, payload: {label}};
+                const before = {...initialState, [label]: {...initialState[label], isAdding: true}};
+                const after = {
+                    ...initialState,
+                    [label]: {
+                        ...initialState[label],
+                        isAdding: false,
+                        isAdded: true,
+                        current: {},
+                    },
+                };
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+        });
+    });
 });
