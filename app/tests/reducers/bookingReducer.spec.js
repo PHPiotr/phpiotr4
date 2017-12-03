@@ -171,4 +171,45 @@ describe('bookingReducer', () => {
             });
         });
     });
+
+    describe('should handle getting list of bookings', () => {
+        labels.forEach((label) => {
+            it(`${bookingActionTypes.GET_BOOKINGS_REQUEST} should start getting ${label} list`, () => {
+
+                const action = {type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload: {label}};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.GET_BOOKINGS_FAILURE} should fail getting ${label} list`, () => {
+
+                const action = {type: bookingActionTypes.GET_BOOKINGS_FAILURE, payload: {label, error: {}}};
+                const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.GET_BOOKINGS_SUCCESS} should succeed getting ${label} list`, () => {
+
+                const data = {'hello': 'world'};
+                const action = {type: bookingActionTypes.GET_BOOKINGS_SUCCESS, payload: {label, data}};
+                const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: false, data}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+        });
+    });
 });
