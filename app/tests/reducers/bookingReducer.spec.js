@@ -212,4 +212,45 @@ describe('bookingReducer', () => {
             });
         });
     });
+
+    describe('should handle getting single booking', () => {
+        labels.forEach((label) => {
+            it(`${bookingActionTypes.GET_BOOKING_REQUEST} should start getting ${label}`, () => {
+
+                const action = {type: bookingActionTypes.GET_BOOKING_REQUEST, payload: {label}};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.GET_BOOKING_FAILURE} should fail getting ${label}`, () => {
+
+                const action = {type: bookingActionTypes.GET_BOOKING_FAILURE, payload: {label, error: {}}};
+                const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.GET_BOOKING_SUCCESS} should succeed getting ${label}`, () => {
+
+                const current = {'hello': 'world'};
+                const action = {type: bookingActionTypes.GET_BOOKING_SUCCESS, payload: {label, current}};
+                const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: false, current}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+        });
+    });
 });
