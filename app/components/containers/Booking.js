@@ -11,8 +11,6 @@ const booking = (WrappedComponent) => {
 
     const label = WrappedComponent.bookingLabel;
     const labels = WrappedComponent.bookingsLabel;
-    const newLabel = WrappedComponent.newLabel;
-    const editLabel = WrappedComponent.editLabel;
 
     class Booking extends Component {
         componentDidMount() {
@@ -49,10 +47,10 @@ const booking = (WrappedComponent) => {
         init() {
             dispatch(bookingActions.setIsAdd({label, isAdd: true}));
             if (id === 'new') {
-                return dispatch(setAppBarTitle(newLabel));
+                return dispatch(setAppBarTitle(WrappedComponent.newLabel));
             }
             dispatch(bookingActions.getBookingIfNeeded(label, labels, id))
-                .then(() => dispatch(setAppBarTitle(`${editLabel}: ${id}`)));
+                .then(() => dispatch(setAppBarTitle(WrappedComponent.editLabel)));
         },
         handleFocus(event) {
             dispatch(bookingActions.handleFocus(event, label));
