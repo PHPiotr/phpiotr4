@@ -5,10 +5,9 @@ import BookingDetails from './BookingDetails';
 import NoContent from './NoContent';
 import {TRAINS} from '../../constants';
 
-const TrainsTable = ({journeys, journeys_length, return_journeys_length, current_page, max_per_page, total_cost, average_cost}) => {
+const TrainsTable = (props) => {
 
-    journeys_length || 0;
-    if (!journeys_length) {
+    if (!props.bookings_length) {
         return <NoContent/>;
     }
 
@@ -17,27 +16,27 @@ const TrainsTable = ({journeys, journeys_length, return_journeys_length, current
             <TableHead>
                 <TableRow>
                     <TableCell>Total</TableCell>
-                    <TableCell>£{formatPrice(total_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.total_cost)}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 <TableRow>
                     <TableCell>Average</TableCell>
-                    <TableCell>£{formatPrice(average_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.average_cost)}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Bookings</TableCell>
-                    <TableCell>{journeys_length}</TableCell>
+                    <TableCell>{props.bookings_length}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Singles</TableCell>
-                    <TableCell>{journeys_length - return_journeys_length}</TableCell>
+                    <TableCell>{props.bookings_length - props.return_bookings_length}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Returns</TableCell>
-                    <TableCell>{return_journeys_length}</TableCell>
+                    <TableCell>{props.return_bookings_length}</TableCell>
                 </TableRow>
-                <BookingDetails label="train" details={journeys} offset={(current_page - 1) * max_per_page}/>
+                <BookingDetails label="train" details={props.bookings} offset={(props.current_page - 1) * props.max_per_page}/>
             </TableBody>
         </Table>
     );
