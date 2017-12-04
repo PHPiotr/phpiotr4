@@ -1,78 +1,25 @@
-import React, {Component} from 'react';
-import * as bookingActions from '../../actions/booking/bookingActions';
-import {connect} from 'react-redux';
+import React from 'react';
 import BusForm from '../presentation/BusForm';
-import {setAppBarTitle} from '../../actions/app/appActions';
 import {NEW_BUS, EDIT_BUS} from '../../constants';
 import MessageBar from '../presentation/MessageBar';
+import Booking from './Booking';
 
-class Bus extends Component {
+const Bus = (props) => {
+    return (
+        <div>
+            <BusForm {...props}/>
+            <MessageBar
+                open={props.bus.isAdded}
+                message="Bus saved"
+                onRequestClose={props.onRequestClose}
+            />
+        </div>
+    );
+};
 
-    componentDidMount() {
-        this.props.init();
-    }
+Bus.bookingsLabel = 'buses';
+Bus.bookingLabel = 'bus';
+Bus.newLabel = NEW_BUS;
+Bus.editLabel = EDIT_BUS;
 
-    componentWillUnmount() {
-        this.props.isAdding(false);
-    }
-
-    render() {
-        return (
-            <div>
-                <BusForm {...this.props}/>
-                <MessageBar
-                    open={this.props.bus.isAdded}
-                    message="Bus saved"
-                    onRequestClose={this.props.onRequestClose}
-                />
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = state => ({
-    bus: state.bookings.bus,
-    bookingsLabel: 'buses',
-    bookingLabel: 'bus',
-    pricePlaceholder: '0.00',
-    isAdd: state.bookings.bus.isAdd,
-});
-
-const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
-    init() {
-        dispatch(bookingActions.setIsAdd({label: 'bus', isAdd: true}));
-        if (id === 'new') {
-            return dispatch(setAppBarTitle(NEW_BUS));
-        }
-        dispatch(bookingActions.getBookingIfNeeded('bus', 'buses', id))
-            .then(() => dispatch(setAppBarTitle(`${EDIT_BUS}: ${id}`)));
-    },
-    handleFocus(event) {
-        dispatch(bookingActions.handleFocus(event, 'bus'));
-    },
-    handleChange(event) {
-        dispatch(bookingActions.handleChange(event, 'bus'));
-    },
-    handleSubmit(event) {
-        event.preventDefault();
-        if (id === 'new') {
-            dispatch(bookingActions.addBookingIfNeeded('bus', 'buses'));
-        } else {
-            dispatch(bookingActions.editBookingIfNeeded('bus', 'buses'));
-        }
-    },
-    fetchBookings(type, page) {
-        dispatch(bookingActions.getBookingsIfNeeded('bus', 'buses', type || '', page || 1));
-    },
-    isAdding(isAdd) {
-        dispatch(bookingActions.setIsAdd({label: 'bus', isAdd}));
-    },
-    setAppBarTitle(appBarTitle) {
-        dispatch(setAppBarTitle(appBarTitle));
-    },
-    onRequestClose() {
-        dispatch(bookingActions.setIsAdded({label: 'bus', isAdded: false}));
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Bus);
+export default Booking(Bus);
