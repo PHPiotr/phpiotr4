@@ -13,6 +13,7 @@ import Login from './components/containers/Login';
 import Registration from './components/containers/Registration';
 import Logout from './components/containers/Logout';
 import Auth from './components/containers/Auth';
+import Booking from './components/containers/Booking';
 import NoAuth from './components/containers/NoAuth';
 
 const routes = () => (
@@ -22,13 +23,13 @@ const routes = () => (
         <Route name="register" path="/register" component={NoAuth(Registration)}/>
         <Route name="logout" path="/logout" component={Logout}/>
         <Route name="buses" path="/bookings/buses/:current?/:page?" component={Auth(Buses)}/>
-        <Route name="bus" path="/bookings/bus/:id?" component={Auth(Bus)}/>
+        <Route name="bus" path="/bookings/bus/:id?" component={Auth(Booking(Bus))}/>
         <Route name="planes" path="/bookings/planes/:current?/:page?" component={Auth(Planes)}/>
-        <Route name="plane" path="/bookings/plane/:id?" component={Auth(Plane)}/>
+        <Route name="plane" path="/bookings/plane/:id?" component={Auth(Booking(Plane))}/>
         <Route name="trains" path="/bookings/trains/:current?/:page?" component={Auth(Trains)}/>
-        <Route name="train" path="/bookings/train/:id?" component={Auth(Train)}/>
+        <Route name="train" path="/bookings/train/:id?" component={Auth(Booking(Train))}/>
         <Route name="hostels" path="/bookings/hostels/:current?/:page?" component={Auth(Hostels)}/>
-        <Route name="hostel" path="/bookings/hostel/:id?" component={Auth(Hostel)}/>
+        <Route name="hostel" path="/bookings/hostel/:id?" component={Auth(Booking(Hostel))}/>
     </Switch>
 );
 

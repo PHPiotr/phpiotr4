@@ -3,7 +3,6 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import {EDIT_HOSTEL, NEW_HOSTEL} from '../../constants';
-import Booking from '../containers/Booking';
 
 const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
     return (
@@ -80,4 +79,4 @@ HostelForm.bookingLabel = 'hostel';
 HostelForm.newLabel = NEW_HOSTEL;
 HostelForm.editLabel = EDIT_HOSTEL;
 
-export default Booking(HostelForm);
+export default HostelForm;

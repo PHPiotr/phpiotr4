@@ -4,7 +4,6 @@ import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {NEW_PLANE, EDIT_PLANE} from '../../constants';
-import Booking from '../containers/Booking';
 
 const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
     return (
@@ -177,4 +176,4 @@ PlaneForm.bookingLabel = 'plane';
 PlaneForm.newLabel = NEW_PLANE;
 PlaneForm.editLabel = EDIT_PLANE;
 
-export default Booking(PlaneForm);
+export default PlaneForm;
