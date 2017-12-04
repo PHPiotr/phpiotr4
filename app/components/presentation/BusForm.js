@@ -4,7 +4,6 @@ import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {NEW_BUS, EDIT_BUS} from '../../constants';
-import Booking from '../containers/Booking';
 
 const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
     return (
@@ -120,4 +119,4 @@ BusForm.bookingLabel = 'bus';
 BusForm.newLabel = NEW_BUS;
 BusForm.editLabel = EDIT_BUS;
 
-export default Booking(BusForm);
+export default BusForm;
