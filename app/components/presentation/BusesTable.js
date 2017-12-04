@@ -3,6 +3,7 @@ import formatPrice from '../../utils/formatPriceUtil';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import BookingDetails from './BookingDetails';
 import NoContent from './NoContent';
+import {BUSES} from '../../constants';
 
 const BusesTable = ({journeys, journeys_length, return_journeys_length, current_page, max_per_page, total_cost, average_cost}) => {
 
@@ -41,5 +42,9 @@ const BusesTable = ({journeys, journeys_length, return_journeys_length, current_
         </Table>
     );
 };
+
+BusesTable.bookingLabel = 'bus';
+BusesTable.bookingsLabel = 'buses';
+BusesTable.appBarTitle = BUSES;
 
 export default BusesTable;

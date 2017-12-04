@@ -3,6 +3,7 @@ import formatPrice from '../../utils/formatPriceUtil';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import BookingDetails from './BookingDetails';
 import NoContent from './NoContent';
+import {PLANES} from '../../constants';
 
 const PlanesTable = ({flights, flights_length, return_flights_length, current_page, max_per_page, total_cost, average_cost}) => {
 
@@ -41,5 +42,9 @@ const PlanesTable = ({flights, flights_length, return_flights_length, current_pa
         </Table>
     );
 };
+
+PlanesTable.bookingLabel = 'plane';
+PlanesTable.bookingsLabel = 'planes';
+PlanesTable.appBarTitle = PLANES;
 
 export default PlanesTable;
