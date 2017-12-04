@@ -7,7 +7,7 @@ import {BUSES} from '../../constants';
 
 const BusesTable = (props) => {
 
-    if (!props.bookings_length) {
+    if (!props.bookingsLength) {
         return <NoContent/>;
     }
 
@@ -16,27 +16,27 @@ const BusesTable = (props) => {
             <TableHead>
                 <TableRow>
                     <TableCell>Total</TableCell>
-                    <TableCell>£{formatPrice(props.total_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.totalCost)}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 <TableRow>
                     <TableCell>Average</TableCell>
-                    <TableCell>£{formatPrice(props.average_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.averageCost)}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Bookings</TableCell>
-                    <TableCell>{props.bookings_length}</TableCell>
+                    <TableCell>{props.bookingsLength}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Singles</TableCell>
-                    <TableCell>{props.bookings_length - props.return_bookings_length}</TableCell>
+                    <TableCell>{props.bookingsLength - props.returnBookingsLength}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Returns</TableCell>
-                    <TableCell>{props.return_bookings_length}</TableCell>
+                    <TableCell>{props.returnBookingsLength}</TableCell>
                 </TableRow>
-                <BookingDetails label="bus" details={props.bookings} offset={(props.current_page - 1) * props.max_per_page}/>
+                <BookingDetails label="bus" details={props.bookings} offset={(props.currentPage - 1) * props.maxPerPage}/>
             </TableBody>
         </Table>
     );

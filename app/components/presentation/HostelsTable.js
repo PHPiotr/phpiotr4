@@ -7,7 +7,7 @@ import {HOSTELS} from '../../constants';
 
 const HostelsTable = (props) => {
 
-    if (!props.bookings_length) {
+    if (!props.bookingsLength) {
         return <NoContent/>;
     }
 
@@ -16,19 +16,19 @@ const HostelsTable = (props) => {
             <TableHead>
                 <TableRow>
                     <TableCell>Total</TableCell>
-                    <TableCell>£{formatPrice(props.total_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.totalCost)}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 <TableRow>
                     <TableCell>Average</TableCell>
-                    <TableCell>£{formatPrice(props.average_cost)}</TableCell>
+                    <TableCell>£{formatPrice(props.averageCost)}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell>Bookings</TableCell>
-                    <TableCell>{props.bookings_length}</TableCell>
+                    <TableCell>{props.bookingsLength}</TableCell>
                 </TableRow>
-                <BookingDetails label="hostel" details={props.bookings} isHostel={true} offset={(props.current_page - 1) * props.max_per_page}/>
+                <BookingDetails label="hostel" details={props.bookings} isHostel={true} offset={(props.currentPage - 1) * props.maxPerPage}/>
             </TableBody>
         </Table>
     );
