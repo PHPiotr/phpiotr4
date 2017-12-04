@@ -5,6 +5,8 @@ const initialBooking = {
     isAdded: false,
     isAdding: false,
     isFetching: false,
+    isDeleted: false,
+    isDeleting: false,
     data: {},
     message: '',
     errors: {},
@@ -111,6 +113,23 @@ const bookings = (state = initialState, action) => {
 
         case indexActionTypes.GET_BOOKINGS_FAILURE:
             return {...state, [payload.label]: {...state[payload.label], isFetching: false, error: payload.error}};
+
+        case indexActionTypes.DELETE_BOOKING_REQUEST:
+            return {...state, [payload.label]: {...state[payload.label], isDeleting: true}};
+
+        case indexActionTypes.DELETE_BOOKING_SUCCESS:
+            return {...state, [payload.label]: {...state[payload.label], isDeleted: true, isDeleting: false}};
+
+        case indexActionTypes.DELETE_BOOKING_FAILURE:
+            return {
+                ...state,
+                [payload.label]: {
+                    ...state[payload.label],
+                    isDeleting: false,
+                    message: payload.error.message || '',
+                    errors: payload.error.errors || {},
+                },
+            };
 
         case indexActionTypes.SET_IS_ADDED:
             return {...state, [payload.label]: {...state[payload.label], isAdded: payload.isAdded}};

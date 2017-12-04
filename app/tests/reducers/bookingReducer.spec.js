@@ -8,6 +8,8 @@ const initialBooking = {
     isAdded: false,
     isAdding: false,
     isFetching: false,
+    isDeleted: false,
+    isDeleting: false,
     data: {},
     message: '',
     errors: {},
@@ -245,6 +247,48 @@ describe('bookingReducer', () => {
                 const action = {type: bookingActionTypes.GET_BOOKING_SUCCESS, payload: {label, current}};
                 const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
                 const after = {...initialState, [label]: {...initialState[label], isFetching: false, current}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+        });
+    });
+
+    describe('should handle deleting single booking', () => {
+        labels.forEach((label) => {
+            it(`${bookingActionTypes.DELETE_BOOKING_REQUEST} should start deleting ${label}`, () => {
+
+                const action = {type: bookingActionTypes.DELETE_BOOKING_REQUEST, payload: {label}};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {...initialState[label], isDeleting: true, isDeleted: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.DELETE_BOOKING_FAILURE} should fail deleting ${label}`, () => {
+
+                const action = {type: bookingActionTypes.DELETE_BOOKING_FAILURE, payload: {label, error: {}}};
+                const before = {...initialState, [label]: {...initialState[label], isDeleting: true, isDeleted: false}};
+                const after = {...initialState, [label]: {...initialState[label], isDeleting: false, isDeleted: false}};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
+
+            it(`${bookingActionTypes.DELETE_BOOKING_SUCCESS} should succeed deleting ${label}`, () => {
+
+                const action = {type: bookingActionTypes.DELETE_BOOKING_SUCCESS, payload: {label}};
+                const before = {...initialState, [label]: {...initialState[label], isDeleting: true, isDeleted: false}};
+                const after = {
+                    ...initialState,
+                    [label]: {...initialState[label], isDeleting: false, isDeleted: true}};
                 freeze(action);
                 freeze(before);
                 freeze(after);
