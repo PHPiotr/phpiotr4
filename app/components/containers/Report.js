@@ -31,7 +31,7 @@ class Report extends Component {
         }
         return (
             <div>
-                <Typography style={{padding: '23px'}} type="headline">Total: £{report.total_cost}</Typography>
+                <Typography style={{padding: '23px'}} type="headline">Total: £{report.totalCost}</Typography>
                 <DateFilterForm {...this.props}/>
                 <ReportTable report={report} toggleDetailsOpen={toggleDetailsOpen}/>
             </div>
