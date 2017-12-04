@@ -30,6 +30,16 @@ export const putBookings = (token, bookingType, id, body) => {
     });
 };
 
+export const deleteBooking = (token, bookingType, id) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/bookings/${bookingType}/${id}`, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+};
+
 export const getBooking = (token, bookingType, id) => {
     return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/bookings/${bookingType}/${id}`, {
         method: 'get',

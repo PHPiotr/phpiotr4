@@ -1,4 +1,4 @@
-import {postBookings, putBookings, getBookings, getBooking} from '../../services/bookingServices';
+import {postBookings, putBookings, getBookings, getBooking, deleteBooking} from '../../services/bookingServices';
 import * as bookingActionTypes from './bookingActionTypes';
 
 export const setIsAdded = payload => ({type: bookingActionTypes.SET_IS_ADDED, payload});
@@ -80,6 +80,28 @@ export const editBookingIfNeeded = (singular, plural) => {
 const editBookingRequest = payload => ({type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload});
 const editBookingSuccess = payload => ({type: bookingActionTypes.EDIT_BOOKING_SUCCESS, payload});
 const editBookingFailure = payload => ({type: bookingActionTypes.EDIT_BOOKING_FAILURE, payload});
+
+export const deleteBookingIfNeeded = (singular, plural, id) => {
+    return (dispatch, getState) => {
+        const {bookings, auth: {token}} = getState();
+        const bookingSingular = bookings[singular];
+        if (bookingSingular.isDeleting) {
+            return Promise.resolve();
+        }
+        dispatch(deleteBookingRequest({label: singular}));
+        return deleteBooking(token, plural, id)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText, response.status);
+                }
+                return dispatch(deleteBookingSuccess({label: singular}));
+            })
+            .catch(error => dispatch(deleteBookingFailure({label: singular, error})));
+    };
+};
+const deleteBookingRequest = payload => ({type: bookingActionTypes.DELETE_BOOKING_REQUEST, payload});
+const deleteBookingSuccess = payload => ({type: bookingActionTypes.DELETE_BOOKING_SUCCESS, payload});
+const deleteBookingFailure = payload => ({type: bookingActionTypes.DELETE_BOOKING_FAILURE, payload});
 
 export const getBookingIfNeeded = (singular, plural, id) => {
     return (dispatch, getState) => {
