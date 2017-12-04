@@ -3,6 +3,8 @@ import Button from 'material-ui/Button';
 import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
+import {NEW_TRAIN, EDIT_TRAIN} from '../../constants';
+import Booking from '../containers/Booking';
 
 const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
     return (
@@ -81,4 +83,9 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
     );
 };
 
-export default TrainForm;
+TrainForm.bookingsLabel = 'trains';
+TrainForm.bookingLabel = 'train';
+TrainForm.newLabel = NEW_TRAIN;
+TrainForm.editLabel = EDIT_TRAIN;
+
+export default Booking(TrainForm);
