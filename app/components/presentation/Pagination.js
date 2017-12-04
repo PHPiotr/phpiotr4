@@ -10,7 +10,7 @@ const Pagination = (props) => {
     if (!pagesCount || pagesCount <= 1) {
         return null;
     }
-    const currentPage = bookings.current_page;
+    const currentPage = bookings.currentPage;
     const style = {paddingLeft: 0, paddingRight: 0, minWidth: '40px', maxWidth: '40px'};
     const pages = [];
     const handleOnChange = (event, page) => {

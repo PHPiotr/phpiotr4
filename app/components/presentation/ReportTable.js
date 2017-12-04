@@ -18,11 +18,11 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
-                                <TableCell>£{report.buses_cost}</TableCell>
+                                <TableCell>£{report.busesCost}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Avg / singles</TableCell>
-                                <TableCell>{`£${report.buses_avg} / ${report.buses_singles_quantity}`}</TableCell>
+                                <TableCell>{`£${report.busesAvg} / ${report.busesSinglesQuantity}`}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
@@ -45,13 +45,13 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
-                                <TableCell>£{report.planes_cost}</TableCell>
+                                <TableCell>£{report.planesCost}</TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Avg / singles</TableCell>
-                                <TableCell>{`£${report.planes_avg} / ${report.planes_singles_quantity}`}</TableCell>
+                                <TableCell>{`£${report.planesAvg} / ${report.planesSinglesQuantity}`}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
@@ -73,13 +73,13 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
-                                <TableCell>£{report.trains_cost}</TableCell>
+                                <TableCell>£{report.trainsCost}</TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Avg / singles</TableCell>
-                                <TableCell>{`£${report.trains_avg} / ${report.trains_singles_quantity}`}</TableCell>
+                                <TableCell>{`£${report.trainsAvg} / ${report.trainsSinglesQuantity}`}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
@@ -101,13 +101,13 @@ const ReportTable = ({report, toggleDetailsOpen}) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Total</TableCell>
-                                <TableCell>£{report.hostels_cost}</TableCell>
+                                <TableCell>£{report.hostelsCost}</TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
                             <TableRow>
                                 <TableCell>Average</TableCell>
-                                <TableCell>£{report.hostels_avg}</TableCell>
+                                <TableCell>£{report.hostelsAvg}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
