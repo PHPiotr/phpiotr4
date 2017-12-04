@@ -1,21 +1,9 @@
 import React from 'react';
 import HostelForm from '../presentation/HostelForm';
 import {EDIT_HOSTEL, NEW_HOSTEL} from '../../constants';
-import MessageBar from '../presentation/MessageBar';
 import Booking from './Booking';
 
-const Hostel = (props) => {
-    return (
-        <div>
-            <HostelForm {...props}/>
-            <MessageBar
-                open={props.hostel.isAdded}
-                message="Hostel saved"
-                onRequestClose={props.onRequestClose}
-            />
-        </div>
-    );
-};
+const Hostel = props => <HostelForm {...props}/>;
 
 Hostel.bookingsLabel = 'hostels';
 Hostel.bookingLabel = 'hostel';

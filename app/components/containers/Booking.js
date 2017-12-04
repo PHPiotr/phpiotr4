@@ -3,6 +3,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import * as bookingActions from '../../actions/booking/bookingActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
+import MessageBar from '../presentation/MessageBar';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -21,7 +22,16 @@ const booking = (WrappedComponent) => {
             this.props.isAdding(false);
         }
         render() {
-            return <WrappedComponent {...this.props} />;
+            return (
+                <div>
+                    <WrappedComponent {...this.props} />
+                    <MessageBar
+                        open={this.props.isAdded}
+                        message="Saved"
+                        onRequestClose={this.props.onRequestClose}
+                    />
+                </div>
+            );
         }
     }
 
@@ -32,6 +42,7 @@ const booking = (WrappedComponent) => {
         [label]: state.bookings[label],
         pricePlaceholder: '0.00',
         isAdd: state.bookings[label].isAdd,
+        isAdded: state.bookings[label].isAdded,
     });
 
     const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
