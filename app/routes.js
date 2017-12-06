@@ -21,7 +21,7 @@ const routes = () => (
     <Switch>
         <Route exact path="/" component={Auth(Report)}/>
         <Route name="login" path="/login" component={NoAuth(Login)}/>
-        <Route name="register" path="/register" component={NoAuth(Registration)}/>
+        <Route name="register" path="/register/:userId?/:bearerToken?" component={NoAuth(Registration)}/>
         <Route name="logout" path="/logout" component={Logout}/>
         <Route name="buses" path="/bookings/buses/:current?/:page?" component={Auth(Bookings(Buses))}/>
         <Route name="bus" path="/bookings/bus/:id?" component={Auth(Booking(Bus))}/>

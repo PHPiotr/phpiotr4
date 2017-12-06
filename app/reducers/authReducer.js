@@ -8,8 +8,11 @@ const initialState = {
     registration: {},
     registrationErrorMessage: '',
     isRegistering: false,
-    isVerifying: false,
     registrationSuccessMessage: '',
+    isActivating: false,
+    activationErrorMessage: '',
+    activationSuccessMessage: '',
+    isVerifying: false,
     token: '',
     expiresIn: 0,
 };
@@ -48,6 +51,20 @@ const auth = (state = initialState, action) => {
                 ...state,
                 isRegistering: false,
                 registrationErrorMessage: action.registrationErrorMessage,
+            };
+        case authActionTypes.ACTIVATION_REQUEST:
+            return {...state, isActivating: true};
+        case authActionTypes.ACTIVATION_SUCCESS:
+            return {
+                ...state,
+                isActivating: false,
+                activationSuccessMessage: action.payload,
+            };
+        case authActionTypes.ACTIVATION_FAILURE:
+            return {
+                ...state,
+                isActivating: false,
+                activationErrorMessage: action.payload,
             };
         case authActionTypes.SET_IS_LOGGED_IN:
             return {...state, isLoggedIn: action.payload};

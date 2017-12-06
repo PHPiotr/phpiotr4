@@ -19,32 +19,13 @@ const root = isDevelopment ? 'app' : 'build';
 app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
 
-app.get('/activation/:id/:hash', (req, res) => {
-    fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users/${req.params.id}`, {
-        method: 'put',
-        body: JSON.stringify({
-            active: true,
-        }),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${req.params.hash}`,
-        },
-    })
-        .then(function(response) {
-            if (response.status >= 400) {
-                throw new Error('Bad response from server');
-            }
-        });
-    res.redirect('/');
-});
-
 app.post('/send_activation_link', (req, res) => {
 
     const helper = sendgrid.mail;
     const from_email = new helper.Email('no-reply@phpiotr.herokuapp.com', 'PHPiotr');
     const to_email = new helper.Email(req.body.email);
     const subject = '[PHPiotr] Activate your account';
-    const link = `${req.protocol}://${req.get('host')}/activation/${req.body.id}/${req.body.hash}`;
+    const link = `${req.protocol}://${req.get('host')}/register/${req.body.id}/${req.body.hash}`;
     const content = new helper.Content(
         'text/html',
         `Hello ${req.body.username}! Click the following link in order to activate your account: <a href="${link}">${link}</a>`);

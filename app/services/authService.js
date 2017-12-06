@@ -9,5 +9,33 @@ export const getAuthLogin = (username, password) => {
 };
 
 // Registration
-export const postUsers = body => fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {method: 'post', body});
-export const postActivationLink = body => fetch('send_activation_link', {method: 'post', body});
+export const postUsers = (body) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+};
+export const postActivationLink = (body) => {
+    return fetch('send_activation_link', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+};
+export const activateUser = (userId, token) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users/${userId}`, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            active: true,
+        }),
+    });
+};
