@@ -19,3 +19,4 @@ export const SET_TOKEN = 'SET_TOKEN';
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
 export const SET_LOGIN_FAILED = 'SET_LOGIN_FAILED';
 export const LOGOUT = 'LOGOUT';
+export const SET_ACTIVATION_DATA = 'SET_ACTIVATION_DATA';

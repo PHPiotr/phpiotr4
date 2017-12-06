@@ -25,9 +25,9 @@ const registration = () => {
             })
             .then((json) => {
                 if (!json.success) {
-                    return dispatch(registrationFailure(json.message))
+                    return dispatch(registrationFailure(json.message));
                 }
-                dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'))
+                dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
             })
             .catch(() => dispatch(registrationFailure('Something went wrong')));
     };
@@ -119,3 +119,8 @@ const activation = (userId, bearerToken) => {
 const activationRequest = () => ({type: authActionTypes.ACTIVATION_REQUEST});
 const activationSuccess = payload => ({type: authActionTypes.ACTIVATION_SUCCESS, payload});
 const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE, payload});
+
+export const setActivationData = () => {
+    const {host, hostname, protocol} = location;
+    return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
+};
