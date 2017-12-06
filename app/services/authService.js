@@ -27,3 +27,15 @@ export const postActivationLink = (body) => {
         body: JSON.stringify(body),
     });
 };
+export const activateUser = (userId, token) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users/${userId}`, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            active: true,
+        }),
+    });
+};
