@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     activateUserIfNeeded() {
         const {bearerToken, userId} = params;
         if (bearerToken && userId) {
-            activateIfNeeded(userId, bearerToken)
+            dispatch(activateIfNeeded(userId, bearerToken))
                 .then(() => history.replace('/login'));
         }
     },
