@@ -10,7 +10,7 @@ class Registration extends Component {
         this.props.activateUserIfNeeded();
     }
     render() {
-        if (this.props.isRegistering) {
+        if (this.props.auth.isRegistering) {
             return <LinearProgress/>;
         }
         return <RegistrationForm {...this.props} />;
