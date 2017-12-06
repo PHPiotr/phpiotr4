@@ -1,4 +1,4 @@
-import {getAuthLogin, postUsers, postActivationLink, activateUser} from '../../services/authService';
+import {getAuthLogin, postUsers, activateUser} from '../../services/authService';
 import cookie from 'cookie-monster';
 import * as authActionTypes from './authActionTypes';
 
@@ -22,16 +22,7 @@ const registration = () => {
                 }
                 return response.json();
             })
-            .then(({hash, user: {email, username, _id}}) => {
-                return postActivationLink({hash, email, username, id: _id})
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw Error(response.statusText, response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(() => dispatch(registrationSuccess(hash)));
-            })
+            .then(({hash}) => dispatch(registrationSuccess(hash)))
             .catch(error => dispatch(registrationFailure(error)));
     };
 };
