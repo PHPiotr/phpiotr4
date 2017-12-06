@@ -5,6 +5,8 @@ const initialState = {
     loginErrorMessage: '',
     isLoggedIn: false,
     isLoggingIn: false,
+    activationUrl: '',
+    activationFromEmail: '',
     registration: {},
     registrationErrorMessage: '',
     isRegistering: false,
@@ -43,14 +45,14 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 isRegistering: false,
-                registrationSuccessMessage: action.registrationSuccessMessage,
+                registrationSuccessMessage: action.payload,
                 registration: {},
             };
         case authActionTypes.REGISTRATION_FAILURE:
             return {
                 ...state,
                 isRegistering: false,
-                registrationErrorMessage: action.registrationErrorMessage,
+                registrationErrorMessage: action.payload,
             };
         case authActionTypes.ACTIVATION_REQUEST:
             return {...state, isActivating: true};
@@ -90,6 +92,12 @@ const auth = (state = initialState, action) => {
                 registrationErrorMessage: '',
                 registrationSuccessMessage: '',
                 registration: {...state.registration, [action.fieldName]: action.fieldValue},
+            };
+        case authActionTypes.SET_ACTIVATION_DATA:
+            return {
+                ...state,
+                activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
+                activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
         default:
             return state;

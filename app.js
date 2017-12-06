@@ -1,7 +1,6 @@
 const express = require('express');
 const serveStatic = require('serve-static');
 const path = require('path');
-const sendgrid = require('sendgrid');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 require('es6-promise').polyfill();
@@ -18,33 +17,6 @@ const root = isDevelopment ? 'app' : 'build';
 
 app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
-
-app.post('/send_activation_link', (req, res) => {
-
-    const helper = sendgrid.mail;
-    const from_email = new helper.Email('no-reply@phpiotr.herokuapp.com', 'PHPiotr');
-    const to_email = new helper.Email(req.body.email);
-    const subject = '[PHPiotr] Activate your account';
-    const link = `${req.protocol}://${req.get('host')}/register/${req.body.id}/${req.body.hash}`;
-    const content = new helper.Content(
-        'text/html',
-        `Hello ${req.body.username}! Click the following link in order to activate your account: <a href="${link}">${link}</a>`);
-    const mail = new helper.Mail(from_email, subject, to_email, content);
-
-    const sg = sendgrid(process.env.SENDGRID_API_KEY);
-    const request = sg.emptyRequest({
-        method: 'POST',
-        path: '/v3/mail/send',
-        body: mail.toJSON(),
-    });
-
-    sg.API(request, function (error, response) {
-        if (error) {
-            throw new Error(error);
-        }
-        res.json(response);
-    });
-});
 
 if (isDevelopment) {
     const webpack = require('webpack');

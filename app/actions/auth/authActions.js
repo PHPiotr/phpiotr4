@@ -1,4 +1,4 @@
-import {getAuthLogin, postUsers, postActivationLink, activateUser} from '../../services/authService';
+import {getAuthLogin, postUsers, activateUser} from '../../services/authService';
 import cookie from 'cookie-monster';
 import * as authActionTypes from './authActionTypes';
 
@@ -15,43 +15,26 @@ const registration = () => {
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
-        return postUsers(getState().auth.registration)
+        const {auth, appReducer} = getState();
+        const {registration, activationUrl, activationFromEmail} = auth;
+        const {appBarTitle} = appReducer;
+
+        return postUsers({registration, activationUrl, activationFromEmail, appName: appBarTitle})
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
-                }
                 return response.json();
             })
-            .then(({hash, user: {email, username, _id}}) => {
-                return postActivationLink({hash, email, username, id: _id})
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw Error(response.statusText, response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(() => dispatch(registrationSuccess(hash)));
+            .then((json) => {
+                if (!json.success) {
+                    return dispatch(registrationFailure(json.message));
+                }
+                dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
             })
-            .catch(error => dispatch(registrationFailure(error)));
+            .catch(() => dispatch(registrationFailure('Something went wrong')));
     };
 };
-const registrationRequest = () => ({
-    type: authActionTypes.REGISTRATION_REQUEST,
-});
-const registrationSuccess = (hash) => {
-    return {
-        type: authActionTypes.REGISTRATION_SUCCESS,
-        registrationSuccessMessage: 'Account created. We have sent you an email with activation instructions.',
-        hash,
-    };
-};
-const registrationFailure = (json) => {
-    return {
-        type: authActionTypes.REGISTRATION_FAILURE,
-        ok: false,
-        registrationErrorMessage: json.message,
-    };
-};
+const registrationRequest = () => ({type: authActionTypes.REGISTRATION_REQUEST});
+const registrationSuccess = payload => ({type: authActionTypes.REGISTRATION_SUCCESS, payload});
+const registrationFailure = payload => ({type: authActionTypes.REGISTRATION_FAILURE, payload});
 
 export const loginIfNeeded = () => {
     return (dispatch, getState) => {
@@ -136,3 +119,8 @@ const activation = (userId, bearerToken) => {
 const activationRequest = () => ({type: authActionTypes.ACTIVATION_REQUEST});
 const activationSuccess = payload => ({type: authActionTypes.ACTIVATION_SUCCESS, payload});
 const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE, payload});
+
+export const setActivationData = () => {
+    const {host, hostname, protocol} = location;
+    return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
+};
