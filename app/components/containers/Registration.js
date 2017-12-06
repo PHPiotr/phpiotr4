@@ -1,12 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    registerIfNeeded,
-    change,
-    focus,
-    ON_CHANGE_REGISTRATION_FIELD,
-    ON_FOCUS_REGISTRATION_FIELD,
-} from '../../actions/auth/authActions';
+import {focus, change, registerIfNeeded} from '../../actions/auth/authActions';
+import {ON_FOCUS_REGISTRATION_FIELD, ON_CHANGE_REGISTRATION_FIELD} from '../../actions/auth/authActionTypes';
 import RegistrationForm from '../presentation/RegistrationForm';
 import {LinearProgress} from 'material-ui/Progress';
 
@@ -15,10 +10,12 @@ const Registration = props => props.auth.isRegistering ? <LinearProgress/> : <Re
 const mapStateToProps = state => ({auth: state.auth});
 const mapDispatchToProps = dispatch => ({
     handleFocus(event) {
-        dispatch(focus(event.target.name, event.target.value, ON_FOCUS_REGISTRATION_FIELD));
+        const {name, value} = event.target;
+        dispatch(focus(name, value, ON_FOCUS_REGISTRATION_FIELD));
     },
     handleChange(event) {
-        dispatch(change(event.target.name, event.target.value, ON_CHANGE_REGISTRATION_FIELD));
+        const {name, value} = event.target;
+        dispatch(change(name, value, ON_CHANGE_REGISTRATION_FIELD));
     },
     handleSubmit(event) {
         event.preventDefault();
