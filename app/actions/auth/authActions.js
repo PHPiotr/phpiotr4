@@ -15,22 +15,22 @@ const registration = () => {
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
-        return postUsers(JSON.stringify(getState().auth.registration))
+        return postUsers(getState().auth.registration)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText, response.status);
                 }
                 return response.json();
             })
-            .then(({resp: {hash, user: {email, username, _id}}}) => {
-                return postActivationLink(JSON.stringify({hash, email, username, id: _id}))
+            .then(({hash, user: {email, username, _id}}) => {
+                return postActivationLink({hash, email, username, id: _id})
                     .then((response) => {
                         if (!response.ok) {
                             throw Error(response.statusText, response.status);
                         }
                         return response.json();
                     })
-                    .then(json => dispatch(registrationSuccess(json)));
+                    .then(() => dispatch(registrationSuccess(hash)));
             })
             .catch(error => dispatch(registrationFailure(error)));
     };
@@ -38,11 +38,11 @@ const registration = () => {
 const registrationRequest = () => ({
     type: authActionTypes.REGISTRATION_REQUEST,
 });
-const registrationSuccess = (json) => {
+const registrationSuccess = (hash) => {
     return {
         type: authActionTypes.REGISTRATION_SUCCESS,
         registrationSuccessMessage: 'Account created. We have sent you an email with activation instructions.',
-        hash: json.hash,
+        hash,
     };
 };
 const registrationFailure = (json) => {
