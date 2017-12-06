@@ -128,7 +128,6 @@ const activation = (userId, bearerToken) => {
                 if (!response.ok) {
                     throw Error(response.statusText, response.status);
                 }
-                return response.json();
             })
             .then(() => dispatch(activationSuccess('Account activated. You can now log in.')))
             .catch(({message}) => dispatch(activationFailure(message)));
