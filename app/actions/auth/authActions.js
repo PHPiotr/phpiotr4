@@ -15,34 +15,26 @@ const registration = () => {
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
-        return postUsers(getState().auth.registration)
+        const {auth, appReducer} = getState();
+        const {registration, activationUrl, activationFromEmail} = auth;
+        const {appBarTitle} = appReducer;
+
+        return postUsers({registration, activationUrl, activationFromEmail, appName: appBarTitle})
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
-                }
                 return response.json();
             })
-            .then(({hash}) => dispatch(registrationSuccess(hash)))
-            .catch(error => dispatch(registrationFailure(error)));
+            .then((json) => {
+                if (!json.success) {
+                    return dispatch(registrationFailure(json.message))
+                }
+                dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'))
+            })
+            .catch(() => dispatch(registrationFailure('Something went wrong')));
     };
 };
-const registrationRequest = () => ({
-    type: authActionTypes.REGISTRATION_REQUEST,
-});
-const registrationSuccess = (hash) => {
-    return {
-        type: authActionTypes.REGISTRATION_SUCCESS,
-        registrationSuccessMessage: 'Account created. We have sent you an email with activation instructions.',
-        hash,
-    };
-};
-const registrationFailure = (json) => {
-    return {
-        type: authActionTypes.REGISTRATION_FAILURE,
-        ok: false,
-        registrationErrorMessage: json.message,
-    };
-};
+const registrationRequest = () => ({type: authActionTypes.REGISTRATION_REQUEST});
+const registrationSuccess = payload => ({type: authActionTypes.REGISTRATION_SUCCESS, payload});
+const registrationFailure = payload => ({type: authActionTypes.REGISTRATION_FAILURE, payload});
 
 export const loginIfNeeded = () => {
     return (dispatch, getState) => {

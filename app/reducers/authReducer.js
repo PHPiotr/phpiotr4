@@ -5,6 +5,8 @@ const initialState = {
     loginErrorMessage: '',
     isLoggedIn: false,
     isLoggingIn: false,
+    activationUrl: 'http://localhost:4000/register',
+    activationFromEmail: 'no-reply@phpiotr.herokuapp.com',
     registration: {},
     registrationErrorMessage: '',
     isRegistering: false,
@@ -43,14 +45,14 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 isRegistering: false,
-                registrationSuccessMessage: action.registrationSuccessMessage,
+                registrationSuccessMessage: action.payload,
                 registration: {},
             };
         case authActionTypes.REGISTRATION_FAILURE:
             return {
                 ...state,
                 isRegistering: false,
-                registrationErrorMessage: action.registrationErrorMessage,
+                registrationErrorMessage: action.payload,
             };
         case authActionTypes.ACTIVATION_REQUEST:
             return {...state, isActivating: true};
