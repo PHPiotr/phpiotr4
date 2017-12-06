@@ -1,4 +1,4 @@
-import {getAuthLogin, postUsers, postActivationLink} from '../../services/authService';
+import {getAuthLogin, postUsers, postActivationLink, activateUser} from '../../services/authService';
 import cookie from 'cookie-monster';
 import * as authActionTypes from './authActionTypes';
 
@@ -50,7 +50,6 @@ const registrationFailure = (json) => {
         type: authActionTypes.REGISTRATION_FAILURE,
         ok: false,
         registrationErrorMessage: json.message,
-        registrationErrors: json.errors,
     };
 };
 
@@ -110,3 +109,31 @@ export const logoutIfNeeded = () => {
 };
 export const setToken = payload => ({type: authActionTypes.SET_TOKEN, payload});
 export const setIsLoggedIn = payload => ({type: authActionTypes.SET_IS_LOGGED_IN, payload});
+
+export const activateIfNeeded = (userId, bearerToken) => {
+    return (dispatch, getState) => {
+        if (shouldActivate(getState())) {
+            return dispatch(activation(userId, bearerToken));
+        }
+        return Promise.resolve();
+    };
+};
+const shouldActivate = ({auth: {isLoggingIn, isLoggedIn, isActivating}}) => !isLoggingIn && !isLoggedIn && !isActivating;
+const activation = (userId, bearerToken) => {
+    return (dispatch) => {
+        dispatch(activationRequest());
+
+        return activateUser(userId, bearerToken)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText, response.status);
+                }
+                return response.json();
+            })
+            .then(() => dispatch(activationSuccess('Account activated. You can now log in.')))
+            .catch(({message}) => dispatch(activationFailure(message)));
+    };
+};
+const activationRequest = () => ({type: authActionTypes.ACTIVATION_REQUEST});
+const activationSuccess = payload => ({type: authActionTypes.ACTIVATION_SUCCESS, payload});
+const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE, payload});
