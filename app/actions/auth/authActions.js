@@ -21,15 +21,20 @@ const registration = () => {
 
         return postUsers({registration, activationUrl, activationFromEmail, appName: appBarTitle})
             .then((response) => {
-                return response.json();
+                if (response.status === 201) {
+                    dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
+
+                    return {success: true};
+                } else {
+                    return response.json();
+                }
             })
             .then((json) => {
                 if (!json.success) {
-                    return dispatch(registrationFailure(json.message));
+                    throw Error(json.message || 'Something went wrong');
                 }
-                dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
             })
-            .catch(() => dispatch(registrationFailure('Something went wrong')));
+            .catch(e => dispatch(registrationFailure(e.message)));
     };
 };
 const registrationRequest = () => ({type: authActionTypes.REGISTRATION_REQUEST});
@@ -107,12 +112,13 @@ const activation = (userId, bearerToken) => {
         dispatch(activationRequest());
 
         return activateUser(userId, bearerToken)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
+            .then(response => response.json())
+            .then((json) => {
+                if (!json.success) {
+                    return dispatch(activationFailure(json.message));
                 }
+                dispatch(activationSuccess('Account activated. You can now log in.'));
             })
-            .then(() => dispatch(activationSuccess('Account activated. You can now log in.')))
             .catch(({message}) => dispatch(activationFailure(message)));
     };
 };
