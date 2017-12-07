@@ -112,14 +112,21 @@ const activation = (userId, bearerToken) => {
         dispatch(activationRequest());
 
         return activateUser(userId, bearerToken)
-            .then(response => response.json())
+            .then((response) => {
+                if (response.status === 204) {
+                    dispatch(activationSuccess('Account activated. You can now log in.'));
+
+                    return {success: true};
+                } else {
+                    return response.json();
+                }
+            })
             .then((json) => {
                 if (!json.success) {
-                    return dispatch(activationFailure(json.message));
+                    throw Error(json.message || 'Something went wrong');
                 }
-                dispatch(activationSuccess('Account activated. You can now log in.'));
             })
-            .catch(({message}) => dispatch(activationFailure(message)));
+            .catch(e => dispatch(activationFailure(e.message)));
     };
 };
 const activationRequest = () => ({type: authActionTypes.ACTIVATION_REQUEST});
