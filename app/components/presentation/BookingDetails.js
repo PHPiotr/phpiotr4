@@ -15,12 +15,12 @@ const BookingDetails = ({label, details, isHostel, offset, history}) => {
     const style = {paddingLeft: 0, paddingRight: 0};
     const handleClick = id => history.push(`/bookings/${label}/${id}`);
     const rowStyle = {cursor: 'pointer'};
-    const items = [];
+
     if (isHostel) {
-        details.map(function (row, i) {
+        return details.map((row, i) => {
             const checkIn = formatDate(row.checkin_date);
             const checkOut = formatDate(row.checkout_date);
-            items.push(
+            return (
                 <TableRow style={rowStyle} key={`${i}hostel`} onClick={() => handleClick(row._id)}>
                     <TableCell>
                         <List>
@@ -43,36 +43,34 @@ const BookingDetails = ({label, details, isHostel, offset, history}) => {
                 </TableRow>
             );
         });
-    } else {
-        details.map(function (row, i) {
-            const departDate = formatDate(row.departure_date);
-            const returnDate = row.is_return ? ' - ' + formatDate(row.return_departure_date) : '';
-            items.push(
-                <TableRow style={rowStyle} key={i} onClick={() => handleClick(row._id)}>
-                    <TableCell>
-                        <List>
-                            <ListItem style={style}>
-                                <ListItemText
-                                    primary={`${i + 1 + (offset || 0)}. ${departDate}${returnDate}`}
-                                    secondary={`${row.from} - ${row.to}`} />
-                            </ListItem>
-                        </List>
-                    </TableCell>
-                    <TableCell>
-                        <List>
-                            <ListItem style={style}>
-                                <ListItemText
-                                    primary={`£${getPrice(row.price)}`}
-                                    secondary={row.booking_number || row.confirmation_code || ''} />
-                            </ListItem>
-                        </List>
-                    </TableCell>
-                </TableRow>
-            );
-        });
     }
 
-    return items;
+    return details.map((row, i) => {
+        const departDate = formatDate(row.departure_date);
+        const returnDate = row.is_return ? ' - ' + formatDate(row.return_departure_date) : '';
+        return (
+            <TableRow style={rowStyle} key={i} onClick={() => handleClick(row._id)}>
+                <TableCell>
+                    <List>
+                        <ListItem style={style}>
+                            <ListItemText
+                                primary={`${i + 1 + (offset || 0)}. ${departDate}${returnDate}`}
+                                secondary={`${row.from} - ${row.to}`} />
+                        </ListItem>
+                    </List>
+                </TableCell>
+                <TableCell>
+                    <List>
+                        <ListItem style={style}>
+                            <ListItemText
+                                primary={`£${getPrice(row.price)}`}
+                                secondary={row.booking_number || row.confirmation_code || ''} />
+                        </ListItem>
+                    </List>
+                </TableCell>
+            </TableRow>
+        );
+    });
 };
 
 BookingDetails.propTypes = {
@@ -85,6 +83,6 @@ BookingDetails.defaultProps = {
     isHostel: false,
 };
 
-BookingDetails.displayName = 'BookingCell';
+BookingDetails.displayName = 'BookingDetails';
 
 export default withRouter(BookingDetails);
