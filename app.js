@@ -29,7 +29,7 @@ if (isDevelopment) {
     app.use(require('webpack-hot-middleware')(compiler));
     app.get('*', (req, res, next) => {
         const filename = path.join(compiler.outputPath, 'index.html');
-        compiler.outputFileSystem.readFile(filename, function(err, result) {
+        compiler.outputFileSystem.readFile(filename, (err, result) => {
             if (err) {
                 return next(err);
             }
