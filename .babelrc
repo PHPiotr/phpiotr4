@@ -7,12 +7,14 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-class-properties"
       ]
     },
     "production": {
       "plugins": [
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-class-properties"
       ]
     }
   }
