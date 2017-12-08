@@ -39,8 +39,6 @@ class Report extends Component {
     }
 }
 
-Report.displayName = 'Report';
-
 const mapStateToProps = ({report, dateFilter, auth: {isLoggedIn}}) => ({
     report,
     dateFilter,

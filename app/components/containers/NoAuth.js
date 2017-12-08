@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 function noAuth(WrappedComponent) {
     class NoAuth extends Component {
-
+        static displayName = `NoAuth(${getDisplayName(WrappedComponent)})`;
         verify(token) {
             const {exp} = jwtDecode(token);
             const expiration = exp * 1000;
@@ -40,7 +40,6 @@ function noAuth(WrappedComponent) {
         }
     }
 
-    NoAuth.displayName = `NoAuth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
     return connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(NoAuth);

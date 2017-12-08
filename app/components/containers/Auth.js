@@ -7,7 +7,7 @@ import {setToken, setIsLoggedIn} from '../../actions/auth/authActions';
 
 function auth(WrappedComponent) {
     class Auth extends Component {
-
+        static displayName = `Auth(${getDisplayName(WrappedComponent)})`;
         verify(token) {
             const {exp} = jwtDecode(token);
             if (!exp) {
@@ -50,7 +50,6 @@ function auth(WrappedComponent) {
         }
     }
 
-    Auth.displayName = `Auth(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Auth, WrappedComponent);
 
     const mapStateToProps = ({auth: {isLoggedIn, token}}) => ({isLoggedIn, token});
