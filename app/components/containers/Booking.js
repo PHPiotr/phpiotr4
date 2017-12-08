@@ -13,6 +13,7 @@ const booking = (WrappedComponent) => {
     const labels = WrappedComponent.bookingsLabel;
 
     class Booking extends Component {
+        static displayName = `Booking(${getDisplayName(WrappedComponent)})`;
         componentDidMount() {
             this.props.init();
         }
@@ -33,7 +34,6 @@ const booking = (WrappedComponent) => {
         }
     }
 
-    Booking.displayName = `Booking(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Booking, WrappedComponent);
 
     const mapStateToProps = state => ({
