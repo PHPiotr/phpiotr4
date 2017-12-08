@@ -18,6 +18,7 @@ const bookings = (WrappedComponent) => {
     const appBarTitle = WrappedComponent.appBarTitle;
 
     class Bookings extends Component {
+        static displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
         componentDidMount() {
             if (!this.props.isLoggedIn) {
                 return null;
@@ -42,7 +43,6 @@ const bookings = (WrappedComponent) => {
         }
     }
 
-    Bookings.displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
     hoistNonReactStatic(Bookings, WrappedComponent);
 
     const mapStateToProps = ({bookings, auth: {isLoggedIn}}) => ({
