@@ -19,7 +19,12 @@ function noAuth(WrappedComponent) {
         componentWillMount() {
             const {verify, props: {token}} = this;
             if (token) {
-                return verify(token);
+                try {
+                    return verify(token);
+                } catch (e) {
+                    this.props.history.replace('/');
+                }
+
             }
             try {
                 const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
