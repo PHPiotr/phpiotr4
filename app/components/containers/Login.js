@@ -18,14 +18,16 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     handleSubmit(event) {
         event.preventDefault();
         dispatch(loginIfNeeded())
-            .then(({payload: {token, expiresIn}}) => {
-                const now = new Date();
-                const expireTime = now.getTime() + 1000 * parseInt(expiresIn, 10);
-                now.setTime(expireTime);
-                cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
-                history.push('/');
-            })
-            .catch(error => console.log(error));
+            .then((payload) => {
+                const {token, expiresIn} = payload;
+                if (token && expiresIn) {
+                    const now = new Date();
+                    const expireTime = now.getTime() + 1000 * parseInt(expiresIn, 10);
+                    now.setTime(expireTime);
+                    cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
+                    history.push('/');
+                }
+            });
     },
 });
 
