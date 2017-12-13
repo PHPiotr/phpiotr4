@@ -66,8 +66,8 @@ const bookings = (state = initialState, action) => {
                 [payload.label]: {
                     ...state[payload.label],
                     isAdding: false,
-                    message: payload.error.message || '',
-                    errors: payload.error.errors || {},
+                    message: payload.error || '',
+                    errors: {},
                 },
             };
 
