@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     handleSubmit(event) {
         event.preventDefault();
         dispatch(loginIfNeeded())
-            .then((payload) => {
-                const {token, expiresIn} = payload;
+            .then(({payload}) => {
+                const {token, expiresIn} = (payload || {});
                 if (token && expiresIn) {
                     const now = new Date();
                     const expireTime = now.getTime() + 1000 * parseInt(expiresIn, 10);
