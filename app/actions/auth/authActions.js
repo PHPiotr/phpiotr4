@@ -54,27 +54,16 @@ const logUserIn = ({username, password}) => {
     return (dispatch) => {
         dispatch(loginRequest());
         return getAuthLogin(username, password)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
-                }
-                return response.json();
-            })
-            .then((json) => {
-                if (!json) {
-                    throw Error('Something bad happened.');
-                }
-                if (!json.token) {
-                    return dispatch(loginFailure({message: json.msg}));
-                }
-                return dispatch(loginSuccess(json));
-            })
+            .then(response => response.json())
+            .then(json => json.success === false
+                ? dispatch(loginFailure({message: json.msg}))
+                : dispatch(loginSuccess(json)))
             .catch(error => dispatch(loginFailure(error)));
     };
 };
 const loginRequest = () => ({type: authActionTypes.LOGIN_REQUEST});
 const loginSuccess = ({token, expiresIn}) => ({type: authActionTypes.LOGIN_SUCCESS, payload: {token, expiresIn}});
-const loginFailure = ({message, errors}) => ({type: authActionTypes.LOGIN_FAILURE, ok: false,  loginErrorMessage: message, loginErrors: errors});
+const loginFailure = ({message, errors}) => ({type: authActionTypes.LOGIN_FAILURE, loginErrorMessage: message, loginErrors: errors});
 
 export const change = (fieldName, fieldValue, type = authActionTypes.ON_CHANGE_LOGIN_FIELD) => ({
     type,
