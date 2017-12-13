@@ -46,7 +46,7 @@ describe('bookingReducer', () => {
 
             it(`${bookingActionTypes.ADD_BOOKING_FAILURE} should fail adding ${label}`, () => {
 
-                const action = {type: bookingActionTypes.ADD_BOOKING_FAILURE, payload: {label, error: {}}};
+                const action = {type: bookingActionTypes.ADD_BOOKING_FAILURE, payload: {label, error: ''}};
                 const before = {...initialState, [label]: {...initialState[label], isAdding: true}};
                 const after = {...initialState, [label]: {...initialState[label], isAdding: false}};
                 freeze(action);

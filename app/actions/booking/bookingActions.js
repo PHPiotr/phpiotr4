@@ -36,20 +36,17 @@ export const addBookingIfNeeded = (singular, plural) => {
         dispatch(addBookingRequest({label: singular}));
         return postBookings(token, plural, JSON.stringify(bookingSingular.current))
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
+                if (response.ok) {
+                    return dispatch(addBookingSuccess({label: singular}));
                 }
                 return response.json();
             })
             .then((json) => {
-                if (json.ok) {
-                    dispatch(addBookingSuccess({label: singular, data: json[singular]}));
-                }
-                if (json.err) {
-                    dispatch(addBookingFailure({label: singular, error: json.err}));
+                if (json.error) {
+                    dispatch(addBookingFailure({label: singular, error: json.error}));
                 }
             })
-            .catch(error => dispatch(addBookingFailure({label: singular, error})));
+            .catch(error => dispatch(addBookingFailure({label: singular, error: error.message})));
     };
 };
 const addBookingRequest = payload => ({type: bookingActionTypes.ADD_BOOKING_REQUEST, payload});
