@@ -1,23 +1,16 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Webpack = require('webpack');
 
 module.exports = {
+    name: 'client',
+    target: 'web',
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 use: 'babel-loader',
                 exclude: /node_modules/,
-            },
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader',
-                }),
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/,
@@ -51,9 +44,6 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['build/*']),
         new ManifestPlugin(),
-        new HtmlWebpackPlugin({
-            template: './index.html',
-        }),
         new Webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: function (module) {

@@ -15,11 +15,11 @@
     "test": "NODE_ENV=production mocha './app/tests/**/*.js' --require babel-core/register",
     "test:watch": "npm run tests -- --watch",
     "build": "better-npm-run build",
-    "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js --progress"
+    "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack.client.prod.js --progress"
   },
   "betterScripts": {
     "build": {
-      "command": "webpack -p --config ./webpack.config.prod.js --progress --colors",
+      "command": "webpack -p --config ./webpack.client.prod.js --progress --colors",
       "env": {
         "NODE_ENV": "production"
       }

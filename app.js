@@ -20,7 +20,7 @@ app.use(express.static(path.resolve(__dirname, root, 'static')));
 
 if (isDevelopment) {
     const webpack = require('webpack');
-    const webpackConfig = require('./webpack.config.dev');
+    const webpackConfig = require('./webpack.client.dev');
     const compiler = webpack(webpackConfig);
     const webpackDevMiddleware = require('webpack-dev-middleware');
     app.use(webpackDevMiddleware(compiler, {
