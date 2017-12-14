@@ -42,11 +42,11 @@ export const addBookingIfNeeded = (singular, plural) => {
                 return response.json();
             })
             .then((json) => {
-                if (json.error) {
-                    dispatch(addBookingFailure({label: singular, error: json.error}));
+                if (json.error && json.errors) {
+                    dispatch(addBookingFailure({label: singular, error: json.error, errors: json.errors}));
                 }
             })
-            .catch(error => dispatch(addBookingFailure({label: singular, error: error.message})));
+            .catch(error => dispatch(addBookingFailure({label: singular, error: error.message, errors: {}})));
     };
 };
 const addBookingRequest = payload => ({type: bookingActionTypes.ADD_BOOKING_REQUEST, payload});
