@@ -40,7 +40,7 @@ export default ({clientStats}) => (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Universal testing</title>
+        <title>${preloadedState.appReducer.appBarTitle}</title>
         ${styles}
         <link href="/app.css" rel="stylesheets" />
     </head>

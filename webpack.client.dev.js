@@ -1,7 +1,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
 const Webpack = require('webpack');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
@@ -54,11 +53,6 @@ module.exports = merge(common, {
                 'NODE_ENV': JSON.stringify('development'),
             },
         }),
-        // new ExtractTextPlugin({
-        //     filename: '[name].css',
-        //     disable: false,
-        //     allChunks: true,
-        // }),
         new Webpack.HotModuleReplacementPlugin(),
         new Webpack.NamedModulesPlugin(),
         new Webpack.NoEmitOnErrorsPlugin(),
