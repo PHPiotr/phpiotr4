@@ -39,7 +39,7 @@ export default ({clientStats}) => (req, res) => {
     const css = sheetsRegistry.toString();
     const chunkNames = flushChunkNames();
 
-    const {js, styles, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames});
+    const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames});
 
     console.log('Dynamic Chunk Names Rendered', chunkNames);
     console.log('Scripts', scripts);
