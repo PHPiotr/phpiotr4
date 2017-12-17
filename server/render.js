@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/server';
+import {renderToString} from 'react-dom/server';
 import {flushChunkNames} from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
 import App from '../app/components/containers/App';
@@ -10,22 +10,33 @@ import {MuiThemeProvider} from 'material-ui/styles';
 import {Provider} from 'react-redux';
 import configureStore from '../app/configureStore';
 import reducers from '../app/reducers';
+import {SheetsRegistry} from 'react-jss/lib/jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {create} from 'jss';
+import preset from 'jss-preset-default';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 
 export default ({clientStats}) => (req, res) => {
+    const sheetsRegistry = new SheetsRegistry();
+    const jss = create(preset());
+    jss.options.createGenerateClassName = createGenerateClassName;
     const store = configureStore(reducers);
     const preloadedState = store.getState();
     const context = {};
-    const app = ReactDOM.renderToString(
+    const app = renderToString(
         <Provider store={store}>
             <Router location={req.url} context={context}>
-                <MuiThemeProvider theme={theme}>
-                    <App>
-                        <Routes/>
-                    </App>
-                </MuiThemeProvider>
+                <JssProvider registry={sheetsRegistry} jss={jss}>
+                    <MuiThemeProvider theme={theme}>
+                        <App>
+                            <Routes/>
+                        </App>
+                    </MuiThemeProvider>
+                </JssProvider>
             </Router>
         </Provider>
     );
+    const css = sheetsRegistry.toString();
     const chunkNames = flushChunkNames();
 
     const {js, styles, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames});
@@ -41,11 +52,11 @@ export default ({clientStats}) => (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>${preloadedState.appReducer.appBarTitle}</title>
-        ${styles}
         <link href="/app.css" rel="stylesheets" />
     </head>
     <body>
         <div id="root">${app}</div>
+        <style id="jss-server-side">${css}</style>
         <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
         </script>
