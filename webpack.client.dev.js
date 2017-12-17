@@ -1,13 +1,13 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
 const Webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = merge(common, {
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval',
     entry: {
         app: [
             'babel-polyfill',
@@ -18,37 +18,47 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, './buildClient'),
         filename: '[name].js',
         chunkFilename: '[name].js',
-        publicPath: '/',
-        pathinfo: true,
+        publicPath: '/static/',
+        //pathinfo: true,
     },
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader',
+                use: ExtractCssChunks.extract({
+                    use: {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            //localIdentName: '[name]__[local]--[hash:base64:5]',
+                        },
+                    },
                 }),
             },
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './index.html',
+        new ExtractCssChunks({
+            filename: '[name].css',
         }),
         new Webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('development'),
             },
         }),
-        new ExtractTextPlugin({
-            filename: '[name].css',
-            disable: true,
-            allChunks: true,
-        }),
+        // new ExtractTextPlugin({
+        //     filename: '[name].css',
+        //     disable: false,
+        //     allChunks: true,
+        // }),
         new Webpack.HotModuleReplacementPlugin(),
         new Webpack.NamedModulesPlugin(),
         new Webpack.NoEmitOnErrorsPlugin(),

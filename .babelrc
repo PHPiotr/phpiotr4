@@ -6,6 +6,7 @@
   "env": {
     "development": {
       "plugins": [
+        "universal-import",
         "react-hot-loader/babel",
         "transform-object-rest-spread",
         "transform-class-properties"
@@ -13,6 +14,7 @@
     },
     "production": {
       "plugins": [
+        "universal-import",
         "transform-object-rest-spread",
         "transform-class-properties"
       ]

@@ -45,17 +45,22 @@ module.exports = {
         new CleanWebpackPlugin(['build/*']),
         new ManifestPlugin(),
         new Webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: function (module) {
-                if (module.resource && (/^.*\.(css|scss|less)$/).test(module.resource)) {
-                    return false;
-                }
-                return module.context && module.context.indexOf('node_modules') !== -1;
-            },
-        }),
-        new Webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest',
+            names: ['bootstrap'],
+            filename: '[name].js',
             minChunks: Infinity,
         }),
+        // new Webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor',
+        //     minChunks: function (module) {
+        //         if (module.resource && (/^.*\.(css|scss|less)$/).test(module.resource)) {
+        //             return false;
+        //         }
+        //         return module.context && module.context.indexOf('node_modules') !== -1;
+        //     },
+        // }),
+        // new Webpack.optimize.CommonsChunkPlugin({
+        //     name: 'manifest',
+        //     minChunks: Infinity,
+        // }),
     ],
 };

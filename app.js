@@ -20,13 +20,20 @@ app.use(express.static(path.resolve(__dirname, root, 'static')));
 
 if (isDevelopment) {
     const webpack = require('webpack');
-    const webpackConfig = require('./webpack.client.dev');
-    const compiler = webpack(webpackConfig);
+    const clientConfig = require('./webpack.client.dev');
+    const serverConfig = require('./webpack.server.dev');
+    const compiler = webpack([clientConfig, serverConfig]);
+    const clientCompiler = compiler.compilers[0];
     const webpackDevMiddleware = require('webpack-dev-middleware');
-    app.use(webpackDevMiddleware(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-    }));
-    app.use(require('webpack-hot-middleware')(compiler));
+    const webpackHotMiddleware = require('webpack-hot-middleware');
+    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+    const publicPath = clientConfig.output.publicPath;
+    const options = {publicPath, stats: {colors: true}};
+
+    app.use(webpackDevMiddleware(compiler, options));
+
+    app.use(webpackHotMiddleware(clientCompiler));
+    app.use(webpackHotServerMiddleware(compiler));
     app.get('*', (req, res, next) => {
         const filename = path.join(compiler.outputPath, 'index.html');
         compiler.outputFileSystem.readFile(filename, (err, result) => {

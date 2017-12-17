@@ -26,13 +26,6 @@ module.exports = merge(common, {
                     use: 'css-loader',
                 }),
             },
-            // {
-            //     test: /\.css$/,
-            //     exclude: /node_modules/,
-            //     use: ExtractCssChunks.extract({
-            //         use: ['style-loader', 'css-loader'],
-            //     }),
-            // },
         ],
     },
     plugins: [
