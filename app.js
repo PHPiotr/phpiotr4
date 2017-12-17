@@ -31,20 +31,12 @@ if (isDevelopment) {
     const options = {publicPath, stats: {colors: true}};
 
     app.use(webpackDevMiddleware(compiler, options));
-
-    app.use(webpackHotMiddleware(clientCompiler));
+    app.use(webpackHotMiddleware(clientCompiler, {
+        log: console.log,
+        path: '/__webpack_hmr',
+        heartbeat: 10 * 1000,
+    }));
     app.use(webpackHotServerMiddleware(compiler));
-    app.get('*', (req, res, next) => {
-        const filename = path.join(compiler.outputPath, 'index.html');
-        compiler.outputFileSystem.readFile(filename, (err, result) => {
-            if (err) {
-                return next(err);
-            }
-            res.set('content-type', 'text/html');
-            res.send(result);
-            res.end();
-        });
-    });
 } else {
     app.use(serveStatic('build'));
     app.get('/*', (req, res) => {
