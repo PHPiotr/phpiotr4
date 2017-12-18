@@ -12,7 +12,7 @@ const Train = universal(() => import('./components/presentation/TrainForm'));
 const Hostel = universal(() => import('./components/presentation/HostelForm'));
 const Login = universal(() => import('./components/containers/Login'));
 const Registration = universal(() => import('./components/containers/Registration'));
-import Logout from './components/containers/Logout';
+const Logout = universal(() => import('./components/containers/Logout'));
 
 const routes = () => (
     <Switch>
