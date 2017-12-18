@@ -1,11 +1,14 @@
 {
   "presets": [
     ["es2015"],
-    "react"
+    "env",
+    "react",
+    "stage-2"
   ],
   "env": {
     "development": {
       "plugins": [
+        "universal-import",
         "react-hot-loader/babel",
         "transform-object-rest-spread",
         "transform-class-properties"
@@ -13,6 +16,7 @@
     },
     "production": {
       "plugins": [
+        "universal-import",
         "transform-object-rest-spread",
         "transform-class-properties"
       ]

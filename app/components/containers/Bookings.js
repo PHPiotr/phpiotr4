@@ -8,6 +8,7 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import {LinearProgress} from 'material-ui/Progress';
 import FloatingAddButton from '../presentation/FloatingAddButton';
+import Auth from './Auth';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -19,6 +20,15 @@ const bookings = (WrappedComponent) => {
 
     class Bookings extends Component {
         static displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
+
+        componentWillReceiveProps(nextProps) {
+            const {params} = this.props.match;
+            const nextParams = nextProps.match.params;
+            if (params.current !== nextParams.current || params.page !== nextParams.page) {
+                this.props.fetchBookings(nextParams.current, nextParams.page);
+            }
+        }
+
         componentDidMount() {
             if (!this.props.isLoggedIn) {
                 return null;
@@ -63,7 +73,7 @@ const bookings = (WrappedComponent) => {
         },
     });
 
-    return withRouter(connect(mapStateToProps, mapDispatchToProps)(Bookings));
+    return Auth(withRouter(connect(mapStateToProps, mapDispatchToProps)(Bookings)));
 };
 
 export default bookings;

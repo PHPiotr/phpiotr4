@@ -4,6 +4,7 @@ import {focus, change, registerIfNeeded, activateIfNeeded, setActivationData} fr
 import {ON_FOCUS_REGISTRATION_FIELD, ON_CHANGE_REGISTRATION_FIELD} from '../../actions/auth/authActionTypes';
 import RegistrationForm from '../presentation/RegistrationForm';
 import {LinearProgress} from 'material-ui/Progress';
+import NoAuth from './NoAuth';
 
 class Registration extends Component {
     componentDidMount() {
@@ -42,5 +43,5 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Registration);
+export default NoAuth(connect(mapStateToProps, mapDispatchToProps)(Registration));
 

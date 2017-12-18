@@ -1,7 +1,8 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
 const Webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const merge = require('webpack-merge');
+const common = require('./webpack.client.common.js');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
@@ -17,21 +18,21 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, './buildClient'),
         filename: '[name].js',
+        chunkFilename: '[name].js',
         publicPath: '/',
         pathinfo: true,
     },
     plugins: [
+        new CleanWebpackPlugin(['buildClient/*']),
+        new ExtractCssChunks({
+            filename: '[name].css',
+        }),
         new Webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('development'),
             },
-        }),
-        new ExtractTextPlugin({
-            filename: '[name].css',
-            disable: true,
-            allChunks: true,
         }),
         new Webpack.HotModuleReplacementPlugin(),
         new Webpack.NamedModulesPlugin(),

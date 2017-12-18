@@ -4,6 +4,7 @@ import {loginIfNeeded, change, focus} from '../../actions/auth/authActions';
 import LoginForm from '../presentation/LoginForm';
 import cookie from 'cookie-monster';
 import {LinearProgress} from 'material-ui/Progress';
+import NoAuth from './NoAuth';
 
 const Login = props => props.auth.isLoggingIn ? <LinearProgress/> : <LoginForm {...props}/>;
 
@@ -31,5 +32,5 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default NoAuth(connect(mapStateToProps, mapDispatchToProps)(Login));
 

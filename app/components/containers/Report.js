@@ -8,6 +8,7 @@ import DateFilterForm from '../containers/DateFilter';
 import Typography from 'material-ui/Typography';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {HOME} from '../../constants';
+import Auth from './Auth';
 
 class Report extends Component {
 
@@ -65,4 +66,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default Auth(connect(mapStateToProps, mapDispatchToProps)(Report));

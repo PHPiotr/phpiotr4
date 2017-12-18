@@ -1,22 +1,26 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
+    name: 'client',
+    target: 'web',
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                use: 'babel-loader',
+                test: /\.js$/,
                 exclude: /node_modules/,
+                use: 'babel-loader',
             },
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader',
+                use: ExtractCssChunks.extract({
+                    use: {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                        },
+                    },
                 }),
             },
             {
@@ -49,22 +53,10 @@ module.exports = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(['build/*']),
         new ManifestPlugin(),
-        new HtmlWebpackPlugin({
-            template: './index.html',
-        }),
         new Webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: function (module) {
-                if (module.resource && (/^.*\.(css|scss|less)$/).test(module.resource)) {
-                    return false;
-                }
-                return module.context && module.context.indexOf('node_modules') !== -1;
-            },
-        }),
-        new Webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest',
+            names: ['bootstrap'],
+            filename: '[name].js',
             minChunks: Infinity,
         }),
     ],

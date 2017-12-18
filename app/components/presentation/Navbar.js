@@ -36,7 +36,7 @@ const Navbar = (props) => {
                 <ToolbarIconButtonLeft {...props}/>
                 <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
             </Toolbar>
-            <Drawer open={props.isDrawerOpen} onRequestClose={props.toggleIsDrawerOpen}>
+            <Drawer open={props.isDrawerOpen} onClose={props.toggleIsDrawerOpen}>
                 <Typography type="subheading" color="inherit">
                     <div className={classes.list} onClick={props.toggleIsDrawerOpen}>{
                         !props.isLoggedIn ? (

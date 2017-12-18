@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as bookingActions from '../../actions/booking/bookingActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
+import Auth from './Auth';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -27,7 +28,7 @@ const booking = (WrappedComponent) => {
                     <MessageBar
                         open={this.props.isAdded}
                         message="Saved"
-                        onRequestClose={this.props.onRequestClose}
+                        onClose={this.props.onRequestClose}
                     />
                 </div>
             );
@@ -80,7 +81,7 @@ const booking = (WrappedComponent) => {
         },
     });
 
-    return connect(mapStateToProps, mapDispatchToProps)(Booking);
+    return Auth(connect(mapStateToProps, mapDispatchToProps)(Booking));
 };
 
 export default booking;
