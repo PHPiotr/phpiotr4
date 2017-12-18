@@ -1,5 +1,5 @@
 import React from 'react';
-import {hydrate} from 'react-dom';
+import {hydrate, render as ReactDOMRender} from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
@@ -14,7 +14,6 @@ import {MuiThemeProvider} from 'material-ui/styles';
 import theme from './theme';
 
 const preloadedState = window.__PRELOADED_STATE__;
-
 const store = configureStore(reducers, preloadedState);
 
 try {
@@ -23,9 +22,9 @@ try {
     //
 }
 
-const rootElementIdAttr = 'root';
+const ROOT = 'root';
 
-const app = () => (
+const app = App => (
     <Provider store={store}>
         <Router>
             <MuiThemeProvider theme={theme}>
@@ -38,21 +37,13 @@ const app = () => (
 );
 let render;
 if (process.env.NODE_ENV === 'production') {
-    render = () => {
-        hydrate(app(), document.getElementById(rootElementIdAttr));
-    };
+    render = App => hydrate(app(App), document.getElementById(ROOT));
 } else {
-    render = () => {
-        hydrate(
-            <AppContainer>
-                {app()}
-            </AppContainer>
-            , document.getElementById(rootElementIdAttr));
-
-        if (module.hot) {
-            module.hot.accept();
-        }
-    };
+    render = App => ReactDOMRender(<AppContainer>{app(App)}</AppContainer>, document.getElementById(ROOT));
+    if (module.hot) {
+        module.hot.accept('./components/containers/App', () => {
+            render(require('./components/containers/App').default);
+        });
+    }
 }
-
-render();
+render(App);
