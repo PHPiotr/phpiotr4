@@ -6,7 +6,7 @@ const path = require('path');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = merge(common, {
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
     entry: {
         app: [
             'babel-polyfill',
