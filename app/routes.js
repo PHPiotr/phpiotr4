@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import Report from './components/containers/Report';
+import universal from 'react-universal-component';
+const Report = universal(() => import('./components/containers/Report'));
 import Buses from './components/presentation/BusesTable';
 import Planes from './components/presentation/PlanesTable';
 import Trains from './components/presentation/TrainsTable';
@@ -19,7 +20,7 @@ import NoAuth from './components/containers/NoAuth';
 
 const routes = () => (
     <Switch>
-        <Route exact path="/" component={Auth(Report)}/>
+        <Route exact path="/" component={Report}/>
         <Route name="login" path="/login" component={NoAuth(Login)}/>
         <Route name="register" path="/register/:userId?/:bearerToken?" component={NoAuth(Registration)}/>
         <Route name="logout" path="/logout" component={Logout}/>
