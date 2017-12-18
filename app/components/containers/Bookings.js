@@ -20,6 +20,15 @@ const bookings = (WrappedComponent) => {
 
     class Bookings extends Component {
         static displayName = `Bookings(${getDisplayName(WrappedComponent)})`;
+
+        componentWillReceiveProps(nextProps) {
+            const {params} = this.props.match;
+            const nextParams = nextProps.match.params;
+            if (params.current !== nextParams.current || params.page !== nextParams.page) {
+                this.props.fetchBookings(nextParams.current, nextParams.page);
+            }
+        }
+
         componentDidMount() {
             if (!this.props.isLoggedIn) {
                 return null;
