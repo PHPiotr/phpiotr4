@@ -10,16 +10,15 @@ const Bus = universal(() => import('./components/presentation/BusForm'));
 const Plane = universal(() => import('./components/presentation/PlaneForm'));
 const Train = universal(() => import('./components/presentation/TrainForm'));
 const Hostel = universal(() => import('./components/presentation/HostelForm'));
-import Login from './components/containers/Login';
-import Registration from './components/containers/Registration';
+const Login = universal(() => import('./components/containers/Login'));
+const Registration = universal(() => import('./components/containers/Registration'));
 import Logout from './components/containers/Logout';
-import NoAuth from './components/containers/NoAuth';
 
 const routes = () => (
     <Switch>
         <Route exact path="/" component={Report}/>
-        <Route name="login" path="/login" component={NoAuth(Login)}/>
-        <Route name="register" path="/register/:userId?/:bearerToken?" component={NoAuth(Registration)}/>
+        <Route name="login" path="/login" component={Login}/>
+        <Route name="register" path="/register/:userId?/:bearerToken?" component={Registration}/>
         <Route name="logout" path="/logout" component={Logout}/>
         <Route name="buses" path="/bookings/buses/:current?/:page?" component={Buses}/>
         <Route name="bus" path="/bookings/bus/:id?" component={Bus}/>
