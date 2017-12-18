@@ -8,6 +8,7 @@ import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import {LinearProgress} from 'material-ui/Progress';
 import FloatingAddButton from '../presentation/FloatingAddButton';
+import Auth from './Auth';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -63,7 +64,7 @@ const bookings = (WrappedComponent) => {
         },
     });
 
-    return withRouter(connect(mapStateToProps, mapDispatchToProps)(Bookings));
+    return Auth(withRouter(connect(mapStateToProps, mapDispatchToProps)(Bookings)));
 };
 
 export default bookings;

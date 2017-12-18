@@ -4,6 +4,7 @@ import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Tabl
 import BookingDetails from './BookingDetails';
 import NoContent from './NoContent';
 import {PLANES} from '../../constants';
+import Bookings from '../containers/Bookings';
 
 const PlanesTable = (props) => {
 
@@ -46,4 +47,4 @@ PlanesTable.bookingLabel = 'plane';
 PlanesTable.bookingsLabel = 'planes';
 PlanesTable.appBarTitle = PLANES;
 
-export default PlanesTable;
+export default Bookings(PlanesTable);
