@@ -1,9 +1,10 @@
+const Webpack = require('webpack');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
-const Webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = merge(common, {
     devtool: 'cheap-module-eval-source-map',
@@ -23,28 +24,8 @@ module.exports = merge(common, {
         publicPath: '/',
         pathinfo: true,
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: 'babel-loader',
-            },
-            {
-                test: /\.css$/,
-                use: ExtractCssChunks.extract({
-                    use: {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            //localIdentName: '[name]__[local]--[hash:base64:5]',
-                        },
-                    },
-                }),
-            },
-        ],
-    },
     plugins: [
+        new CleanWebpackPlugin(['buildClient/*']),
         new ExtractCssChunks({
             filename: '[name].css',
         }),

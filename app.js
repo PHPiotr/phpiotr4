@@ -1,5 +1,4 @@
 const express = require('express');
-const serveStatic = require('serve-static');
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
@@ -13,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const root = isDevelopment ? 'app' : 'build';
+const root = isDevelopment ? 'app' : 'buildClient';
 
 app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
@@ -38,10 +37,17 @@ if (isDevelopment) {
     }));
     app.use(webpackHotServerMiddleware(compiler));
 } else {
-    app.use(serveStatic('build'));
-    app.get('/*', (req, res) => {
-        return res.sendFile(path.join(__dirname, 'build', 'index.html'));
-    });
+    const webpack = require('webpack');
+    const clientConfig = require('./webpack.client.prod');
+    const serverConfig = require('./webpack.server.prod');
+    const compiler = webpack([clientConfig, serverConfig]);
+    const webpackDevMiddleware = require('webpack-dev-middleware');
+    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+    const publicPath = clientConfig.output.publicPath;
+    const options = {publicPath, stats: {colors: true}};
+
+    app.use(webpackDevMiddleware(compiler, options));
+    app.use(webpackHotServerMiddleware(compiler));
 }
 
 module.exports = {app: app, server: server};

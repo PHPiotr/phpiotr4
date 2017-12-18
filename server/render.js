@@ -41,6 +41,11 @@ export default ({clientStats}) => (req, res) => {
 
     const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames});
 
+    let appScript = '';
+    if (process.env.NODE_ENV === 'development') {
+        appScript = '<script type="text/javascript" src="/app.js" defer></script>';
+    }
+
     console.log('Dynamic Chunk Names Rendered', chunkNames);
     console.log('Scripts', scripts);
     console.log('Styles', stylesheets);
@@ -52,7 +57,6 @@ export default ({clientStats}) => (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>${preloadedState.appReducer.appBarTitle}</title>
-        <link href="/app.css" rel="stylesheets" />
     </head>
     <body>
         <div id="root">${app}</div>
@@ -62,7 +66,7 @@ export default ({clientStats}) => (req, res) => {
         </script>
         ${cssHash}
         ${js}
-        <script type='text/javascript' src='/app.js' defer></script>
+        ${appScript}
     </body>
 </html>
     `);

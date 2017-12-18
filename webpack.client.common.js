@@ -1,6 +1,6 @@
-const ManifestPlugin = require('webpack-manifest-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
     name: 'client',
@@ -8,9 +8,20 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                use: 'babel-loader',
+                test: /\.js$/,
                 exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
+                test: /\.css$/,
+                use: ExtractCssChunks.extract({
+                    use: {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                        },
+                    },
+                }),
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/,
@@ -42,25 +53,11 @@ module.exports = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(['build/*']),
         new ManifestPlugin(),
         new Webpack.optimize.CommonsChunkPlugin({
             names: ['bootstrap'],
             filename: '[name].js',
             minChunks: Infinity,
         }),
-        // new Webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     minChunks: function (module) {
-        //         if (module.resource && (/^.*\.(css|scss|less)$/).test(module.resource)) {
-        //             return false;
-        //         }
-        //         return module.context && module.context.indexOf('node_modules') !== -1;
-        //     },
-        // }),
-        // new Webpack.optimize.CommonsChunkPlugin({
-        //     name: 'manifest',
-        //     minChunks: Infinity,
-        // }),
     ],
 };

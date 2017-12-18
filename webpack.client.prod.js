@@ -2,7 +2,6 @@ const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
 const Webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
@@ -17,19 +16,10 @@ module.exports = merge(common, {
         chunkFilename: 'js/[name].[chunkhash].js',
         publicPath: '/',
     },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader',
-                }),
-            },
-        ],
-    },
     plugins: [
-        new ExtractCssChunks(),
+        new ExtractCssChunks({
+            filename: '[name].[chunkhash].css',
+        }),
         new Webpack.optimize.CommonsChunkPlugin({
             names: ['bootstrap'],
             filename: 'js/[name].[chunkhash].js',
@@ -47,12 +37,6 @@ module.exports = merge(common, {
                 'API_PREFIX': JSON.stringify(process.env.API_PREFIX),
                 'TOKEN_KEY': JSON.stringify(process.env.TOKEN_KEY),
             },
-        }),
-        new ExtractTextPlugin({
-            filename: 'css/[name].[chunkhash].css',
-            publicPath: '/',
-            disable: false,
-            allChunks: true,
         }),
         new UglifyJSPlugin({
             mangle: true,

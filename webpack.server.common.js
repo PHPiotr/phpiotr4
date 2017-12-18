@@ -1,4 +1,7 @@
+const path = require('path');
+
 module.exports = {
+    entry: path.resolve(__dirname, './server/render.js'),
     name: 'server',
     target: 'node',
     module: {
