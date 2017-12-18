@@ -46,7 +46,7 @@ export default ({clientStats}) => (req, res) => {
         appScript = '<script type="text/javascript" src="/app.js" defer></script>';
     }
 
-    console.log('Dynamic Chunk Names Rendered', chunkNames);
+    console.log('Chunk names', chunkNames);
     console.log('Scripts', scripts);
     console.log('Styles', stylesheets);
 
