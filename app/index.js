@@ -27,7 +27,7 @@ const ROOT = 'root';
 const app = App => (
     <Provider store={store}>
         <Router>
-            <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={theme()}>
                 <App>
                     <Routes/>
                 </App>

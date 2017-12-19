@@ -27,7 +27,7 @@ export default ({clientStats}) => (req, res) => {
         <Provider store={store}>
             <Router location={req.url} context={context}>
                 <JssProvider registry={sheetsRegistry} jss={jss}>
-                    <MuiThemeProvider theme={theme}>
+                    <MuiThemeProvider theme={theme()}>
                         <App>
                             <Routes/>
                         </App>
