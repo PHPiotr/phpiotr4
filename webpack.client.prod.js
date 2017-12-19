@@ -6,7 +6,6 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const path = require('path');
-require('babel-polyfill');
 
 module.exports = merge(common, {
     entry: ['babel-polyfill', './app/index.js'],

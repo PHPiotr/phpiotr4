@@ -1,7 +1,6 @@
 const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.server.common.js');
-require('babel-polyfill');
 
 module.exports = merge(common, {
     plugins: [
