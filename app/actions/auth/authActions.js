@@ -1,5 +1,5 @@
 import {getAuthLogin, postUsers, activateUser} from '../../services/authService';
-import cookie from 'cookie-monster';
+import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
 
 export const registerIfNeeded = () => {
@@ -78,7 +78,8 @@ export const focus = (fieldName, fieldValue, type = authActionTypes.ON_FOCUS_LOG
 });
 
 export const logoutIfNeeded = () => {
-    cookie.removeItem(process.env.TOKEN_KEY);
+    const cookies = new Cookies();
+    cookies.remove(process.env.TOKEN_KEY, {path: '/'});
     return (dispatch) => {
         dispatch({type: authActionTypes.LOGOUT});
         return Promise.resolve(true);

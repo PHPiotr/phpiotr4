@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import cookie from 'cookie-monster';
 import jwtDecode from 'jwt-decode';
+import {withCookies, Cookies} from 'react-cookie';
 
 function noAuth(WrappedComponent) {
     class NoAuth extends Component {
@@ -27,10 +27,11 @@ function noAuth(WrappedComponent) {
 
             }
             try {
-                const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
+                const cookies = new Cookies();
+                const tokenFromCookie = cookies.get(process.env.TOKEN_KEY) || '';
                 if (tokenFromCookie) {
                     verify(tokenFromCookie);
-                    cookie.clear();
+                    cookies.remove(process.env.TOKEN_KEY, {path: '/'});
                 }
             } catch (e) {
                 this.props.history.replace('/');
@@ -47,7 +48,7 @@ function noAuth(WrappedComponent) {
 
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
-    return connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(NoAuth);
+    return withCookies(connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(NoAuth));
 }
 
 function getDisplayName(WrappedComponent) {

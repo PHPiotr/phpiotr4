@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {loginIfNeeded, change, focus} from '../../actions/auth/authActions';
 import LoginForm from '../presentation/LoginForm';
-import cookie from 'cookie-monster';
 import {LinearProgress} from 'material-ui/Progress';
 import NoAuth from './NoAuth';
+import {Cookies} from 'react-cookie';
 
 const Login = props => props.auth.isLoggingIn ? <LinearProgress/> : <LoginForm {...props}/>;
 
@@ -25,7 +25,9 @@ const mapDispatchToProps = (dispatch, {history}) => ({
                     const now = new Date();
                     const expireTime = now.getTime() + 1000 * parseInt(expiresIn, 10);
                     now.setTime(expireTime);
-                    cookie.setItem(process.env.TOKEN_KEY, token, {expires: now.toGMTString()});
+                    const cookies = new Cookies();
+                    cookies.set(process.env.TOKEN_KEY, token, {path: '/', expires: now});
+
                     history.push('/');
                 }
             });

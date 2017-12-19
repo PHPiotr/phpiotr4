@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const cookiesMiddleware = require('universal-cookie-express');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -16,6 +17,7 @@ const root = isDevelopment ? 'app' : 'buildClient';
 
 app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
+app.use(cookiesMiddleware());
 
 if (isDevelopment) {
     const webpack = require('webpack');

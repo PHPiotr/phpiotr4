@@ -12,6 +12,7 @@ import App from './components/containers/App';
 import 'typeface-roboto';
 import {MuiThemeProvider} from 'material-ui/styles';
 import theme from './theme';
+import {CookiesProvider} from 'react-cookie';
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = configureStore(reducers, preloadedState);
@@ -25,15 +26,17 @@ try {
 const ROOT = 'root';
 
 const app = App => (
-    <Provider store={store}>
-        <Router>
-            <MuiThemeProvider theme={theme()}>
-                <App>
-                    <Routes/>
-                </App>
-            </MuiThemeProvider>
-        </Router>
-    </Provider>
+    <CookiesProvider>
+        <Provider store={store}>
+            <Router>
+                <MuiThemeProvider theme={theme()}>
+                    <App>
+                        <Routes/>
+                    </App>
+                </MuiThemeProvider>
+            </Router>
+        </Provider>
+    </CookiesProvider>
 );
 let render;
 if (process.env.NODE_ENV === 'production') {
