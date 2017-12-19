@@ -25,7 +25,7 @@ export default ({clientStats}) => (req, res) => {
     const preloadedState = store.getState();
     const context = {};
     const app = renderToString(
-        <CookiesProvider cookies={req.universalCookies}>
+        <CookiesProvider>
             <Provider store={store}>
                 <Router location={req.url} context={context}>
                     <JssProvider registry={sheetsRegistry} jss={jss}>

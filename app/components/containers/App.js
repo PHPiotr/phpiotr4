@@ -20,4 +20,4 @@ class App extends Component {
     }
 }
 
-export default withCookies(withRouter(connect()(App)));
+export default withRouter(connect()(withCookies(App)));
