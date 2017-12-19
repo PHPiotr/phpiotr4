@@ -48,7 +48,7 @@ function noAuth(WrappedComponent) {
 
     hoistNonReactStatic(NoAuth, WrappedComponent);
 
-    return withCookies(connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(NoAuth));
+    return connect(({auth: {isLoggedIn, token}}) => ({isLoggedIn, token}))(withCookies(NoAuth));
 }
 
 function getDisplayName(WrappedComponent) {

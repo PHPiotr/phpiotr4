@@ -63,7 +63,7 @@ function auth(WrappedComponent) {
         },
     });
 
-    return withCookies(connect(mapStateToProps, mapDispatchToProps)(Auth));
+    return connect(mapStateToProps, mapDispatchToProps)(withCookies(Auth));
 }
 
 function getDisplayName(WrappedComponent) {
