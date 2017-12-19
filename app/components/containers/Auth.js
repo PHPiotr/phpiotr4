@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
-import cookie from 'cookie-monster';
+import {withCookies, Cookies} from 'react-cookie';
 import jwtDecode from 'jwt-decode';
 import {setToken, setIsLoggedIn} from '../../actions/auth/authActions';
 
@@ -28,7 +28,8 @@ function auth(WrappedComponent) {
                 if (token) {
                     return verify(token);
                 }
-                const tokenFromCookie = cookie.getItem(process.env.TOKEN_KEY);
+                const cookies = new Cookies();
+                const tokenFromCookie = cookies.get(process.env.TOKEN_KEY);
                 if (!tokenFromCookie) {
                     throw Error;
                 }
@@ -62,7 +63,7 @@ function auth(WrappedComponent) {
         },
     });
 
-    return connect(mapStateToProps, mapDispatchToProps)(Auth);
+    return withCookies(connect(mapStateToProps, mapDispatchToProps)(Auth));
 }
 
 function getDisplayName(WrappedComponent) {

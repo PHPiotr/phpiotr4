@@ -40,7 +40,6 @@
     "babel-plugin-universal-import": "^1.3.4",
     "better-npm-run": "^0.1.0",
     "body-parser": "^1.18.2",
-    "cookie-monster": "^0.2.1",
     "debug": "^3.1.0",
     "es6-promise": "^4.1.0",
     "eslint-watch": "^3.1.3",
@@ -59,6 +58,7 @@
     "nock": "^9.1.4",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-cookie": "^2.1.2",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",
     "react-jss": "^8.2.0",
@@ -72,6 +72,7 @@
     "redux-thunk": "^2.2.0",
     "serve-favicon": "^2.4.5",
     "typeface-roboto": "0.0.45",
+    "universal-cookie-express": "^2.1.2",
     "webpack-flush-chunks": "^1.2.2",
     "webpack-hot-server-middleware": "^0.3.1"
   },

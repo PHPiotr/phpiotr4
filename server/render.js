@@ -15,6 +15,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import {create} from 'jss';
 import preset from 'jss-preset-default';
 import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
+import {CookiesProvider} from 'react-cookie';
 
 export default ({clientStats}) => (req, res) => {
     const sheetsRegistry = new SheetsRegistry();
@@ -24,17 +25,19 @@ export default ({clientStats}) => (req, res) => {
     const preloadedState = store.getState();
     const context = {};
     const app = renderToString(
-        <Provider store={store}>
-            <Router location={req.url} context={context}>
-                <JssProvider registry={sheetsRegistry} jss={jss}>
-                    <MuiThemeProvider theme={theme()}>
-                        <App>
-                            <Routes/>
-                        </App>
-                    </MuiThemeProvider>
-                </JssProvider>
-            </Router>
-        </Provider>
+        <CookiesProvider cookies={req.universalCookies}>
+            <Provider store={store}>
+                <Router location={req.url} context={context}>
+                    <JssProvider registry={sheetsRegistry} jss={jss}>
+                        <MuiThemeProvider theme={theme()}>
+                            <App>
+                                <Routes/>
+                            </App>
+                        </MuiThemeProvider>
+                    </JssProvider>
+                </Router>
+            </Provider>
+        </CookiesProvider>
     );
     const css = sheetsRegistry.toString();
     const chunkNames = flushChunkNames();

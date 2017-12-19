@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Navbar from '../presentation/Navbar';
+import {withCookies} from 'react-cookie';
 
 class App extends Component {
     componentDidMount() {
@@ -19,4 +20,4 @@ class App extends Component {
     }
 }
 
-export default withRouter(connect()(App));
+export default withCookies(withRouter(connect()(App)));
