@@ -18,7 +18,6 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        path: path.resolve(__dirname, './buildClient'),
         filename: '[name].js',
         chunkFilename: '[name].js',
         publicPath: '/',

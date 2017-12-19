@@ -1,4 +1,5 @@
 const path = require('path');
+require('babel-polyfill');
 
 module.exports = {
     entry: path.resolve(__dirname, './server/render.js'),
@@ -7,9 +8,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                use: 'babel-loader',
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
+                use: 'babel-loader',
             },
             {
                 test: /\.css$/,

@@ -1,6 +1,7 @@
 const Webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+require('babel-polyfill');
 
 module.exports = {
     name: 'client',
@@ -8,7 +9,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
