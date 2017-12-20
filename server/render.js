@@ -5,7 +5,6 @@ import flushChunks from 'webpack-flush-chunks';
 import App from '../app/components/containers/App';
 import {StaticRouter as Router} from 'react-router-dom';
 import theme from '../app/theme';
-import Routes from '../app/routes';
 import {MuiThemeProvider} from 'material-ui/styles';
 import {Provider} from 'react-redux';
 import configureStore from '../app/configureStore';
@@ -30,9 +29,7 @@ export default ({clientStats}) => (req, res) => {
                 <Router location={req.url} context={context}>
                     <JssProvider registry={sheetsRegistry} jss={jss}>
                         <MuiThemeProvider theme={theme()}>
-                            <App>
-                                <Routes/>
-                            </App>
+                            <App/>
                         </MuiThemeProvider>
                     </JssProvider>
                 </Router>
