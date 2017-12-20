@@ -28,6 +28,11 @@ module.exports = merge(common, {
         new ExtractCssChunks({
             filename: '[name].css',
         }),
+        new Webpack.optimize.CommonsChunkPlugin({
+            names: ['bootstrap'],
+            filename: '[name].js',
+            minChunks: Infinity,
+        }),
         new Webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('development'),
