@@ -5,6 +5,7 @@ const favicon = require('serve-favicon');
 const cookiesMiddleware = require('universal-cookie-express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+const webpack = require('webpack');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -22,7 +23,6 @@ app.use(express.static(path.resolve(__dirname, root, 'static')));
 app.use(cookiesMiddleware());
 
 if (isDevelopment) {
-    const webpack = require('webpack');
     const clientConfig = require('./webpack/client/webpack.client.dev');
     const serverConfig = require('./webpack/server/webpack.server.dev');
     const compiler = webpack([clientConfig, serverConfig]);
@@ -39,7 +39,6 @@ if (isDevelopment) {
     }));
     app.use(webpackHotServerMiddleware(compiler));
 } else {
-    const webpack = require('webpack');
     const clientConfig = require('./webpack/client/webpack.client.prod');
     const serverConfig = require('./webpack/server/webpack.server.prod');
     const compiler = webpack([clientConfig, serverConfig]);
