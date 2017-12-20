@@ -2,7 +2,8 @@ const path = require('path');
 require('babel-polyfill');
 
 module.exports = {
-    entry: path.resolve(__dirname, './server/render.js'),
+    context: path.resolve(__dirname, '../../'),
+    entry: './server/render.js',
     name: 'server',
     target: 'node',
     module: {

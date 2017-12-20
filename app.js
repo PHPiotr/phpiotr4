@@ -21,8 +21,8 @@ app.use(cookiesMiddleware());
 
 if (isDevelopment) {
     const webpack = require('webpack');
-    const clientConfig = require('./webpack.client.dev');
-    const serverConfig = require('./webpack.server.dev');
+    const clientConfig = require('./webpack/client/webpack.client.dev');
+    const serverConfig = require('./webpack/server/webpack.server.dev');
     const compiler = webpack([clientConfig, serverConfig]);
     const clientCompiler = compiler.compilers[0];
     const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -40,8 +40,8 @@ if (isDevelopment) {
     app.use(webpackHotServerMiddleware(compiler));
 } else {
     const webpack = require('webpack');
-    const clientConfig = require('./webpack.client.prod');
-    const serverConfig = require('./webpack.server.prod');
+    const clientConfig = require('./webpack/client/webpack.client.prod');
+    const serverConfig = require('./webpack/server/webpack.server.prod');
     const compiler = webpack([clientConfig, serverConfig]);
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotServerMiddleware = require('webpack-hot-server-middleware');

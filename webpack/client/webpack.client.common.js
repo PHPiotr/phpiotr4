@@ -1,9 +1,10 @@
-const Webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 require('babel-polyfill');
+const path = require('path');
 
 module.exports = {
+    context: path.resolve(__dirname, '../../'),
     name: 'client',
     target: 'web',
     module: {
