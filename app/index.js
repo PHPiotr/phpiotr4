@@ -44,9 +44,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     render = App => ReactDOMRender(<AppContainer>{app(App)}</AppContainer>, document.getElementById(ROOT));
     if (module.hot) {
-        module.hot.accept('./components/containers/App', () => {
-            render(require('./components/containers/App').default);
-        });
+        module.hot.accept();
     }
 }
 render(App);
