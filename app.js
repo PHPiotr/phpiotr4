@@ -3,6 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const cookiesMiddleware = require('universal-cookie-express');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -25,9 +27,7 @@ if (isDevelopment) {
     const serverConfig = require('./webpack/server/webpack.server.dev');
     const compiler = webpack([clientConfig, serverConfig]);
     const clientCompiler = compiler.compilers[0];
-    const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
-    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
     const publicPath = clientConfig.output.publicPath;
     const options = {publicPath, stats: {colors: true}};
 
@@ -43,8 +43,6 @@ if (isDevelopment) {
     const clientConfig = require('./webpack/client/webpack.client.prod');
     const serverConfig = require('./webpack/server/webpack.server.prod');
     const compiler = webpack([clientConfig, serverConfig]);
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
     const publicPath = clientConfig.output.publicPath;
     const options = {publicPath, stats: {colors: true}};
 
