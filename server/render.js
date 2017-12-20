@@ -38,13 +38,9 @@ export default ({clientStats}) => (req, res) => {
     );
     const css = sheetsRegistry.toString();
     const chunkNames = flushChunkNames();
+    const after = process.env.NODE_ENV === 'development' ? ['app'] : ['main'];
 
-    const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames});
-
-    let appScript = '';
-    if (process.env.NODE_ENV === 'development') {
-        appScript = '<script type="text/javascript" src="/app.js" defer></script>';
-    }
+    const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames, after});
 
     console.log('Chunk names', chunkNames);
     console.log('Scripts', scripts);
@@ -66,7 +62,6 @@ export default ({clientStats}) => (req, res) => {
         </script>
         ${cssHash}
         ${js}
-        ${appScript}
     </body>
 </html>
     `);
