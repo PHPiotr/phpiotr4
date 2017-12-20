@@ -29,7 +29,7 @@ if (isDevelopment) {
     const clientCompiler = compiler.compilers[0];
     const webpackHotMiddleware = require('webpack-hot-middleware');
     const publicPath = clientConfig.output.publicPath;
-    const options = {publicPath, stats: {colors: true}};
+    const options = {publicPath, stats: {entrypoints: true, usedExports: true, colors: true}};
 
     app.use(webpackDevMiddleware(compiler, options));
     app.use(webpackHotMiddleware(clientCompiler, {
@@ -43,7 +43,7 @@ if (isDevelopment) {
     const serverConfig = require('./webpack/server/webpack.server.prod');
     const compiler = webpack([clientConfig, serverConfig]);
     const publicPath = clientConfig.output.publicPath;
-    const options = {publicPath, stats: {colors: true}};
+    const options = {publicPath, stats: 'minimal'};
 
     app.use(webpackDevMiddleware(compiler, options));
     app.use(webpackHotServerMiddleware(compiler));
