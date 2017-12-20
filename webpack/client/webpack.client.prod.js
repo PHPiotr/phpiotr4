@@ -2,15 +2,15 @@ const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
 const Webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const path = require('path');
+const context = common.context;
 
 module.exports = merge(common, {
-    entry: ['babel-polyfill', './app/index.js'],
+    entry: path.resolve(context, './app/index.js'),
     output: {
-        path: path.resolve(__dirname, 'buildClient'),
+        path: path.resolve(context, 'buildClient'),
         filename: 'js/[name].[chunkhash].js',
         chunkFilename: 'js/[name].[chunkhash].js',
         publicPath: '/',
@@ -25,7 +25,7 @@ module.exports = merge(common, {
             minChunks: Infinity,
         }),
         new CopyWebpackPlugin([
-            {from: path.resolve(__dirname, 'app/static/img'), to: 'static/img'},
+            {from: path.resolve(context, 'app/static/img'), to: 'static/img'},
         ], {
             copyUnmodified: true,
         }),
@@ -47,6 +47,5 @@ module.exports = merge(common, {
             },
         }),
         new Webpack.optimize.OccurrenceOrderPlugin(true),
-        new OptimizeCssAssetsPlugin(),
     ],
 });

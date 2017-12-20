@@ -3,6 +3,8 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const merge = require('webpack-merge');
 const common = require('./webpack.client.common.js');
 const Dotenv = require('dotenv-webpack');
+const path = require('path');
+const context = common.context;
 
 module.exports = merge(common, {
     devtool: 'cheap-module-eval-source-map',
@@ -10,7 +12,7 @@ module.exports = merge(common, {
         app: [
             'react-hot-loader/patch',
             'webpack-hot-middleware/client',
-            './app/index.js',
+            path.resolve(context, './app/index.js'),
         ],
     },
     output: {
@@ -34,6 +36,6 @@ module.exports = merge(common, {
             },
         }),
         new Webpack.HotModuleReplacementPlugin(),
-        new Dotenv({path: './.env', safe: false}),
+        new Dotenv({path: path.resolve(context, './.env'), safe: false}),
     ],
 });

@@ -15,11 +15,11 @@
     "test": "NODE_ENV=production mocha './app/tests/**/*.js' --require babel-core/register",
     "test:watch": "npm run tests -- --watch",
     "build": "better-npm-run build",
-    "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack.client.prod.js --progress"
+    "heroku-postbuild": "./node_modules/.bin/webpack -p --config ./webpack/client/webpack.client.prod.js --progress"
   },
   "betterScripts": {
     "build": {
-      "command": "webpack -p --config ./webpack.client.prod.js --progress --colors",
+      "command": "rm -rf ./buildClient/* && webpack -p --config ./webpack/client/webpack.client.prod.js --progress --colors",
       "env": {
         "NODE_ENV": "production"
       }
@@ -107,7 +107,6 @@
     "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.4.2",
     "mocha": "^4.0.1",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "react-addons-test-utils": "^15.6.2",
     "redux-devtools-extension": "^2.13.2",
     "style-loader": "^0.19.1",
