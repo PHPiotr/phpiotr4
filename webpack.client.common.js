@@ -55,10 +55,5 @@ module.exports = {
     },
     plugins: [
         new ManifestPlugin(),
-        new Webpack.optimize.CommonsChunkPlugin({
-            names: ['bootstrap'],
-            filename: '[name].js',
-            minChunks: Infinity,
-        }),
     ],
 };
