@@ -40,6 +40,5 @@ module.exports = merge(common, {
             },
         }),
         new UglifyJSPlugin(),
-        new Webpack.optimize.OccurrenceOrderPlugin(true),
     ],
 });
