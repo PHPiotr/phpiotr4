@@ -19,7 +19,7 @@
   },
   "betterScripts": {
     "build": {
-      "command": "rm -rf ./buildClient/* && webpack -p --config ./webpack/client/webpack.client.prod.js --progress --colors",
+      "command": "webpack -p --config ./webpack/client/webpack.client.prod.js --progress --colors",
       "env": {
         "NODE_ENV": "production"
       }

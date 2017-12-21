@@ -38,9 +38,7 @@ export default ({clientStats}) => (req, res) => {
     );
     const css = sheetsRegistry.toString();
     const chunkNames = flushChunkNames();
-    const after = process.env.NODE_ENV === 'development' ? ['app'] : ['main'];
-
-    const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames, after});
+    const {js, cssHash, scripts, stylesheets} = flushChunks(clientStats, {chunkNames, after: ['app']});
 
     console.log('Chunk names', chunkNames);
     console.log('Scripts', scripts);
