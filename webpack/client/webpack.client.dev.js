@@ -26,7 +26,7 @@ module.exports = merge(common, {
             filename: '[name].css',
         }),
         new Webpack.optimize.CommonsChunkPlugin({
-            names: ['bootstrap'],
+            names: ['vendor', 'bootstrap'],
             filename: '[name].js',
             minChunks: Infinity,
         }),

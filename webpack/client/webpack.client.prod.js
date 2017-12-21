@@ -8,7 +8,9 @@ const path = require('path');
 const context = common.context;
 
 module.exports = merge(common, {
-    entry: path.resolve(context, './app/index.js'),
+    entry: {
+        app: path.resolve(context, './app/index.js'),
+    },
     output: {
         path: path.resolve(context, 'buildClient'),
         filename: 'js/[name].[chunkhash].js',
@@ -20,7 +22,7 @@ module.exports = merge(common, {
             filename: '[name].[chunkhash].css',
         }),
         new Webpack.optimize.CommonsChunkPlugin({
-            names: ['bootstrap'],
+            names: ['vendor', 'bootstrap'],
             filename: 'js/[name].[chunkhash].js',
             minChunks: Infinity,
         }),
