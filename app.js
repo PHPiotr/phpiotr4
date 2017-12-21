@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const root = isDevelopment ? 'app' : 'buildClient';
+const stats = {entrypoints: true, usedExports: true, colors: true};
 
 app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
@@ -29,7 +30,7 @@ if (isDevelopment) {
     const clientCompiler = compiler.compilers[0];
     const webpackHotMiddleware = require('webpack-hot-middleware');
     const publicPath = clientConfig.output.publicPath;
-    const options = {publicPath, stats: {entrypoints: true, usedExports: true, colors: true}};
+    const options = {publicPath, stats};
 
     app.use(webpackDevMiddleware(compiler, options));
     app.use(webpackHotMiddleware(clientCompiler, {
@@ -43,7 +44,7 @@ if (isDevelopment) {
     const serverConfig = require('./webpack/server/webpack.server.prod');
     const compiler = webpack([clientConfig, serverConfig]);
     const publicPath = clientConfig.output.publicPath;
-    const options = {publicPath, stats: 'minimal'};
+    const options = {publicPath, stats};
 
     app.use(webpackDevMiddleware(compiler, options));
     app.use(webpackHotServerMiddleware(compiler));

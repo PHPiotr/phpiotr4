@@ -7,8 +7,11 @@ module.exports = {
     context: path.resolve(__dirname, '../../'),
     entry: {
         vendor: [
+            'hoist-non-react-statics',
             'isomorphic-fetch',
             'jwt-decode',
+            'jsonwebtoken',
+            'jss',
             'material-ui',
             'material-ui-icons',
             'moment',
@@ -16,7 +19,7 @@ module.exports = {
             'react',
             'react-cookie',
             'react-dom',
-            'react-hot-loader',
+            'react-jss',
             'react-redux',
             'react-router-dom',
             'react-tap-event-plugin',
