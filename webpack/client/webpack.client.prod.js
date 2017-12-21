@@ -39,15 +39,7 @@ module.exports = merge(common, {
                 'TOKEN_KEY': JSON.stringify(process.env.TOKEN_KEY),
             },
         }),
-        new UglifyJSPlugin({
-            mangle: true,
-            output: {
-                comments: false,
-            },
-            compress: {
-                warnings: false,
-            },
-        }),
+        new UglifyJSPlugin(),
         new Webpack.optimize.OccurrenceOrderPlugin(true),
     ],
 });
