@@ -55,7 +55,7 @@
     "material-ui": "^1.0.0-beta.24",
     "material-ui-icons": "^1.0.0-beta.17",
     "moment": "^2.20.1",
-    "nock": "^9.1.4",
+    "nock": "^9.1.5",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-cookie": "^2.1.2",
@@ -73,7 +73,7 @@
     "serve-favicon": "^2.4.5",
     "typeface-roboto": "0.0.45",
     "universal-cookie-express": "^2.1.2",
-    "webpack-flush-chunks": "^1.2.2",
+    "webpack-flush-chunks": "^1.2.3",
     "webpack-hot-server-middleware": "^0.3.1"
   },
   "devDependencies": {
@@ -101,7 +101,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "^3.0.1",
-    "expect": "^22.0.1",
+    "expect": "^22.0.3",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
