@@ -2,6 +2,7 @@ import {postBookings, putBookings, getBookings, getBooking, deleteBooking} from 
 import * as bookingActionTypes from './bookingActionTypes';
 
 export const setIsAdded = payload => ({type: bookingActionTypes.SET_IS_ADDED, payload});
+export const setIsDeleted = payload => ({type: bookingActionTypes.SET_IS_DELETED, payload});
 export const setBookingErrorMessage = payload => ({type: bookingActionTypes.SET_BOOKING_ERROR_MESSAGE, payload});
 export const setBookingFieldErrorMessage = payload => ({type: bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE, payload});
 

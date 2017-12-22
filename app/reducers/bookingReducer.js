@@ -139,6 +139,9 @@ const bookings = (state = initialState, action) => {
         case indexActionTypes.SET_IS_ADDED:
             return {...state, [payload.label]: {...state[payload.label], isAdded: payload.isAdded}};
 
+        case indexActionTypes.SET_IS_DELETED:
+            return {...state, [payload.label]: {...state[payload.label], isDeleted: payload.isDeleted}};
+
         case indexActionTypes.SET_IS_ADD:
             return {...state,
                 [payload.label]: {

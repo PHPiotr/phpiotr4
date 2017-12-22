@@ -29,7 +29,7 @@ const booking = (WrappedComponent) => {
                     <MessageBar
                         open={this.props.isAdded}
                         message="Saved"
-                        onClose={this.props.onRequestClose}
+                        onClose={this.props.onClose}
                     />
                     <BookingDeleteDialog/>
                 </Fragment>
@@ -85,7 +85,7 @@ const booking = (WrappedComponent) => {
         setAppBarTitle(appBarTitle) {
             dispatch(setAppBarTitle(appBarTitle));
         },
-        onRequestClose() {
+        onClose() {
             dispatch(bookingActions.setIsAdded({label, isAdded: false}));
         },
     });

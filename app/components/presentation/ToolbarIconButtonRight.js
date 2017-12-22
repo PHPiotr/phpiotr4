@@ -5,7 +5,8 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {toggleIsBookingDeleteDialogOpen} from '../../actions/booking/bookingActions';
 
-const ToolbarIconButtonRight = ({showArrowBack, deleteBooking}) => {
+const ToolbarIconButtonRight = (props) => {
+    const {showArrowBack, deleteBooking} = props;
     if (showArrowBack) {
         return (
             <IconButton onClick={deleteBooking}>
