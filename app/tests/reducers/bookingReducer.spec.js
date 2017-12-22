@@ -22,6 +22,12 @@ const initialState = {
     plane: {...initialBooking},
     train: {...initialBooking},
     hostel: {...initialBooking},
+    isBookingDeleteDialogOpen: false,
+    currentBooking: {
+        label: '',
+        labelPlural: '',
+        id: null,
+    },
 };
 
 const labels = ['bus', 'plane', 'train', 'hostel'];
