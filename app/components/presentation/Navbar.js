@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {withStyles} from 'material-ui/styles';
 import Divider from 'material-ui/Divider';
 import ToolbarIconButtonLeft from './ToolbarIconButtonLeft';
+import ToolbarIconButtonRight from './ToolbarIconButtonRight';
 import ReportIcon from 'material-ui-icons/Home';
 import BusIcon from 'material-ui-icons/DirectionsBus';
 import PlaneIcon from 'material-ui-icons/Flight';
@@ -35,6 +36,7 @@ const Navbar = (props) => {
             <Toolbar>
                 <ToolbarIconButtonLeft {...props}/>
                 <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
+                <ToolbarIconButtonRight {...props}/>
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onClose={props.toggleIsDrawerOpen}>
                 <Typography type="subheading" color="inherit">
