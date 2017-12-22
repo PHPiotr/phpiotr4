@@ -3,13 +3,13 @@ import {IconButton} from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {deleteBookingIfNeeded} from '../../actions/booking/bookingActions';
+import {toggleIsBookingDeleteDialogOpen} from '../../actions/app/appActions';
 
 const ToolbarIconButtonRight = ({showArrowBack, deleteBooking}) => {
     if (showArrowBack) {
         return (
             <IconButton onClick={deleteBooking}>
-                <DeleteIcon style={{color: 'white'}} />
+                <DeleteIcon style={{color: 'white'}}/>
             </IconButton>
         );
     }
@@ -19,9 +19,9 @@ const ToolbarIconButtonRight = ({showArrowBack, deleteBooking}) => {
 const mapStateToProps = ({bookings: {bus, plane, train, hostel}}) => ({
     showArrowBack: bus.isAdd || plane.isAdd || train.isAdd || hostel.isAdd,
 });
-const mapDispatchToProps = (dispatch, {labelPlural, history}) => ({
+const mapDispatchToProps = dispatch => ({
     deleteBooking() {
-        dispatch(deleteBookingIfNeeded()).then(() => history.replace(`/bookings/${labelPlural}`));
+        dispatch(toggleIsBookingDeleteDialogOpen());
     },
 });
 

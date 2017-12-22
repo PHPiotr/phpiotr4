@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import * as bookingActions from '../../actions/booking/bookingActions';
 import {setAppBarTitle, setCurrentBooking} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
+import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -23,14 +24,15 @@ const booking = (WrappedComponent) => {
         }
         render() {
             return (
-                <div>
+                <Fragment>
                     <WrappedComponent {...this.props} />
                     <MessageBar
                         open={this.props.isAdded}
                         message="Saved"
                         onClose={this.props.onRequestClose}
                     />
-                </div>
+                    <BookingDeleteDialog/>
+                </Fragment>
             );
         }
     }
