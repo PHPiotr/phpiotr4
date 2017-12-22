@@ -8,6 +8,7 @@ const initialState = {
         labelPlural: '',
         id: null,
     },
+    isBookingDeleteDialogOpen: false,
 };
 
 const app = (state = initialState, {type, payload}) => {
@@ -18,6 +19,8 @@ const app = (state = initialState, {type, payload}) => {
             return {...state, appBarTitle: payload || initialState.appBarTitle};
         case appActionTypes.SET_CURRENT_BOOKING:
             return {...state, currentBooking: payload};
+        case appActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN:
+            return {...state, isBookingDeleteDialogOpen: !state.isBookingDeleteDialogOpen};
         default:
             return state;
     }

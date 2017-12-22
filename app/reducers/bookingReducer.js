@@ -15,7 +15,6 @@ const initialBooking = {
 };
 
 const initialState = {
-
     bus: {...initialBooking},
     plane: {...initialBooking},
     train: {...initialBooking},
