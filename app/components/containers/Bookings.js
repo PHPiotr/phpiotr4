@@ -1,14 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getBookingsIfNeeded} from '../../actions/booking/bookingActions';
+import {getBookingsIfNeeded, setIsDeleted} from '../../actions/booking/bookingActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import Navigation from '../presentation/Navigation';
 import Pagination from '../presentation/Pagination';
 import {LinearProgress} from 'material-ui/Progress';
 import FloatingAddButton from '../presentation/FloatingAddButton';
 import Auth from './Auth';
+import MessageBar from '../presentation/MessageBar';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -39,17 +40,20 @@ const bookings = (WrappedComponent) => {
         }
 
         render() {
-            const items = [];
-            items.push(<Navigation key={1} {...this.props}/>);
-            if (this.props.isFetching) {
-                items.push(<LinearProgress key={2}/>);
-            } else {
-                items.push(<WrappedComponent key={3} {...this.props[label].data} />);
-                items.push(<Pagination key={4} {...this.props} />);
-                items.push(<FloatingAddButton href={`/bookings/${label}/new`} key={5}/>);
-            }
-
-            return items;
+            return (
+                <Fragment>
+                    <Navigation {...this.props}/>
+                    {this.props.isFetching && <LinearProgress/>}
+                    <WrappedComponent {...this.props[label].data}/>
+                    <Pagination {...this.props}/>
+                    <FloatingAddButton href={`/bookings/${label}/new`}/>
+                    <MessageBar
+                        open={this.props[label].isDeleted}
+                        message="Deleted"
+                        onClose={this.props.onClose}
+                    />
+                </Fragment>
+            );
         }
     }
 
@@ -70,6 +74,9 @@ const bookings = (WrappedComponent) => {
         },
         setAppBarTitle(appBarTitle) {
             dispatch(setAppBarTitle(appBarTitle));
+        },
+        onClose() {
+            dispatch(setIsDeleted({label, isDeleted: false}));
         },
     });
 

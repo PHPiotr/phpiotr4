@@ -8,7 +8,7 @@ const MessageBar = (props) => {
             autoHideDuration={props.autohide}
             anchorOrigin={{vertical: props.vertical, horizontal: props.horizontal}}
             open={props.open}
-            onClose={props.onRequestClose}
+            onClose={props.onClose}
             SnackbarContentProps={{'aria-describedby': 'message-id'}}
             message={<span id="message-id">{props.message}</span>}
         />
