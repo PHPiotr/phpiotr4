@@ -15,9 +15,9 @@ const registration = () => {
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
-        const {auth, appReducer} = getState();
+        const {auth, app} = getState();
         const {registration, activationUrl, activationFromEmail} = auth;
-        const {appBarTitle} = appReducer;
+        const {appBarTitle} = app;
 
         return postUsers({registration, activationUrl, activationFromEmail, appName: appBarTitle})
             .then((response) => {

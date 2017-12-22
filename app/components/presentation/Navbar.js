@@ -89,11 +89,12 @@ const Navbar = (props) => {
     );
 };
 
-const mapStateToProps = ({appReducer: {isDrawerOpen, appBarTitle}, dateFilter, auth: {isLoggedIn}}) => ({
+const mapStateToProps = ({app: {isDrawerOpen, appBarTitle, currentBooking}, dateFilter, auth: {isLoggedIn}}) => ({
     isDrawerOpen,
     appBarTitle,
     isLoggedIn,
     dateFilter,
+    labelPlural: currentBooking.labelPlural || '',
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import {connect} from 'react-redux';
 import * as bookingActions from '../../actions/booking/bookingActions';
-import {setAppBarTitle} from '../../actions/app/appActions';
+import {setAppBarTitle, setCurrentBooking} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
 
@@ -19,7 +19,7 @@ const booking = (WrappedComponent) => {
             this.props.init();
         }
         componentWillUnmount() {
-            this.props.isAdding(false);
+            this.props.terminate();
         }
         render() {
             return (
@@ -51,7 +51,14 @@ const booking = (WrappedComponent) => {
                 return dispatch(setAppBarTitle(WrappedComponent.newLabel));
             }
             dispatch(bookingActions.getBookingIfNeeded(label, labels, id))
-                .then(() => dispatch(setAppBarTitle(WrappedComponent.editLabel)));
+                .then(() => {
+                    dispatch(setAppBarTitle(WrappedComponent.editLabel));
+                    dispatch(setCurrentBooking({label, labelPlural: labels, id}));
+                });
+        },
+        terminate() {
+            dispatch(bookingActions.setIsAdd({label, isAdd: false}));
+            dispatch(setCurrentBooking({label: '', labelPlural: '', id: null}));
         },
         handleFocus(event) {
             dispatch(bookingActions.handleFocus(event, label));
@@ -78,6 +85,9 @@ const booking = (WrappedComponent) => {
         },
         onRequestClose() {
             dispatch(bookingActions.setIsAdded({label, isAdded: false}));
+        },
+        onDeleteClick() {
+            console.log(labels);
         },
     });
 

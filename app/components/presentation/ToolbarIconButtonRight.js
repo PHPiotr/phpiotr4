@@ -1,26 +1,28 @@
 import React from 'react';
 import {IconButton} from 'material-ui';
-import {Menu, ArrowBack} from 'material-ui-icons';
+import DeleteIcon from 'material-ui-icons/Delete';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {deleteBookingIfNeeded} from '../../actions/booking/bookingActions';
 
-const ToolbarIconButtonRight = ({showArrowBack, history, toggleIsDrawerOpen}) => {
+const ToolbarIconButtonRight = ({showArrowBack, deleteBooking}) => {
     if (showArrowBack) {
         return (
-            <IconButton onClick={() => history.goBack()}>
-                <ArrowBack style={{color: 'white'}} />
+            <IconButton onClick={deleteBooking}>
+                <DeleteIcon style={{color: 'white'}} />
             </IconButton>
         );
     }
-    return (
-        <IconButton onClick={toggleIsDrawerOpen}>
-            <Menu style={{color: 'white'}} />
-        </IconButton>
-    );
+    return null;
 };
 
 const mapStateToProps = ({bookings: {bus, plane, train, hostel}}) => ({
     showArrowBack: bus.isAdd || plane.isAdd || train.isAdd || hostel.isAdd,
 });
+const mapDispatchToProps = (dispatch, {labelPlural, history}) => ({
+    deleteBooking() {
+        dispatch(deleteBookingIfNeeded()).then(() => history.replace(`/bookings/${labelPlural}`));
+    },
+});
 
-export default withRouter(connect(mapStateToProps)(ToolbarIconButtonRight));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolbarIconButtonRight));

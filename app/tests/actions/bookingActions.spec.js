@@ -37,10 +37,18 @@ describe('bookingActions', () => {
                             data: {
                                 bookings: [{_id: id}],
                             },
+                            isDeleting: false,
                         },
                     },
                     auth: {
                         token: 'j.w.t',
+                    },
+                    app: {
+                        currentBooking: {
+                            label: pluralToSingularMapping[label],
+                            labelPlural: label,
+                            id,
+                        },
                     },
                 });
             });
@@ -56,7 +64,7 @@ describe('bookingActions', () => {
                     {type: bookingActionTypes.DELETE_BOOKING_SUCCESS, payload: {label: pluralToSingularMapping[label]}},
                 ];
 
-                return store.dispatch(bookingActions.deleteBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                return store.dispatch(bookingActions.deleteBookingIfNeeded())
                     .then(() => {
                         expect(store.getActions()).toEqual(expectedActions);
                     });
@@ -74,7 +82,7 @@ describe('bookingActions', () => {
                     },
                 ];
 
-                return store.dispatch(bookingActions.deleteBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                return store.dispatch(bookingActions.deleteBookingIfNeeded())
                     .then(() => {
                         expect(store.getActions()).toEqual(expectedActions);
                     });
