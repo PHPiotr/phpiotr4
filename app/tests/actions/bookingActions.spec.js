@@ -39,16 +39,14 @@ describe('bookingActions', () => {
                             },
                             isDeleting: false,
                         },
-                    },
-                    auth: {
-                        token: 'j.w.t',
-                    },
-                    app: {
                         currentBooking: {
                             label: pluralToSingularMapping[label],
                             labelPlural: label,
                             id,
                         },
+                    },
+                    auth: {
+                        token: 'j.w.t',
                     },
                 });
             });

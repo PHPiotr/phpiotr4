@@ -19,6 +19,12 @@ const initialState = {
     plane: {...initialBooking},
     train: {...initialBooking},
     hostel: {...initialBooking},
+    currentBooking: {
+        label: '',
+        labelPlural: '',
+        id: null,
+    },
+    isBookingDeleteDialogOpen: false,
 };
 
 const bookings = (state = initialState, action) => {
@@ -143,6 +149,10 @@ const bookings = (state = initialState, action) => {
                     isAdded: payload.isAdd ? state.isAdded : false,
                 },
             };
+        case indexActionTypes.SET_CURRENT_BOOKING:
+            return {...state, currentBooking: payload};
+        case indexActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN:
+            return {...state, isBookingDeleteDialogOpen: !state.isBookingDeleteDialogOpen};
         default:
             return state;
     }
