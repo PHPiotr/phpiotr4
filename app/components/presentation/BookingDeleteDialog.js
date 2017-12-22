@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import Dialog, {DialogActions, DialogTitle, withMobileDialog} from 'material-ui/Dialog';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import {deleteBookingIfNeeded, toggleIsBookingDeleteDialogOpen} from '../../actions/booking/bookingActions';
 
 const BookingDeleteDialog = (props) => {
@@ -42,4 +43,4 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     },
 });
 
-export default withMobileDialog()(connect(mapStateToProps, mapDispatchToProps)(BookingDeleteDialog));
+export default withRouter(withMobileDialog()(connect(mapStateToProps, mapDispatchToProps)(BookingDeleteDialog)));
