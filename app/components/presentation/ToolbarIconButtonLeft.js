@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 const ToolbarIconButtonLeft = ({showArrowBack, history, toggleIsDrawerOpen}) => {
     if (showArrowBack) {
         return (
-            <IconButton onClick={() => history.goBack()}>
+            <IconButton onClick={history.goBack}>
                 <ArrowBack style={{color: 'white'}} />
             </IconButton>
         );
