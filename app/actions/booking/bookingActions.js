@@ -80,7 +80,8 @@ const editBookingFailure = payload => ({type: bookingActionTypes.EDIT_BOOKING_FA
 
 export const deleteBookingIfNeeded = () => {
     return (dispatch, getState) => {
-        const {bookings, auth: {token}, app: {currentBooking: {label, labelPlural, id}}} = getState();
+        const {bookings, auth: {token}} = getState();
+        const {label, labelPlural, id} = bookings.currentBooking;
         const bookingSingular = bookings[label];
         if (bookingSingular.isDeleting) {
             return Promise.resolve();
@@ -158,3 +159,6 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
 const fetchBookingsRequest = payload => ({type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload});
 const fetchBookingsSuccess = payload => ({type: bookingActionTypes.GET_BOOKINGS_SUCCESS, payload});
 const fetchBookingsFailure = payload => ({type: bookingActionTypes.GET_BOOKINGS_FAILURE, payload});
+
+export const setCurrentBooking = payload => ({type: bookingActionTypes.SET_CURRENT_BOOKING, payload});
+export const toggleIsBookingDeleteDialogOpen = () => ({type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN});

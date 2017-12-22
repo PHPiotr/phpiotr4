@@ -3,7 +3,7 @@ import {IconButton} from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {toggleIsBookingDeleteDialogOpen} from '../../actions/app/appActions';
+import {toggleIsBookingDeleteDialogOpen} from '../../actions/booking/bookingActions';
 
 const ToolbarIconButtonRight = ({showArrowBack, deleteBooking}) => {
     if (showArrowBack) {
