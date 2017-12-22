@@ -50,7 +50,7 @@ export default ({clientStats}) => (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>${preloadedState.appReducer.appBarTitle}</title>
+        <title>${preloadedState.app.appBarTitle}</title>
     </head>
     <body>
         <div id="root">${app}</div>
