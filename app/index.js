@@ -40,6 +40,8 @@ if (process.env.NODE_ENV === 'production') {
     render = App => hydrate(app(App), document.getElementById(ROOT));
 } else {
     render = App => ReactDOMRender(<AppContainer>{app(App)}</AppContainer>, document.getElementById(ROOT));
-    module.hot && module.hot.accept();
+    module.hot && module.hot.accept('./components/containers/App', () => {
+        render(require('./components/containers/App').default);
+    });
 }
 render(App);
