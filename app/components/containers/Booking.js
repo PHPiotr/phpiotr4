@@ -6,6 +6,7 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
 import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
+import NotFound from '../presentation/NotFound';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -23,8 +24,12 @@ const booking = (WrappedComponent) => {
             this.props.terminate();
         }
         render() {
+            if (this.props[label].code === 404) {
+                return <NotFound/>;
+            }
             return (
                 <Fragment>
+                    {[label].message}
                     <WrappedComponent {...this.props} />
                     <MessageBar
                         open={this.props.isAdded}
@@ -53,9 +58,13 @@ const booking = (WrappedComponent) => {
                 return dispatch(setAppBarTitle(WrappedComponent.newLabel));
             }
             dispatch(bookingActions.getBookingIfNeeded(label, labels, id))
-                .then(() => {
-                    dispatch(setAppBarTitle(WrappedComponent.editLabel));
-                    dispatch(bookingActions.setCurrentBooking({label, labelPlural: labels, id}));
+                .then((response) => {
+                    if (response.payload && response.payload.code === 404) {
+                        return dispatch(setAppBarTitle(response.payload.message));
+                    } else {
+                        dispatch(setAppBarTitle(WrappedComponent.editLabel));
+                        dispatch(bookingActions.setCurrentBooking({label, labelPlural: labels, id}));
+                    }
                 });
         },
         terminate() {

@@ -9,6 +9,7 @@ const initialBooking = {
     isDeleting: false,
     data: {},
     message: '',
+    code: null,
     errors: {},
     error: {},
     current: {},
@@ -105,7 +106,8 @@ const bookings = (state = initialState, action) => {
                 [payload.label]: {
                     ...state[payload.label],
                     isFetching: false,
-                    message: payload.error.message || '',
+                    message: payload.message || '',
+                    code: payload.code || null,
                     errors: payload.error.errors || {},
                 },
             };

@@ -4,11 +4,12 @@ import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import {EDIT_HOSTEL, NEW_HOSTEL} from '../../constants';
 import Booking from '../containers/Booking';
+import Typography from 'material-ui/Typography';
 
 const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
     return (
         <Fragment>
-            {hostel.message}
+            {hostel.message && <Typography style={{padding: '23px'}} type="headline">{hostel.message}</Typography>}
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField

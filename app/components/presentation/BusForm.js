@@ -5,11 +5,12 @@ import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {NEW_BUS, EDIT_BUS} from '../../constants';
 import Booking from '../containers/Booking';
+import Typography from 'material-ui/Typography';
 
 const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
     return (
         <Fragment>
-            {bus.message}
+            {bus.message && <Typography style={{padding: '23px'}} type="headline">{bus.message}</Typography>}
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField

@@ -5,11 +5,12 @@ import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {NEW_TRAIN, EDIT_TRAIN} from '../../constants';
 import Booking from '../containers/Booking';
+import Typography from 'material-ui/Typography';
 
 const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
     return (
         <Fragment>
-            {train.message}
+            {train.message && <Typography style={{padding: '23px'}} type="headline">{train.message}</Typography>}
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField
