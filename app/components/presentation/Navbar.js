@@ -94,7 +94,7 @@ const mapStateToProps = ({app: {isDrawerOpen, appBarTitle}, bookings: {currentBo
     appBarTitle,
     isLoggedIn,
     dateFilter,
-    labelPlural: currentBooking.labelPlural || '',
+    labelPlural: (currentBooking && currentBooking.labelPlural) || '',
 });
 
 const mapDispatchToProps = (dispatch) => {

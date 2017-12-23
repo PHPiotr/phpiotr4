@@ -5,11 +5,12 @@ import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {NEW_PLANE, EDIT_PLANE} from '../../constants';
 import Booking from '../containers/Booking';
+import Typography from 'material-ui/Typography';
 
 const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
     return (
         <Fragment>
-            {plane.message}
+            {plane.message && <Typography style={{padding: '23px'}} type="headline">{plane.message}</Typography>}
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField

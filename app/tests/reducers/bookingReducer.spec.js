@@ -12,6 +12,7 @@ const initialBooking = {
     isDeleting: false,
     data: {},
     message: '',
+    code: null,
     errors: {},
     error: {},
     current: {},

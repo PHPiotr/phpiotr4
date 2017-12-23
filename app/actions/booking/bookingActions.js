@@ -113,7 +113,7 @@ export const getBookingIfNeeded = (singular, plural, id) => {
         return getBooking(token, plural, id)
             .then((response) => {
                 if (!response.ok) {
-                    throw Error(response.statusText, response.status);
+                    throw {message: response.statusText, code: response.status};
                 }
                 return response.json();
             })
@@ -132,7 +132,7 @@ export const getBookingIfNeeded = (singular, plural, id) => {
                 };
             })
             .then(json => dispatch(getBookingSuccess({label: singular, current: json})))
-            .catch(error => dispatch(getBookingFailure({label: singular, error})));
+            .catch(error => dispatch(getBookingFailure({label: singular, error, message: error.message, code: error.code})));
     };
 };
 const getBookingRequest = payload => ({type: bookingActionTypes.GET_BOOKING_REQUEST, payload});
