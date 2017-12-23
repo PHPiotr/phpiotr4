@@ -87,7 +87,7 @@ export const deleteBookingIfNeeded = () => {
         if (bookingSingular.isDeleting) {
             return Promise.resolve();
         }
-        dispatch(deleteBookingRequest({label}));
+        dispatch(deleteBookingRequest({label, data: bookingSingular.data.length && bookingSingular.data.filter(d => d.id !== id)}));
         return deleteBooking(token, labelPlural, id)
             .then((response) => {
                 if (!response.ok) {
