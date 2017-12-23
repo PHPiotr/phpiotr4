@@ -17,6 +17,7 @@ const Hostel = universal(() => import('../presentation/HostelForm'));
 const Login = universal(() => import('./Login'));
 const Registration = universal(() => import('./Registration'));
 const Logout = universal(() => import('./Logout'));
+const NotFound = universal(() => import('./NotFound'));
 
 class App extends Component {
     componentDidMount() {
@@ -43,6 +44,7 @@ class App extends Component {
                     <Route name="train" path="/bookings/train/:id?" component={Train}/>
                     <Route name="hostels" path="/bookings/hostels/:current?/:page?" component={Hostels}/>
                     <Route name="hostel" path="/bookings/hostel/:id?" component={Hostel}/>
+                    <Route name="404" path="*" component={NotFound}/>
                 </Switch>
             </div>,
         ];
