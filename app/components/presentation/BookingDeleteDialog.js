@@ -38,8 +38,7 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     },
     handleDelete(labelPlural) {
         dispatch(toggleIsBookingDeleteDialogOpen());
-        dispatch(deleteBookingIfNeeded());
-        history.replace(`/bookings/${labelPlural}`);
+        dispatch(deleteBookingIfNeeded()).then(() => history.replace(`/bookings/${labelPlural}`));
     },
 });
 

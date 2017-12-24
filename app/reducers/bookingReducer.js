@@ -122,7 +122,7 @@ const bookings = (state = initialState, action) => {
             return {...state, [payload.label]: {...state[payload.label], isFetching: false, error: payload.error}};
 
         case indexActionTypes.DELETE_BOOKING_REQUEST:
-            return {...state, [payload.label]: {...state[payload.label], isDeleting: true, data: payload.data || state[payload.label].data}};
+            return {...state, [payload.label]: {...state[payload.label], isDeleting: true}};
 
         case indexActionTypes.DELETE_BOOKING_SUCCESS:
             return {...state, [payload.label]: {...state[payload.label], isDeleted: true, isDeleting: false}};
@@ -135,7 +135,6 @@ const bookings = (state = initialState, action) => {
                     isDeleting: false,
                     message: payload.error.message || '',
                     errors: payload.error.errors || {},
-                    data: payload.data || state[payload.label].data,
                 },
             };
 

@@ -87,7 +87,7 @@ export const deleteBookingIfNeeded = () => {
         if (bookingSingular.isDeleting) {
             return Promise.resolve();
         }
-        dispatch(deleteBookingRequest({label, data: bookingSingular.data.length && bookingSingular.data.filter(d => d.id !== id)}));
+        dispatch(deleteBookingRequest({label}));
         return deleteBooking(token, labelPlural, id)
             .then((response) => {
                 if (!response.ok) {
@@ -142,7 +142,8 @@ const getBookingFailure = payload => ({type: bookingActionTypes.GET_BOOKING_FAIL
 export const getBookingsIfNeeded = (singular, plural, type, page) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        if (bookings[singular]['isFetching']) {
+        const booking = bookings[singular];
+        if (booking.isFetching || booking.isDeleting) {
             return Promise.resolve();
         }
         dispatch(fetchBookingsRequest({label: singular}));
