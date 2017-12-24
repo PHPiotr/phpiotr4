@@ -72,7 +72,7 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
-                        options: { name: 'static/fonts/[name].[ext]' },
+                        options: {name: 'static/fonts/[name].[ext]'},
                     },
                 ],
             },

@@ -16,6 +16,20 @@ import {CookiesProvider} from 'react-cookie';
 const preloadedState = window.__PRELOADED_STATE__;
 const store = configureStore(reducers, preloadedState);
 
+const init = () => {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then((registration) => {
+                console.log('SW registered: ', registration);
+            }).catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+};
+
+init();
+
 try {
     injectTapEventPlugin();
 } catch (e) {

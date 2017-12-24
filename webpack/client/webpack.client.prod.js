@@ -4,15 +4,17 @@ const Webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const path = require('path');
 const context = common.context;
+const buildPath = path.resolve(context, 'buildClient');
 
 module.exports = merge(common, {
     entry: {
         app: path.resolve(context, './app/index.js'),
     },
     output: {
-        path: path.resolve(context, 'buildClient'),
+        path: buildPath,
         filename: 'js/[name].[chunkhash].js',
         chunkFilename: 'js/[name].[chunkhash].js',
         publicPath: '/',
@@ -40,5 +42,12 @@ module.exports = merge(common, {
             },
         }),
         new UglifyJSPlugin(),
+        new WorkboxPlugin({
+            globDirectory: buildPath,
+            globPatterns: ['**/*.{html,js}'],
+            swDest: path.join(buildPath, 'sw.js'),
+            clientsClaim: true,
+            skipWaiting: true,
+        }),
     ],
 });
