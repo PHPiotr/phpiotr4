@@ -11,7 +11,7 @@ const BookingDeleteDialog = (props) => {
 
     return (
         <Dialog open={props.isOpen} onClose={props.handleCancel} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">Delete this booking?</DialogTitle>
+            <DialogTitle id="responsive-dialog-title">Delete booking?</DialogTitle>
             <DialogActions>
                 <Button onClick={props.handleCancel} color="primary">
                     Cancel
