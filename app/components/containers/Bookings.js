@@ -10,6 +10,7 @@ import {LinearProgress} from 'material-ui/Progress';
 import FloatingAddButton from '../presentation/FloatingAddButton';
 import Auth from './Auth';
 import MessageBar from '../presentation/MessageBar';
+import NoContent from '../presentation/NoContent';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -40,11 +41,21 @@ const bookings = (WrappedComponent) => {
         }
 
         render() {
+
+            // Do not show both LinearProgress and NoContent at the same time
+            let content;
+            if (this.props.isFetching || !this.props[label].data.bookings) {
+                content = <LinearProgress/>;
+            } else {
+                content = this.props[label].data.bookingsLength
+                    ? <WrappedComponent {...this.props[label].data}/>
+                    : <NoContent/>;
+            }
+
             return (
                 <Fragment>
                     <Navigation {...this.props}/>
-                    {this.props.isFetching && <LinearProgress/>}
-                    <WrappedComponent {...this.props[label].data}/>
+                    {content}
                     <Pagination {...this.props}/>
                     <FloatingAddButton href={`/bookings/${label}/new`}/>
                     <MessageBar
