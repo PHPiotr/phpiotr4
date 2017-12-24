@@ -142,7 +142,8 @@ const getBookingFailure = payload => ({type: bookingActionTypes.GET_BOOKING_FAIL
 export const getBookingsIfNeeded = (singular, plural, type, page) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        if (bookings[singular]['isFetching']) {
+        const booking = bookings[singular];
+        if (booking.isFetching || booking.isDeleting) {
             return Promise.resolve();
         }
         dispatch(fetchBookingsRequest({label: singular}));

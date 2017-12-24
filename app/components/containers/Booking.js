@@ -7,6 +7,7 @@ import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
 import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
 import NotFound from '../presentation/NotFound';
+import {LinearProgress} from 'material-ui/Progress';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -24,6 +25,9 @@ const booking = (WrappedComponent) => {
             this.props.terminate();
         }
         render() {
+            if (this.props[label].isDeleting) {
+                return <LinearProgress/>;
+            }
             if (this.props[label].code === 404) {
                 return <NotFound/>;
             }
