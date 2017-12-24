@@ -23,11 +23,8 @@ app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
 app.use(cookiesMiddleware());
 
-app.get('/sw.js', function(req, res) {
-    res.sendFile(path.join(__dirname, root, 'sw.js'));
-});
-app.get('/workbox-sw.prod.v2.1.2.js', function(req, res) {
-    res.sendFile(path.join(__dirname, root, 'workbox-sw.prod.v2.1.2.js'));
+app.get('/workbox-sw*', (req, res) => {
+    res.sendFile(path.join(__dirname, root, req.originalUrl));
 });
 
 if (isDevelopment) {

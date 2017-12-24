@@ -45,7 +45,7 @@ module.exports = merge(common, {
         new WorkboxPlugin({
             globDirectory: buildPath,
             globPatterns: ['**/*.{html,js}'],
-            swDest: path.join(buildPath, 'sw.js'),
+            swDest: path.join(buildPath, 'workbox-sw.js'),
             clientsClaim: true,
             skipWaiting: true,
         }),

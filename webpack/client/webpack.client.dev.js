@@ -6,7 +6,7 @@ const common = require('./webpack.client.common.js');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const context = common.context;
-const serviceWorkerDest = path.join(context, 'app', 'sw.js');
+const serviceWorkerDest = path.join(context, 'app', 'workbox-sw.js');
 
 module.exports = merge(common, {
     devtool: 'cheap-module-eval-source-map',
