@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
+import {Link} from 'react-router-dom';
 
 const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSuccessMessage, activationErrorMessage}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
@@ -35,9 +36,10 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
                         onFocus={handleFocus}
                         value={login.password || ''}
                     />
-                    <Button style={{marginTop: '20px'}} type="submit">Log in</Button>
+                    <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Log in</Button>
                 </FormControl>
             </form>
+            <Link to="/users/account-recovery">Forgot password?</Link>
         </div>
     );
 };
