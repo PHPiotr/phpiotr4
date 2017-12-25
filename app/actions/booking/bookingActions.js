@@ -150,12 +150,12 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
         return getBookings(token, plural, type, page)
             .then((response) => {
                 if (!response.ok) {
-                    throw Error(response.statusText, response.status);
+                    throw {message: response.statusText, code: response.status};
                 }
                 return response.json();
             })
             .then(json => dispatch(fetchBookingsSuccess({label: singular, data: json})))
-            .catch(error => dispatch(fetchBookingsFailure({label: singular, error})));
+            .catch(error => dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code})));
     };
 };
 const fetchBookingsRequest = payload => ({type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload});

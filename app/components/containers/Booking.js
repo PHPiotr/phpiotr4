@@ -6,7 +6,7 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
 import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
-import NotFound from '../presentation/NotFound';
+import Typography from 'material-ui/Typography';
 import {LinearProgress} from 'material-ui/Progress';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -28,8 +28,8 @@ const booking = (WrappedComponent) => {
             if (this.props[label].isDeleting) {
                 return <LinearProgress/>;
             }
-            if (this.props[label].code === 404) {
-                return <NotFound/>;
+            if (this.props[label].code >= 400) {
+                return <Typography style={{padding: '23px'}} type="headline">{`${this.props[label].code}: ${this.props[label].message}`}</Typography>;
             }
             return (
                 <Fragment>
@@ -63,12 +63,12 @@ const booking = (WrappedComponent) => {
             }
             dispatch(bookingActions.getBookingIfNeeded(label, labels, id))
                 .then((response) => {
-                    if (response.payload && response.payload.code === 404) {
-                        return dispatch(setAppBarTitle(response.payload.message));
-                    } else {
-                        dispatch(setAppBarTitle(WrappedComponent.editLabel));
-                        dispatch(bookingActions.setCurrentBooking({label, labelPlural: labels, id}));
-                    }
+                    dispatch(setAppBarTitle(WrappedComponent.editLabel));
+                    dispatch(bookingActions.setCurrentBooking({
+                        label,
+                        labelPlural: labels,
+                        id: response.payload.current ? response.payload.current._id : null,
+                    }));
                 });
         },
         terminate() {

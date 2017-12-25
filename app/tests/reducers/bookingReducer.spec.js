@@ -199,7 +199,14 @@ describe('bookingReducer', () => {
 
                 const action = {type: bookingActionTypes.GET_BOOKINGS_FAILURE, payload: {label, error: {}}};
                 const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
-                const after = {...initialState, [label]: {...initialState[label], isFetching: false}};
+                const after = {
+                    ...initialState,
+                    [label]: {
+                        ...initialState[label],
+                        isFetching: false,
+                        data: {...initialState[label].data, bookings: []},
+                    },
+                };
                 freeze(action);
                 freeze(before);
                 freeze(after);
@@ -211,8 +218,8 @@ describe('bookingReducer', () => {
 
                 const data = {'hello': 'world'};
                 const action = {type: bookingActionTypes.GET_BOOKINGS_SUCCESS, payload: {label, data}};
-                const before = {...initialState, [label]: {...initialState[label], isFetching: true}};
-                const after = {...initialState, [label]: {...initialState[label], isFetching: false, data}};
+                const before = {...initialState, [label]: {...initialState[label], isFetching: true, code: null}};
+                const after = {...initialState, [label]: {...initialState[label], isFetching: false, data, code: 200}};
                 freeze(action);
                 freeze(before);
                 freeze(after);
