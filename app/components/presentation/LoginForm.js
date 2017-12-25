@@ -39,7 +39,9 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
                     <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Log in</Button>
                 </FormControl>
             </form>
-            <Link to="/users/account-recovery">Forgot password?</Link>
+            <Button raised style={{marginLeft: '20px'}} component={Link} to="/users/account-recovery">
+                Forgot password?
+            </Button>
         </Fragment>
     );
 };
