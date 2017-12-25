@@ -113,13 +113,43 @@ const bookings = (state = initialState, action) => {
             };
 
         case indexActionTypes.GET_BOOKINGS_REQUEST:
-            return {...state, [payload.label]: {...state[payload.label], isFetching: true}};
+            return {
+                ...state,
+                [payload.label]: {
+                    ...state[payload.label],
+                    isFetching: true,
+                    error: {},
+                    code: null,
+                    message: '',
+                },
+            };
 
         case indexActionTypes.GET_BOOKINGS_SUCCESS:
-            return {...state, [payload.label]: {...state[payload.label], isFetching: false, data: payload.data}};
+            return {
+                ...state,
+                [payload.label]: {
+                    ...state[payload.label],
+                    isFetching: false,
+                    data: payload.data,
+                    code: 200,
+                },
+            };
 
         case indexActionTypes.GET_BOOKINGS_FAILURE:
-            return {...state, [payload.label]: {...state[payload.label], isFetching: false, error: payload.error}};
+            return {
+                ...state,
+                [payload.label]: {
+                    ...state[payload.label],
+                    isFetching: false,
+                    error: payload.error,
+                    message: payload.message || '',
+                    code: payload.code || null,
+                    data: {
+                        ...state[payload.label].data,
+                        bookings: [],
+                    },
+                },
+            };
 
         case indexActionTypes.DELETE_BOOKING_REQUEST:
             return {...state, [payload.label]: {...state[payload.label], isDeleting: true}};

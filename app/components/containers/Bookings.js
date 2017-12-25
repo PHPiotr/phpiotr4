@@ -11,6 +11,7 @@ import FloatingAddButton from '../presentation/FloatingAddButton';
 import Auth from './Auth';
 import MessageBar from '../presentation/MessageBar';
 import NoContent from '../presentation/NoContent';
+import Typography from 'material-ui/Typography';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -47,6 +48,9 @@ const bookings = (WrappedComponent) => {
             if (this.props.isFetching || !this.props[label].data.bookings) {
                 content = <LinearProgress/>;
             } else {
+                if (this.props[label].code >= 400) {
+                    return <Typography style={{padding: '23px'}} type="headline">{`${this.props[label].code}: ${this.props[label].message}`}</Typography>;
+                }
                 content = this.props[label].data.bookingsLength
                     ? <WrappedComponent {...this.props[label].data}/>
                     : <NoContent/>;
