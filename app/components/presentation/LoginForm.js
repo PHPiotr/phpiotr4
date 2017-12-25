@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
@@ -10,7 +10,7 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
     }
 
     return (
-        <div>
+        <Fragment>
             <div>
                 {activationSuccessMessage}
                 {activationErrorMessage}
@@ -40,7 +40,7 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
                 </FormControl>
             </form>
             <Link to="/users/account-recovery">Forgot password?</Link>
-        </div>
+        </Fragment>
     );
 };
 
