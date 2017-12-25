@@ -54,7 +54,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         onFocus={handleFocus}
                         value={registration.repeatPassword || ''}
                     />
-                    <Button type="submit">Register</Button>
+                    <Button style={{marginTop: '20px'}} raised color="primary" type="submit">Register</Button>
                 </FormControl>
             </form>
         </div>
