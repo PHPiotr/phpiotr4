@@ -17,6 +17,9 @@ const initialState = {
     isVerifying: false,
     token: '',
     expiresIn: 0,
+    recoveryEmail: '',
+    isRecovering: false,
+    isRecovered: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -99,6 +102,16 @@ const auth = (state = initialState, action) => {
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
+        case authActionTypes.SET_RECOVERY_EMAIL:
+            return {...state, recoveryEmail: action.payload};
+        case authActionTypes.SET_IS_RECOVERED:
+            return {...state, isRecovered: action.payload};
+        case authActionTypes.ACCOUNT_RECOVERY_REQUEST:
+            return {...state, isRecovering: true};
+        case authActionTypes.ACCOUNT_RECOVERY_SUCCESS:
+            return {...state, isRecovering: false, recoveryEmail: '', isRecovered: true};
+        case authActionTypes.ACCOUNT_RECOVERY_FAILURE:
+            return {...state, isRecovering: false, recoveryError: action.payload.error};
         default:
             return state;
     }

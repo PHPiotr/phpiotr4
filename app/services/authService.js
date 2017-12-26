@@ -8,6 +8,16 @@ export const getAuthLogin = (username, password) => {
     });
 };
 
+export const recoverAccount = (body) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/auth/account-recovery`, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+};
+
 // Registration
 export const postUsers = (body) => {
     return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {

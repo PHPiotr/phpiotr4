@@ -1,4 +1,4 @@
-import {getAuthLogin, postUsers, activateUser} from '../../services/authService';
+import {getAuthLogin, postUsers, activateUser, recoverAccount} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
 
@@ -126,4 +126,24 @@ const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE,
 export const setActivationData = () => {
     const {host, hostname, protocol} = location;
     return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
+};
+
+export const setRecoveryEmail = payload => ({type: authActionTypes.SET_RECOVERY_EMAIL, payload});
+export const setIsRecovered = payload => ({type: authActionTypes.SET_IS_RECOVERED, payload});
+export const recoverAccountIfNeeded = () => {
+    return (dispatch, getState) => {
+        const {auth} = getState();
+        if (auth.isRecovering) {
+            return Promise.resolve();
+        }
+        dispatch({type: authActionTypes.ACCOUNT_RECOVERY_REQUEST});
+        return recoverAccount({email: auth.recoveryEmail})
+            .then((response) => {
+                if (response.status === 201) {
+                    return dispatch({type: authActionTypes.ACCOUNT_RECOVERY_SUCCESS});
+                }
+                throw {message: response.statusText, code: response.code};
+            })
+            .catch(error => dispatch({type: authActionTypes.ACCOUNT_RECOVERY_FAILURE, error}));
+    };
 };
