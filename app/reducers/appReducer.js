@@ -1,8 +1,9 @@
 import * as appActionTypes from '../actions/app/appActionTypes';
+import {HOME} from '../constants';
 
 const initialState = {
     isDrawerOpen: false,
-    appBarTitle: 'phpiotr 4.0',
+    appBarTitle: HOME,
 };
 
 const app = (state = initialState, {type, payload}) => {

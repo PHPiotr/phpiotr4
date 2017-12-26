@@ -5,7 +5,10 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import NoAuth from './NoAuth';
-import {setRecoveryEmail, recoverAccountIfNeeded, setIsRecovered} from '../../actions/auth/authActions';
+import {
+    setRecoveryEmail, recoverAccountIfNeeded, setIsRecovered,
+    setRecoveryErrorMessage,
+} from '../../actions/auth/authActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 
@@ -24,7 +27,9 @@ class AccountRecovery extends Component {
     };
 
     handleFocus = () => {
-        // TODO: Empty value if error
+        if (this.props.recoveryErrorMessage) {
+            this.props.setRecoveryErrorMessage('');
+        }
     };
 
     render() {
@@ -38,13 +43,14 @@ class AccountRecovery extends Component {
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
-                            helperText="Enter your email address and we'll send you a recovery link."
+                            helperText={this.props.recoveryErrorMessage || 'Test Enter your email address and we\'ll send you a recovery link.'}
                             id={'email'}
-                            type={'email'}
+                            type={'text'}
                             name={'email'}
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
                             value={this.props.email}
+                            error={!!this.props.recoveryErrorMessage}
                         />
                         <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Send recovery email</Button>
                     </FormControl>
@@ -64,6 +70,7 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.auth.isLoggedIn,
         email: state.auth.recoveryEmail,
         isRecovered: state.auth.isRecovered,
+        recoveryErrorMessage: state.auth.recoveryErrorMessage,
     };
 };
 
@@ -81,6 +88,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onClose() {
             dispatch(setIsRecovered(false));
+        },
+        setRecoveryErrorMessage(message) {
+            dispatch(setRecoveryErrorMessage(message));
         },
     };
 };

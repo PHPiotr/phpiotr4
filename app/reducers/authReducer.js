@@ -20,6 +20,7 @@ const initialState = {
     recoveryEmail: '',
     isRecovering: false,
     isRecovered: false,
+    recoveryErrorMessage: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -106,12 +107,14 @@ const auth = (state = initialState, action) => {
             return {...state, recoveryEmail: action.payload};
         case authActionTypes.SET_IS_RECOVERED:
             return {...state, isRecovered: action.payload};
+        case authActionTypes.SET_RECOVERY_ERROR_MESSAGE:
+            return {...state, recoveryErrorMessage: action.payload};
         case authActionTypes.ACCOUNT_RECOVERY_REQUEST:
             return {...state, isRecovering: true};
         case authActionTypes.ACCOUNT_RECOVERY_SUCCESS:
             return {...state, isRecovering: false, recoveryEmail: '', isRecovered: true};
         case authActionTypes.ACCOUNT_RECOVERY_FAILURE:
-            return {...state, isRecovering: false, recoveryError: action.payload.error};
+            return {...state, isRecovering: false, recoveryErrorMessage: action.payload.recoveryErrorMessage};
         default:
             return state;
     }
