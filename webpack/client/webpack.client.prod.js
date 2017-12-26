@@ -18,6 +18,7 @@ module.exports = merge(common, {
         publicPath: '/',
     },
     plugins: [
+        new Webpack.HashedModuleIdsPlugin(),
         new ExtractCssChunks({
             filename: '[name].[chunkhash].css',
         }),
