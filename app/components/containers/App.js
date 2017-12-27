@@ -47,7 +47,7 @@ class App extends Component {
                     <Route name="hostels" path="/bookings/hostels/:current?/:page?" component={Hostels}/>
                     <Route name="hostel" path="/bookings/hostel/:id?" component={Hostel}/>
                     <Route name="account-recovery" path="/account-recovery" component={AccountRecovery}/>
-                    <Route name="password-reset" path="/password-reset" component={PasswordReset}/>
+                    <Route name="password-reset" path="/password-reset/:userId/:token" component={PasswordReset}/>
                     <Route name="404" path="*" component={NotFound}/>
                 </Switch>
             </div>,

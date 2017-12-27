@@ -21,6 +21,12 @@ const initialState = {
     isRecovering: false,
     isRecovered: false,
     recoveryErrorMessage: '',
+    newPassword: '',
+    newPasswordRepeat: '',
+    isResettingPassword: false,
+    isResetPassword: false,
+    newPasswordErrorMessage: '',
+    newPasswordRepeatErrorMessage: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -103,6 +109,9 @@ const auth = (state = initialState, action) => {
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
+
+        // Account recovery
+        // TODO: Move to separate reducer
         case authActionTypes.SET_RECOVERY_EMAIL:
             return {...state, recoveryEmail: action.payload};
         case authActionTypes.SET_IS_RECOVERED:
@@ -115,6 +124,15 @@ const auth = (state = initialState, action) => {
             return {...state, isRecovering: false, recoveryEmail: '', isRecovered: true};
         case authActionTypes.ACCOUNT_RECOVERY_FAILURE:
             return {...state, isRecovering: false, recoveryErrorMessage: action.payload.recoveryErrorMessage};
+
+        // Password reset
+        // TODO: Move to separate reducer
+        case authActionTypes.SET_RESET_PASSWORD_INPUT_VALUE:
+            return {...state, [action.payload.name]: action.payload.value};
+        case authActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE:
+            return {...state, [action.payload.name]: action.payload.value};
+        case authActionTypes.SET_IS_RESET_PASSWORD:
+            return {...state, isResetPassword: action.payload};
         default:
             return state;
     }

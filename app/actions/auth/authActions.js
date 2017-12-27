@@ -1,4 +1,4 @@
-import {getAuthLogin, postUsers, activateUser, recoverAccount} from '../../services/authService';
+import {getAuthLogin, postUsers, activateUser, recoverAccount, resetPassword} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
 import {HOME} from '../../constants';
@@ -129,6 +129,8 @@ export const setActivationData = () => {
     return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
 };
 
+// Account recovery
+// TODO: Move to separate action creator
 export const setRecoveryEmail = payload => ({type: authActionTypes.SET_RECOVERY_EMAIL, payload});
 export const setIsRecovered = payload => ({type: authActionTypes.SET_IS_RECOVERED, payload});
 export const setRecoveryErrorMessage = payload => ({type: authActionTypes.SET_RECOVERY_ERROR_MESSAGE, payload});
@@ -153,5 +155,32 @@ export const recoverAccountIfNeeded = () => {
                 throw {message: response.statusText, code: response.code};
             })
             .catch(error => dispatch({type: authActionTypes.ACCOUNT_RECOVERY_FAILURE, payload: {recoveryErrorMessage: error.message}}));
+    };
+};
+
+// Reset password
+// TODO: Move to separate action creator
+export const setResetPasswordInputValue = payload => ({type: authActionTypes.SET_RESET_PASSWORD_INPUT_VALUE, payload});
+export const setResetPasswordErrorMessage = payload => ({type: authActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE, payload});
+export const setIsResetPassword = payload => ({type: authActionTypes.SET_IS_RESET_PASSWORD, payload});
+export const resetPasswordIfNeeded = (userId, token) => {
+    return (dispatch, getState) => {
+        const {auth} = getState();
+        if (auth.isResettingPassword) {
+            return Promise.resolve();
+        }
+        dispatch({type: authActionTypes.RESET_PASSWORD_REQUEST});
+        return resetPassword(userId, token, {
+            newPassword: auth.newPassword,
+            newPasswordRepeat: auth.newPasswordRepeat,
+        })
+            .then((response) => {
+                if (response.status === 204) {
+                    return dispatch({type: authActionTypes.RESET_PASSWORD_SUCCESS});
+                }
+                throw {message: response.statusText, code: response.code};
+            })
+            .catch(error => dispatch({type: authActionTypes.RESET_PASSWORD_FAILURE, payload: {
+                newPasswordErrorMessage: error.message}}));
     };
 };
