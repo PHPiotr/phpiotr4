@@ -5,6 +5,7 @@ import dateFilter from './dateFilterReducer';
 import bookings from './bookingReducer';
 import app from './appReducer';
 import recovery from './recoveryReducer';
+import passwordReset from './passwordResetReducer';
 
 const reducers = combineReducers({
     auth,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
     bookings,
     app,
     recovery,
+    passwordReset,
 });
 
 export default reducers;

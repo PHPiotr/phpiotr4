@@ -44,7 +44,7 @@ class AccountRecovery extends Component {
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
-                            helperText={this.props.recoveryErrorMessage || 'Test Enter your email address and we\'ll send you a recovery link.'}
+                            helperText={this.props.recoveryErrorMessage || 'Enter your email address and we\'ll send you a recovery link.'}
                             id={'email'}
                             type={'text'}
                             name={'email'}
@@ -66,7 +66,7 @@ class AccountRecovery extends Component {
     }
 }
 
-const mapStateToProps = ({recovery, auth}) => ({...recovery, isLoggedIn: auth.isLoggedIn});
+const mapStateToProps = ({recovery, auth: {isLoggedIn}}) => ({...recovery, isLoggedIn});
 const mapDispatchToProps = (dispatch) => {
     return {
         setRecoveryEmail(email) {
