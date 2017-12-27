@@ -17,10 +17,6 @@ const initialState = {
     isVerifying: false,
     token: '',
     expiresIn: 0,
-    recoveryEmail: '',
-    isRecovering: false,
-    isRecovered: false,
-    recoveryErrorMessage: '',
     newPassword: '',
     newPasswordRepeat: '',
     isResetting: false,
@@ -108,21 +104,6 @@ const auth = (state = initialState, action) => {
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
-
-        // Account recovery
-        // TODO: Move to separate reducer
-        case authActionTypes.SET_RECOVERY_EMAIL:
-            return {...state, recoveryEmail: action.payload};
-        case authActionTypes.SET_IS_RECOVERED:
-            return {...state, isRecovered: action.payload};
-        case authActionTypes.SET_RECOVERY_ERROR_MESSAGE:
-            return {...state, recoveryErrorMessage: action.payload};
-        case authActionTypes.ACCOUNT_RECOVERY_REQUEST:
-            return {...state, isRecovering: true};
-        case authActionTypes.ACCOUNT_RECOVERY_SUCCESS:
-            return {...state, isRecovering: false, recoveryEmail: '', isRecovered: true};
-        case authActionTypes.ACCOUNT_RECOVERY_FAILURE:
-            return {...state, isRecovering: false, recoveryErrorMessage: action.payload.recoveryErrorMessage};
 
         // Password reset
         // TODO: Move to separate reducer
