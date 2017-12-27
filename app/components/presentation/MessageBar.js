@@ -18,7 +18,7 @@ const MessageBar = (props) => {
 MessageBar.propTypes = {
     autohide: PropTypes.number,
     open: PropTypes.bool,
-    handleRequestClose: PropTypes.func,
+    onClose: PropTypes.func,
     message: PropTypes.string.isRequired,
     vertical: PropTypes.string,
     horizontal: PropTypes.string,
@@ -27,7 +27,7 @@ MessageBar.propTypes = {
 MessageBar.defaultProps = {
     autohide: 4000,
     open: false,
-    handleRequestClose: null,
+    onClose: null,
     vertical: 'bottom',
     horizontal: 'center',
 };

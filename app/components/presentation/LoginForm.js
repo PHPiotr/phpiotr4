@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
+import {Link} from 'react-router-dom';
 
 const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSuccessMessage, activationErrorMessage}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
@@ -9,7 +10,7 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
     }
 
     return (
-        <div>
+        <Fragment>
             <div>
                 {activationSuccessMessage}
                 {activationErrorMessage}
@@ -35,10 +36,13 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
                         onFocus={handleFocus}
                         value={login.password || ''}
                     />
-                    <Button style={{marginTop: '20px'}} type="submit">Log in</Button>
+                    <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Log in</Button>
                 </FormControl>
             </form>
-        </div>
+            <Button raised style={{marginLeft: '20px'}} component={Link} to="/account-recovery">
+                Forgot password?
+            </Button>
+        </Fragment>
     );
 };
 

@@ -8,6 +8,27 @@ export const getAuthLogin = (username, password) => {
     });
 };
 
+export const recoverAccount = (body) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/auth/account-recovery`, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+};
+
+export const resetPassword = (userId, token, body) => {
+    return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+    });
+};
+
 // Registration
 export const postUsers = (body) => {
     return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/users`, {

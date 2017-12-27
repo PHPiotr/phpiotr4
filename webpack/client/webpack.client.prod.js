@@ -4,6 +4,7 @@ const Webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
 const path = require('path');
 const context = common.context;
 
@@ -18,6 +19,14 @@ module.exports = merge(common, {
         publicPath: '/',
     },
     plugins: [
+        new Webpack.HashedModuleIdsPlugin(),
+        new Webpack.NamedChunksPlugin((chunk) => {
+            if (chunk.name) {
+                return chunk.name;
+            }
+            return chunk.modules.map(m => path.relative(m.context, m.request)).join('_');
+        }),
+        new NameAllModulesPlugin(),
         new ExtractCssChunks({
             filename: '[name].[chunkhash].css',
         }),
