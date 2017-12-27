@@ -166,7 +166,7 @@ export const setIsResetPassword = payload => ({type: authActionTypes.SET_IS_RESE
 export const resetPasswordIfNeeded = (userId, token) => {
     return (dispatch, getState) => {
         const {auth} = getState();
-        if (auth.isResettingPassword) {
+        if (auth.isResetting) {
             return Promise.resolve();
         }
         dispatch({type: authActionTypes.RESET_PASSWORD_REQUEST});
@@ -181,6 +181,6 @@ export const resetPasswordIfNeeded = (userId, token) => {
                 throw {message: response.statusText, code: response.code};
             })
             .catch(error => dispatch({type: authActionTypes.RESET_PASSWORD_FAILURE, payload: {
-                newPasswordErrorMessage: error.message}}));
+                passwordResetErrorMessage: error.message}}));
     };
 };

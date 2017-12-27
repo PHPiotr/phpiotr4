@@ -11,6 +11,7 @@ import {
 } from '../../actions/auth/authActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
+import {LinearProgress} from 'material-ui/Progress';
 
 class AccountRecovery extends Component {
 
@@ -35,6 +36,9 @@ class AccountRecovery extends Component {
     render() {
         if (this.props.isLoggedIn) {
             return null;
+        }
+        if (this.props.isRecovering) {
+            return <LinearProgress/>;
         }
 
         return (
@@ -70,6 +74,7 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.auth.isLoggedIn,
         email: state.auth.recoveryEmail,
         isRecovered: state.auth.isRecovered,
+        isRecovering: state.auth.isRecovering,
         recoveryErrorMessage: state.auth.recoveryErrorMessage,
     };
 };

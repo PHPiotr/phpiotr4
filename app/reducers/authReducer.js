@@ -23,10 +23,9 @@ const initialState = {
     recoveryErrorMessage: '',
     newPassword: '',
     newPasswordRepeat: '',
-    isResettingPassword: false,
-    isResetPassword: false,
-    newPasswordErrorMessage: '',
-    newPasswordRepeatErrorMessage: '',
+    isResetting: false,
+    isReset: false,
+    passwordResetErrorMessage: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -130,9 +129,26 @@ const auth = (state = initialState, action) => {
         case authActionTypes.SET_RESET_PASSWORD_INPUT_VALUE:
             return {...state, [action.payload.name]: action.payload.value};
         case authActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE:
-            return {...state, [action.payload.name]: action.payload.value};
+            return {...state, passwordResetErrorMessage: action.payload};
         case authActionTypes.SET_IS_RESET_PASSWORD:
-            return {...state, isResetPassword: action.payload};
+            return {...state, isReset: action.payload};
+        case authActionTypes.RESET_PASSWORD_REQUEST:
+            return {...state, isResetting: true};
+        case authActionTypes.RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                isResetting: false,
+                isReset: true,
+                newPassword: '',
+                newPasswordRepeat: '',
+                passwordResetErrorMessage: '',
+            };
+        case authActionTypes.RESET_PASSWORD_FAILURE:
+            return {
+                ...state,
+                isResetting: false,
+                passwordResetErrorMessage: action.payload.passwordResetErrorMessage,
+            };
         default:
             return state;
     }

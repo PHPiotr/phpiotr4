@@ -9,6 +9,7 @@ import NoAuth from './NoAuth';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import {setResetPasswordInputValue, setResetPasswordErrorMessage, setIsResetPassword, resetPasswordIfNeeded} from '../../actions/auth/authActions';
+import {LinearProgress} from 'material-ui/Progress';
 
 class PasswordReset extends Component {
 
@@ -24,10 +25,9 @@ class PasswordReset extends Component {
         this.props.setResetPasswordInputValue(event.target.name, event.target.value);
     };
 
-    handleFocus = (event) => {
-        const errorMessageKey = `${event.target.name}ErrorMessage`;
-        if (this.props[errorMessageKey]) {
-            this.props.setResetPasswordErrorMessage(errorMessageKey, '');
+    handleFocus = () => {
+        if (this.props.passwordResetErrorMessage) {
+            this.props.setResetPasswordErrorMessage('');
         }
     };
 
@@ -35,30 +35,33 @@ class PasswordReset extends Component {
         if (this.props.isLoggedIn) {
             return null;
         }
+        if (this.props.isResetting) {
+            return <LinearProgress/>;
+        }
         return (
             <Fragment>
-                <Typography style={{padding: '23px'}} type="headline">Reset your password</Typography>
+                <Typography style={{padding: '23px'}} type="headline">{this.props.passwordResetErrorMessage || 'Reset your password'}</Typography>
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
-                            helperText={this.props.newPasswordErrorMessage || 'New password'}
+                            helperText={'New password'}
                             id={'new-password'}
                             type={'password'}
                             name={'newPassword'}
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
                             value={this.props.newPassword}
-                            error={!!this.props.newPasswordErrorMessage}
+                            error={!!this.props.passwordResetErrorMessage}
                         />
                         <TextField
-                            helperText={this.props.newPasswordRepeatErrorMessage || 'Confirm new password'}
+                            helperText={'Confirm new password'}
                             id={'new-password-repeat'}
                             type={'password'}
                             name={'newPasswordRepeat'}
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
                             value={this.props.newPasswordRepeat}
-                            error={!!this.props.newPasswordRepeatErrorMessage}
+                            error={!!this.props.passwordResetErrorMessage}
                         />
                         <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset password</Button>
                     </FormControl>
@@ -78,10 +81,9 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.auth.isLoggedIn,
         newPassword: state.auth.newPassword,
         newPasswordRepeat: state.auth.newPasswordRepeat,
-        isReset: state.auth.isResetPassword,
-        isResetting: state.auth.isResettingPassword,
-        newPasswordErrorMessage: state.auth.newPasswordErrorMessage,
-        newPasswordRepeatErrorMessage: state.auth.newPasswordRepeatErrorMessage,
+        isReset: state.auth.isReset,
+        isResetting: state.auth.isResetting,
+        passwordResetErrorMessage: state.auth.passwordResetErrorMessage,
     };
 };
 
@@ -101,8 +103,8 @@ const mapDispatchToProps = (dispatch, {match}) => {
         onClose() {
             dispatch(setIsResetPassword(false));
         },
-        setResetPasswordErrorMessage(name, value) {
-            dispatch(setResetPasswordErrorMessage({name, value}));
+        setResetPasswordErrorMessage(value) {
+            dispatch(setResetPasswordErrorMessage(value));
         },
     };
 };
