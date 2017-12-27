@@ -1,7 +1,6 @@
-import {getAuthLogin, postUsers, activateUser, recoverAccount, resetPassword} from '../../services/authService';
+import {getAuthLogin, postUsers, activateUser, resetPassword} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
-import {HOME} from '../../constants';
 
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
@@ -127,35 +126,6 @@ const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE,
 export const setActivationData = () => {
     const {host, hostname, protocol} = location;
     return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
-};
-
-// Account recovery
-// TODO: Move to separate action creator
-export const setRecoveryEmail = payload => ({type: authActionTypes.SET_RECOVERY_EMAIL, payload});
-export const setIsRecovered = payload => ({type: authActionTypes.SET_IS_RECOVERED, payload});
-export const setRecoveryErrorMessage = payload => ({type: authActionTypes.SET_RECOVERY_ERROR_MESSAGE, payload});
-export const recoverAccountIfNeeded = () => {
-    return (dispatch, getState) => {
-        const {auth} = getState();
-        if (auth.isRecovering) {
-            return Promise.resolve();
-        }
-        dispatch({type: authActionTypes.ACCOUNT_RECOVERY_REQUEST});
-        const {host, hostname, protocol} = location;
-        return recoverAccount({
-            email: auth.recoveryEmail,
-            appName: HOME,
-            recoveryUrl: `${protocol}//${host}/password-reset`,
-            recoveryFromEmail: `no-reply@${hostname}`,
-        })
-            .then((response) => {
-                if (response.status === 201) {
-                    return dispatch({type: authActionTypes.ACCOUNT_RECOVERY_SUCCESS});
-                }
-                throw {message: response.statusText, code: response.code};
-            })
-            .catch(error => dispatch({type: authActionTypes.ACCOUNT_RECOVERY_FAILURE, payload: {recoveryErrorMessage: error.message}}));
-    };
 };
 
 // Reset password

@@ -5,10 +5,7 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import NoAuth from './NoAuth';
-import {
-    setRecoveryEmail, recoverAccountIfNeeded, setIsRecovered,
-    setRecoveryErrorMessage,
-} from '../../actions/auth/authActions';
+import * as recoveryActions from '../../actions/recovery/recoveryActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
@@ -69,33 +66,24 @@ class AccountRecovery extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isLoggedIn: state.auth.isLoggedIn,
-        email: state.auth.recoveryEmail,
-        isRecovered: state.auth.isRecovered,
-        isRecovering: state.auth.isRecovering,
-        recoveryErrorMessage: state.auth.recoveryErrorMessage,
-    };
-};
-
+const mapStateToProps = ({recovery, auth}) => ({...recovery, isLoggedIn: auth.isLoggedIn});
 const mapDispatchToProps = (dispatch) => {
     return {
         setRecoveryEmail(email) {
-            dispatch(setRecoveryEmail(email));
+            dispatch(recoveryActions.setRecoveryEmail(email));
         },
         handleSubmit(event) {
             event.preventDefault();
-            dispatch(recoverAccountIfNeeded());
+            dispatch(recoveryActions.recoverAccountIfNeeded());
         },
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
         },
         onClose() {
-            dispatch(setIsRecovered(false));
+            dispatch(recoveryActions.setIsRecovered(false));
         },
         setRecoveryErrorMessage(message) {
-            dispatch(setRecoveryErrorMessage(message));
+            dispatch(recoveryActions.setRecoveryErrorMessage(message));
         },
     };
 };
