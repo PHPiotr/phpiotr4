@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import NoAuth from './NoAuth';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
-import {setResetPasswordInputValue, setResetPasswordErrorMessage, setIsResetPassword, resetPasswordIfNeeded} from '../../actions/auth/authActions';
+import * as passwordResetActions from '../../actions/passwordReset/passwordResetActions';
 import {LinearProgress} from 'material-ui/Progress';
 
 class PasswordReset extends Component {
@@ -76,35 +76,25 @@ class PasswordReset extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isLoggedIn: state.auth.isLoggedIn,
-        newPassword: state.auth.newPassword,
-        newPasswordRepeat: state.auth.newPasswordRepeat,
-        isReset: state.auth.isReset,
-        isResetting: state.auth.isResetting,
-        passwordResetErrorMessage: state.auth.passwordResetErrorMessage,
-    };
-};
-
+const mapStateToProps = ({auth: {isLoggedIn}, passwordReset}) => ({...passwordReset, isLoggedIn});
 const mapDispatchToProps = (dispatch, {match}) => {
     return {
         setResetPasswordInputValue(name, value) {
-            dispatch(setResetPasswordInputValue({name, value}));
+            dispatch(passwordResetActions.setResetPasswordInputValue({name, value}));
         },
         handleSubmit(event) {
             event.preventDefault();
             const {userId, token} = match.params;
-            dispatch(resetPasswordIfNeeded(userId, token));
+            dispatch(passwordResetActions.resetPasswordIfNeeded(userId, token));
         },
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
         },
         onClose() {
-            dispatch(setIsResetPassword(false));
+            dispatch(passwordResetActions.setIsResetPassword(false));
         },
         setResetPasswordErrorMessage(value) {
-            dispatch(setResetPasswordErrorMessage(value));
+            dispatch(passwordResetActions.setResetPasswordErrorMessage(value));
         },
     };
 };
