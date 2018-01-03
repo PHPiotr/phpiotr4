@@ -39,14 +39,6 @@ const bookings = (state = initialState, action) => {
                     current: {...state[payload.label]['current'], [payload.name]: payload.value},
                 },
             };
-        case indexActionTypes.SET_BOOKING:
-            return {
-                ...state,
-                [payload.label]: {
-                    ...state[payload.label],
-                    current: payload.current,
-                },
-            };
 
         case indexActionTypes.SET_BOOKING_ERROR_MESSAGE:
             return {...state, [payload.label]: {...state[payload.label], message: payload.message}};
