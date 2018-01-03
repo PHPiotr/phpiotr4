@@ -104,4 +104,33 @@ describe('dateFilterReducer', () => {
 
         expect(dateFilter(beforeState, action)).toEqual(afterState);
     });
+
+    it(`${dateFilterActionTypes.TOGGLE_DATE_FILTER_ENABLED} should toggle date filter`, () => {
+        const payload = true;
+        const action = {payload, type: dateFilterActionTypes.TOGGLE_DATE_FILTER_ENABLED};
+        const beforeState = {isDateFilterEnabled: false};
+        const afterState = {isDateFilterEnabled: payload};
+        deepFreeze(action);
+        deepFreeze(beforeState);
+        deepFreeze(afterState);
+
+        expect(dateFilter(beforeState, action)).toEqual(afterState);
+    });
+
+    it('undefined action type should not modify anything', () => {
+        const state = {
+            fromDate: '',
+            toDate: '',
+            isDateFilterEnabled: false,
+        };
+        const payload = 'whatever';
+        const action = {payload, type: undefined};
+        const beforeState = state;
+        const afterState = state;
+        deepFreeze(action);
+        deepFreeze(beforeState);
+        deepFreeze(afterState);
+
+        expect(dateFilter(beforeState, action)).toEqual(afterState);
+    });
 });
