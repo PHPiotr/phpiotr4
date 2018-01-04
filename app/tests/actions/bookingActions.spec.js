@@ -104,6 +104,30 @@ describe('bookingActions', () => {
                         expect(store.getActions()).toEqual(expectedActions);
                     });
             });
+
+            it(`should create ${bookingActionTypes.GET_BOOKINGS_FAILURE} when listing of bookings failed`, () => {
+
+                const type = 'current';
+                const page = 1;
+                const code = 403;
+                const message = 'Forbidden';
+                const error = {code, message};
+
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}?type=${type}&page=${page}`).reply(403, error);
+                const expectedActions = [
+                    {type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                    {type: bookingActionTypes.GET_BOOKINGS_FAILURE, payload: {label: pluralToSingularMapping[label], error, code, message}},
+                ];
+
+                return store.dispatch(bookingActions.getBookingsIfNeeded(pluralToSingularMapping[label], label, type, page))
+                    .then((response) => {
+                        expect(response.type).toEqual(bookingActionTypes.GET_BOOKINGS_FAILURE);
+                        expect(response.payload.code).toEqual(code);
+                        expect(response.payload.message).toEqual(message);
+                        expect(response.payload.error).toEqual(error);
+                        expect(store.getActions()).toEqual(expectedActions);
+                    });
+            });
         });
     });
 });
