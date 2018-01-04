@@ -29,15 +29,15 @@ describe('bookingActions', () => {
         labels.forEach((label) => {
 
             const id = 1;
+            const data = {bookings: [{_id: id}]};
             let store;
             beforeEach(() => {
                 store = mockStore({
                     bookings: {
                         [pluralToSingularMapping[label]]: {
-                            data: {
-                                bookings: [{_id: id}],
-                            },
+                            data,
                             isDeleting: false,
+                            isFetching: false,
                         },
                         currentBooking: {
                             label: pluralToSingularMapping[label],
@@ -82,6 +82,25 @@ describe('bookingActions', () => {
 
                 return store.dispatch(bookingActions.deleteBookingIfNeeded())
                     .then(() => {
+                        expect(store.getActions()).toEqual(expectedActions);
+                    });
+            });
+
+            it(`should create ${bookingActionTypes.GET_BOOKINGS_SUCCESS} when listing of bookings succeeded`, () => {
+
+                const type = 'current';
+                const page = 1;
+
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}?type=${type}&page=${page}`).reply(200, data);
+                const expectedActions = [
+                    {type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                    {type: bookingActionTypes.GET_BOOKINGS_SUCCESS, payload: {label: pluralToSingularMapping[label], data}},
+                ];
+
+                return store.dispatch(bookingActions.getBookingsIfNeeded(pluralToSingularMapping[label], label, type, page))
+                    .then((response) => {
+                        expect(response.type).toEqual(bookingActionTypes.GET_BOOKINGS_SUCCESS);
+                        expect(response.payload.data).toEqual(data);
                         expect(store.getActions()).toEqual(expectedActions);
                     });
             });
