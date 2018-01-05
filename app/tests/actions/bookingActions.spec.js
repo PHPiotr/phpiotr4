@@ -168,6 +168,24 @@ describe('bookingActions', () => {
                         expect(store.getActions()[1]).toEqual(expectedSuccessAction);
                     });
             });
+
+            it(`should create ${bookingActionTypes.GET_BOOKING_FAILURE} when viewing of booking failed`, () => {
+                const error = 'Booking not found';
+                const code = 404;
+                const expectedPayload = {error, code};
+
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(code, expectedPayload);
+                const expectedRequestAction = {
+                    type: bookingActionTypes.GET_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                };
+
+                return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                    .then((expectedFailureAction) => {
+                        expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                        expect(store.getActions()[1]).toEqual(expectedFailureAction);
+                    });
+            });
         });
     });
 });
