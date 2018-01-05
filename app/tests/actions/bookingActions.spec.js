@@ -29,7 +29,8 @@ describe('bookingActions', () => {
         labels.forEach((label) => {
 
             const id = 1;
-            const data = {bookings: [{_id: id}]};
+            const booking = {_id: id};
+            const data = {bookings: [booking]};
             let store;
             beforeEach(() => {
                 store = mockStore({
@@ -38,6 +39,7 @@ describe('bookingActions', () => {
                             data,
                             isDeleting: false,
                             isFetching: false,
+                            current: {_id: id},
                         },
                         currentBooking: {
                             label: pluralToSingularMapping[label],
@@ -138,6 +140,69 @@ describe('bookingActions', () => {
 
                 return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
                     .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
+
+            it(`should create ${bookingActionTypes.ADD_BOOKING_FAILURE} when adding of booking succeeded`, () => {
+                const error = 'Booking validation failed';
+                const errors = {};
+                const expectedPayload = {error, errors};
+                nock(apiUrl).post(`${apiPrefix}/bookings/${label}`).reply(403, expectedPayload);
+                const expectedActions = [
+                    {type: bookingActionTypes.ADD_BOOKING_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                    {type: bookingActionTypes.ADD_BOOKING_FAILURE, payload: {label: pluralToSingularMapping[label], error, errors}},
+                ];
+
+                return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
+
+            it(`should create ${bookingActionTypes.GET_BOOKING_SUCCESS} when viewing of booking succeeded`, () => {
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(200, booking);
+                const expectedRequestAction = {
+                    type: bookingActionTypes.GET_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                };
+
+                return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                    .then((expectedSuccessAction) => {
+                        expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                        expect(store.getActions()[1]).toEqual(expectedSuccessAction);
+                    });
+            });
+
+            it(`should create ${bookingActionTypes.GET_BOOKING_FAILURE} when viewing of booking failed`, () => {
+                const error = 'Booking not found';
+                const code = 404;
+                const expectedPayload = {error, code};
+
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(code, expectedPayload);
+                const expectedRequestAction = {
+                    type: bookingActionTypes.GET_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                };
+
+                return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                    .then((expectedFailureAction) => {
+                        expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                        expect(store.getActions()[1]).toEqual(expectedFailureAction);
+                    });
+            });
+
+            it(`should create ${bookingActionTypes.EDIT_BOOKING_SUCCESS} when edition of booking succeeded`, () => {
+                nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(204);
+                const expectedActions = [
+                    {
+                        type: bookingActionTypes.EDIT_BOOKING_REQUEST,
+                        payload: {label: pluralToSingularMapping[label]},
+                    },
+                    {
+                        type: bookingActionTypes.EDIT_BOOKING_SUCCESS,
+                        payload: {label: pluralToSingularMapping[label]},
+                    },
+                ];
+
+                return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then(() =>  expect(store.getActions()).toEqual(expectedActions));
             });
         });
     });
