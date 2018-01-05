@@ -39,6 +39,7 @@ describe('bookingActions', () => {
                             data,
                             isDeleting: false,
                             isFetching: false,
+                            current: {_id: id},
                         },
                         currentBooking: {
                             label: pluralToSingularMapping[label],
@@ -185,6 +186,23 @@ describe('bookingActions', () => {
                         expect(store.getActions()[0]).toEqual(expectedRequestAction);
                         expect(store.getActions()[1]).toEqual(expectedFailureAction);
                     });
+            });
+
+            it(`should create ${bookingActionTypes.EDIT_BOOKING_SUCCESS} when edition of booking succeeded`, () => {
+                nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(204);
+                const expectedActions = [
+                    {
+                        type: bookingActionTypes.EDIT_BOOKING_REQUEST,
+                        payload: {label: pluralToSingularMapping[label]},
+                    },
+                    {
+                        type: bookingActionTypes.EDIT_BOOKING_SUCCESS,
+                        payload: {label: pluralToSingularMapping[label]},
+                    },
+                ];
+
+                return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then(() =>  expect(store.getActions()).toEqual(expectedActions));
             });
         });
     });
