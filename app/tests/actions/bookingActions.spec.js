@@ -202,7 +202,22 @@ describe('bookingActions', () => {
                 ];
 
                 return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
-                    .then(() =>  expect(store.getActions()).toEqual(expectedActions));
+                    .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
+
+            it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed`, () => {
+
+                nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(404);
+                const expectedRequestAction = {
+                    type: bookingActionTypes.EDIT_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                };
+
+                return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then((response) => {
+                        expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                        expect(store.getActions()[1]).toEqual(response);
+                    });
             });
         });
     });
