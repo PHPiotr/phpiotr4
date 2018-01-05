@@ -128,6 +128,17 @@ describe('bookingActions', () => {
                         expect(store.getActions()).toEqual(expectedActions);
                     });
             });
+
+            it(`should create ${bookingActionTypes.ADD_BOOKING_SUCCESS} when adding of booking succeeded`, () => {
+                nock(apiUrl).post(`${apiPrefix}/bookings/${label}`).reply(201);
+                const expectedActions = [
+                    {type: bookingActionTypes.ADD_BOOKING_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                    {type: bookingActionTypes.ADD_BOOKING_SUCCESS, payload: {label: pluralToSingularMapping[label]}},
+                ];
+
+                return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
         });
     });
 });
