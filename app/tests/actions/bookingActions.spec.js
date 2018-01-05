@@ -139,6 +139,20 @@ describe('bookingActions', () => {
                 return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
                     .then(() => expect(store.getActions()).toEqual(expectedActions));
             });
+
+            it(`should create ${bookingActionTypes.ADD_BOOKING_FAILURE} when adding of booking succeeded`, () => {
+                const error = 'Booking validation failed';
+                const errors = {};
+                const expectedPayload = {error, errors};
+                nock(apiUrl).post(`${apiPrefix}/bookings/${label}`).reply(403, expectedPayload);
+                const expectedActions = [
+                    {type: bookingActionTypes.ADD_BOOKING_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                    {type: bookingActionTypes.ADD_BOOKING_FAILURE, payload: {label: pluralToSingularMapping[label], error, errors}},
+                ];
+
+                return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
+                    .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
         });
     });
 });
