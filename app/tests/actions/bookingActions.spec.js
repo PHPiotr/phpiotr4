@@ -29,7 +29,8 @@ describe('bookingActions', () => {
         labels.forEach((label) => {
 
             const id = 1;
-            const data = {bookings: [{_id: id}]};
+            const booking = {_id: id};
+            const data = {bookings: [booking]};
             let store;
             beforeEach(() => {
                 store = mockStore({
@@ -152,6 +153,20 @@ describe('bookingActions', () => {
 
                 return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
                     .then(() => expect(store.getActions()).toEqual(expectedActions));
+            });
+
+            it(`should create ${bookingActionTypes.GET_BOOKING_SUCCESS} when viewing of booking succeeded`, () => {
+                nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(200, booking);
+                const expectedRequestAction = {
+                    type: bookingActionTypes.GET_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                };
+
+                return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                    .then((expectedSuccessAction) => {
+                        expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                        expect(store.getActions()[1]).toEqual(expectedSuccessAction);
+                    });
             });
         });
     });
