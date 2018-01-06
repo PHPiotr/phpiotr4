@@ -40,6 +40,8 @@ describe('bookingActions', () => {
                             isDeleting: false,
                             isFetching: false,
                             current: {_id: id},
+                            errors: {},
+                            message: '',
                         },
                         currentBooking: {
                             label: pluralToSingularMapping[label],
@@ -218,6 +220,31 @@ describe('bookingActions', () => {
                         expect(store.getActions()[0]).toEqual(expectedRequestAction);
                         expect(store.getActions()[1]).toEqual(response);
                     });
+            });
+
+            it(`should create ${bookingActionTypes.SET_BOOKING_ERROR_MESSAGE} and ${bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE} when form field focused`, () => {
+                const testedFieldName = 'price';
+                store = mockStore({
+                    bookings: {
+                        [pluralToSingularMapping[label]]: {
+                            errors: {[testedFieldName]: {message: 'This field is required'}},
+                            message: 'You have an error',
+                        },
+                    },
+                });
+                const expectedActions = [
+                    {
+                        type: bookingActionTypes.SET_BOOKING_ERROR_MESSAGE,
+                        payload: {label: pluralToSingularMapping[label], message: ''},
+                    },
+                    {
+                        type: bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE,
+                        payload: {label: pluralToSingularMapping[label], name: testedFieldName, value: null},
+                    },
+                ];
+
+                return store.dispatch(bookingActions.handleFocus({target: {name: testedFieldName, value: ''}}, pluralToSingularMapping[label]))
+                    .then(() => expect(store.getActions()).toEqual(expectedActions));
             });
         });
     });
