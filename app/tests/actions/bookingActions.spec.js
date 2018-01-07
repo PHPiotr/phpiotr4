@@ -246,6 +246,25 @@ describe('bookingActions', () => {
                 return store.dispatch(bookingActions.handleFocus({target: {name: testedFieldName, value: ''}}, pluralToSingularMapping[label]))
                     .then(() => expect(store.getActions()).toEqual(expectedActions));
             });
+
+            it(`should create ${bookingActionTypes.SET_BOOKING_PROPERTY} when form field changed`, () => {
+                const name = 'price';
+                const type = 'text';
+                const value = '9.99';
+                const expectedAction = {type: bookingActionTypes.SET_BOOKING_PROPERTY, payload: {label: pluralToSingularMapping[label], name, value}};
+                expect(bookingActions.handleChange({target: {name, type, value}}, pluralToSingularMapping[label])).toEqual(expectedAction);
+            });
+
+            it(`should create ${bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN} when delete booking button clicked`, () => {
+                const expectedAction = {type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN};
+                expect(bookingActions.toggleIsBookingDeleteDialogOpen()).toEqual(expectedAction);
+            });
+
+            it(`should create ${bookingActionTypes.SET_CURRENT_BOOKING} and set current booking to empty object when leaving add/edit page`, () => {
+                const payload = {};
+                const expectedAction = {type: bookingActionTypes.SET_CURRENT_BOOKING, payload};
+                expect(bookingActions.setCurrentBooking(payload)).toEqual(expectedAction);
+            });
         });
     });
 });
