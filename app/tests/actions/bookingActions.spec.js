@@ -254,6 +254,11 @@ describe('bookingActions', () => {
                 const expectedAction = {type: bookingActionTypes.SET_BOOKING_PROPERTY, payload: {label: pluralToSingularMapping[label], name, value}};
                 expect(bookingActions.handleChange({target: {name, type, value}}, pluralToSingularMapping[label])).toEqual(expectedAction);
             });
+
+            it(`should create ${bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN} when delete booking button clicked`, () => {
+                const expectedAction = {type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN};
+                expect(bookingActions.toggleIsBookingDeleteDialogOpen()).toEqual(expectedAction);
+            });
         });
     });
 });
