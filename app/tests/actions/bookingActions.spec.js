@@ -259,6 +259,12 @@ describe('bookingActions', () => {
                 const expectedAction = {type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN};
                 expect(bookingActions.toggleIsBookingDeleteDialogOpen()).toEqual(expectedAction);
             });
+
+            it(`should create ${bookingActionTypes.SET_CURRENT_BOOKING} and set current booking to empty object when leaving add/edit page`, () => {
+                const payload = {};
+                const expectedAction = {type: bookingActionTypes.SET_CURRENT_BOOKING, payload};
+                expect(bookingActions.setCurrentBooking(payload)).toEqual(expectedAction);
+            });
         });
     });
 });
