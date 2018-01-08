@@ -277,6 +277,12 @@ describe('bookingActions', () => {
                 const expectedAction = {type: bookingActionTypes.SET_IS_DELETED, payload};
                 expect(bookingActions.setIsDeleted(payload)).toEqual(expectedAction);
             });
+
+            it(`should create ${bookingActionTypes.SET_IS_ADD} and set is-add flag to true on enter add/edit page`, () => {
+                const payload = {label: pluralToSingularMapping[label], isAdd: true};
+                const expectedAction = {type: bookingActionTypes.SET_IS_ADD, payload};
+                expect(bookingActions.setIsAdd(payload)).toEqual(expectedAction);
+            });
         });
     });
 });
