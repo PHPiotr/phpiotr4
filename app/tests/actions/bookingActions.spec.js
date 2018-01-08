@@ -120,7 +120,7 @@ describe('bookingActions', () => {
                 {type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload: {label: pluralToSingularMapping[label]}},
                 {
                     type: bookingActionTypes.GET_BOOKINGS_FAILURE,
-                    payload: {label: pluralToSingularMapping[label], error, code, message}
+                    payload: {label: pluralToSingularMapping[label], error, code, message},
                 },
             ];
 
@@ -154,7 +154,7 @@ describe('bookingActions', () => {
                 {type: bookingActionTypes.ADD_BOOKING_REQUEST, payload: {label: pluralToSingularMapping[label]}},
                 {
                     type: bookingActionTypes.ADD_BOOKING_FAILURE,
-                    payload: {label: pluralToSingularMapping[label], error, errors}
+                    payload: {label: pluralToSingularMapping[label], error, errors},
                 },
             ];
 
@@ -250,8 +250,8 @@ describe('bookingActions', () => {
             return store.dispatch(bookingActions.handleFocus({
                 target: {
                     name: testedFieldName,
-                    value: ''
-                }
+                    value: '',
+                },
             }, pluralToSingularMapping[label]))
                 .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
@@ -262,14 +262,14 @@ describe('bookingActions', () => {
             const value = '9.99';
             const expectedAction = {
                 type: bookingActionTypes.SET_BOOKING_PROPERTY,
-                payload: {label: pluralToSingularMapping[label], name, value}
+                payload: {label: pluralToSingularMapping[label], name, value},
             };
             expect(bookingActions.handleChange({
                 target: {
                     name,
                     type,
-                    value
-                }
+                    value,
+                },
             }, pluralToSingularMapping[label])).toEqual(expectedAction);
         });
 
