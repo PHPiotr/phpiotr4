@@ -265,6 +265,12 @@ describe('bookingActions', () => {
                 const expectedAction = {type: bookingActionTypes.SET_CURRENT_BOOKING, payload};
                 expect(bookingActions.setCurrentBooking(payload)).toEqual(expectedAction);
             });
+
+            it(`should create ${bookingActionTypes.SET_IS_ADDED} and set is-added flag to false on success-add-snackbar close`, () => {
+                const payload = {isAdded: false};
+                const expectedAction = {type: bookingActionTypes.SET_IS_ADDED, payload};
+                expect(bookingActions.setIsAdded(payload)).toEqual(expectedAction);
+            });
         });
     });
 });
