@@ -162,6 +162,21 @@ describe('bookingActions', () => {
                 .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
 
+        it(`should not create ${bookingActionTypes.ADD_BOOKING_REQUEST} when booking is already being added`, () => {
+            store = mockStore({
+                bookings: {
+                    [pluralToSingularMapping[label]]: {
+                        isAdding: true,
+                    },
+                },
+                auth: {
+                    token: 'j.w.t',
+                },
+            });
+            return store.dispatch(bookingActions.addBookingIfNeeded(pluralToSingularMapping[label], label))
+                .then(() => expect(store.getActions()).toEqual([]));
+        });
+
         it(`should create ${bookingActionTypes.GET_BOOKING_SUCCESS} when viewing of booking succeeded`, () => {
             nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(200, booking);
             const expectedRequestAction = {
