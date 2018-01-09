@@ -207,6 +207,24 @@ describe('bookingActions', () => {
                 .then(() => expect(store.getActions()).toEqual([]));
         });
 
+        it(`should not create ${bookingActionTypes.GET_BOOKINGS_REQUEST} when bookings are already being fetched`, () => {
+
+            const type = 'current';
+            const page = 1;
+            store = mockStore({
+                bookings: {
+                    [pluralToSingularMapping[label]]: {
+                        isFetching: true,
+                    },
+                },
+                auth: {
+                    token: 'j.w.t',
+                },
+            });
+            return store.dispatch(bookingActions.getBookingsIfNeeded(pluralToSingularMapping[label], type, page))
+                .then(() => expect(store.getActions()).toEqual([]));
+        });
+
         it(`should not create ${bookingActionTypes.DELETE_BOOKING_REQUEST} when booking is already being deleted`, () => {
             store = mockStore({
                 bookings: {
