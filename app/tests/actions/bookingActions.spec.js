@@ -192,6 +192,21 @@ describe('bookingActions', () => {
                 .then(() => expect(store.getActions()).toEqual([]));
         });
 
+        it(`should not create ${bookingActionTypes.GET_BOOKING_REQUEST} when booking is already being fetched`, () => {
+            store = mockStore({
+                bookings: {
+                    [pluralToSingularMapping[label]]: {
+                        isFetching: true,
+                    },
+                },
+                auth: {
+                    token: 'j.w.t',
+                },
+            });
+            return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                .then(() => expect(store.getActions()).toEqual([]));
+        });
+
         it(`should not create ${bookingActionTypes.DELETE_BOOKING_REQUEST} when booking is already being deleted`, () => {
             store = mockStore({
                 bookings: {
