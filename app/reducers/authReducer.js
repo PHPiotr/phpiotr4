@@ -9,6 +9,7 @@ const initialState = {
     activationFromEmail: '',
     registration: {},
     registrationErrorMessage: '',
+    registrationErrors: {},
     isRegistering: false,
     registrationSuccessMessage: '',
     isActivating: false,
@@ -57,7 +58,8 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 isRegistering: false,
-                registrationErrorMessage: action.payload,
+                registrationErrorMessage: action.payload.error || '',
+                registrationErrors: action.payload.errors || {},
             };
         case authActionTypes.ACTIVATION_REQUEST:
             return {...state, isActivating: true};
