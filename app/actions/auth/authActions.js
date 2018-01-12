@@ -30,11 +30,11 @@ const registration = () => {
                 }
             })
             .then((json) => {
-                if (!json.success) {
-                    throw Error(json.message || 'Something went wrong');
+                if (json.error && json.errors) {
+                    dispatch(registrationFailure({error: json.error, errors: json.errors}));
                 }
             })
-            .catch(e => dispatch(registrationFailure(e.message)));
+            .catch(error => dispatch(registrationFailure({error: error.message, errors: {}})));
     };
 };
 const registrationRequest = () => ({type: authActionTypes.REGISTRATION_REQUEST});

@@ -19,6 +19,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField
+                        error={auth.registrationErrors.username && !!auth.registrationErrors.username.message}
                         helperText={'Login'}
                         id={'username'}
                         type={'text'}
@@ -28,6 +29,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.username || ''}
                     />
                     <TextField
+                        error={auth.registrationErrors.email && !!auth.registrationErrors.email.message}
                         helperText={'Email'}
                         id={'email'}
                         type={'email'}
@@ -37,6 +39,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.email || ''}
                     />
                     <TextField
+                        error={auth.registrationErrors.password && !!auth.registrationErrors.password.message}
                         helperText={'Password'}
                         id={'password'}
                         type={'password'}
@@ -46,6 +49,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.password || ''}
                     />
                     <TextField
+                        error={auth.registrationErrors.repeatPassword && !!auth.registrationErrors.repeatPassword.message}
                         helperText={'Confirm password'}
                         id={'repeat-password'}
                         type={'password'}

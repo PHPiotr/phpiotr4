@@ -9,6 +9,7 @@ const initialState = {
     activationFromEmail: '',
     registration: {},
     registrationErrorMessage: '',
+    registrationErrors: {},
     isRegistering: false,
     registrationSuccessMessage: '',
     isActivating: false,
@@ -57,7 +58,8 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 isRegistering: false,
-                registrationErrorMessage: action.payload,
+                registrationErrorMessage: action.payload.error || '',
+                registrationErrors: action.payload.errors || {},
             };
         case authActionTypes.ACTIVATION_REQUEST:
             return {...state, isActivating: true};
@@ -90,7 +92,12 @@ const auth = (state = initialState, action) => {
         case authActionTypes.ON_CHANGE_LOGIN_FIELD:
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
         case authActionTypes.ON_FOCUS_REGISTRATION_FIELD:
-            return {...state, registrationErrorMessage: '', registrationSuccessMessage: ''};
+            return {
+                ...state,
+                registrationErrorMessage: '',
+                registrationSuccessMessage: '',
+                registrationErrors: {...state.registrationErrors, [action.fieldName]: {}},
+            };
         case authActionTypes.ON_CHANGE_REGISTRATION_FIELD:
             return {
                 ...state,
