@@ -127,3 +127,6 @@ export const setActivationData = () => {
     const {host, hostname, protocol} = location;
     return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
 };
+
+export const setRegistrationErrorMessage = payload => ({type: authActionTypes.SET_REGISTRATION_ERROR_MESSAGE, payload});
+export const setRegistrationSuccessMessage = payload => ({type: authActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE, payload});

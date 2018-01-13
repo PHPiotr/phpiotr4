@@ -9,7 +9,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
         return null;
     }
 
-    const {registration, registrationSuccessMessage, registrationErrorMessage, registrationErrors} = auth;
+    const {registration, registrationErrors} = auth;
     const usernameErrorMessage = (registrationErrors.username && registrationErrors.username.message)
         ? registrationErrors.username.message : '';
     const emailErrorMessage = (registrationErrors.email && registrationErrors.email.message)
@@ -19,10 +19,9 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
     const repeatPasswordErrorMessage = (registrationErrors.repeatPassword && registrationErrors.repeatPassword.message)
         ? registrationErrors.repeatPassword.message : '';
 
-    const headline = registrationErrorMessage || registrationSuccessMessage || 'User registration';
     return (
         <Fragment>
-            <Typography style={{padding: '23px'}} type="headline">{headline}</Typography>
+            <Typography style={{padding: '23px'}} type="headline">User registration</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
                 <FormControl component="fieldset">
                     <TextField

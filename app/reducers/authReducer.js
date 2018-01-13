@@ -105,6 +105,10 @@ const auth = (state = initialState, action) => {
                 registrationSuccessMessage: '',
                 registration: {...state.registration, [action.fieldName]: action.fieldValue},
             };
+        case authActionTypes.SET_REGISTRATION_ERROR_MESSAGE:
+            return {...state, registrationErrorMessage: action.payload};
+        case authActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE:
+            return {...state, registrationSuccessMessage: action.payload};
         case authActionTypes.SET_ACTIVATION_DATA:
             return {
                 ...state,
