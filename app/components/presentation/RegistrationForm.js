@@ -8,7 +8,15 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
         return null;
     }
 
-    const {registration, registrationSuccessMessage, registrationErrorMessage} = auth;
+    const {registration, registrationSuccessMessage, registrationErrorMessage, registrationErrors} = auth;
+    const usernameErrorMessage = (registrationErrors.username && registrationErrors.username.message)
+        ? registrationErrors.username.message : '';
+    const emailErrorMessage = (registrationErrors.email && registrationErrors.email.message)
+        ? registrationErrors.email.message : '';
+    const passwordErrorMessage = (registrationErrors.password && registrationErrors.password.message)
+        ? registrationErrors.password.message : '';
+    const repeatPasswordErrorMessage = (registrationErrors.repeatPassword && registrationErrors.repeatPassword.message)
+        ? registrationErrors.repeatPassword.message : '';
 
     return (
         <div>
@@ -19,8 +27,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField
-                        error={auth.registrationErrors.username && !!auth.registrationErrors.username.message}
-                        helperText={'Login'}
+                        error={!!usernameErrorMessage}
+                        helperText={`Login: ${usernameErrorMessage}`}
                         id={'username'}
                         type={'text'}
                         name={'username'}
@@ -29,8 +37,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.username || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.email && !!auth.registrationErrors.email.message}
-                        helperText={'Email'}
+                        error={!!emailErrorMessage}
+                        helperText={`Email: ${emailErrorMessage}`}
                         id={'email'}
                         type={'email'}
                         name={'email'}
@@ -39,8 +47,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.email || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.password && !!auth.registrationErrors.password.message}
-                        helperText={'Password'}
+                        error={!!passwordErrorMessage}
+                        helperText={`Password: ${passwordErrorMessage}`}
                         id={'password'}
                         type={'password'}
                         name={'password'}
@@ -49,8 +57,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.password || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.repeatPassword && !!auth.registrationErrors.repeatPassword.message}
-                        helperText={'Confirm password'}
+                        error={!!repeatPasswordErrorMessage}
+                        helperText={`Confirm password: ${repeatPasswordErrorMessage}`}
                         id={'repeat-password'}
                         type={'password'}
                         name={'repeatPassword'}
