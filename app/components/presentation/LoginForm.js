@@ -3,18 +3,16 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
+import Typography from 'material-ui/Typography';
 
-const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSuccessMessage, activationErrorMessage}, handleFocus, handleChange, handleSubmit}) => {
+const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
         return null;
     }
 
     return (
         <Fragment>
-            <div>
-                {activationSuccessMessage}
-                {activationErrorMessage}
-            </div>
+            <Typography style={{padding: '23px'}} type="headline">Sign in</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     {loginErrorMessage}

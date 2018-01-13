@@ -21,7 +21,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
 
     return (
         <Fragment>
-            <Typography style={{padding: '23px'}} type="headline">User registration</Typography>
+            <Typography style={{padding: '23px'}} type="headline">Sign up</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
                 <FormControl component="fieldset">
                     <TextField
