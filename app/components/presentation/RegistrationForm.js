@@ -1,26 +1,33 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 
 const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
     if (auth.isLoggedIn || auth.isRegistering || auth.isActivating) {
         return null;
     }
 
-    const {registration, registrationSuccessMessage, registrationErrorMessage} = auth;
+    const {registration, registrationSuccessMessage, registrationErrorMessage, registrationErrors} = auth;
+    const usernameErrorMessage = (registrationErrors.username && registrationErrors.username.message)
+        ? registrationErrors.username.message : '';
+    const emailErrorMessage = (registrationErrors.email && registrationErrors.email.message)
+        ? registrationErrors.email.message : '';
+    const passwordErrorMessage = (registrationErrors.password && registrationErrors.password.message)
+        ? registrationErrors.password.message : '';
+    const repeatPasswordErrorMessage = (registrationErrors.repeatPassword && registrationErrors.repeatPassword.message)
+        ? registrationErrors.repeatPassword.message : '';
 
+    const headline = registrationErrorMessage || registrationSuccessMessage || 'User registration';
     return (
-        <div>
-            <div>
-                {registrationSuccessMessage}
-                {registrationErrorMessage}
-            </div>
-            <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+        <Fragment>
+            <Typography style={{padding: '23px'}} type="headline">{headline}</Typography>
+            <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
                 <FormControl component="fieldset">
                     <TextField
-                        error={auth.registrationErrors.username && !!auth.registrationErrors.username.message}
-                        helperText={'Login'}
+                        error={!!usernameErrorMessage}
+                        helperText={`Login: ${usernameErrorMessage}`}
                         id={'username'}
                         type={'text'}
                         name={'username'}
@@ -29,8 +36,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.username || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.email && !!auth.registrationErrors.email.message}
-                        helperText={'Email'}
+                        error={!!emailErrorMessage}
+                        helperText={`Email: ${emailErrorMessage}`}
                         id={'email'}
                         type={'email'}
                         name={'email'}
@@ -39,8 +46,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.email || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.password && !!auth.registrationErrors.password.message}
-                        helperText={'Password'}
+                        error={!!passwordErrorMessage}
+                        helperText={`Password: ${passwordErrorMessage}`}
                         id={'password'}
                         type={'password'}
                         name={'password'}
@@ -49,8 +56,8 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                         value={registration.password || ''}
                     />
                     <TextField
-                        error={auth.registrationErrors.repeatPassword && !!auth.registrationErrors.repeatPassword.message}
-                        helperText={'Confirm password'}
+                        error={!!repeatPasswordErrorMessage}
+                        helperText={`Confirm password: ${repeatPasswordErrorMessage}`}
                         id={'repeat-password'}
                         type={'password'}
                         name={'repeatPassword'}
@@ -61,7 +68,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                     <Button style={{marginTop: '20px'}} raised color="primary" type="submit">Register</Button>
                 </FormControl>
             </form>
-        </div>
+        </Fragment>
     );
 };
 
