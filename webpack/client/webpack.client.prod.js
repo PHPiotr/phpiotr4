@@ -24,7 +24,7 @@ module.exports = merge(common, {
             if (chunk.name) {
                 return chunk.name;
             }
-            return chunk.modules.map(m => path.relative(m.context, m.request)).join('_');
+            return chunk.mapModules(m => path.relative(m.context, m.request)).join('_');
         }),
         new NameAllModulesPlugin(),
         new ExtractCssChunks({
