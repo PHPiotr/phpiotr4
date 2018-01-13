@@ -24,7 +24,7 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
                 {registrationSuccessMessage}
                 {registrationErrorMessage}
             </div>
-            <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+            <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
                 <FormControl component="fieldset">
                     <TextField
                         error={!!usernameErrorMessage}
