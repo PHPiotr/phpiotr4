@@ -3,23 +3,26 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
+import Typography from 'material-ui/Typography';
 
-const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSuccessMessage, activationErrorMessage}, handleFocus, handleChange, handleSubmit}) => {
+const LoginForm = ({auth: {isLoggedIn, login, loginErrors}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
         return null;
     }
 
+    const usernameErrorMessage = (loginErrors.username && loginErrors.username.message)
+        ? loginErrors.username.message : '';
+    const passwordErrorMessage = (loginErrors.password && loginErrors.password.message)
+        ? loginErrors.password.message : '';
+
     return (
         <Fragment>
-            <div>
-                {activationSuccessMessage}
-                {activationErrorMessage}
-            </div>
+            <Typography style={{padding: '23px'}} type="headline">Sign in</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
-                    {loginErrorMessage}
                     <TextField
-                        helperText={'Login'}
+                        error={!!usernameErrorMessage}
+                        helperText={`Login: ${usernameErrorMessage}`}
                         id={'username'}
                         type={'text'}
                         name={'username'}
@@ -28,7 +31,8 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login, activationSucce
                         value={login.username || ''}
                     />
                     <TextField
-                        helperText={'Password'}
+                        error={!!passwordErrorMessage}
+                        helperText={`Password: ${passwordErrorMessage}`}
                         id={'password'}
                         type={'password'}
                         name={'password'}

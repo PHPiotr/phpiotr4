@@ -1,24 +1,52 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {loginIfNeeded, change, focus} from '../../actions/auth/authActions';
+import * as authActions from '../../actions/auth/authActions';
 import LoginForm from '../presentation/LoginForm';
 import {LinearProgress} from 'material-ui/Progress';
 import NoAuth from './NoAuth';
 import {Cookies} from 'react-cookie';
+import MessageBar from '../presentation/MessageBar';
 
-const Login = props => props.auth.isLoggingIn ? <LinearProgress/> : <LoginForm {...props}/>;
+class Login extends Component {
+    onClose = () => {
+        if (this.props.auth.loginErrorMessage) {
+            this.props.onCloseLoginErrorMessageBar();
+        }
+        if (this.props.auth.activationErrorMessage) {
+            this.props.onCloseActivationErrorMessageBar();
+        }
+        if (this.props.auth.activationSuccessMessage) {
+            this.props.onCloseSuccessMessageBar();
+        }
+    };
+    render() {
+        if (this.props.auth.isLoggingIn) {
+            return <LinearProgress/>;
+        }
+        return (
+            <Fragment>
+                <LoginForm {...this.props}/>
+                <MessageBar
+                    open={!!(this.props.auth.loginErrorMessage || this.props.auth.activationErrorMessage || this.props.auth.activationSuccessMessage)}
+                    message={this.props.auth.loginErrorMessage || this.props.auth.activationErrorMessage || this.props.auth.activationSuccessMessage}
+                    onClose={this.onClose}
+                />
+            </Fragment>
+        );
+    }
+}
 
 const mapStateToProps = state => ({auth: state.auth});
 const mapDispatchToProps = (dispatch, {history}) => ({
     handleFocus(event) {
-        dispatch(focus(event.target.name, event.target.value));
+        dispatch(authActions.focus(event.target.name, event.target.value));
     },
     handleChange(event) {
-        dispatch(change(event.target.name, event.target.value));
+        dispatch(authActions.change(event.target.name, event.target.value));
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(loginIfNeeded())
+        dispatch(authActions.loginIfNeeded())
             .then(({payload}) => {
                 const {token, expiresIn} = (payload || {});
                 if (token && expiresIn) {
@@ -31,6 +59,15 @@ const mapDispatchToProps = (dispatch, {history}) => ({
                     history.push('/');
                 }
             });
+    },
+    onCloseLoginErrorMessageBar() {
+        authActions.setLoginErrorMessage('');
+    },
+    onCloseActivationErrorMessageBar() {
+        authActions.setActivationErrorMessage('');
+    },
+    onCloseSuccessMessageBar() {
+        authActions.setActivationSuccessMessage('');
     },
 });
 
