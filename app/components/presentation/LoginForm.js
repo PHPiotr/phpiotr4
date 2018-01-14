@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
 import Typography from 'material-ui/Typography';
 
-const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login}, handleFocus, handleChange, handleSubmit}) => {
+const LoginForm = ({auth: {isLoggedIn, login}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
         return null;
     }
@@ -15,7 +15,6 @@ const LoginForm = ({auth: {isLoggedIn, loginErrorMessage, login}, handleFocus, h
             <Typography style={{padding: '23px'}} type="headline">Sign in</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
-                    {loginErrorMessage}
                     <TextField
                         helperText={'Login'}
                         id={'username'}

@@ -130,3 +130,6 @@ export const setActivationData = () => {
 
 export const setRegistrationErrorMessage = payload => ({type: authActionTypes.SET_REGISTRATION_ERROR_MESSAGE, payload});
 export const setRegistrationSuccessMessage = payload => ({type: authActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE, payload});
+export const setLoginErrorMessage = payload => ({type: authActionTypes.SET_LOGIN_ERROR_MESSAGE, payload});
+export const setActivationErrorMessage = payload => ({type: authActionTypes.SET_ACTIVATION_ERROR_MESSAGE, payload});
+export const setActivationSuccessMessage = payload => ({type: authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE, payload});
