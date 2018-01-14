@@ -56,14 +56,14 @@ const logUserIn = ({username, password}) => {
         return getAuthLogin(username, password)
             .then(response => response.json())
             .then(json => json.success === false
-                ? dispatch(loginFailure({message: json.msg}))
+                ? dispatch(loginFailure({message: json.error, errors: json.errors}))
                 : dispatch(loginSuccess(json)))
-            .catch(error => dispatch(loginFailure(error)));
+            .catch(error => dispatch(loginFailure({message: error.message, errors: {}})));
     };
 };
 const loginRequest = () => ({type: authActionTypes.LOGIN_REQUEST});
 const loginSuccess = ({token, expiresIn}) => ({type: authActionTypes.LOGIN_SUCCESS, payload: {token, expiresIn}});
-const loginFailure = ({message, errors}) => ({type: authActionTypes.LOGIN_FAILURE, loginErrorMessage: message, loginErrors: errors});
+const loginFailure = payload => ({type: authActionTypes.LOGIN_FAILURE, payload});
 
 export const change = (fieldName, fieldValue, type = authActionTypes.ON_CHANGE_LOGIN_FIELD) => ({
     type,

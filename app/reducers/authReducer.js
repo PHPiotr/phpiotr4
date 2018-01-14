@@ -1,8 +1,12 @@
 import * as authActionTypes from '../actions/auth/authActionTypes';
 
 const initialState = {
-    login: {},
+    login: {
+        username: '',
+        password: '',
+    },
     loginErrorMessage: '',
+    loginErrors: {},
     isLoggedIn: false,
     isLoggingIn: false,
     activationUrl: '',
@@ -41,9 +45,10 @@ const auth = (state = initialState, action) => {
         case authActionTypes.LOGIN_FAILURE:
             return {
                 ...state,
-                loginErrorMessage: action.loginErrorMessage,
+                loginErrorMessage: action.payload.message,
                 isLoggedIn: false,
                 isLoggingIn: false,
+                loginErrors: action.payload.errors || {},
             };
         case authActionTypes.REGISTRATION_REQUEST:
             return {...state, isRegistering: true};
