@@ -93,7 +93,11 @@ const auth = (state = initialState, action) => {
         case authActionTypes.LOGOUT:
             return {...state, ...initialState};
         case authActionTypes.ON_FOCUS_LOGIN_FIELD:
-            return {...state, loginErrorMessage: ''};
+            return {
+                ...state,
+                loginErrorMessage: '',
+                loginErrors: {...state.loginErrors, [action.fieldName]: {}},
+            };
         case authActionTypes.ON_CHANGE_LOGIN_FIELD:
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
         case authActionTypes.ON_FOCUS_REGISTRATION_FIELD:
