@@ -5,10 +5,15 @@ import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
 import Typography from 'material-ui/Typography';
 
-const LoginForm = ({auth: {isLoggedIn, login}, handleFocus, handleChange, handleSubmit}) => {
+const LoginForm = ({auth: {isLoggedIn, login, loginErrors}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
         return null;
     }
+
+    const usernameErrorMessage = (loginErrors.username && loginErrors.username.message)
+        ? loginErrors.username.message : '';
+    const passwordErrorMessage = (loginErrors.password && loginErrors.password.message)
+        ? loginErrors.password.message : '';
 
     return (
         <Fragment>
@@ -16,7 +21,8 @@ const LoginForm = ({auth: {isLoggedIn, login}, handleFocus, handleChange, handle
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField
-                        helperText={'Login'}
+                        error={!!usernameErrorMessage}
+                        helperText={`Login: ${usernameErrorMessage}`}
                         id={'username'}
                         type={'text'}
                         name={'username'}
@@ -25,7 +31,8 @@ const LoginForm = ({auth: {isLoggedIn, login}, handleFocus, handleChange, handle
                         value={login.username || ''}
                     />
                     <TextField
-                        helperText={'Password'}
+                        error={!!passwordErrorMessage}
+                        helperText={`Password: ${passwordErrorMessage}`}
                         id={'password'}
                         type={'password'}
                         name={'password'}
