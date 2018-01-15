@@ -12,7 +12,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
             <FormControl component="fieldset">
                 <TextField
                     error={plane.errors.confirmation_code && !!plane.errors.confirmation_code.message}
-                    helperText={'Code'}
+                    helperText={`Code: ${(plane.errors.confirmation_code && !!plane.errors.confirmation_code.message) ? plane.errors.confirmation_code.message : ''}`}
                     id={'confirmation-code'}
                     type={'text'}
                     name={'confirmation_code'}
@@ -22,7 +22,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.from && !!plane.errors.from.message}
-                    helperText={'From'}
+                    helperText={`From: ${(plane.errors.from && !!plane.errors.from.message) ? plane.errors.from.message : ''}`}
                     id={'from'}
                     type={'text'}
                     name={'from'}
@@ -32,7 +32,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.to && !!plane.errors.to.message}
-                    helperText={'To'}
+                    helperText={`To: ${(plane.errors.to && !!plane.errors.to.message) ? plane.errors.to.message : ''}`}
                     id={'to'}
                     type={'text'}
                     name={'to'}
@@ -42,7 +42,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.departure_date && !!plane.errors.departure_date.message}
-                    helperText={'Departure date'}
+                    helperText={`Departure date: ${(plane.errors.departure_date && !!plane.errors.departure_date.message) ? plane.errors.departure_date.message : ''}`}
                     id={'departure-date'}
                     type={'date'}
                     name={'departure_date'}
@@ -52,7 +52,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.departure_time && !!plane.errors.departure_time.message}
-                    helperText={'Departure time'}
+                    helperText={`Departure time: ${(plane.errors.departure_time && !!plane.errors.departure_time.message) ? plane.errors.departure_time.message : ''}`}
                     id={'departure-time'}
                     type={'time'}
                     name={'departure_time'}
@@ -62,7 +62,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.arrival_time && !!plane.errors.arrival_time.message}
-                    helperText={'Arrival time'}
+                    helperText={`Arrival time: ${(plane.errors.arrival_time && !!plane.errors.arrival_time.message) ? plane.errors.arrival_time.message : ''}`}
                     id={'arrival-time'}
                     type={'time'}
                     name={'arrival_time'}
@@ -72,7 +72,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.seat && !!plane.errors.seat.message}
-                    helperText={'Seat'}
+                    helperText={`Seat: ${(plane.errors.seat && !!plane.errors.seat.message) ? plane.errors.seat.message : ''}`}
                     id={'seat'}
                     type={'text'}
                     name={'seat'}
@@ -82,7 +82,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <TextField
                     error={plane.errors.price && !!plane.errors.price.message}
-                    helperText={'Price'}
+                    helperText={`Price: ${(plane.errors.price && !!plane.errors.price.message) ? plane.errors.price.message : ''}`}
                     id={'price'}
                     type={'text'}
                     name={'price'}
@@ -92,7 +92,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 />
                 <FormGroup>
                     <FormControlLabel
-                        label={'Is checked-in?'}
+                        label={`Is checked-in? ${(plane.errors.checked_in && !!plane.errors.checked_in.message) ? plane.errors.checked_in.message : ''}`}
                         control={
                             <Checkbox
                                 error={plane.errors.checked_in && !!plane.errors.checked_in.message}
@@ -107,7 +107,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 </FormGroup>
                 <FormGroup>
                     <FormControlLabel
-                        label={'Is return?'}
+                        label={`Is return? ${(plane.errors.is_return && !!plane.errors.is_return.message) ? plane.errors.is_return.message : ''}`}
                         control={
                             <Checkbox
                                 error={plane.errors.is_return && !!plane.errors.is_return.message}
@@ -123,7 +123,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                 {!!plane.current.is_return && [
                     <TextField
                         error={plane.errors.return_departure_date && !!plane.errors.return_departure_date.message}
-                        helperText={'Return departure date'}
+                        helperText={`Return departure date: ${(plane.errors.return_departure_date && !!plane.errors.return_departure_date.message) ? plane.errors.return_departure_date.message : ''}`}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
@@ -134,7 +134,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                     />,
                     <TextField
                         error={plane.errors.return_departure_time && !!plane.errors.return_departure_time.message}
-                        helperText={'Return departure time'}
+                        helperText={`Return departure time: ${(plane.errors.return_departure_time && !!plane.errors.return_departure_time.message) ? plane.errors.return_departure_time.message : ''}`}
                         id={'return-departure-time'}
                         type={'time'}
                         name={'return_departure_time'}
@@ -145,7 +145,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                     />,
                     <TextField
                         error={plane.errors.return_arrival_time && !!plane.errors.return_arrival_time.message}
-                        helperText={'Return arrival time'}
+                        helperText={`Return arrival time: ${(plane.errors.return_arrival_time && !!plane.errors.return_arrival_time.message) ? plane.errors.return_arrival_time.message : ''}`}
                         id={'return-arrival-time'}
                         type={'time'}
                         name={'return_arrival_time'}
@@ -156,7 +156,7 @@ const PlaneForm = ({handleSubmit, handleChange, handleFocus, plane}) => {
                     />,
                     <TextField
                         error={plane.errors.return_seat && !!plane.errors.return_seat.message}
-                        helperText={'Return seat'}
+                        helperText={`Return seat: ${(plane.errors.return_seat && !!plane.errors.return_seat.message) ? plane.errors.return_seat.message : ''}`}
                         id={'return_seat'}
                         type={'text'}
                         name={'return_seat'}
