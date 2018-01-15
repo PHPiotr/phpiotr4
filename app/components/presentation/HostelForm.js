@@ -11,7 +11,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
             <FormControl component="fieldset">
                 <TextField
                     error={hostel.errors.booking_number && !!hostel.errors.booking_number.message}
-                    helperText={'Code'}
+                    helperText={`Code: ${(hostel.errors.booking_number && !!hostel.errors.booking_number.message) ? hostel.errors.booking_number.message : ''}`}
                     id={'booking-number'}
                     type={'text'}
                     name={'booking_number'}
@@ -21,7 +21,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                 />
                 <TextField
                     error={hostel.errors.hostel_name && !!hostel.errors.hostel_name.message}
-                    helperText={'Hostel name'}
+                    helperText={`Hostel name: ${(hostel.errors.hostel_name && !!hostel.errors.hostel_name.message) ? hostel.errors.hostel_name.message : ''}`}
                     id={'hostel-name'}
                     type={'text'}
                     name={'hostel_name'}
@@ -31,7 +31,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                 />
                 <TextField
                     error={hostel.errors.hostel_address && !!hostel.errors.hostel_address.message}
-                    helperText={'Hostel address'}
+                    helperText={`Hostel address: ${(hostel.errors.hostel_address && !!hostel.errors.hostel_address.message) ? hostel.errors.hostel_address.message : ''}`}
                     id={'hostel-address'}
                     type={'text'}
                     name={'hostel_address'}
@@ -41,7 +41,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                 />
                 <TextField
                     error={hostel.errors.checkin_date && !!hostel.errors.checkin_date.message}
-                    helperText={'Check-in date'}
+                    helperText={`Check-in date: ${(hostel.errors.checkin_date && !!hostel.errors.checkin_date.message) ? hostel.errors.checkin_date.message : ''}`}
                     id={'checkin-date'}
                     type={'date'}
                     name={'checkin_date'}
@@ -51,7 +51,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                 />
                 <TextField
                     error={hostel.errors.checkout_date && !!hostel.errors.checkout_date.message}
-                    helperText={'Check-out date'}
+                    helperText={`Check-out date: ${(hostel.errors.checkout_date && !!hostel.errors.checkout_date.message) ? hostel.errors.checkout_date.message : ''}`}
                     id={'checkout-date'}
                     type={'date'}
                     name={'checkout_date'}
@@ -61,7 +61,7 @@ const HostelForm = ({handleSubmit, handleChange, handleFocus, hostel}) => {
                 />
                 <TextField
                     error={hostel.errors.price && !!hostel.errors.price.message}
-                    helperText={'Price'}
+                    helperText={`Price: ${(hostel.errors.price && !!hostel.errors.price.message) ? hostel.errors.price.message : ''}`}
                     id={'price'}
                     type={'text'}
                     name={'price'}
