@@ -12,7 +12,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
             <FormControl component="fieldset">
                 <TextField
                     error={train.errors.from && !!train.errors.from.message}
-                    helperText={'From'}
+                    helperText={`From: ${(train.errors.from && !!train.errors.from.message) ? train.errors.from.message : ''}`}
                     id={'from'}
                     type={'text'}
                     name={'from'}
@@ -22,7 +22,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 />
                 <TextField
                     error={train.errors.to && !!train.errors.to.message}
-                    helperText={'To'}
+                    helperText={`To: ${(train.errors.to && !!train.errors.to.message) ? train.errors.to.message : ''}`}
                     id={'to'}
                     type={'text'}
                     name={'to'}
@@ -32,7 +32,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 />
                 <TextField
                     error={train.errors.departure_date && !!train.errors.departure_date.message}
-                    helperText={'Departure date'}
+                    helperText={`Departure date: ${(train.errors.departure_date && !!train.errors.departure_date.message) ? train.errors.departure_date.message : ''}`}
                     id={'departure-date'}
                     type={'date'}
                     name={'departure_date'}
@@ -42,7 +42,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 />
                 <TextField
                     error={train.errors.price && !!train.errors.price.message}
-                    helperText={'Price'}
+                    helperText={`Price: ${(train.errors.price && !!train.errors.price.message) ? train.errors.price.message : ''}`}
                     id={'price'}
                     type={'text'}
                     name={'price'}
@@ -52,7 +52,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 />
                 <FormGroup>
                     <FormControlLabel
-                        label={'Is return?'}
+                        label={`Is return? ${(train.errors.is_return && !!train.errors.is_return.message) ? train.errors.is_return.message : ''}`}
                         control={
                             <Checkbox
                                 error={train.errors.is_return && !!train.errors.is_return.message}
@@ -68,7 +68,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 {!!train.current.is_return && (
                     <TextField
                         error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
-                        helperText={'Return departure date'}
+                        helperText={`Return departure date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
