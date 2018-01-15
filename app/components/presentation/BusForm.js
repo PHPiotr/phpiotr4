@@ -12,7 +12,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
             <FormControl component="fieldset">
                 <TextField
                     error={bus.errors.booking_number && !!bus.errors.booking_number.message}
-                    helperText={'Code'}
+                    helperText={`Code: ${(bus.errors.booking_number && !!bus.errors.booking_number.message) ? bus.errors.booking_number.message : ''}`}
                     id={'booking-number'}
                     type={'text'}
                     name={'booking_number'}
@@ -22,7 +22,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <TextField
                     error={bus.errors.from && !!bus.errors.from.message}
-                    helperText={'From'}
+                    helperText={`From: ${(bus.errors.from && !!bus.errors.from.message) ? bus.errors.from.message : ''}`}
                     id={'from'}
                     type={'text'}
                     name={'from'}
@@ -32,7 +32,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <TextField
                     error={bus.errors.to && !!bus.errors.to.message}
-                    helperText={'To'}
+                    helperText={`To: ${(bus.errors.to && !!bus.errors.to.message) ? bus.errors.to.message : ''}`}
                     id={'to'}
                     type={'text'}
                     name={'to'}
@@ -42,7 +42,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <TextField
                     error={bus.errors.departure_date && !!bus.errors.departure_date.message}
-                    helperText={'Departure date'}
+                    helperText={`Departure date: ${(bus.errors.departure_date && !!bus.errors.departure_date.message) ? bus.errors.departure_date.message : ''}`}
                     id={'departure-date'}
                     type={'date'}
                     name={'departure_date'}
@@ -52,7 +52,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <TextField
                     error={bus.errors.departure_time && !!bus.errors.departure_time.message}
-                    helperText={'Departure time'}
+                    helperText={`Departure time: ${(bus.errors.departure_time && !!bus.errors.departure_time.message) ? bus.errors.departure_time.message : ''}`}
                     id={'departure-time'}
                     type={'time'}
                     name={'departure_time'}
@@ -62,7 +62,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <TextField
                     error={bus.errors.price && !!bus.errors.price.message}
-                    helperText={'Price'}
+                    helperText={`Price: ${(bus.errors.price && !!bus.errors.price.message) ? bus.errors.price.message : ''}`}
                     id={'price'}
                     type={'text'}
                     name={'price'}
@@ -72,7 +72,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 />
                 <FormGroup>
                     <FormControlLabel
-                        label={'Is return?'}
+                        label={`Is return? ${(bus.errors.is_return && !!bus.errors.is_return.message) ? bus.errors.is_return.message : ''}`}
                         control={
                             <Checkbox
                                 error={bus.errors.is_return && !!bus.errors.is_return.message}
@@ -88,7 +88,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                 {!!bus.current.is_return && [
                     <TextField
                         error={bus.errors.return_departure_date && !!bus.errors.return_departure_date.message}
-                        helperText={'Return departure date'}
+                        helperText={`Return departure date: ${(bus.errors.return_departure_date && !!bus.errors.return_departure_date.message) ? bus.errors.return_departure_date.message : ''}`}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
@@ -99,7 +99,7 @@ const BusForm = ({handleSubmit, handleChange, handleFocus, bus}) => {
                     />,
                     <TextField
                         error={bus.errors.return_departure_time && !!bus.errors.return_departure_time.message}
-                        helperText={'Return departure time'}
+                        helperText={`Return departure time: ${(bus.errors.return_departure_time && !!bus.errors.return_departure_time.message) ? bus.errors.return_departure_time.message : ''}`}
                         id={'return-departure-time'}
                         type={'time'}
                         name={'return_departure_time'}
