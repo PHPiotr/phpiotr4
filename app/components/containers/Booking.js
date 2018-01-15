@@ -6,7 +6,6 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import Auth from './Auth';
 import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
-import Typography from 'material-ui/Typography';
 import {LinearProgress} from 'material-ui/Progress';
 
 const getDisplayName = WrappedComponent => WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -28,17 +27,17 @@ const booking = (WrappedComponent) => {
             if (this.props[label].isDeleting) {
                 return <LinearProgress/>;
             }
-            if (this.props[label].code >= 400) {
-                return <Typography style={{padding: '23px'}} type="headline">{`${this.props[label].code}: ${this.props[label].message}`}</Typography>;
-            }
             return (
                 <Fragment>
-                    {[label].message}
                     <WrappedComponent {...this.props} />
                     <MessageBar
                         open={this.props.isAdded}
                         message="Saved"
                         onClose={this.props.onClose}
+                    />
+                    <MessageBar
+                        open={!!this.props[label].message}
+                        message={this.props[label].message}
                     />
                     <BookingDeleteDialog/>
                 </Fragment>
