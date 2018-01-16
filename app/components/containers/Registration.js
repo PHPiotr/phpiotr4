@@ -6,6 +6,7 @@ import RegistrationForm from '../presentation/RegistrationForm';
 import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
 import NoAuth from './NoAuth';
+import {setAppBarTitle} from '../../actions/app/appActions';
 
 class Registration extends Component {
     onClose = () => {
@@ -18,6 +19,7 @@ class Registration extends Component {
     };
     componentDidMount() {
         this.props.activateUserIfNeeded();
+        this.props.dispatch(setAppBarTitle('Sign up'));
     }
     render() {
         if (this.props.auth.isRegistering) {

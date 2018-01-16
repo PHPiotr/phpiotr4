@@ -6,8 +6,12 @@ import {LinearProgress} from 'material-ui/Progress';
 import NoAuth from './NoAuth';
 import {Cookies} from 'react-cookie';
 import MessageBar from '../presentation/MessageBar';
+import {setAppBarTitle} from '../../actions/app/appActions';
 
 class Login extends Component {
+    componentDidMount() {
+        this.props.dispatch(setAppBarTitle('Sign in'));
+    }
     onClose = () => {
         if (this.props.auth.loginErrorMessage) {
             this.props.onCloseLoginErrorMessageBar();
