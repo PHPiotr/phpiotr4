@@ -68,7 +68,7 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                 {!!train.current.is_return && (
                     <TextField
                         error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
-                        helperText={`Return departure date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}
+                        helperText={`Return date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}
                         id={'return-departure-date'}
                         type={'date'}
                         name={'return_departure_date'}
