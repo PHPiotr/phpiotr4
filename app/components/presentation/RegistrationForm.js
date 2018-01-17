@@ -1,8 +1,7 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
-import Typography from 'material-ui/Typography';
 
 const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
     if (auth.isLoggedIn || auth.isRegistering || auth.isActivating) {
@@ -20,54 +19,51 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
         ? registrationErrors.repeatPassword.message : '';
 
     return (
-        <Fragment>
-            <Typography style={{padding: '23px'}} type="headline">Sign up</Typography>
-            <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
-                <FormControl component="fieldset">
-                    <TextField
-                        error={!!usernameErrorMessage}
-                        helperText={`Login: ${usernameErrorMessage}`}
-                        id={'username'}
-                        type={'text'}
-                        name={'username'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={registration.username || ''}
-                    />
-                    <TextField
-                        error={!!emailErrorMessage}
-                        helperText={`Email: ${emailErrorMessage}`}
-                        id={'email'}
-                        type={'email'}
-                        name={'email'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={registration.email || ''}
-                    />
-                    <TextField
-                        error={!!passwordErrorMessage}
-                        helperText={`Password: ${passwordErrorMessage}`}
-                        id={'password'}
-                        type={'password'}
-                        name={'password'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={registration.password || ''}
-                    />
-                    <TextField
-                        error={!!repeatPasswordErrorMessage}
-                        helperText={`Confirm password: ${repeatPasswordErrorMessage}`}
-                        id={'repeat-password'}
-                        type={'password'}
-                        name={'repeatPassword'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={registration.repeatPassword || ''}
-                    />
-                    <Button style={{marginTop: '20px'}} raised color="primary" type="submit">Register</Button>
-                </FormControl>
-            </form>
-        </Fragment>
+        <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
+            <FormControl component="fieldset">
+                <TextField
+                    error={!!usernameErrorMessage}
+                    helperText={`Login: ${usernameErrorMessage}`}
+                    id={'username'}
+                    type={'text'}
+                    name={'username'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={registration.username || ''}
+                />
+                <TextField
+                    error={!!emailErrorMessage}
+                    helperText={`Email: ${emailErrorMessage}`}
+                    id={'email'}
+                    type={'email'}
+                    name={'email'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={registration.email || ''}
+                />
+                <TextField
+                    error={!!passwordErrorMessage}
+                    helperText={`Password: ${passwordErrorMessage}`}
+                    id={'password'}
+                    type={'password'}
+                    name={'password'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={registration.password || ''}
+                />
+                <TextField
+                    error={!!repeatPasswordErrorMessage}
+                    helperText={`Confirm password: ${repeatPasswordErrorMessage}`}
+                    id={'repeat-password'}
+                    type={'password'}
+                    name={'repeatPassword'}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    value={registration.repeatPassword || ''}
+                />
+                <Button style={{marginTop: '20px'}} raised color="primary" type="submit">Register</Button>
+            </FormControl>
+        </form>
     );
 };
 

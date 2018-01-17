@@ -3,7 +3,6 @@ import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
-import Typography from 'material-ui/Typography';
 
 const LoginForm = ({auth: {isLoggedIn, login, loginErrors}, handleFocus, handleChange, handleSubmit}) => {
     if (isLoggedIn) {
@@ -17,7 +16,6 @@ const LoginForm = ({auth: {isLoggedIn, login, loginErrors}, handleFocus, handleC
 
     return (
         <Fragment>
-            <Typography style={{padding: '23px'}} type="headline">Sign in</Typography>
             <form style={{padding: '20px'}} onSubmit={handleSubmit}>
                 <FormControl component="fieldset">
                     <TextField
