@@ -44,7 +44,7 @@ class AccountRecovery extends Component {
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
-                            helperText={this.props.recoveryErrorMessage || 'Enter your email address and we\'ll send you a recovery link.'}
+                            helperText={`Email: ${this.props.recoveryErrorMessage}`}
                             id={'email'}
                             type={'text'}
                             name={'email'}
