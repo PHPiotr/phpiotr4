@@ -22,11 +22,6 @@ const initialState = {
     isVerifying: false,
     token: '',
     expiresIn: 0,
-    newPassword: '',
-    newPasswordRepeat: '',
-    isResetting: false,
-    isReset: false,
-    passwordResetErrorMessage: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -123,32 +118,6 @@ const auth = (state = initialState, action) => {
                 ...state,
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
-            };
-
-        // Password reset
-        // TODO: Move to separate reducer
-        case authActionTypes.SET_RESET_PASSWORD_INPUT_VALUE:
-            return {...state, [action.payload.name]: action.payload.value};
-        case authActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE:
-            return {...state, passwordResetErrorMessage: action.payload};
-        case authActionTypes.SET_IS_RESET_PASSWORD:
-            return {...state, isReset: action.payload};
-        case authActionTypes.RESET_PASSWORD_REQUEST:
-            return {...state, isResetting: true};
-        case authActionTypes.RESET_PASSWORD_SUCCESS:
-            return {
-                ...state,
-                isResetting: false,
-                isReset: true,
-                newPassword: '',
-                newPasswordRepeat: '',
-                passwordResetErrorMessage: '',
-            };
-        case authActionTypes.RESET_PASSWORD_FAILURE:
-            return {
-                ...state,
-                isResetting: false,
-                passwordResetErrorMessage: action.payload.passwordResetErrorMessage,
             };
         default:
             return state;
