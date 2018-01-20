@@ -12,16 +12,27 @@ export const resetPasswordIfNeeded = (userId, token) => {
         }
         dispatch({type: passwordResetActionTypes.RESET_PASSWORD_REQUEST});
         return resetPassword(userId, token, {
-            newPassword: passwordReset.newPassword,
-            newPasswordRepeat: passwordReset.newPasswordRepeat,
+            newPassword: passwordReset.password,
+            newPasswordRepeat: passwordReset.repeatPassword,
         })
             .then((response) => {
                 if (response.status === 204) {
-                    return dispatch({type: passwordResetActionTypes.RESET_PASSWORD_SUCCESS});
+                    dispatch({type: passwordResetActionTypes.RESET_PASSWORD_SUCCESS});
+                    return {success: true};
+                } else {
+                    return response.json();
                 }
-                throw {message: response.statusText, code: response.code};
+            })
+            .then((json) => {
+                if (json.err) {
+                    dispatch({type: passwordResetActionTypes.RESET_PASSWORD_FAILURE, payload: {
+                        passwordResetErrorMessage: json.err.message,
+                        passwordResetInputErrors: json.err.errors,
+                    }});
+                }
             })
             .catch(error => dispatch({type: passwordResetActionTypes.RESET_PASSWORD_FAILURE, payload: {
-                passwordResetErrorMessage: error.message}}));
+                passwordResetErrorMessage: error.message,
+            }}));
     };
 };

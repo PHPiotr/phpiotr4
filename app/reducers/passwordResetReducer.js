@@ -1,11 +1,15 @@
 import * as passwordResetActionTypes from '../actions/passwordReset/passwordResetActionTypes';
 
 const initialState = {
-    newPassword: '',
-    newPasswordRepeat: '',
+    password: '',
+    repeatPassword: '',
     isResetting: false,
     isReset: false,
     passwordResetErrorMessage: '',
+    passwordResetInputErrors: {
+        password: {},
+        repeatPassword: {},
+    },
 };
 
 const passwordReset = (state = initialState, action) => {
@@ -14,6 +18,12 @@ const passwordReset = (state = initialState, action) => {
             return {...state, [action.payload.name]: action.payload.value};
         case passwordResetActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE:
             return {...state, passwordResetErrorMessage: action.payload};
+        case passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD:
+            return {
+                ...state,
+                passwordResetErrorMessage: '',
+                passwordResetInputErrors: {...state.passwordResetInputErrors, [action.payload]: {}},
+            };
         case passwordResetActionTypes.SET_IS_RESET_PASSWORD:
             return {...state, isReset: action.payload};
         case passwordResetActionTypes.RESET_PASSWORD_REQUEST:
@@ -23,8 +33,8 @@ const passwordReset = (state = initialState, action) => {
                 ...state,
                 isResetting: false,
                 isReset: true,
-                newPassword: '',
-                newPasswordRepeat: '',
+                password: '',
+                repeatPassword: '',
                 passwordResetErrorMessage: '',
             };
         case passwordResetActionTypes.RESET_PASSWORD_FAILURE:
@@ -32,6 +42,7 @@ const passwordReset = (state = initialState, action) => {
                 ...state,
                 isResetting: false,
                 passwordResetErrorMessage: action.payload.passwordResetErrorMessage,
+                passwordResetInputErrors: action.payload.passwordResetInputErrors,
             };
         default:
             return state;

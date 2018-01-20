@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
@@ -9,12 +8,13 @@ import NoAuth from './NoAuth';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import * as passwordResetActions from '../../actions/passwordReset/passwordResetActions';
+import * as passwordResetActionTypes from '../../actions/passwordReset/passwordResetActionTypes';
 import {LinearProgress} from 'material-ui/Progress';
 
 class PasswordReset extends Component {
 
     componentDidMount() {
-        this.props.setAppBarTitle('Account recovery');
+        this.props.setAppBarTitle('Password reset');
     }
 
     componentWillUnmount() {
@@ -25,11 +25,7 @@ class PasswordReset extends Component {
         this.props.setResetPasswordInputValue(event.target.name, event.target.value);
     };
 
-    handleFocus = () => {
-        if (this.props.passwordResetErrorMessage) {
-            this.props.setResetPasswordErrorMessage('');
-        }
-    };
+    handleFocus = event => this.props.dispatch({type: passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD, payload: event.target.name});
 
     render() {
         if (this.props.isLoggedIn) {
@@ -40,36 +36,40 @@ class PasswordReset extends Component {
         }
         return (
             <Fragment>
-                <Typography style={{padding: '23px'}} type="headline">{this.props.passwordResetErrorMessage || 'Reset your password'}</Typography>
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
-                            helperText={'New password'}
+                            helperText={`New password: ${(this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message) || ''}`}
                             id={'new-password'}
                             type={'password'}
-                            name={'newPassword'}
+                            name={'password'}
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
-                            value={this.props.newPassword}
-                            error={!!this.props.passwordResetErrorMessage}
+                            value={this.props.password}
+                            error={!!((this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message))}
                         />
                         <TextField
-                            helperText={'Confirm new password'}
+                            helperText={`Repeat new password: ${(this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message) || ''}`}
                             id={'new-password-repeat'}
                             type={'password'}
-                            name={'newPasswordRepeat'}
+                            name={'repeatPassword'}
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
-                            value={this.props.newPasswordRepeat}
-                            error={!!this.props.passwordResetErrorMessage}
+                            value={this.props.repeatPassword}
+                            error={!!((this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message))}
                         />
-                        <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset password</Button>
+                        <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset</Button>
                     </FormControl>
                 </form>
                 <MessageBar
                     open={this.props.isReset}
                     message="New password set successfully"
-                    onClose={this.props.onClose}
+                    onClose={this.props.onSuccessClose}
+                />
+                <MessageBar
+                    open={!!this.props.passwordResetErrorMessage}
+                    message={this.props.passwordResetErrorMessage}
+                    onClose={this.props.onErrorClose}
                 />
             </Fragment>
         );
@@ -90,11 +90,11 @@ const mapDispatchToProps = (dispatch, {match}) => {
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
         },
-        onClose() {
+        onSuccessClose() {
             dispatch(passwordResetActions.setIsResetPassword(false));
         },
-        setResetPasswordErrorMessage(value) {
-            dispatch(passwordResetActions.setResetPasswordErrorMessage(value));
+        onErrorClose() {
+            dispatch(passwordResetActions.setResetPasswordErrorMessage(''));
         },
     };
 };
