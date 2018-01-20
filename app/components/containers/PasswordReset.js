@@ -48,7 +48,7 @@ class PasswordReset extends Component {
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
                             value={this.props.password}
-                            error={!!this.props.passwordResetErrorMessage}
+                            error={!!((this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message))}
                         />
                         <TextField
                             helperText={`Repeat new password: ${(this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message) || ''}`}
@@ -58,7 +58,7 @@ class PasswordReset extends Component {
                             onChange={this.handleChange}
                             onFocus={this.handleFocus}
                             value={this.props.repeatPassword}
-                            error={!!this.props.passwordResetErrorMessage}
+                            error={!!((this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message))}
                         />
                         <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset password</Button>
                     </FormControl>
