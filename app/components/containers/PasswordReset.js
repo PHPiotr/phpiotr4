@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
@@ -15,7 +14,7 @@ import {LinearProgress} from 'material-ui/Progress';
 class PasswordReset extends Component {
 
     componentDidMount() {
-        this.props.setAppBarTitle('Account recovery');
+        this.props.setAppBarTitle('Password reset');
     }
 
     componentWillUnmount() {
@@ -37,7 +36,6 @@ class PasswordReset extends Component {
         }
         return (
             <Fragment>
-                <Typography style={{padding: '23px'}} type="headline">{this.props.passwordResetErrorMessage || 'Reset your password'}</Typography>
                 <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
                         <TextField
@@ -60,13 +58,18 @@ class PasswordReset extends Component {
                             value={this.props.repeatPassword}
                             error={!!((this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message))}
                         />
-                        <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset password</Button>
+                        <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset</Button>
                     </FormControl>
                 </form>
                 <MessageBar
                     open={this.props.isReset}
                     message="New password set successfully"
-                    onClose={this.props.onClose}
+                    onClose={this.props.onSuccessClose}
+                />
+                <MessageBar
+                    open={!!this.props.passwordResetErrorMessage}
+                    message={this.props.passwordResetErrorMessage}
+                    onClose={this.props.onErrorClose}
                 />
             </Fragment>
         );
@@ -87,8 +90,11 @@ const mapDispatchToProps = (dispatch, {match}) => {
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
         },
-        onClose() {
+        onSuccessClose() {
             dispatch(passwordResetActions.setIsResetPassword(false));
+        },
+        onErrorClose() {
+            dispatch(passwordResetActions.setResetPasswordErrorMessage(''));
         },
     };
 };
