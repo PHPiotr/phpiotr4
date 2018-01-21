@@ -56,7 +56,7 @@ const LoginForm = (props) => {
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                    onClick={() => props.handleClickTogglePassword()}
+                                    onClick={() => props.handleClickToggleRepeatPassword()}
                                 >
                                     {props.showPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
