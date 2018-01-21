@@ -36,3 +36,5 @@ export const resetPasswordIfNeeded = (userId, token) => {
             }}));
     };
 };
+
+export const togglePasswordVisibility = payload => ({type: passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY, payload});

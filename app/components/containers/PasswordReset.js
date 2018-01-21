@@ -3,13 +3,27 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
-import TextField from 'material-ui/TextField';
 import NoAuth from './NoAuth';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import * as passwordResetActions from '../../actions/passwordReset/passwordResetActions';
 import * as passwordResetActionTypes from '../../actions/passwordReset/passwordResetActionTypes';
 import {LinearProgress} from 'material-ui/Progress';
+import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
+import {withStyles} from 'material-ui/styles';
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+});
 
 class PasswordReset extends Component {
 
@@ -27,6 +41,10 @@ class PasswordReset extends Component {
 
     handleFocus = event => this.props.dispatch({type: passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD, payload: event.target.name});
 
+    handleClickTogglePassword = () => this.props.dispatch(passwordResetActions.togglePasswordVisibility('showPassword'));
+    handleClickToggleRepeatPassword = () => this.props.dispatch(passwordResetActions.togglePasswordVisibility('showRepeatPassword'));
+    handleMouseDownTogglePassword = event => event.preventDefault();
+
     render() {
         if (this.props.isLoggedIn) {
             return null;
@@ -34,31 +52,59 @@ class PasswordReset extends Component {
         if (this.props.isResetting) {
             return <LinearProgress/>;
         }
+        const {classes} = this.props;
+
         return (
             <Fragment>
-                <form style={{padding: '20px'}} onSubmit={this.props.handleSubmit}>
+                <form className={classes.root} onSubmit={this.props.handleSubmit}>
                     <FormControl component="fieldset">
-                        <TextField
-                            helperText={`New password: ${(this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message) || ''}`}
-                            id={'new-password'}
-                            type={'password'}
-                            name={'password'}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            value={this.props.password}
-                            error={!!((this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message))}
-                        />
-                        <TextField
-                            helperText={`Repeat new password: ${(this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message) || ''}`}
-                            id={'new-password-repeat'}
-                            type={'password'}
-                            name={'repeatPassword'}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            value={this.props.repeatPassword}
-                            error={!!((this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message))}
-                        />
-                        <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset</Button>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="password">{`New password: ${(this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message) || ''}`}</InputLabel>
+                            <Input
+                                id="new-password"
+                                name="password"
+                                type={this.props.showPassword ? 'text' : 'password'}
+                                onChange={this.handleChange}
+                                onFocus={this.handleFocus}
+                                value={this.props.password}
+                                error={!!((this.props.passwordResetInputErrors.password && this.props.passwordResetInputErrors.password.message))}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={this.handleClickTogglePassword}
+                                            onMouseDown={this.handleMouseDownTogglePassword}
+                                        >
+                                            {this.props.showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="password">{`Repeat new password: ${(this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message) || ''}`}</InputLabel>
+                            <Input
+                                id="new-password-repeat"
+                                name="repeatPassword"
+                                type={this.props.showRepeatPassword ? 'text' : 'password'}
+                                onChange={this.handleChange}
+                                onFocus={this.handleFocus}
+                                value={this.props.repeatPassword}
+                                error={!!((this.props.passwordResetInputErrors.repeatPassword && this.props.passwordResetInputErrors.repeatPassword.message))}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={this.handleClickToggleRepeatPassword}
+                                            onMouseDown={this.handleMouseDownTogglePassword}
+                                        >
+                                            {this.props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                            <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset</Button>
+                        </FormControl>
                     </FormControl>
                 </form>
                 <MessageBar
@@ -99,4 +145,4 @@ const mapDispatchToProps = (dispatch, {match}) => {
     };
 };
 
-export default NoAuth(withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordReset)));
+export default withStyles(styles)(NoAuth(withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordReset))));

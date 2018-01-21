@@ -10,6 +10,8 @@ const initialState = {
         password: {},
         repeatPassword: {},
     },
+    showPassword: false,
+    showRepeatPassword: false,
 };
 
 const passwordReset = (state = initialState, action) => {
@@ -44,6 +46,8 @@ const passwordReset = (state = initialState, action) => {
                 passwordResetErrorMessage: action.payload.passwordResetErrorMessage,
                 passwordResetInputErrors: action.payload.passwordResetInputErrors,
             };
+        case passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY:
+            return {...state, [action.payload]: !state[action.payload]};
         default:
             return state;
     }
