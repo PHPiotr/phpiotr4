@@ -33,7 +33,7 @@ const RegistrationForm = (props) => {
         ? registrationErrors.repeatPassword.message : '';
 
     return (
-        <form style={{padding: '20px'}} onSubmit={props.handleSubmit} noValidate>
+        <form className={props.classes.root} onSubmit={props.handleSubmit} noValidate>
             <FormControl component="fieldset">
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Login: ${usernameErrorMessage}`}</InputLabel>
