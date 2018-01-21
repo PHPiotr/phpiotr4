@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import * as authActions from '../../actions/auth/authActions';
 import * as registrationActions from '../../actions/registration/registrationActions';
+import * as activationActions from '../../actions/activation/activationActions';
 import RegistrationForm from '../presentation/RegistrationForm';
 import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
@@ -38,15 +38,15 @@ class Registration extends Component {
     }
 }
 
-const mapStateToProps = state => ({...state.auth, ...state.registration});
+const mapStateToProps = state => ({...state.auth, ...state.registration, ...state.activation});
 const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     activateUserIfNeeded() {
         const {bearerToken, userId} = params;
         if (bearerToken && userId) {
-            dispatch(authActions.activateIfNeeded(userId, bearerToken))
+            dispatch(activationActions.activateIfNeeded(userId, bearerToken))
                 .then(() => history.replace('/login'));
         } else {
-            dispatch(authActions.setActivationData());
+            dispatch(activationActions.setActivationData());
         }
     },
     handleFocus(event) {

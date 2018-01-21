@@ -7,6 +7,7 @@ import app from './appReducer';
 import recovery from './recoveryReducer';
 import passwordReset from './passwordResetReducer';
 import registration from './registrationReducer';
+import activation from './activationReducer';
 
 const reducers = combineReducers({
     auth,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
     recovery,
     passwordReset,
     registration,
+    activation,
 });
 
 export default reducers;
