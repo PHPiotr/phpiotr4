@@ -22,6 +22,7 @@ const initialState = {
     isVerifying: false,
     token: '',
     expiresIn: 0,
+    showPassword: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -119,6 +120,10 @@ const auth = (state = initialState, action) => {
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
+        case authActionTypes.TOGGLE_PASSWORD_VISIBILITY:
+            return {...state, showPassword: !state.showPassword};
+        case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
+            return {...state, loginErrorMessage: action.payload};
         default:
             return state;
     }

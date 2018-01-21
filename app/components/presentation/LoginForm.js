@@ -1,51 +1,78 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
-import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
+import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
+import {withStyles} from 'material-ui/styles';
 
-const LoginForm = ({auth: {isLoggedIn, login, loginErrors}, handleFocus, handleChange, handleSubmit}) => {
-    if (isLoggedIn) {
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+});
+
+const LoginForm = (props) => {
+    if (props.isLoggedIn) {
         return null;
     }
 
-    const usernameErrorMessage = (loginErrors.username && loginErrors.username.message)
-        ? loginErrors.username.message : '';
-    const passwordErrorMessage = (loginErrors.password && loginErrors.password.message)
-        ? loginErrors.password.message : '';
+    const usernameErrorMessage = (props.loginErrors.username && props.loginErrors.username.message)
+        ? props.loginErrors.username.message : '';
+    const passwordErrorMessage = (props.loginErrors.password && props.loginErrors.password.message)
+        ? props.loginErrors.password.message : '';
 
     return (
-        <Fragment>
-            <form style={{padding: '20px'}} onSubmit={handleSubmit}>
-                <FormControl component="fieldset">
-                    <TextField
-                        error={!!usernameErrorMessage}
-                        helperText={`Login: ${usernameErrorMessage}`}
-                        id={'username'}
+        <form className={props.classes.root} onSubmit={props.handleSubmit}>
+            <FormControl component="fieldset">
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Login: ${usernameErrorMessage}`}</InputLabel>
+                    <Input
+                        id="username"
+                        name="username"
                         type={'text'}
-                        name={'username'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={login.username || ''}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={props.login.username || ''}
+                        error={!!usernameErrorMessage}
                     />
-                    <TextField
-                        error={!!passwordErrorMessage}
-                        helperText={`Password: ${passwordErrorMessage}`}
-                        id={'password'}
-                        type={'password'}
-                        name={'password'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={login.password || ''}
-                    />
-                    <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Log in</Button>
                 </FormControl>
-            </form>
-            <Button raised style={{marginLeft: '20px'}} component={Link} to="/account-recovery">
-                Forgot password?
-            </Button>
-        </Fragment>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Password: ${passwordErrorMessage}`}</InputLabel>
+                    <Input
+                        id="password"
+                        name="password"
+                        type={props.showPassword ? 'text' : 'password'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={props.login.password || ''}
+                        error={!!passwordErrorMessage}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={() => props.handleClickTogglePassword()}
+                                >
+                                    {props.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <Button raised color="primary" type="submit">Log in</Button>
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <Button raised component={Link} to="/account-recovery">Forgot password?</Button>
+                </FormControl>
+            </FormControl>
+        </form>
     );
 };
 
-export default LoginForm;
+export default withStyles(styles)(LoginForm);

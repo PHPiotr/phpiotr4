@@ -103,7 +103,7 @@ class PasswordReset extends Component {
                             />
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                            <Button raised color="primary" style={{marginTop: '20px'}} type="submit">Reset</Button>
+                            <Button raised color="primary" type="submit">Reset</Button>
                         </FormControl>
                     </FormControl>
                 </form>
