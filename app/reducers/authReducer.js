@@ -85,6 +85,8 @@ const auth = (state = initialState, action) => {
             return {...state, showLoginPassword: !state.showLoginPassword};
         case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
             return {...state, loginErrorMessage: action.payload};
+        case authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE:
+            return {...state, activationSuccessMessage: action.payload};
         default:
             return state;
     }
