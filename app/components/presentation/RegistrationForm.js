@@ -64,7 +64,7 @@ const RegistrationForm = (props) => {
                     <Input
                         id={'password'}
                         name="password"
-                        type={props.showPassword ? 'text' : 'password'}
+                        type={props.showRegistrationPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
                         value={registration.password || ''}
@@ -73,9 +73,8 @@ const RegistrationForm = (props) => {
                             <InputAdornment position="end">
                                 <IconButton
                                     onClick={props.handleClickTogglePassword}
-                                    onMouseDown={props.handleMouseDownTogglePassword}
                                 >
-                                    {props.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    {props.showRegistrationPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }
@@ -86,7 +85,7 @@ const RegistrationForm = (props) => {
                     <Input
                         id={'repeat-password'}
                         name="repeatPassword"
-                        type={props.showRepeatPassword ? 'text' : 'password'}
+                        type={props.showRegistrationRepeatPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
                         value={registration.repeatPassword || ''}
@@ -95,9 +94,8 @@ const RegistrationForm = (props) => {
                             <InputAdornment position="end">
                                 <IconButton
                                     onClick={props.handleClickToggleRepeatPassword}
-                                    onMouseDown={props.handleMouseDownTogglePassword}
                                 >
-                                    {props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
+                                    {props.showRegistrationRepeatPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }

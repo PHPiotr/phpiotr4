@@ -43,7 +43,6 @@ class PasswordReset extends Component {
 
     handleClickTogglePassword = () => this.props.dispatch(passwordResetActions.togglePasswordVisibility('showPassword'));
     handleClickToggleRepeatPassword = () => this.props.dispatch(passwordResetActions.togglePasswordVisibility('showRepeatPassword'));
-    handleMouseDownTogglePassword = event => event.preventDefault();
 
     render() {
         if (this.props.isLoggedIn) {
@@ -72,7 +71,6 @@ class PasswordReset extends Component {
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={this.handleClickTogglePassword}
-                                            onMouseDown={this.handleMouseDownTogglePassword}
                                         >
                                             {this.props.showPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
@@ -94,7 +92,6 @@ class PasswordReset extends Component {
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={this.handleClickToggleRepeatPassword}
-                                            onMouseDown={this.handleMouseDownTogglePassword}
                                         >
                                             {this.props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>

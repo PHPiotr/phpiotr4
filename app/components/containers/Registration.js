@@ -68,10 +68,10 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
         authActions.setRegistrationSuccessMessage('');
     },
     handleClickTogglePassword() {
-        dispatch(authActions.togglePasswordVisibility());
+        dispatch(authActions.toggleRegistrationPasswordVisibility());
     },
     handleClickToggleRepeatPassword() {
-        dispatch(authActions.toggleRepeatPasswordVisibility());
+        dispatch(authActions.toggleRegistrationRepeatPasswordVisibility());
     },
 });
 

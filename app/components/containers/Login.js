@@ -74,10 +74,7 @@ const mapDispatchToProps = (dispatch, {history}) => ({
         dispatch(authActions.setActivationSuccessMessage(''));
     },
     handleClickTogglePassword() {
-        dispatch(authActions.togglePasswordVisibility());
-    },
-    handleClickToggleRepeatPassword() {
-        dispatch(authActions.toggleRepeatPasswordVisibility());
+        dispatch(authActions.toggleLoginPasswordVisibility());
     },
 });
 
