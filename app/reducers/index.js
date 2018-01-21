@@ -6,6 +6,7 @@ import bookings from './bookingReducer';
 import app from './appReducer';
 import recovery from './recoveryReducer';
 import passwordReset from './passwordResetReducer';
+import registration from './registrationReducer';
 
 const reducers = combineReducers({
     auth,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
     app,
     recovery,
     passwordReset,
+    registration,
 });
 
 export default reducers;

@@ -11,11 +11,6 @@ const initialState = {
     isLoggingIn: false,
     activationUrl: '',
     activationFromEmail: '',
-    registration: {},
-    registrationErrorMessage: '',
-    registrationErrors: {},
-    isRegistering: false,
-    registrationSuccessMessage: '',
     isActivating: false,
     activationErrorMessage: '',
     activationSuccessMessage: '',
@@ -23,8 +18,6 @@ const initialState = {
     token: '',
     expiresIn: 0,
     showLoginPassword: false,
-    showRegistrationPassword: false,
-    showRegistrationRepeatPassword: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -47,22 +40,6 @@ const auth = (state = initialState, action) => {
                 isLoggedIn: false,
                 isLoggingIn: false,
                 loginErrors: action.payload.errors || {},
-            };
-        case authActionTypes.REGISTRATION_REQUEST:
-            return {...state, isRegistering: true};
-        case authActionTypes.REGISTRATION_SUCCESS:
-            return {
-                ...state,
-                isRegistering: false,
-                registrationSuccessMessage: action.payload,
-                registration: {},
-            };
-        case authActionTypes.REGISTRATION_FAILURE:
-            return {
-                ...state,
-                isRegistering: false,
-                registrationErrorMessage: action.payload.error || '',
-                registrationErrors: action.payload.errors || {},
             };
         case authActionTypes.ACTIVATION_REQUEST:
             return {...state, isActivating: true};
@@ -98,24 +75,6 @@ const auth = (state = initialState, action) => {
             };
         case authActionTypes.ON_CHANGE_LOGIN_FIELD:
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
-        case authActionTypes.ON_FOCUS_REGISTRATION_FIELD:
-            return {
-                ...state,
-                registrationErrorMessage: '',
-                registrationSuccessMessage: '',
-                registrationErrors: {...state.registrationErrors, [action.fieldName]: {}},
-            };
-        case authActionTypes.ON_CHANGE_REGISTRATION_FIELD:
-            return {
-                ...state,
-                registrationErrorMessage: '',
-                registrationSuccessMessage: '',
-                registration: {...state.registration, [action.fieldName]: action.fieldValue},
-            };
-        case authActionTypes.SET_REGISTRATION_ERROR_MESSAGE:
-            return {...state, registrationErrorMessage: action.payload};
-        case authActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE:
-            return {...state, registrationSuccessMessage: action.payload};
         case authActionTypes.SET_ACTIVATION_DATA:
             return {
                 ...state,
@@ -124,10 +83,6 @@ const auth = (state = initialState, action) => {
             };
         case authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY:
             return {...state, showLoginPassword: !state.showLoginPassword};
-        case authActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY:
-            return {...state, showRegistrationPassword: !state.showRegistrationPassword};
-        case authActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY:
-            return {...state, showRegistrationRepeatPassword: !state.showRegistrationRepeatPassword};
         case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
             return {...state, loginErrorMessage: action.payload};
         default:

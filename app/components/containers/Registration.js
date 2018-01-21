@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as authActions from '../../actions/auth/authActions';
-import {ON_FOCUS_REGISTRATION_FIELD, ON_CHANGE_REGISTRATION_FIELD} from '../../actions/auth/authActionTypes';
+import * as registrationActions from '../../actions/registration/registrationActions';
 import RegistrationForm from '../presentation/RegistrationForm';
 import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
@@ -38,7 +38,7 @@ class Registration extends Component {
     }
 }
 
-const mapStateToProps = state => ({...state.auth});
+const mapStateToProps = state => ({...state.auth, ...state.registration});
 const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     activateUserIfNeeded() {
         const {bearerToken, userId} = params;
@@ -51,27 +51,27 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     },
     handleFocus(event) {
         const {name, value} = event.target;
-        dispatch(authActions.focus(name, value, ON_FOCUS_REGISTRATION_FIELD));
+        dispatch(registrationActions.focus(name, value));
     },
     handleChange(event) {
         const {name, value} = event.target;
-        dispatch(authActions.change(name, value, ON_CHANGE_REGISTRATION_FIELD));
+        dispatch(registrationActions.change(name, value));
     },
     handleSubmit(event) {
         event.preventDefault();
-        dispatch(authActions.registerIfNeeded());
+        dispatch(registrationActions.registerIfNeeded());
     },
     onCloseErrorMessageBar() {
-        authActions.setRegistrationErrorMessage('');
+        dispatch(registrationActions.setRegistrationErrorMessage(''));
     },
     onCloseSuccessMessageBar() {
-        authActions.setRegistrationSuccessMessage('');
+        dispatch(registrationActions.setRegistrationSuccessMessage(''));
     },
     handleClickTogglePassword() {
-        dispatch(authActions.toggleRegistrationPasswordVisibility());
+        dispatch(registrationActions.toggleRegistrationPasswordVisibility());
     },
     handleClickToggleRepeatPassword() {
-        dispatch(authActions.toggleRegistrationRepeatPasswordVisibility());
+        dispatch(registrationActions.toggleRegistrationRepeatPasswordVisibility());
     },
 });
 
