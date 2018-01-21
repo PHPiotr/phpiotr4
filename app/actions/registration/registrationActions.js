@@ -1,5 +1,6 @@
 import {postUsers} from '../../services/authService';
 import * as registrationActionTypes from './registrationActionTypes';
+import {HOME} from '../../constants';
 
 export const registerIfNeeded = () => {
     return (dispatch, getState) => {
@@ -14,11 +15,10 @@ const registration = () => {
     return (dispatch, getState) => {
         dispatch(registrationRequest());
 
-        const {registration, auth, app} = getState();
+        const {registration, auth} = getState();
         const {activationUrl, activationFromEmail} = auth;
-        const {appBarTitle} = app;
 
-        return postUsers({registration: registration.registration, activationUrl, activationFromEmail, appName: appBarTitle})
+        return postUsers({registration: registration.registration, activationUrl, activationFromEmail, appName: HOME})
             .then((response) => {
                 if (response.status === 201) {
                     dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
