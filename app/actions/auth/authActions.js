@@ -133,5 +133,6 @@ export const setRegistrationSuccessMessage = payload => ({type: authActionTypes.
 export const setLoginErrorMessage = payload => ({type: authActionTypes.SET_LOGIN_ERROR_MESSAGE, payload});
 export const setActivationErrorMessage = payload => ({type: authActionTypes.SET_ACTIVATION_ERROR_MESSAGE, payload});
 export const setActivationSuccessMessage = payload => ({type: authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE, payload});
-export const togglePasswordVisibility = () => ({type: authActionTypes.TOGGLE_PASSWORD_VISIBILITY});
-export const toggleRepeatPasswordVisibility = () => ({type: authActionTypes.TOGGLE_REPEAT_PASSWORD_VISIBILITY});
+export const toggleLoginPasswordVisibility = () => ({type: authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY});
+export const toggleRegistrationPasswordVisibility = () => ({type: authActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY});
+export const toggleRegistrationRepeatPasswordVisibility = () => ({type: authActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY});

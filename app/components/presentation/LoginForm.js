@@ -48,7 +48,7 @@ const LoginForm = (props) => {
                     <Input
                         id="password"
                         name="password"
-                        type={props.showPassword ? 'text' : 'password'}
+                        type={props.showLoginPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
                         value={props.login.password || ''}
@@ -56,9 +56,9 @@ const LoginForm = (props) => {
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                    onClick={() => props.handleClickToggleRepeatPassword()}
+                                    onClick={props.handleClickTogglePassword}
                                 >
-                                    {props.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    {props.showLoginPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }

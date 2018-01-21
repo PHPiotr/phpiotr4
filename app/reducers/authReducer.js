@@ -22,8 +22,9 @@ const initialState = {
     isVerifying: false,
     token: '',
     expiresIn: 0,
-    showPassword: false,
-    showRepeatPassword: false,
+    showLoginPassword: false,
+    showRegistrationPassword: false,
+    showRegistrationRepeatPassword: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -121,10 +122,12 @@ const auth = (state = initialState, action) => {
                 activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
                 activationFromEmail: `no-reply@${action.payload.hostname}`,
             };
-        case authActionTypes.TOGGLE_PASSWORD_VISIBILITY:
-            return {...state, showPassword: !state.showPassword};
-        case authActionTypes.TOGGLE_REPEAT_PASSWORD_VISIBILITY:
-            return {...state, showRepeatPassword: !state.showRepeatPassword};
+        case authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY:
+            return {...state, showLoginPassword: !state.showLoginPassword};
+        case authActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY:
+            return {...state, showRegistrationPassword: !state.showRegistrationPassword};
+        case authActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY:
+            return {...state, showRegistrationRepeatPassword: !state.showRegistrationRepeatPassword};
         case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
             return {...state, loginErrorMessage: action.payload};
         default:
