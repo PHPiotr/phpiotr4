@@ -10,10 +10,10 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 
 class Registration extends Component {
     onClose = () => {
-        if (this.props.auth.registrationErrorMessage) {
+        if (this.props.registrationErrorMessage) {
             this.props.onCloseErrorMessageBar();
         }
-        if (this.props.auth.registrationSuccessMessage) {
+        if (this.props.registrationSuccessMessage) {
             this.props.onCloseSuccessMessageBar();
         }
     };
@@ -22,15 +22,15 @@ class Registration extends Component {
         this.props.dispatch(setAppBarTitle('Sign up'));
     }
     render() {
-        if (this.props.auth.isRegistering) {
+        if (this.props.isRegistering) {
             return <LinearProgress/>;
         }
         return (
             <Fragment>
                 <RegistrationForm {...this.props} />
                 <MessageBar
-                    open={!!(this.props.auth.registrationErrorMessage || this.props.auth.registrationSuccessMessage)}
-                    message={this.props.auth.registrationErrorMessage || this.props.auth.registrationSuccessMessage}
+                    open={!!(this.props.registrationErrorMessage || this.props.registrationSuccessMessage)}
+                    message={this.props.registrationErrorMessage || this.props.registrationSuccessMessage}
                     onClose={this.onClose}
                 />
             </Fragment>
@@ -38,7 +38,7 @@ class Registration extends Component {
     }
 }
 
-const mapStateToProps = state => ({auth: state.auth});
+const mapStateToProps = state => ({...state.auth});
 const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     activateUserIfNeeded() {
         const {bearerToken, userId} = params;
@@ -66,6 +66,12 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
     },
     onCloseSuccessMessageBar() {
         authActions.setRegistrationSuccessMessage('');
+    },
+    handleClickTogglePassword() {
+        dispatch(authActions.togglePasswordVisibility());
+    },
+    handleClickToggleRepeatPassword() {
+        dispatch(authActions.toggleRepeatPasswordVisibility());
     },
 });
 

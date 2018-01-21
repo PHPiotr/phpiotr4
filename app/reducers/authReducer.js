@@ -23,6 +23,7 @@ const initialState = {
     token: '',
     expiresIn: 0,
     showPassword: false,
+    showRepeatPassword: false,
 };
 
 const auth = (state = initialState, action) => {
@@ -122,6 +123,8 @@ const auth = (state = initialState, action) => {
             };
         case authActionTypes.TOGGLE_PASSWORD_VISIBILITY:
             return {...state, showPassword: !state.showPassword};
+        case authActionTypes.TOGGLE_REPEAT_PASSWORD_VISIBILITY:
+            return {...state, showRepeatPassword: !state.showRepeatPassword};
         case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
             return {...state, loginErrorMessage: action.payload};
         default:
