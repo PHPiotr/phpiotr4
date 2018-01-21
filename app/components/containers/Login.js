@@ -76,6 +76,9 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     handleClickTogglePassword() {
         dispatch(authActions.togglePasswordVisibility());
     },
+    handleClickToggleRepeatPassword() {
+        dispatch(authActions.toggleRepeatPasswordVisibility());
+    },
 });
 
 export default NoAuth(connect(mapStateToProps, mapDispatchToProps)(Login));
