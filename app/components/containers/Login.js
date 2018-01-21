@@ -13,26 +13,26 @@ class Login extends Component {
         this.props.dispatch(setAppBarTitle('Sign in'));
     }
     onClose = () => {
-        if (this.props.auth.loginErrorMessage) {
+        if (this.props.loginErrorMessage) {
             this.props.onCloseLoginErrorMessageBar();
         }
-        if (this.props.auth.activationErrorMessage) {
+        if (this.props.activationErrorMessage) {
             this.props.onCloseActivationErrorMessageBar();
         }
-        if (this.props.auth.activationSuccessMessage) {
+        if (this.props.activationSuccessMessage) {
             this.props.onCloseSuccessMessageBar();
         }
     };
     render() {
-        if (this.props.auth.isLoggingIn) {
+        if (this.props.isLoggingIn) {
             return <LinearProgress/>;
         }
         return (
             <Fragment>
                 <LoginForm {...this.props}/>
                 <MessageBar
-                    open={!!(this.props.auth.loginErrorMessage || this.props.auth.activationErrorMessage || this.props.auth.activationSuccessMessage)}
-                    message={this.props.auth.loginErrorMessage || this.props.auth.activationErrorMessage || this.props.auth.activationSuccessMessage}
+                    open={!!(this.props.loginErrorMessage || this.props.activationErrorMessage || this.props.activationSuccessMessage)}
+                    message={this.props.loginErrorMessage || this.props.activationErrorMessage || this.props.activationSuccessMessage}
                     onClose={this.onClose}
                 />
             </Fragment>
@@ -40,7 +40,7 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({auth: state.auth});
+const mapStateToProps = state => ({...state.auth});
 const mapDispatchToProps = (dispatch, {history}) => ({
     handleFocus(event) {
         dispatch(authActions.focus(event.target.name, event.target.value));
@@ -65,13 +65,16 @@ const mapDispatchToProps = (dispatch, {history}) => ({
             });
     },
     onCloseLoginErrorMessageBar() {
-        authActions.setLoginErrorMessage('');
+        dispatch(authActions.setLoginErrorMessage(''));
     },
     onCloseActivationErrorMessageBar() {
-        authActions.setActivationErrorMessage('');
+        dispatch(authActions.setActivationErrorMessage(''));
     },
     onCloseSuccessMessageBar() {
-        authActions.setActivationSuccessMessage('');
+        dispatch(authActions.setActivationSuccessMessage(''));
+    },
+    handleClickTogglePassword() {
+        dispatch(authActions.togglePasswordVisibility());
     },
 });
 
