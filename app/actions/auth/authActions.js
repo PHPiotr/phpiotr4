@@ -1,4 +1,4 @@
-import {getAuthLogin, activateUser} from '../../services/authService';
+import {getAuthLogin} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
 
@@ -49,47 +49,5 @@ export const logoutIfNeeded = () => {
 export const setToken = payload => ({type: authActionTypes.SET_TOKEN, payload});
 export const setIsLoggedIn = payload => ({type: authActionTypes.SET_IS_LOGGED_IN, payload});
 
-export const activateIfNeeded = (userId, bearerToken) => {
-    return (dispatch, getState) => {
-        if (shouldActivate(getState())) {
-            return dispatch(activation(userId, bearerToken));
-        }
-        return Promise.resolve();
-    };
-};
-const shouldActivate = ({auth: {isLoggingIn, isLoggedIn, isActivating}}) => !isLoggingIn && !isLoggedIn && !isActivating;
-const activation = (userId, bearerToken) => {
-    return (dispatch) => {
-        dispatch(activationRequest());
-
-        return activateUser(userId, bearerToken)
-            .then((response) => {
-                if (response.status === 204) {
-                    dispatch(activationSuccess('Account activated. You can now log in.'));
-
-                    return {success: true};
-                } else {
-                    return response.json();
-                }
-            })
-            .then((json) => {
-                if (!json.success) {
-                    throw Error(json.message || 'Something went wrong');
-                }
-            })
-            .catch(e => dispatch(activationFailure(e.message)));
-    };
-};
-const activationRequest = () => ({type: authActionTypes.ACTIVATION_REQUEST});
-const activationSuccess = payload => ({type: authActionTypes.ACTIVATION_SUCCESS, payload});
-const activationFailure = payload => ({type: authActionTypes.ACTIVATION_FAILURE, payload});
-
-export const setActivationData = () => {
-    const {host, hostname, protocol} = location;
-    return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
-};
-
 export const setLoginErrorMessage = payload => ({type: authActionTypes.SET_LOGIN_ERROR_MESSAGE, payload});
-export const setActivationErrorMessage = payload => ({type: authActionTypes.SET_ACTIVATION_ERROR_MESSAGE, payload});
-export const setActivationSuccessMessage = payload => ({type: authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE, payload});
 export const toggleLoginPasswordVisibility = () => ({type: authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY});

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as authActions from '../../actions/auth/authActions';
+import * as activationActions from '../../actions/activation/activationActions';
 import LoginForm from '../presentation/LoginForm';
 import {LinearProgress} from 'material-ui/Progress';
 import NoAuth from './NoAuth';
@@ -40,7 +41,7 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({...state.auth});
+const mapStateToProps = state => ({...state.auth, ...state.activation});
 const mapDispatchToProps = (dispatch, {history}) => ({
     handleFocus(event) {
         dispatch(authActions.focus(event.target.name, event.target.value));
@@ -68,10 +69,10 @@ const mapDispatchToProps = (dispatch, {history}) => ({
         dispatch(authActions.setLoginErrorMessage(''));
     },
     onCloseActivationErrorMessageBar() {
-        dispatch(authActions.setActivationErrorMessage(''));
+        dispatch(activationActions.setActivationErrorMessage(''));
     },
     onCloseSuccessMessageBar() {
-        dispatch(authActions.setActivationSuccessMessage(''));
+        dispatch(activationActions.setActivationSuccessMessage(''));
     },
     handleClickTogglePassword() {
         dispatch(authActions.toggleLoginPasswordVisibility());

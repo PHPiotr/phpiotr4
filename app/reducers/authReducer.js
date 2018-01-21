@@ -9,11 +9,6 @@ const initialState = {
     loginErrors: {},
     isLoggedIn: false,
     isLoggingIn: false,
-    activationUrl: '',
-    activationFromEmail: '',
-    isActivating: false,
-    activationErrorMessage: '',
-    activationSuccessMessage: '',
     isVerifying: false,
     token: '',
     expiresIn: 0,
@@ -41,20 +36,6 @@ const auth = (state = initialState, action) => {
                 isLoggingIn: false,
                 loginErrors: action.payload.errors || {},
             };
-        case authActionTypes.ACTIVATION_REQUEST:
-            return {...state, isActivating: true};
-        case authActionTypes.ACTIVATION_SUCCESS:
-            return {
-                ...state,
-                isActivating: false,
-                activationSuccessMessage: action.payload,
-            };
-        case authActionTypes.ACTIVATION_FAILURE:
-            return {
-                ...state,
-                isActivating: false,
-                activationErrorMessage: action.payload,
-            };
         case authActionTypes.SET_IS_LOGGED_IN:
             return {...state, isLoggedIn: action.payload};
         case authActionTypes.SET_TOKEN:
@@ -75,18 +56,10 @@ const auth = (state = initialState, action) => {
             };
         case authActionTypes.ON_CHANGE_LOGIN_FIELD:
             return {...state, login: {...state.login, [action.fieldName]: action.fieldValue}};
-        case authActionTypes.SET_ACTIVATION_DATA:
-            return {
-                ...state,
-                activationUrl: `${action.payload.protocol}//${action.payload.host}/register`,
-                activationFromEmail: `no-reply@${action.payload.hostname}`,
-            };
         case authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY:
             return {...state, showLoginPassword: !state.showLoginPassword};
         case authActionTypes.SET_LOGIN_ERROR_MESSAGE:
             return {...state, loginErrorMessage: action.payload};
-        case authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE:
-            return {...state, activationSuccessMessage: action.payload};
         default:
             return state;
     }
