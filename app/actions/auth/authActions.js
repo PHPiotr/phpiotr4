@@ -1,45 +1,6 @@
-import {getAuthLogin, postUsers, activateUser} from '../../services/authService';
+import {getAuthLogin, activateUser} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
-
-export const registerIfNeeded = () => {
-    return (dispatch, getState) => {
-        if (shouldRegister(getState())) {
-            return dispatch(registration());
-        }
-        return Promise.resolve();
-    };
-};
-const shouldRegister = ({auth: {isLoggingIn, isLoggedIn}}) => !isLoggingIn && !isLoggedIn;
-const registration = () => {
-    return (dispatch, getState) => {
-        dispatch(registrationRequest());
-
-        const {auth, app} = getState();
-        const {registration, activationUrl, activationFromEmail} = auth;
-        const {appBarTitle} = app;
-
-        return postUsers({registration, activationUrl, activationFromEmail, appName: appBarTitle})
-            .then((response) => {
-                if (response.status === 201) {
-                    dispatch(registrationSuccess('Account created. We have sent you an email with activation instructions.'));
-
-                    return {success: true};
-                } else {
-                    return response.json();
-                }
-            })
-            .then((json) => {
-                if (json.error && json.errors) {
-                    dispatch(registrationFailure({error: json.error, errors: json.errors}));
-                }
-            })
-            .catch(error => dispatch(registrationFailure({error: error.message, errors: {}})));
-    };
-};
-const registrationRequest = () => ({type: authActionTypes.REGISTRATION_REQUEST});
-const registrationSuccess = payload => ({type: authActionTypes.REGISTRATION_SUCCESS, payload});
-const registrationFailure = payload => ({type: authActionTypes.REGISTRATION_FAILURE, payload});
 
 export const loginIfNeeded = () => {
     return (dispatch, getState) => {
@@ -128,11 +89,7 @@ export const setActivationData = () => {
     return {type: authActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
 };
 
-export const setRegistrationErrorMessage = payload => ({type: authActionTypes.SET_REGISTRATION_ERROR_MESSAGE, payload});
-export const setRegistrationSuccessMessage = payload => ({type: authActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE, payload});
 export const setLoginErrorMessage = payload => ({type: authActionTypes.SET_LOGIN_ERROR_MESSAGE, payload});
 export const setActivationErrorMessage = payload => ({type: authActionTypes.SET_ACTIVATION_ERROR_MESSAGE, payload});
 export const setActivationSuccessMessage = payload => ({type: authActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE, payload});
 export const toggleLoginPasswordVisibility = () => ({type: authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY});
-export const toggleRegistrationPasswordVisibility = () => ({type: authActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY});
-export const toggleRegistrationRepeatPasswordVisibility = () => ({type: authActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY});
