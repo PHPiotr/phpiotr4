@@ -1,14 +1,28 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import {FormControl} from 'material-ui/Form';
-import TextField from 'material-ui/TextField';
+import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
+import {withStyles} from 'material-ui/styles';
 
-const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
-    if (auth.isLoggedIn || auth.isRegistering || auth.isActivating) {
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+});
+
+const RegistrationForm = (props) => {
+    if (props.isLoggedIn || props.isRegistering || props.isActivating) {
         return null;
     }
 
-    const {registration, registrationErrors} = auth;
+    const {registration, registrationErrors} = props;
     const usernameErrorMessage = (registrationErrors.username && registrationErrors.username.message)
         ? registrationErrors.username.message : '';
     const emailErrorMessage = (registrationErrors.email && registrationErrors.email.message)
@@ -19,52 +33,82 @@ const RegistrationForm = ({auth, handleFocus, handleChange, handleSubmit}) => {
         ? registrationErrors.repeatPassword.message : '';
 
     return (
-        <form style={{padding: '20px'}} onSubmit={handleSubmit} noValidate>
+        <form style={{padding: '20px'}} onSubmit={props.handleSubmit} noValidate>
             <FormControl component="fieldset">
-                <TextField
-                    error={!!usernameErrorMessage}
-                    helperText={`Login: ${usernameErrorMessage}`}
-                    id={'username'}
-                    type={'text'}
-                    name={'username'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={registration.username || ''}
-                />
-                <TextField
-                    error={!!emailErrorMessage}
-                    helperText={`Email: ${emailErrorMessage}`}
-                    id={'email'}
-                    type={'email'}
-                    name={'email'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={registration.email || ''}
-                />
-                <TextField
-                    error={!!passwordErrorMessage}
-                    helperText={`Password: ${passwordErrorMessage}`}
-                    id={'password'}
-                    type={'password'}
-                    name={'password'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={registration.password || ''}
-                />
-                <TextField
-                    error={!!repeatPasswordErrorMessage}
-                    helperText={`Confirm password: ${repeatPasswordErrorMessage}`}
-                    id={'repeat-password'}
-                    type={'password'}
-                    name={'repeatPassword'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={registration.repeatPassword || ''}
-                />
-                <Button style={{marginTop: '20px'}} raised color="primary" type="submit">Register</Button>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Login: ${usernameErrorMessage}`}</InputLabel>
+                    <Input
+                        id="username"
+                        name="username"
+                        type={'text'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={registration.username || ''}
+                        error={!!usernameErrorMessage}
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Email: ${emailErrorMessage}`}</InputLabel>
+                    <Input
+                        id="email"
+                        name="email"
+                        type={'text'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={registration.email || ''}
+                        error={!!emailErrorMessage}
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Password: ${passwordErrorMessage}`}</InputLabel>
+                    <Input
+                        id={'password'}
+                        name="password"
+                        type={props.showPassword ? 'text' : 'password'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={registration.password || ''}
+                        error={!!passwordErrorMessage}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={props.handleClickTogglePassword}
+                                    onMouseDown={props.handleMouseDownTogglePassword}
+                                >
+                                    {props.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Confirm password: ${repeatPasswordErrorMessage}`}</InputLabel>
+                    <Input
+                        id={'repeat-password'}
+                        name="repeatPassword"
+                        type={props.showRepeatPassword ? 'text' : 'password'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={registration.repeatPassword || ''}
+                        error={!!repeatPasswordErrorMessage}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={props.handleClickToggleRepeatPassword}
+                                    onMouseDown={props.handleMouseDownTogglePassword}
+                                >
+                                    {props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <Button raised color="primary" type="submit">Register</Button>
+                </FormControl>
             </FormControl>
         </form>
     );
 };
 
-export default RegistrationForm;
+export default withStyles(styles)(RegistrationForm);
