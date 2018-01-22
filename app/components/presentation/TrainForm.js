@@ -2,54 +2,77 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import {FormControl, FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
-import TextField from 'material-ui/TextField';
 import {NEW_TRAIN, EDIT_TRAIN} from '../../constants';
 import Booking from '../containers/Booking';
+import Input, {InputLabel} from 'material-ui/Input';
+import {withStyles} from 'material-ui/styles';
 
-const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+});
+
+const TrainForm = (props) => {
+
+    const {train} = props;
+
     return (
-        <form style={{padding: '20px'}} onSubmit={handleSubmit}>
+        <form className={props.classes.root} onSubmit={props.handleSubmit}>
             <FormControl component="fieldset">
-                <TextField
-                    error={train.errors.from && !!train.errors.from.message}
-                    helperText={`From: ${(train.errors.from && !!train.errors.from.message) ? train.errors.from.message : ''}`}
-                    id={'from'}
-                    type={'text'}
-                    name={'from'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={train.current.from || ''}
-                />
-                <TextField
-                    error={train.errors.to && !!train.errors.to.message}
-                    helperText={`To: ${(train.errors.to && !!train.errors.to.message) ? train.errors.to.message : ''}`}
-                    id={'to'}
-                    type={'text'}
-                    name={'to'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={train.current.to || ''}
-                />
-                <TextField
-                    error={train.errors.departure_date && !!train.errors.departure_date.message}
-                    helperText={`Departure date: ${(train.errors.departure_date && !!train.errors.departure_date.message) ? train.errors.departure_date.message : ''}`}
-                    id={'departure-date'}
-                    type={'date'}
-                    name={'departure_date'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={train.current.departure_date || ''}
-                />
-                <TextField
-                    error={train.errors.price && !!train.errors.price.message}
-                    helperText={`Price: ${(train.errors.price && !!train.errors.price.message) ? train.errors.price.message : ''}`}
-                    id={'price'}
-                    type={'text'}
-                    name={'price'}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    value={train.current.price || '0.00'}
-                />
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`From: ${(train.errors.from && !!train.errors.from.message) ? train.errors.from.message : ''}`}</InputLabel>
+                    <Input
+                        id={'from'}
+                        type={'text'}
+                        name={'from'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={train.current.from || ''}
+                        error={train.errors.from && !!train.errors.from.message}
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`To: ${(train.errors.to && !!train.errors.to.message) ? train.errors.to.message : ''}`}</InputLabel>
+                    <Input
+                        id={'to'}
+                        type={'text'}
+                        name={'to'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={train.current.to || ''}
+                        error={train.errors.to && !!train.errors.to.message}
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Departure date: ${(train.errors.departure_date && !!train.errors.departure_date.message) ? train.errors.departure_date.message : ''}`}</InputLabel>
+                    <Input
+                        id={'departure-date'}
+                        type={'date'}
+                        name={'departure_date'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={train.current.departure_date || ''}
+                        error={train.errors.departure_date && !!train.errors.departure_date.message}
+                    />
+                </FormControl>
+                <FormControl className={props.classes.formControl}>
+                    <InputLabel htmlFor="password">{`Price: ${(train.errors.price && !!train.errors.price.message) ? train.errors.price.message : ''}`}</InputLabel>
+                    <Input
+                        id={'price'}
+                        type={'text'}
+                        name={'price'}
+                        onChange={props.handleChange}
+                        onFocus={props.handleFocus}
+                        value={train.current.price || '0.00'}
+                        error={train.errors.price && !!train.errors.price.message}
+                    />
+                </FormControl>
+
                 <FormGroup>
                     <FormControlLabel
                         label={`Is return? ${(train.errors.is_return && !!train.errors.is_return.message) ? train.errors.is_return.message : ''}`}
@@ -57,8 +80,8 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                             <Checkbox
                                 error={train.errors.is_return && !!train.errors.is_return.message}
                                 checked={!!train.current.is_return}
-                                onChange={handleChange}
-                                onFocus={handleFocus}
+                                onChange={props.handleChange}
+                                onFocus={props.handleFocus}
                                 value={train.current.is_return ? '1' : ''}
                                 name="is_return"
                             />
@@ -66,18 +89,22 @@ const TrainForm = ({handleSubmit, handleChange, handleFocus, train}) => {
                     />
                 </FormGroup>
                 {!!train.current.is_return && (
-                    <TextField
-                        error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
-                        helperText={`Return date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}
-                        id={'return-departure-date'}
-                        type={'date'}
-                        name={'return_departure_date'}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        value={train.current.return_departure_date || ''}
-                    />
+                    <FormControl className={props.classes.formControl}>
+                        <InputLabel htmlFor="password">{`Return date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}</InputLabel>
+                        <Input
+                            id={'return-departure-date'}
+                            type={'date'}
+                            name={'return_departure_date'}
+                            onChange={props.handleChange}
+                            onFocus={props.handleFocus}
+                            value={train.current.return_departure_date || ''}
+                            error={train.errors.return_departure_date && !!train.errors.return_departure_date.message}
+                        />
+                    </FormControl>
                 )}
-                <Button type="submit">Save</Button>
+                <FormControl className={props.classes.formControl}>
+                    <Button raised color="primary" type="submit">Save</Button>
+                </FormControl>
             </FormControl>
         </form>
     );
@@ -88,4 +115,4 @@ TrainForm.bookingLabel = 'train';
 TrainForm.newLabel = NEW_TRAIN;
 TrainForm.editLabel = EDIT_TRAIN;
 
-export default Booking(TrainForm);
+export default withStyles(styles)(Booking(TrainForm));
