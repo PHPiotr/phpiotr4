@@ -60,7 +60,7 @@ class AccountRecovery extends Component {
                                 type={'text'}
                                 onChange={this.handleChange}
                                 onFocus={this.handleFocus}
-                                value={this.props.email}
+                                value={this.props.recoveryEmail}
                                 error={!!this.props.recoveryErrorMessage}
                             />
                         </FormControl>
