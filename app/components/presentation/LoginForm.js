@@ -65,7 +65,7 @@ const LoginForm = (props) => {
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <Button raised color="primary" type="submit">Log in</Button>
+                    <Button raised color="primary" type="submit">Sign in</Button>
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
                     <Button raised component={Link} to="/account-recovery">Forgot password?</Button>

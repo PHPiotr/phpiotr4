@@ -102,7 +102,7 @@ const RegistrationForm = (props) => {
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <Button raised color="primary" type="submit">Register</Button>
+                    <Button raised color="primary" type="submit">Sign up</Button>
                 </FormControl>
             </FormControl>
         </form>
