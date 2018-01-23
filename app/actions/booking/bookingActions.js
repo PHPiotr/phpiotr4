@@ -67,10 +67,15 @@ export const editBookingIfNeeded = (singular, plural) => {
         dispatch(editBookingRequest({label: singular}));
         return putBookings(token, plural, id, JSON.stringify(current))
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText, response.status);
+                if (response.ok) {
+                    return dispatch(editBookingSuccess({label: singular}));
                 }
-                return dispatch(editBookingSuccess({label: singular}));
+                return response.json();
+            })
+            .then((json) => {
+                if (json.err) {
+                    dispatch(editBookingFailure({label: singular, error: json.err}));
+                }
             })
             .catch(error => dispatch(editBookingFailure({label: singular, error})));
     };
