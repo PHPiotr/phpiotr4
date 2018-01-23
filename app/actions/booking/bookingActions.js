@@ -9,13 +9,9 @@ export const setBookingFieldErrorMessage = payload => ({type: bookingActionTypes
 export const handleFocus = ({target: {name}}, label) => {
     return (dispatch, getState) => {
         const {bookings: {[label]: {message, errors}}} = getState();
-        if (message) {
-            dispatch(setBookingErrorMessage({label, message: ''}));
-        }
+        message && dispatch(setBookingErrorMessage({label, message: ''}));
         const errorsName = errors[name];
-        if (errorsName && errorsName.message) {
-            dispatch(setBookingFieldErrorMessage({label, name, value: null}));
-        }
+        (errorsName && errorsName.message) && dispatch(setBookingFieldErrorMessage({label, name, value: null}));
         return Promise.resolve();
     };
 };
