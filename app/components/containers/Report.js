@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {fetchReportIfNeeded, toggleDetailsOpen} from '../../actions/report/reportActions';
 import {toggleDateFilterEnabled} from '../../actions/dateFilter/dateFilterActions';
@@ -31,11 +31,11 @@ class Report extends Component {
             return <LinearProgress />;
         }
         return (
-            <div>
+            <Fragment>
                 <Typography style={{padding: '23px'}} type="headline">Total: £{report.totalCost}</Typography>
                 <DateFilterForm {...this.props}/>
                 <ReportTable report={report} toggleDetailsOpen={toggleDetailsOpen}/>
-            </div>
+            </Fragment>
         );
     }
 }
