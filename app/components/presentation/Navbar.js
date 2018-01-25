@@ -16,16 +16,7 @@ import HostelIcon from 'material-ui-icons/Hotel';
 import SignInIcon from 'material-ui-icons/Input';
 import SignUpIcon from 'material-ui-icons/PersonAdd';
 import SignoutIcon from 'material-ui-icons/ExitToApp';
-
-const styles = ({palette}) => ({
-    listFull: {
-        width: 'auto',
-    },
-    link: {
-        textDecoration: 'none',
-        color: palette.primary,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 const Navbar = (props) => {
 

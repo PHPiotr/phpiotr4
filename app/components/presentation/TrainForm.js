@@ -6,16 +6,7 @@ import {NEW_TRAIN, EDIT_TRAIN} from '../../constants';
 import Booking from '../containers/Booking';
 import Input, {InputLabel} from 'material-ui/Input';
 import {withStyles} from 'material-ui/styles';
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 const TrainForm = (props) => {
 

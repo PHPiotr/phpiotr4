@@ -14,16 +14,7 @@ import IconButton from 'material-ui/IconButton';
 import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import {withStyles} from 'material-ui/styles';
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 class PasswordReset extends Component {
 
