@@ -125,7 +125,7 @@ const BusForm = (props) => {
                             name={'return_departure_time'}
                             onChange={props.handleChange}
                             onFocus={props.handleFocus}
-                            value={bus.current.return_departure_date || ''}
+                            value={bus.current.return_departure_time || ''}
                             error={bus.errors.return_departure_time && !!bus.errors.return_departure_time.message}
                         />
                     </FormControl>,
