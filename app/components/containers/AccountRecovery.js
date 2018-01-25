@@ -9,16 +9,7 @@ import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
 import Input, {InputLabel} from 'material-ui/Input';
 import {withStyles} from 'material-ui/styles';
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 class AccountRecovery extends Component {
 

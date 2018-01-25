@@ -6,16 +6,7 @@ import {NEW_BUS, EDIT_BUS} from '../../constants';
 import Booking from '../containers/Booking';
 import Input, {InputLabel} from 'material-ui/Input';
 import {withStyles} from 'material-ui/styles';
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 const BusForm = (props) => {
 
@@ -134,7 +125,7 @@ const BusForm = (props) => {
                             name={'return_departure_time'}
                             onChange={props.handleChange}
                             onFocus={props.handleFocus}
-                            value={bus.current.return_departure_date || ''}
+                            value={bus.current.return_departure_time || ''}
                             error={bus.errors.return_departure_time && !!bus.errors.return_departure_time.message}
                         />
                     </FormControl>,

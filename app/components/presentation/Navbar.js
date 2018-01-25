@@ -16,16 +16,7 @@ import HostelIcon from 'material-ui-icons/Hotel';
 import SignInIcon from 'material-ui-icons/Input';
 import SignUpIcon from 'material-ui-icons/PersonAdd';
 import SignoutIcon from 'material-ui-icons/ExitToApp';
-
-const styles = ({palette}) => ({
-    listFull: {
-        width: 'auto',
-    },
-    link: {
-        textDecoration: 'none',
-        color: palette.primary,
-    },
-});
+import {formStyles as styles} from '../../utils/styles';
 
 const Navbar = (props) => {
 
@@ -61,19 +52,19 @@ const Navbar = (props) => {
                                 <Divider/>
                                 <ListItem button>
                                     <ListItemIcon><BusIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/buses'}>Buses</Link>
+                                    <Link className={classes.link} to={'/bookings/buses/current'}>Buses</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><PlaneIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/planes'}>Planes</Link>
+                                    <Link className={classes.link} to={'/bookings/planes/current'}>Planes</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><TrainIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/trains'}>Trains</Link>
+                                    <Link className={classes.link} to={'/bookings/trains/current'}>Trains</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><HostelIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/hostels'}>Hostels</Link>
+                                    <Link className={classes.link} to={'/bookings/hostels/current'}>Hostels</Link>
                                 </ListItem>
                                 <Divider/>
                                 <ListItem button>
