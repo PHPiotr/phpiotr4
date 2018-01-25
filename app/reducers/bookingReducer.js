@@ -1,4 +1,5 @@
 import * as indexActionTypes from '../actions/booking/bookingActionTypes';
+import {LOGOUT} from '../actions/auth/authActionTypes';
 
 const initialBooking = {
     isAdd: false,
@@ -180,6 +181,8 @@ const bookings = (state = initialState, action) => {
             return {...state, currentBooking: payload};
         case indexActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN:
             return {...state, isBookingDeleteDialogOpen: !state.isBookingDeleteDialogOpen};
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }
