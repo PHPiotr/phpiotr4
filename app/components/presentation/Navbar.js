@@ -61,19 +61,19 @@ const Navbar = (props) => {
                                 <Divider/>
                                 <ListItem button>
                                     <ListItemIcon><BusIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/buses'}>Buses</Link>
+                                    <Link className={classes.link} to={'/bookings/buses/current'}>Buses</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><PlaneIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/planes'}>Planes</Link>
+                                    <Link className={classes.link} to={'/bookings/planes/current'}>Planes</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><TrainIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/trains'}>Trains</Link>
+                                    <Link className={classes.link} to={'/bookings/trains/current'}>Trains</Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon><HostelIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/hostels'}>Hostels</Link>
+                                    <Link className={classes.link} to={'/bookings/hostels/current'}>Hostels</Link>
                                 </ListItem>
                                 <Divider/>
                                 <ListItem button>
