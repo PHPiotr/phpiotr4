@@ -155,8 +155,16 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
                 }
                 return response.json();
             })
-            .then(json => dispatch(fetchBookingsSuccess({label: singular, data: json})))
-            .catch(error => dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code})));
+            .then((json) => {
+                return dispatch(fetchBookingsSuccess({label: singular, data: getState().auth.isLoggedIn ? json : {}}));
+            })
+            .catch((error) => {
+                if (getState().auth.isLoggedIn) {
+                    return dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code}));
+                } else {
+                    return dispatch(fetchBookingsFailure({label: singular, error: {}, message: '', code: null}));
+                }
+            });
     };
 };
 const fetchBookingsRequest = payload => ({type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload});
