@@ -70,10 +70,10 @@ export const editBookingIfNeeded = (singular, plural) => {
             })
             .then((json) => {
                 if (json.err) {
-                    dispatch(editBookingFailure({label: singular, error: json.err}));
+                    dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? json.err : {}}));
                 }
             })
-            .catch(error => dispatch(editBookingFailure({label: singular, error})));
+            .catch(error => dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? error : {}})));
     };
 };
 const editBookingRequest = payload => ({type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload});
