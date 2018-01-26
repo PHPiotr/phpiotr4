@@ -3,7 +3,9 @@ import {connect} from 'react-redux';
 import {withRouter, Route, Switch} from 'react-router-dom';
 import Navbar from '../presentation/Navbar';
 import {withCookies} from 'react-cookie';
+import {Helmet} from 'react-helmet';
 import universal from 'react-universal-component';
+import {HOME} from '../../constants';
 
 const Report = universal(() => import('./Report'));
 const Buses = universal(() => import('../presentation/BusesTable'));
@@ -32,6 +34,10 @@ class App extends Component {
     render() {
         return (
             <Fragment>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>{HOME}</title>
+                </Helmet>
                 <Navbar/>
                 <div style={{paddingTop: 70}}>
                     <Switch>
