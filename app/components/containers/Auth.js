@@ -8,21 +8,20 @@ import {setToken, setIsLoggedIn} from '../../actions/auth/authActions';
 function auth(WrappedComponent) {
     class Auth extends Component {
         static displayName = `Auth(${getDisplayName(WrappedComponent)})`;
-        verify(token) {
-            const {exp} = jwtDecode(token);
-            if (!exp) {
-                throw Error;
-            }
-            const expiration = exp * 1000;
-            const now = (new Date()).getTime();
-            if (expiration < now) {
-                throw Error;
-            }
-            return true;
-        }
 
-        componentWillMount() {
-            const {verify} = this;
+        validateToken = () => {
+            const verify = (token) => {
+                const {exp} = jwtDecode(token);
+                if (!exp) {
+                    throw Error;
+                }
+                const expiration = exp * 1000;
+                const now = (new Date()).getTime();
+                if (expiration < now) {
+                    throw Error;
+                }
+                return true;
+            };
             const {token, isLoggedIn, setToken, setLoggedIn} = this.props;
             try {
                 if (token) {
@@ -41,6 +40,14 @@ function auth(WrappedComponent) {
             } catch (e) {
                 this.props.history.replace('/logout');
             }
+        };
+
+        componentWillMount() {
+            this.validateToken();
+        }
+
+        componentWillReceiveProps() {
+            this.validateToken();
         }
 
         render() {
