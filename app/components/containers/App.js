@@ -36,7 +36,7 @@ class App extends Component {
             <Fragment>
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>{HOME}</title>
+                    <title>{this.props.appBarTitle === HOME ? HOME : `${HOME} - ${this.props.appBarTitle}`}</title>
                 </Helmet>
                 <Navbar/>
                 <div style={{paddingTop: 70}}>
@@ -63,4 +63,6 @@ class App extends Component {
     }
 }
 
-export default withRouter(connect()(withCookies(App)));
+const mapStateToProps = state => ({appBarTitle: state.app.appBarTitle});
+
+export default withRouter(connect(mapStateToProps)(withCookies(App)));
