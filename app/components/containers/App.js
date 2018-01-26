@@ -3,39 +3,23 @@ import {connect} from 'react-redux';
 import {withRouter, Route, Switch} from 'react-router-dom';
 import Navbar from '../presentation/Navbar';
 import {withCookies} from 'react-cookie';
-// import universal from 'react-universal-component';
-//
-// const Report = universal(() => import('./Report'));
-// const Buses = universal(() => import('../presentation/BusesTable'));
-// const Planes = universal(() => import('../presentation/PlanesTable'));
-// const Trains = universal(() => import('../presentation/TrainsTable'));
-// const Hostels = universal(() => import('../presentation/HostelsTable'));
-// const Bus = universal(() => import('../presentation/BusForm'));
-// const Plane = universal(() => import('../presentation/PlaneForm'));
-// const Train = universal(() => import('../presentation/TrainForm'));
-// const Hostel = universal(() => import('../presentation/HostelForm'));
-// const Login = universal(() => import('./Login'));
-// const Registration = universal(() => import('./Registration'));
-// const Logout = universal(() => import('./Logout'));
-// const AccountRecovery = universal(() => import('./AccountRecovery'));
-// const PasswordReset = universal(() => import('./PasswordReset'));
-// const NotFound = universal(() => import('./NotFound'));
+import universal from 'react-universal-component';
 
-import Report from'./Report';
-import Buses from'../presentation/BusesTable';
-import Planes from'../presentation/PlanesTable';
-import Trains from'../presentation/TrainsTable';
-import Hostels from'../presentation/HostelsTable';
-import Bus from'../presentation/BusForm';
-import Plane from'../presentation/PlaneForm';
-import Train from'../presentation/TrainForm';
-import Hostel from'../presentation/HostelForm';
-import Login from'./Login';
-import Registration from'./Registration';
-import Logout from'./Logout';
-import NotFound from'./NotFound';
-import AccountRecovery from'./AccountRecovery';
-import PasswordReset from'./PasswordReset';
+const Report = universal(() => import('./Report'));
+const Buses = universal(() => import('../presentation/BusesTable'));
+const Planes = universal(() => import('../presentation/PlanesTable'));
+const Trains = universal(() => import('../presentation/TrainsTable'));
+const Hostels = universal(() => import('../presentation/HostelsTable'));
+const Bus = universal(() => import('../presentation/BusForm'));
+const Plane = universal(() => import('../presentation/PlaneForm'));
+const Train = universal(() => import('../presentation/TrainForm'));
+const Hostel = universal(() => import('../presentation/HostelForm'));
+const Login = universal(() => import('./Login'));
+const Registration = universal(() => import('./Registration'));
+const Logout = universal(() => import('./Logout'));
+const AccountRecovery = universal(() => import('./AccountRecovery'));
+const PasswordReset = universal(() => import('./PasswordReset'));
+const NotFound = universal(() => import('./NotFound'));
 
 class App extends Component {
     componentDidMount() {
