@@ -96,7 +96,7 @@ export const deleteBookingIfNeeded = () => {
                 }
                 return dispatch(deleteBookingSuccess({label}));
             })
-            .catch(error => dispatch(deleteBookingFailure({label, error})));
+            .catch(error => dispatch(deleteBookingFailure({label, error: getState().auth.isLoggedIn ? error : {}})));
     };
 };
 const deleteBookingRequest = payload => ({type: bookingActionTypes.DELETE_BOOKING_REQUEST, payload});
