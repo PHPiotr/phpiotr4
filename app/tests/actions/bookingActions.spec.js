@@ -49,6 +49,7 @@ describe('bookingActions', () => {
                 },
                 auth: {
                     token: 'j.w.t',
+                    isLoggedIn: true,
                 },
             });
         });

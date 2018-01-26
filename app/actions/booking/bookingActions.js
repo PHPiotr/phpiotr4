@@ -70,10 +70,10 @@ export const editBookingIfNeeded = (singular, plural) => {
             })
             .then((json) => {
                 if (json.err) {
-                    dispatch(editBookingFailure({label: singular, error: json.err}));
+                    dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? json.err : {}}));
                 }
             })
-            .catch(error => dispatch(editBookingFailure({label: singular, error})));
+            .catch(error => dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? error : {}})));
     };
 };
 const editBookingRequest = payload => ({type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload});
@@ -96,7 +96,7 @@ export const deleteBookingIfNeeded = () => {
                 }
                 return dispatch(deleteBookingSuccess({label}));
             })
-            .catch(error => dispatch(deleteBookingFailure({label, error})));
+            .catch(error => dispatch(deleteBookingFailure({label, error: getState().auth.isLoggedIn ? error : {}})));
     };
 };
 const deleteBookingRequest = payload => ({type: bookingActionTypes.DELETE_BOOKING_REQUEST, payload});
@@ -132,8 +132,16 @@ export const getBookingIfNeeded = (singular, plural, id) => {
                     return_arrival_time: json.return_arrival_time ? (json.return_arrival_time.indexOf(':') === -1 ? json.return_arrival_time.substring(0, 2) + ':' + json.return_arrival_time.substring(2, json.return_arrival_time.length) : json.return_arrival_time) : null,
                 };
             })
-            .then(json => dispatch(getBookingSuccess({label: singular, current: json})))
-            .catch(error => dispatch(getBookingFailure({label: singular, error, message: error.message, code: error.code})));
+            .then((json) => {
+                return dispatch(getBookingSuccess({label: singular, current: getState().auth.isLoggedIn ? json : {}}));
+            })
+            .catch((error) => {
+                if (getState().auth.isLoggedIn) {
+                    return dispatch(getBookingFailure({label: singular, error, message: error.message, code: error.code}));
+                } else {
+                    return dispatch(getBookingFailure({label: singular, error: {}, message: '', code: null}));
+                }
+            });
     };
 };
 const getBookingRequest = payload => ({type: bookingActionTypes.GET_BOOKING_REQUEST, payload});
@@ -155,8 +163,16 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
                 }
                 return response.json();
             })
-            .then(json => dispatch(fetchBookingsSuccess({label: singular, data: json})))
-            .catch(error => dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code})));
+            .then((json) => {
+                return dispatch(fetchBookingsSuccess({label: singular, data: getState().auth.isLoggedIn ? json : {}}));
+            })
+            .catch((error) => {
+                if (getState().auth.isLoggedIn) {
+                    return dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code}));
+                } else {
+                    return dispatch(fetchBookingsFailure({label: singular, error: {}, message: '', code: null}));
+                }
+            });
     };
 };
 const fetchBookingsRequest = payload => ({type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload});

@@ -2,6 +2,7 @@ import bookingReducer from '../../reducers/bookingReducer';
 import * as bookingActionTypes from '../../actions/booking/bookingActionTypes';
 import expect from 'expect';
 import freeze from 'deep-freeze';
+import {LOGOUT} from '../../actions/auth/authActionTypes';
 
 const initialBooking = {
     isAdd: false,
@@ -407,5 +408,14 @@ describe('bookingReducer', () => {
                 expect(bookingReducer(before, action)).toEqual(after);
             });
         });
+    });
+    it(`it should return bookings initial state on ${LOGOUT} action`, () => {
+        const action = {type: LOGOUT};
+        const before = {...initialState, isBookingDeleteDialogOpen: true};
+        const after = initialState;
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(bookingReducer(before, action)).toEqual(initialState);
     });
 });
