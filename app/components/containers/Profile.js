@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Auth from './Auth';
 import {connect} from 'react-redux';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {PROFILE} from '../../constants';
 import {getProfileIfNeeded} from '../../actions/profile/profileActions';
 import {LinearProgress} from 'material-ui/Progress';
+import Typography from 'material-ui/Typography';
 
 class Profile extends Component {
 
@@ -17,7 +18,11 @@ class Profile extends Component {
         if (this.props.isFetching) {
             return <LinearProgress/>;
         }
-        return 'Profile';
+        return (
+            <Fragment>
+                <Typography style={{padding: '23px'}} type="headline">{this.props.login}</Typography>
+            </Fragment>
+        );
     }
 }
 
