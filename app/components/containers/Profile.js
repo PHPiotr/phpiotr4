@@ -1,6 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Auth from './Auth';
+import {connect} from 'react-redux';
+import {setAppBarTitle} from '../../actions/app/appActions';
+import {PROFILE} from '../../constants';
 
-const Profile = () => 'Profile';
+class Profile extends Component {
 
-export default Auth(Profile);
+    componentDidMount() {
+        this.props.dispatch(setAppBarTitle(PROFILE));
+    }
+
+    render() {
+        return 'Profile';
+    }
+}
+
+export default Auth(connect()(Profile));
