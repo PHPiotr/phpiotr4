@@ -5,7 +5,8 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 import {PROFILE} from '../../constants';
 import {getProfileIfNeeded} from '../../actions/profile/profileActions';
 import {LinearProgress} from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import {formatDateTime} from '../../utils/formatDateUtil';
 
 class Profile extends Component {
 
@@ -20,7 +21,20 @@ class Profile extends Component {
         }
         return (
             <Fragment>
-                <Typography style={{padding: '23px'}} type="headline">{this.props.login}</Typography>
+                <List>
+                    <ListItem button>
+                        <ListItemText primary="Login" secondary={this.props.login} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Email" secondary={this.props.email} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Created" secondary={formatDateTime(this.props.createdAt)} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Last modified" secondary={formatDateTime(this.props.updatedAt)} />
+                    </ListItem>
+                </List>
             </Fragment>
         );
     }
