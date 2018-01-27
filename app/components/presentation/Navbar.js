@@ -9,6 +9,7 @@ import Divider from 'material-ui/Divider';
 import ToolbarIconButtonLeft from './ToolbarIconButtonLeft';
 import ToolbarIconButtonRight from './ToolbarIconButtonRight';
 import ReportIcon from 'material-ui-icons/Home';
+import ProfileIcon from 'material-ui-icons/Person';
 import BusIcon from 'material-ui-icons/DirectionsBus';
 import PlaneIcon from 'material-ui-icons/Flight';
 import TrainIcon from 'material-ui-icons/Train';
@@ -48,6 +49,11 @@ const Navbar = (props) => {
                                 <ListItem button>
                                     <ListItemIcon><ReportIcon/></ListItemIcon>
                                     <Link className={classes.link} to={'/'}>Report</Link>
+                                </ListItem>
+                                <Divider/>
+                                <ListItem button>
+                                    <ListItemIcon><ProfileIcon/></ListItemIcon>
+                                    <Link className={classes.link} to={'/profile'}>Profile</Link>
                                 </ListItem>
                                 <Divider/>
                                 <ListItem button>
