@@ -8,6 +8,7 @@ import universal from 'react-universal-component';
 import {HOME} from '../../constants';
 
 const Report = universal(() => import('./Report'));
+const Profile = universal(() => import('./Profile'));
 const Buses = universal(() => import('../presentation/BusesTable'));
 const Planes = universal(() => import('../presentation/PlanesTable'));
 const Trains = universal(() => import('../presentation/TrainsTable'));
@@ -42,6 +43,7 @@ class App extends Component {
                 <div style={{paddingTop: 70}}>
                     <Switch>
                         <Route exact path="/" component={Report}/>
+                        <Route name="profile" path="/profile" component={Profile}/>
                         <Route name="login" path="/login" component={Login}/>
                         <Route name="register" path="/register/:userId?/:bearerToken?" component={Registration}/>
                         <Route name="logout" path="/logout" component={Logout}/>
