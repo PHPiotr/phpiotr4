@@ -7,12 +7,14 @@ import {getProfileIfNeeded} from '../../actions/profile/profileActions';
 import {LinearProgress} from 'material-ui/Progress';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import {formatDateTime} from '../../utils/formatDateUtil';
+import jwtDecode from 'jwt-decode';
 
 class Profile extends Component {
 
     componentDidMount() {
         this.props.setAppBarTitle(PROFILE);
-        this.props.getProfile();
+        const {sub} = jwtDecode(this.props.token);
+        this.props.getProfile(sub);
     }
 
     render() {
@@ -40,13 +42,13 @@ class Profile extends Component {
     }
 }
 
-const mapStateToProps = ({profile}) => ({...profile});
+const mapStateToProps = ({profile, auth: {token}}) => ({...profile, token});
 const mapDispatchToProps = dispatch => ({
     setAppBarTitle(title) {
         dispatch(setAppBarTitle(title));
     },
-    getProfile() {
-        dispatch(getProfileIfNeeded());
+    getProfile(sub) {
+        dispatch(getProfileIfNeeded(sub));
     },
 });
 
