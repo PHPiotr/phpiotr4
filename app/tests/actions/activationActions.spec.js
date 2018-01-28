@@ -53,6 +53,17 @@ describe('Activation actions', () => {
         return store.dispatch(activationActions.activateIfNeeded(userId, token))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${activationActionTypes.ACTIVATION_REQUEST} when user currently logging in`, () => {
+        const store = mockStore({
+            auth: {
+                isLoggingIn: true,
+            },
+        });
+        const userId = 1;
+        const token = 'j.w.t';
+        return store.dispatch(activationActions.activateIfNeeded(userId, token))
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
     it('should create an action to set activation data', () => {
         const location = {
             host: 'www.example.com',
