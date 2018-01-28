@@ -32,6 +32,27 @@ describe('Activation actions', () => {
         return store.dispatch(activationActions.activateIfNeeded(userId, token))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${activationActionTypes.ACTIVATION_FAILURE} when activation failed`, () => {
+        const store = mockStore({
+            auth: {
+                isLoggingIn: false,
+            },
+        });
+        const userId = 1;
+        const token = 'j.w.t';
+        const message = 'Something went wrong';
+        const payload = Error(message);
+        nock(apiUrl).put(`${apiPrefix}/users/${userId}`).reply(403, payload);
+        const expectedActions = [
+            {type: activationActionTypes.ACTIVATION_REQUEST},
+            {
+                type: activationActionTypes.ACTIVATION_FAILURE,
+                payload: message,
+            },
+        ];
+        return store.dispatch(activationActions.activateIfNeeded(userId, token))
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it('should create an action to set activation data', () => {
         const location = {
             host: 'www.example.com',
