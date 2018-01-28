@@ -58,4 +58,17 @@ describe('Profile Actions', () => {
         return store.dispatch(profileActions.getProfileIfNeeded())
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${profileActionTypes.GET_PROFILE_REQUEST} when GET request for view profile already started`, () => {
+        store = mockStore({
+            profile: {
+                isFetching: true,
+            },
+            auth: {
+                token: 'j.w.t',
+                isLoggedIn: true,
+            },
+        });
+        return store.dispatch(profileActions.getProfileIfNeeded())
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
 });
