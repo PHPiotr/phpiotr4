@@ -1,8 +1,37 @@
 import expect from 'expect';
 import * as activationActions from '../../actions/activation/activationActions';
 import * as activationActionTypes from '../../actions/activation/activationActionTypes';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import nock from 'nock';
+import 'isomorphic-fetch';
+import 'babel-polyfill';
+
+const apiUrl = 'http://localhost:8080';
+const apiPrefix = '/api/v1';
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 describe('Activation actions', () => {
+    it(`should create ${activationActionTypes.ACTIVATION_SUCCESS} when activation done`, () => {
+        const store = mockStore({
+            auth: {
+                isLoggingIn: false,
+            },
+        });
+        const userId = 1;
+        const token = 'j.w.t';
+        nock(apiUrl).put(`${apiPrefix}/users/${userId}`).reply(204);
+        const expectedActions = [
+            {type: activationActionTypes.ACTIVATION_REQUEST},
+            {
+                type: activationActionTypes.ACTIVATION_SUCCESS,
+                payload: 'Account activated. You can now log in.',
+            },
+        ];
+        return store.dispatch(activationActions.activateIfNeeded(userId, token))
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it('should create an action to set activation data', () => {
         const location = {
             host: 'www.example.com',
