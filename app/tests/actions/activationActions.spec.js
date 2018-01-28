@@ -23,4 +23,12 @@ describe('Activation actions', () => {
         };
         expect(activationActions.setActivationErrorMessage(payload)).toEqual(expectedAction);
     });
+    it('should create an action to set activation success message', () => {
+        const payload = 'Success...';
+        const expectedAction = {
+            type: activationActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE,
+            payload,
+        };
+        expect(activationActions.setActivationSuccessMessage(payload)).toEqual(expectedAction);
+    });
 });
