@@ -71,4 +71,20 @@ describe('Profile Actions', () => {
         return store.dispatch(profileActions.getProfileIfNeeded())
             .then(() => expect(store.getActions()).toEqual([]));
     });
+    it(`should create ${profileActionTypes.GET_PROFILE_FAILURE} when GET request for view profile fails`, () => {
+        const expectedError = {
+            message: 'Forbidden',
+            code: 403,
+        };
+        nock(apiUrl).get(`${apiPrefix}/users/current`).reply(403, expectedError);
+        const expectedActions = [
+            {type: profileActionTypes.GET_PROFILE_REQUEST},
+            {
+                type: profileActionTypes.GET_PROFILE_FAILURE,
+                payload: expectedError,
+            },
+        ];
+        return store.dispatch(profileActions.getProfileIfNeeded())
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
 });
