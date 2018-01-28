@@ -1,14 +1,12 @@
 import {getProfile} from '../../services/profileService';
 import * as profileActionTypes from './profileActionTypes';
-import jwtDecode from 'jwt-decode';
 
-export const getProfileIfNeeded = () => {
+export const getProfileIfNeeded = (sub) => {
     return (dispatch, getState) => {
         const {profile, auth: {token}} = getState();
         if (profile.isFetching) {
             return Promise.resolve();
         }
-        const {sub} = jwtDecode(token);
         dispatch(getProfileRequest());
         return getProfile(token, sub)
             .then((response) => {
