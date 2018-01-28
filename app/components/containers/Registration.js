@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch, {match: {params}, history}) => ({
             dispatch(activationActions.activateIfNeeded(userId, bearerToken))
                 .then(() => history.replace('/login'));
         } else {
-            dispatch(activationActions.setActivationData());
+            dispatch(activationActions.setActivationData(location));
         }
     },
     handleFocus(event) {
