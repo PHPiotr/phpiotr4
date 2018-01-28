@@ -308,6 +308,25 @@ describe('bookingActions', () => {
                 });
         });
 
+        it(`should create ${bookingActionTypes.GET_BOOKING_FAILURE} when viewing of booking failed but no payload when user logged out`, () => {
+
+            store = mockStore({...storeContent, auth: {...storeContent.auth, isLoggedIn: false}});
+            const code = 403;
+            const expectedPayload = {};
+
+            nock(apiUrl).get(`${apiPrefix}/bookings/${label}/${id}`).reply(code, expectedPayload);
+            const expectedRequestAction = {
+                type: bookingActionTypes.GET_BOOKING_REQUEST,
+                payload: {label: pluralToSingularMapping[label]},
+            };
+
+            return store.dispatch(bookingActions.getBookingIfNeeded(pluralToSingularMapping[label], label, id))
+                .then((expectedFailureAction) => {
+                    expect(store.getActions()[0]).toEqual(expectedRequestAction);
+                    expect(store.getActions()[1]).toEqual(expectedFailureAction);
+                });
+        });
+
         it(`should create ${bookingActionTypes.EDIT_BOOKING_SUCCESS} when edition of booking succeeded`, () => {
             nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(204);
             const expectedActions = [
