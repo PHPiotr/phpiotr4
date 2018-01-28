@@ -9,4 +9,12 @@ describe('App actions', () => {
         };
         expect(appActions.toggleIsDrawerOpen()).toEqual(expectedAction);
     });
+    it('should create an action to set app-bar title', () => {
+        const expectedAppBarTitle = 'Hello World!';
+        const expectedAction = {
+            type: appActionTypes.SET_APP_BAR_TITLE,
+            payload: expectedAppBarTitle,
+        };
+        expect(appActions.setAppBarTitle(expectedAppBarTitle)).toEqual(expectedAction);
+    });
 });
