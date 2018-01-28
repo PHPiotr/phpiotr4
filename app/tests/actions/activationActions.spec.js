@@ -15,4 +15,12 @@ describe('Activation actions', () => {
         };
         expect(activationActions.setActivationData(location)).toEqual(expectedAction);
     });
+    it('should create an action to set activation error message', () => {
+        const payload = 'An error occurred...';
+        const expectedAction = {
+            type: activationActionTypes.SET_ACTIVATION_ERROR_MESSAGE,
+            payload,
+        };
+        expect(activationActions.setActivationErrorMessage(payload)).toEqual(expectedAction);
+    });
 });
