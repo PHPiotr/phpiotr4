@@ -36,7 +36,7 @@ const activationRequest = () => ({type: activationActionTypes.ACTIVATION_REQUEST
 const activationSuccess = payload => ({type: activationActionTypes.ACTIVATION_SUCCESS, payload});
 const activationFailure = payload => ({type: activationActionTypes.ACTIVATION_FAILURE, payload});
 
-export const setActivationData = () => {
+export const setActivationData = (location) => {
     const {host, hostname, protocol} = location;
     return {type: activationActionTypes.SET_ACTIVATION_DATA, payload: {host, hostname, protocol}};
 };
