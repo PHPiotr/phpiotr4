@@ -30,28 +30,29 @@ describe('bookingActions', () => {
         const booking = {_id: id};
         const data = {bookings: [booking]};
         let store;
+        let storeContent = {
+            bookings: {
+                [pluralToSingularMapping[label]]: {
+                    data,
+                    isDeleting: false,
+                    isFetching: false,
+                    current: {_id: id},
+                    errors: {},
+                    message: '',
+                },
+                currentBooking: {
+                    label: pluralToSingularMapping[label],
+                    labelPlural: label,
+                    id,
+                },
+            },
+            auth: {
+                token: 'j.w.t',
+                isLoggedIn: true,
+            },
+        };
         beforeEach(() => {
-            store = mockStore({
-                bookings: {
-                    [pluralToSingularMapping[label]]: {
-                        data,
-                        isDeleting: false,
-                        isFetching: false,
-                        current: {_id: id},
-                        errors: {},
-                        message: '',
-                    },
-                    currentBooking: {
-                        label: pluralToSingularMapping[label],
-                        labelPlural: label,
-                        id,
-                    },
-                },
-                auth: {
-                    token: 'j.w.t',
-                    isLoggedIn: true,
-                },
-            });
+            store = mockStore(storeContent);
         });
         afterEach(() => {
             nock.cleanAll();
@@ -115,6 +116,35 @@ describe('bookingActions', () => {
             const code = 403;
             const message = 'Forbidden';
             const error = {code, message};
+
+            nock(apiUrl).get(`${apiPrefix}/bookings/${label}?type=${type}&page=${page}`).reply(403, error);
+            const expectedActions = [
+                {type: bookingActionTypes.GET_BOOKINGS_REQUEST, payload: {label: pluralToSingularMapping[label]}},
+                {
+                    type: bookingActionTypes.GET_BOOKINGS_FAILURE,
+                    payload: {label: pluralToSingularMapping[label], error, code, message},
+                },
+            ];
+
+            return store.dispatch(bookingActions.getBookingsIfNeeded(pluralToSingularMapping[label], label, type, page))
+                .then((response) => {
+                    expect(response.type).toEqual(bookingActionTypes.GET_BOOKINGS_FAILURE);
+                    expect(response.payload.code).toEqual(code);
+                    expect(response.payload.message).toEqual(message);
+                    expect(response.payload.error).toEqual(error);
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
+        });
+
+        it(`should create ${bookingActionTypes.GET_BOOKINGS_FAILURE} when listing of bookings failed`, () => {
+
+            store = mockStore({...storeContent, auth: {...storeContent.auth, isLoggedIn: false}});
+
+            const type = 'current';
+            const page = 1;
+            const code = null;
+            const message = '';
+            const error = {};
 
             nock(apiUrl).get(`${apiPrefix}/bookings/${label}?type=${type}&page=${page}`).reply(403, error);
             const expectedActions = [
