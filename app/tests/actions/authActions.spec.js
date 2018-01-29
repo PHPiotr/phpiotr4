@@ -45,4 +45,13 @@ describe('Auth Actions', () => {
         };
         expect(authActions.setIsLoggedIn(payload)).toEqual(expectedAction);
     });
+    it(`should create ${authActionTypes.SET_LOGIN_ERROR_MESSAGE} when login error message is to be set`, () => {
+        const payload = 'An error occurred';
+        const type = authActionTypes.SET_LOGIN_ERROR_MESSAGE;
+        const expectedAction = {
+            type,
+            payload,
+        };
+        expect(authActions.setLoginErrorMessage(payload)).toEqual(expectedAction);
+    });
 });
