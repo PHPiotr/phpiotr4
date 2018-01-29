@@ -15,4 +15,16 @@ describe('Auth Actions', () => {
         expect(authActions.change(fieldName, fieldValue, type)).toEqual(expectedAction);
         expect(authActions.change(fieldName, fieldValue)).toEqual(expectedAction);
     });
+    it(`should create ${authActionTypes.ON_FOCUS_LOGIN_FIELD} when login form input focuses`, () => {
+        const fieldName = 'price';
+        const fieldValue = 9.99;
+        const type = authActionTypes.ON_FOCUS_LOGIN_FIELD;
+        const expectedAction = {
+            type,
+            fieldName,
+            fieldValue,
+        };
+        expect(authActions.focus(fieldName, fieldValue, type)).toEqual(expectedAction);
+        expect(authActions.focus(fieldName, fieldValue)).toEqual(expectedAction);
+    });
 });
