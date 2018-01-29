@@ -54,4 +54,11 @@ describe('Auth Actions', () => {
         };
         expect(authActions.setLoginErrorMessage(payload)).toEqual(expectedAction);
     });
+    it(`should create ${authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY} when visibility of password input to be toggled`, () => {
+        const type = authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY;
+        const expectedAction = {
+            type,
+        };
+        expect(authActions.toggleLoginPasswordVisibility()).toEqual(expectedAction);
+    });
 });
