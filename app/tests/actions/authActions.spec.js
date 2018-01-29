@@ -42,6 +42,23 @@ describe('Auth Actions', () => {
         return store.dispatch(authActions.loginIfNeeded(basic))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${authActionTypes.LOGIN_REQUEST} when logging in in progress`, () => {
+        const username = 'hello';
+        const password = 'world';
+        const store = mockStore({
+            auth: {
+                isLoggingIn: true,
+                isLoggedIn: false,
+                login: {
+                    username,
+                    password,
+                },
+            },
+        });
+        const basic = 'base64encodedstring';
+        return store.dispatch(authActions.loginIfNeeded(basic))
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
     it(`should create ${authActionTypes.ON_CHANGE_LOGIN_FIELD} when login form input changes`, () => {
         const fieldName = 'price';
         const fieldValue = 9.99;
