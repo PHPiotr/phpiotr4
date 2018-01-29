@@ -49,9 +49,10 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     handleChange(event) {
         dispatch(authActions.change(event.target.name, event.target.value));
     },
-    handleSubmit(event) {
+    handleSubmit(event, username, password) {
         event.preventDefault();
-        dispatch(authActions.loginIfNeeded())
+        const basic = btoa(`${username}:${password}`);
+        dispatch(authActions.loginIfNeeded(basic))
             .then(({payload}) => {
                 const {token, expiresIn} = (payload || {});
                 if (token && expiresIn) {

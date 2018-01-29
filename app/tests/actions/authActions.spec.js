@@ -3,16 +3,45 @@ import * as authActions from '../../actions/auth/authActions';
 import * as authActionTypes from '../../actions/auth/authActionTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-//import nock from 'nock';
+import nock from 'nock';
 import 'isomorphic-fetch';
 import 'babel-polyfill';
 
-//const apiUrl = 'http://localhost:8080';
-//const apiPrefix = '/api/v1';
+const apiUrl = 'http://localhost:8080';
+const apiPrefix = '/api/v1';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Auth Actions', () => {
+    it(`should create ${authActionTypes.LOGIN_SUCCESS} when logging in succeeds`, () => {
+        const username = 'hello';
+        const password = 'world';
+        const store = mockStore({
+            auth: {
+                isLoggingIn: false,
+                isLoggedIn: false,
+                login: {
+                    username,
+                    password,
+                },
+            },
+        });
+        const basic = 'base64encodedstring';
+        const payload = {
+            token: 'j.w.t',
+            expiresIn: 3600,
+        };
+        nock(apiUrl).get(`${apiPrefix}/auth/login`).reply(200, payload);
+        const expectedActions = [
+            {type: authActionTypes.LOGIN_REQUEST},
+            {
+                type: authActionTypes.LOGIN_SUCCESS,
+                payload,
+            },
+        ];
+        return store.dispatch(authActions.loginIfNeeded(basic))
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it(`should create ${authActionTypes.ON_CHANGE_LOGIN_FIELD} when login form input changes`, () => {
         const fieldName = 'price';
         const fieldValue = 9.99;
