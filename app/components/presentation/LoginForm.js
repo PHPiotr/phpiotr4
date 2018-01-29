@@ -19,7 +19,7 @@ const LoginForm = (props) => {
     const passwordErrorMessage = (props.loginErrors.password && props.loginErrors.password.message)
         ? props.loginErrors.password.message : '';
     const handleSubmit = (event) => {
-        props.handleSubmit(event, props.username, props.password);
+        props.handleSubmit(event, props.login.username, props.login.password);
     };
 
     return (
