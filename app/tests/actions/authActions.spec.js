@@ -1,6 +1,16 @@
 import expect from 'expect';
 import * as authActions from '../../actions/auth/authActions';
 import * as authActionTypes from '../../actions/auth/authActionTypes';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+//import nock from 'nock';
+import 'isomorphic-fetch';
+import 'babel-polyfill';
+
+//const apiUrl = 'http://localhost:8080';
+//const apiPrefix = '/api/v1';
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 describe('Auth Actions', () => {
     it(`should create ${authActionTypes.ON_CHANGE_LOGIN_FIELD} when login form input changes`, () => {
@@ -60,5 +70,18 @@ describe('Auth Actions', () => {
             type,
         };
         expect(authActions.toggleLoginPasswordVisibility()).toEqual(expectedAction);
+    });
+    it(`should create ${authActionTypes.LOGOUT} when user is to be logged out`, () => {
+        const store = mockStore({
+            auth: {
+                isLoggingIn: false,
+            },
+        });
+        const type = authActionTypes.LOGOUT;
+        const expectedAction = {
+            type,
+        };
+        store.dispatch(authActions.logoutIfNeeded())
+            .then(() => expect(store.getActions()).toEqual(expectedAction));
     });
 });
