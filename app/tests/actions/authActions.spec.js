@@ -57,7 +57,6 @@ describe('Auth Actions', () => {
         });
         const basic = 'base64encodedstring';
         const payload = {
-            success: false,
             error: new Error('An error occurred'),
             errors: {some: 'input error'},
         };
