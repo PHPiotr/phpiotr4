@@ -16,10 +16,9 @@ const logUserIn = (basic) => {
         dispatch(loginRequest());
         return getAuthLogin(basic)
             .then(response => response.json())
-            .then(json => json.success === false
-                ? dispatch(loginFailure({message: json.error, errors: json.errors}))
-                : dispatch(loginSuccess(json)))
-            .catch(error => dispatch(loginFailure({message: error.message, errors: {}})));
+            .then(json => (json.token && json.expiresIn)
+                ? dispatch(loginSuccess(json))
+                : dispatch(loginFailure({message: json.error, errors: json.errors})));
     };
 };
 const loginRequest = () => ({type: authActionTypes.LOGIN_REQUEST});
