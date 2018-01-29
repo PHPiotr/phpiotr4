@@ -18,9 +18,12 @@ const LoginForm = (props) => {
         ? props.loginErrors.username.message : '';
     const passwordErrorMessage = (props.loginErrors.password && props.loginErrors.password.message)
         ? props.loginErrors.password.message : '';
+    const handleSubmit = (event) => {
+        props.handleSubmit(event, props.login.username, props.login.password);
+    };
 
     return (
-        <form className={props.classes.root} onSubmit={props.handleSubmit}>
+        <form className={props.classes.root} onSubmit={handleSubmit}>
             <FormControl component="fieldset">
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Login: ${usernameErrorMessage}`}</InputLabel>

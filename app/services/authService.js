@@ -1,9 +1,9 @@
-export const getAuthLogin = (username, password) => {
+export const getAuthLogin = (basic) => {
     return fetch(`${process.env.API_URL}${process.env.API_PREFIX}/auth/login`, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(username + ':' + password),
+            'Authorization': 'Basic ' + basic,
         },
     });
 };

@@ -2,19 +2,19 @@ import {getAuthLogin} from '../../services/authService';
 import {Cookies} from 'react-cookie';
 import * as authActionTypes from './authActionTypes';
 
-export const loginIfNeeded = () => {
+export const loginIfNeeded = (basic) => {
     return (dispatch, getState) => {
-        const {auth: {isLoggingIn, isLoggedIn, login}} = getState();
+        const {auth: {isLoggingIn, isLoggedIn}} = getState();
         if (!isLoggingIn && !isLoggedIn) {
-            return dispatch(logUserIn(login));
+            return dispatch(logUserIn(basic));
         }
         return Promise.resolve();
     };
 };
-const logUserIn = ({username, password}) => {
+const logUserIn = (basic) => {
     return (dispatch) => {
         dispatch(loginRequest());
-        return getAuthLogin(username, password)
+        return getAuthLogin(basic)
             .then(response => response.json())
             .then(json => json.success === false
                 ? dispatch(loginFailure({message: json.error, errors: json.errors}))
