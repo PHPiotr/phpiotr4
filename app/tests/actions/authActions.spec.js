@@ -42,6 +42,39 @@ describe('Auth Actions', () => {
         return store.dispatch(authActions.loginIfNeeded(basic))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${authActionTypes.LOGIN_FAILURE} when logging in fails`, () => {
+        const username = 'hello';
+        const password = 'world';
+        const store = mockStore({
+            auth: {
+                isLoggingIn: false,
+                isLoggedIn: false,
+                login: {
+                    username,
+                    password,
+                },
+            },
+        });
+        const basic = 'base64encodedstring';
+        const payload = {
+            success: false,
+            error: new Error('An error occurred'),
+            errors: {some: 'input error'},
+        };
+        nock(apiUrl).get(`${apiPrefix}/auth/login`).reply(401, payload);
+        const expectedActions = [
+            {type: authActionTypes.LOGIN_REQUEST},
+            {
+                type: authActionTypes.LOGIN_FAILURE,
+                payload: {
+                    errors: {some: 'input error'},
+                    message: {},
+                },
+            },
+        ];
+        return store.dispatch(authActions.loginIfNeeded(basic))
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it(`should not create ${authActionTypes.LOGIN_REQUEST} when logging in in progress`, () => {
         const username = 'hello';
         const password = 'world';
