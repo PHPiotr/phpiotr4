@@ -36,4 +36,13 @@ describe('Auth Actions', () => {
         };
         expect(authActions.setToken(payload)).toEqual(expectedAction);
     });
+    it(`should create ${authActionTypes.SET_IS_LOGGED_IN} when is-logged-in flag is to be set`, () => {
+        const payload = true;
+        const type = authActionTypes.SET_IS_LOGGED_IN;
+        const expectedAction = {
+            type,
+            payload,
+        };
+        expect(authActions.setIsLoggedIn(payload)).toEqual(expectedAction);
+    });
 });
