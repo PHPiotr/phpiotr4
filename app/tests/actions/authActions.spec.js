@@ -27,4 +27,13 @@ describe('Auth Actions', () => {
         expect(authActions.focus(fieldName, fieldValue, type)).toEqual(expectedAction);
         expect(authActions.focus(fieldName, fieldValue)).toEqual(expectedAction);
     });
+    it(`should create ${authActionTypes.SET_TOKEN} when token is to be set`, () => {
+        const payload = 'j.w.t';
+        const type = authActionTypes.SET_TOKEN;
+        const expectedAction = {
+            type,
+            payload,
+        };
+        expect(authActions.setToken(payload)).toEqual(expectedAction);
+    });
 });
