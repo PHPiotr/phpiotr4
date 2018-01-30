@@ -13,6 +13,14 @@ import 'babel-polyfill';
 //const mockStore = configureMockStore(middlewares);
 
 describe('Password Reset Actions', () => {
+    it(`should create ${passwordResetActionTypes.SET_RESET_PASSWORD_INPUT_VALUE} when password input value set`, () => {
+        const payload = 'qwerty';
+        const expectedAction = {
+            type: passwordResetActionTypes.SET_RESET_PASSWORD_INPUT_VALUE,
+            payload,
+        };
+        expect(passwordResetActions.setResetPasswordInputValue(payload)).toEqual(expectedAction);
+    });
     it(`should create ${passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY} when password input visibility toggled`, () => {
         const payloads = ['password', 'repeatPassword'];
         payloads.forEach((payload) => {
