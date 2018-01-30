@@ -11,4 +11,12 @@ describe('Recovery Actions', () => {
         };
         expect(recoveryActions.setRecoveryEmail(payload)).toEqual(expectedAction);
     });
+    it(`should create ${recoveryActionTypes.SET_IS_RECOVERED} when account recovery performed`, () => {
+        const payload = true;
+        const expectedAction = {
+            type: recoveryActionTypes.SET_IS_RECOVERED,
+            payload,
+        };
+        expect(recoveryActions.setIsRecovered(payload)).toEqual(expectedAction);
+    });
 });
