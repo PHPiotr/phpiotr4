@@ -21,6 +21,14 @@ describe('Password Reset Actions', () => {
         };
         expect(passwordResetActions.setResetPasswordInputValue(payload)).toEqual(expectedAction);
     });
+    it(`should create ${passwordResetActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE} when reset-password error message set`, () => {
+        const payload = 'error message';
+        const expectedAction = {
+            type: passwordResetActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE,
+            payload,
+        };
+        expect(passwordResetActions.setResetPasswordErrorMessage(payload)).toEqual(expectedAction);
+    });
     it(`should create ${passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY} when password input visibility toggled`, () => {
         const payloads = ['password', 'repeatPassword'];
         payloads.forEach((payload) => {
