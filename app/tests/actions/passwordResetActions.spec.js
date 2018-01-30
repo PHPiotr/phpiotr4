@@ -35,6 +35,38 @@ describe('Password Reset Actions', () => {
         }))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${passwordResetActionTypes.RESET_PASSWORD_FAILURE} when password reset failed`, () => {
+        const password = '1Qwertyuiop2@';
+        const store = mockStore({
+            passwordReset: {
+                isResetting: false,
+                password,
+                repeatPassword: password,
+            },
+        });
+        const userId = 1;
+        const token = 'j.w.t';
+        const passwordResetErrorMessage = 'Something went wrong';
+        const passwordResetInputErrors = {some: 'errors'};
+        nock(apiUrl).patch(`${apiPrefix}/users/${userId}`).reply(403, {
+            err: {
+                message: passwordResetErrorMessage,
+                errors: passwordResetInputErrors,
+            },
+        });
+        const expectedActions = [
+            {type: passwordResetActionTypes.RESET_PASSWORD_REQUEST},
+            {
+                type: passwordResetActionTypes.RESET_PASSWORD_FAILURE,
+                payload: {passwordResetErrorMessage, passwordResetInputErrors},
+            },
+        ];
+        return store.dispatch(passwordResetActions.resetPasswordIfNeeded(userId, token, {
+            newPassword: password,
+            newPasswordRepeat: password,
+        }))
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it(`should not create ${passwordResetActionTypes.RESET_PASSWORD_REQUEST} when user currently resetting password`, () => {
         const password = '1Qwertyuiop2@';
         const store = mockStore({
