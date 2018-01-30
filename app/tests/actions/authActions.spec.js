@@ -156,10 +156,10 @@ describe('Auth Actions', () => {
             },
         });
         const type = authActionTypes.LOGOUT;
-        const expectedAction = {
+        const expectedActions = [{
             type,
-        };
+        }];
         store.dispatch(authActions.logoutIfNeeded())
-            .then(() => expect(store.getActions()).toEqual(expectedAction));
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 });
