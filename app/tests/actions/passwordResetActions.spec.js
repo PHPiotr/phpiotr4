@@ -35,6 +35,21 @@ describe('Password Reset Actions', () => {
         }))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${passwordResetActionTypes.RESET_PASSWORD_REQUEST} when user currently resetting password`, () => {
+        const password = '1Qwertyuiop2@';
+        const store = mockStore({
+            passwordReset: {
+                isResetting: true,
+            },
+        });
+        const userId = 1;
+        const token = 'j.w.t';
+        return store.dispatch(passwordResetActions.resetPasswordIfNeeded(userId, token, {
+            newPassword: password,
+            newPasswordRepeat: password,
+        }))
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
     it(`should create ${passwordResetActionTypes.SET_RESET_PASSWORD_INPUT_VALUE} when password input value set`, () => {
         const payload = 'qwerty';
         const expectedAction = {
