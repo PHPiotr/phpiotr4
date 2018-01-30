@@ -30,10 +30,7 @@ export const resetPasswordIfNeeded = (userId, token) => {
                         passwordResetInputErrors: json.err.errors,
                     }});
                 }
-            })
-            .catch(error => dispatch({type: passwordResetActionTypes.RESET_PASSWORD_FAILURE, payload: {
-                passwordResetErrorMessage: error.message,
-            }}));
+            });
     };
 };
 
