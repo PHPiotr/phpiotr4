@@ -33,6 +33,38 @@ describe('Recovery Actions', () => {
         return store.dispatch(recoveryActions.recoverAccountIfNeeded(location))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${recoveryActionTypes.ACCOUNT_RECOVERY_FAILURE} when recovering fails`, () => {
+        const location = {
+            host: 'www.example.com',
+            hostname: 'www.example.com:4000',
+            protocol: 'https',
+        };
+        const store = mockStore({
+            recovery: {
+                isRecovering: false,
+                recoveryEmail: 'user@example.com',
+            },
+        });
+        const message = 'Forbidden';
+        const payload = {
+            error: new Error(message),
+        };
+        nock(apiUrl).post(`${apiPrefix}/auth/account-recovery`).reply(403, payload);
+        const expectedActions = [
+            {type: recoveryActionTypes.ACCOUNT_RECOVERY_REQUEST},
+            {
+                type: recoveryActionTypes.ACCOUNT_RECOVERY_FAILURE,
+                payload: {
+                    recoveryErrorMessage: message,
+                },
+            },
+        ];
+        return store.dispatch(recoveryActions.recoverAccountIfNeeded(location))
+            .then(({payload}) => {
+                expect(store.getActions()).toEqual(expectedActions);
+                expect(payload.recoveryErrorMessage).toEqual(message);
+            });
+    });
     it(`should not create ${recoveryActionTypes.ACCOUNT_RECOVERY_REQUEST} when recovering in progress`, () => {
         const location = {
             host: 'www.example.com',
