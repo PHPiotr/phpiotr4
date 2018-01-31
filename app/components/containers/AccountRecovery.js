@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSubmit(event) {
             event.preventDefault();
-            dispatch(recoveryActions.recoverAccountIfNeeded());
+            dispatch(recoveryActions.recoverAccountIfNeeded(location));
         },
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
