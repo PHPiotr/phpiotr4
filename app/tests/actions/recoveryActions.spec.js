@@ -33,6 +33,21 @@ describe('Recovery Actions', () => {
         return store.dispatch(recoveryActions.recoverAccountIfNeeded(location))
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${recoveryActionTypes.ACCOUNT_RECOVERY_REQUEST} when recovering in progress`, () => {
+        const location = {
+            host: 'www.example.com',
+            hostname: 'www.example.com:4000',
+            protocol: 'https',
+        };
+        const store = mockStore({
+            recovery: {
+                isRecovering: true,
+                recoveryEmail: 'user@example.com',
+            },
+        });
+        return store.dispatch(recoveryActions.recoverAccountIfNeeded(location))
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
     it(`should create ${recoveryActionTypes.SET_RECOVERY_EMAIL} when recovery email is set`, () => {
         const payload = 'user@example.com';
         const expectedAction = {
