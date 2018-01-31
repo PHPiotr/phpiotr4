@@ -5,7 +5,7 @@ import {HOME} from '../../constants';
 export const setRecoveryEmail = payload => ({type: recoveryActionTypes.SET_RECOVERY_EMAIL, payload});
 export const setIsRecovered = payload => ({type: recoveryActionTypes.SET_IS_RECOVERED, payload});
 export const setRecoveryErrorMessage = payload => ({type: recoveryActionTypes.SET_RECOVERY_ERROR_MESSAGE, payload});
-export const recoverAccountIfNeeded = () => {
+export const recoverAccountIfNeeded = (location) => {
     return (dispatch, getState) => {
         const {recovery} = getState();
         if (recovery.isRecovering) {
