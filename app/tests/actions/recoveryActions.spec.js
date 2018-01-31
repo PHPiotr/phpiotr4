@@ -19,4 +19,12 @@ describe('Recovery Actions', () => {
         };
         expect(recoveryActions.setIsRecovered(payload)).toEqual(expectedAction);
     });
+    it(`should create ${recoveryActionTypes.SET_RECOVERY_ERROR_MESSAGE} when recovery error message set`, () => {
+        const payload = 'An error occurred';
+        const expectedAction = {
+            type: recoveryActionTypes.SET_RECOVERY_ERROR_MESSAGE,
+            payload,
+        };
+        expect(recoveryActions.setRecoveryErrorMessage(payload)).toEqual(expectedAction);
+    });
 });
