@@ -64,4 +64,13 @@ describe('Report Actions', () => {
         return store.dispatch(reportActions.fetchReportIfNeeded())
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${reportActionTypes.REPORT_REQUEST} when report is already being fetched`, () => {
+        const store = mockStore({
+            report: {
+                isFetching: true,
+            },
+        });
+        return store.dispatch(reportActions.fetchReportIfNeeded())
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
 });
