@@ -20,6 +20,6 @@ export const fetchReportIfNeeded = () => {
     };
 };
 const fetchReportRequest = () => ({type: reportActionTypes.REPORT_REQUEST});
-const fetchReportSuccess = data => ({type: reportActionTypes.REPORT_SUCCESS, data, receivedAt: Date.now()});
+const fetchReportSuccess = data => ({type: reportActionTypes.REPORT_SUCCESS, data});
 const fetchReportFailure = error => ({type: reportActionTypes.REPORT_FAILURE, error});
 export const toggleDetailsOpen = payload => ({type: reportActionTypes.TOGGLE_DETAILS_OPEN, payload});
