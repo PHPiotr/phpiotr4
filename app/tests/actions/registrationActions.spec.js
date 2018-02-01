@@ -42,6 +42,39 @@ describe('Registration Actions', () => {
         return store.dispatch(registrationActions.registerIfNeeded())
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${registrationActionTypes.REGISTRATION_FAILURE} when logging in fails`, () => {
+        const store = mockStore({
+            registration: {
+                registration: {
+                    username: 'hello',
+                    email: 'hello@example.com',
+                    password: '1Qwertyuiop2@',
+                    repeatPassword: '1Qwertyuiop2@',
+
+                },
+            },
+            auth: {
+                isLoggingIn: false,
+                isLoggedIn: false,
+                activationUrl: 'http://www.example.com',
+                activationFromEmail: 'user@example.com',
+            },
+        });
+        const payload = {
+            error: {},
+            errors: {},
+        };
+        nock(apiUrl).post(`${apiPrefix}/users`).reply(422, payload);
+        const expectedActions = [
+            {type: registrationActionTypes.REGISTRATION_REQUEST},
+            {
+                type: registrationActionTypes.REGISTRATION_FAILURE,
+                payload,
+            },
+        ];
+        return store.dispatch(registrationActions.registerIfNeeded())
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
     it(`should create ${registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD} on input change`, () => {
         const fieldName = 'password';
         const fieldValue = '1Qwertyuiop2@';
