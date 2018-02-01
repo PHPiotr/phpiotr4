@@ -25,4 +25,10 @@ describe('Registration Actions', () => {
         };
         expect(registrationActions.toggleRegistrationPasswordVisibility()).toEqual(expectedAction);
     });
+    it(`should create ${registrationActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY} when visibility of repeat-password toggled`, () => {
+        const expectedAction = {
+            type: registrationActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY,
+        };
+        expect(registrationActions.toggleRegistrationRepeatPasswordVisibility()).toEqual(expectedAction);
+    });
 });
