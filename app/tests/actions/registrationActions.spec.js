@@ -19,4 +19,10 @@ describe('Registration Actions', () => {
         };
         expect(registrationActions.setRegistrationSuccessMessage(payload)).toEqual(expectedAction);
     });
+    it(`should create ${registrationActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY} when visibility of password toggled`, () => {
+        const expectedAction = {
+            type: registrationActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY,
+        };
+        expect(registrationActions.toggleRegistrationPasswordVisibility()).toEqual(expectedAction);
+    });
 });
