@@ -32,7 +32,7 @@ const registration = () => {
                 if (json.error && json.errors) {
                     dispatch(registrationFailure({error: json.error, errors: json.errors}));
                 }
-            })
+            });
     };
 };
 const registrationRequest = () => ({type: registrationActionTypes.REGISTRATION_REQUEST});
