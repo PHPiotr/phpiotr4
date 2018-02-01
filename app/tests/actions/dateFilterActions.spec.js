@@ -11,4 +11,12 @@ describe('Date Filter Actions', () => {
         };
         expect(dateFilterActions.toggleDateFilterEnabled(payload)).toEqual(expectedAction);
     });
+    it(`should create ${dateFilterActionTypes.SET_DATE} action when date is set`, () => {
+        const payload = Date();
+        const expectedAction = {
+            type: dateFilterActionTypes.SET_DATE,
+            payload,
+        };
+        expect(dateFilterActions.setDate(payload)).toEqual(expectedAction);
+    });
 });
