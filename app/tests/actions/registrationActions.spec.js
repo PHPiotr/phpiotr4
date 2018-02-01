@@ -13,6 +13,16 @@ describe('Registration Actions', () => {
         };
         expect(registrationActions.change(fieldName, fieldValue)).toEqual(expectedAction);
     });
+    it(`should create ${registrationActionTypes.ON_FOCUS_REGISTRATION_FIELD} on input focus`, () => {
+        const fieldName = 'password';
+        const fieldValue = '1Qwertyuiop2@';
+        const expectedAction = {
+            type: registrationActionTypes.ON_FOCUS_REGISTRATION_FIELD,
+            fieldName,
+            fieldValue,
+        };
+        expect(registrationActions.focus(fieldName, fieldValue)).toEqual(expectedAction);
+    });
     it(`should create ${registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE} when error message set`, () => {
         const payload = 'An error occurred';
         const expectedAction = {
