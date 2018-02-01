@@ -1,0 +1,14 @@
+import expect from 'expect';
+import * as registrationActions from '../../actions/registration/registrationActions';
+import * as registrationActionTypes from '../../actions/registration/registrationActionTypes';
+
+describe('Registration Actions', () => {
+    it(`should create ${registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE} when error message set`, () => {
+        const payload = 'An error occurred';
+        const expectedAction = {
+            type: registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE,
+            payload,
+        };
+        expect(registrationActions.setRegistrationErrorMessage(payload)).toEqual(expectedAction);
+    });
+});
