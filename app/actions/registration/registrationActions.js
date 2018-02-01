@@ -33,7 +33,6 @@ const registration = () => {
                     dispatch(registrationFailure({error: json.error, errors: json.errors}));
                 }
             })
-            .catch(error => dispatch(registrationFailure({error: error.message, errors: {}})));
     };
 };
 const registrationRequest = () => ({type: registrationActionTypes.REGISTRATION_REQUEST});
