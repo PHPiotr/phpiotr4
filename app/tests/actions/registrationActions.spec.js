@@ -3,6 +3,16 @@ import * as registrationActions from '../../actions/registration/registrationAct
 import * as registrationActionTypes from '../../actions/registration/registrationActionTypes';
 
 describe('Registration Actions', () => {
+    it(`should create ${registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD} on input change`, () => {
+        const fieldName = 'password';
+        const fieldValue = '1Qwertyuiop2@';
+        const expectedAction = {
+            type: registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD,
+            fieldName,
+            fieldValue,
+        };
+        expect(registrationActions.change(fieldName, fieldValue)).toEqual(expectedAction);
+    });
     it(`should create ${registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE} when error message set`, () => {
         const payload = 'An error occurred';
         const expectedAction = {
