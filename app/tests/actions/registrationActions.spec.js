@@ -75,6 +75,15 @@ describe('Registration Actions', () => {
         return store.dispatch(registrationActions.registerIfNeeded())
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should not create ${registrationActionTypes.REGISTRATION_REQUEST} when user logged in`, () => {
+        const store = mockStore({
+            auth: {
+                isLoggedIn: true,
+            },
+        });
+        return store.dispatch(registrationActions.registerIfNeeded())
+            .then(() => expect(store.getActions()).toEqual([]));
+    });
     it(`should create ${registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD} on input change`, () => {
         const fieldName = 'password';
         const fieldValue = '1Qwertyuiop2@';
