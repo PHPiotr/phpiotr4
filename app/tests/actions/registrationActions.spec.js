@@ -11,4 +11,12 @@ describe('Registration Actions', () => {
         };
         expect(registrationActions.setRegistrationErrorMessage(payload)).toEqual(expectedAction);
     });
+    it(`should create ${registrationActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE} when success message set`, () => {
+        const payload = 'Success message';
+        const expectedAction = {
+            type: registrationActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE,
+            payload,
+        };
+        expect(registrationActions.setRegistrationSuccessMessage(payload)).toEqual(expectedAction);
+    });
 });
