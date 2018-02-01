@@ -42,4 +42,26 @@ describe('Report Actions', () => {
         return store.dispatch(reportActions.fetchReportIfNeeded())
             .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
+    it(`should create ${reportActionTypes.REPORT_FAILURE} when report fetching failed`, () => {
+        const store = mockStore({
+            report: {
+                isFetching: false,
+            },
+            auth: {
+                isLoggedIn: false,
+            },
+            dateFilter: {
+                fromDate: '',
+                toDate: '',
+            },
+        });
+        const error = Error('Forbidden');
+        const expectedActions = [
+            {type: reportActionTypes.REPORT_REQUEST},
+            {type: reportActionTypes.REPORT_FAILURE, error},
+        ];
+        nock(apiUrl).get(`${apiPrefix}/report?from=&to=`).reply(403, error);
+        return store.dispatch(reportActions.fetchReportIfNeeded())
+            .then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
 });
