@@ -15,12 +15,8 @@ export const getProfileIfNeeded = (sub) => {
                 }
                 return response.json();
             })
-            .then((json) => {
-                return {...json};
-            })
-            .then((json) => {
-                return dispatch(getProfileSuccess(getState().auth.isLoggedIn ? {...json} : {}));
-            })
+            .then(json => ({...json}))
+            .then(json => dispatch(getProfileSuccess({...json})))
             .catch((error) => {
                 if (getState().auth.isLoggedIn) {
                     return dispatch(getProfileFailure({message: error.message, code: error.code}));
