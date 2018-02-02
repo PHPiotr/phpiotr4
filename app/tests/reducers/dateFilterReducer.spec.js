@@ -117,6 +117,17 @@ describe('dateFilterReducer', () => {
         expect(dateFilter(beforeState, action)).toEqual(afterState);
     });
 
+    it(`${dateFilterActionTypes.TOGGLE_DATE_FILTER_ENABLED} should toggle date filter when before state undefined`, () => {
+        const payload = true;
+        const action = {payload, type: dateFilterActionTypes.TOGGLE_DATE_FILTER_ENABLED};
+        const beforeState = undefined;
+        const afterState = {isDateFilterEnabled: payload, fromDate: '', toDate: ''};
+        deepFreeze(action);
+        deepFreeze(afterState);
+
+        expect(dateFilter(beforeState, action)).toEqual(afterState);
+    });
+
     it('undefined action type should not modify anything', () => {
         const state = {
             fromDate: '',

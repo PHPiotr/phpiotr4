@@ -113,6 +113,26 @@ describe('bookingReducer', () => {
                 freeze(after);
                 expect(bookingReducer(before, action)).toEqual(after);
             });
+            it(`${bookingActionTypes.SET_IS_ADD} should set a flag indicating we left add/edit ${label} booking page`, () => {
+                const payload = {
+                    label,
+                    isAdd: false,
+                    isAdded: false,
+                };
+                const action = {type: bookingActionTypes.SET_IS_ADD, payload};
+                const before = {...initialState};
+                const after = {...initialState, [label]: {
+                    ...initialState[label],
+                    isAdd: payload.isAdd,
+                    current: {},
+                    errors: {},
+                    isAdded: payload.isAdd ? initialState.isAdded : false,
+                }};
+                freeze(action);
+                freeze(before);
+                freeze(after);
+                expect(bookingReducer(before, action)).toEqual(after);
+            });
             it(`${bookingActionTypes.SET_CURRENT_BOOKING} should set current ${label} booking`, () => {
                 const payload = {};
                 const action = {type: bookingActionTypes.SET_CURRENT_BOOKING, payload};
