@@ -147,14 +147,14 @@ const getBookingRequest = payload => ({type: bookingActionTypes.GET_BOOKING_REQU
 const getBookingSuccess = payload => ({type: bookingActionTypes.GET_BOOKING_SUCCESS, payload});
 const getBookingFailure = payload => ({type: bookingActionTypes.GET_BOOKING_FAILURE, payload});
 
-export const getBookingsIfNeeded = (singular, plural, type, page) => {
+export const getBookingsIfNeeded = (label, plural, type, page) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        const booking = bookings[singular];
+        const booking = bookings[label];
         if (booking.isFetching || booking.isDeleting) {
             return Promise.resolve();
         }
-        dispatch(fetchBookingsRequest({label: singular}));
+        dispatch(fetchBookingsRequest({label}));
         return getBookings(token, plural, type, page)
             .then((response) => {
                 if (!response.ok) {
@@ -162,14 +162,14 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
                 }
                 return response.json();
             })
-            .then((json) => {
-                return dispatch(fetchBookingsSuccess({label: singular, data: getState().auth.isLoggedIn ? json : {}}));
+            .then((data) => {
+                return dispatch(fetchBookingsSuccess({label, data}));
             })
             .catch((error) => {
                 if (getState().auth.isLoggedIn) {
-                    return dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code}));
+                    return dispatch(fetchBookingsFailure({label, error, message: error.message, code: error.code}));
                 } else {
-                    return dispatch(fetchBookingsFailure({label: singular, error: {}, message: '', code: null}));
+                    return dispatch(fetchBookingsFailure({label, error: {}, message: '', code: null}));
                 }
             });
     };
