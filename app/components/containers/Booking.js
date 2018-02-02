@@ -47,12 +47,31 @@ const booking = (WrappedComponent) => {
 
     hoistNonReactStatic(Booking, WrappedComponent);
 
-    const mapStateToProps = state => ({
-        [label]: state.bookings[label],
-        pricePlaceholder: '0.00',
-        isAdd: state.bookings[label].isAdd,
-        isAdded: state.bookings[label].isAdded,
-    });
+    const mapStateToProps = (state) => {
+
+        const current = state.bookings[label].current;
+
+        return {
+            [label]: {
+                ...state.bookings[label],
+                current: {
+                    ...state.bookings[label].current,
+                    price: current.price ? (parseFloat(current.price)).toFixed(2) : null,
+                    departure_date: current.departure_date ? current.departure_date.substring(0, 10) : null,
+                    return_departure_date: current.return_departure_date ? current.return_departure_date.substring(0, 10) : null,
+                    checkin_date: current.checkin_date ? current.checkin_date.substring(0, 10) : null,
+                    checkout_date: current.checkout_date ? current.checkout_date.substring(0, 10) : null,
+                    departure_time: current.departure_time ? (current.departure_time.indexOf(':') === -1 ? current.departure_time.substring(0, 2) + ':' + current.departure_time.substring(2, current.departure_time.length) : current.departure_time) : null,
+                    arrival_time: current.arrival_time ? (current.arrival_time.indexOf(':') === -1 ? current.arrival_time.substring(0, 2) + ':' + current.arrival_time.substring(2, current.arrival_time.length) : current.arrival_time) : null,
+                    return_departure_time: current.return_departure_time ? (current.return_departure_time.indexOf(':') === -1 ? current.return_departure_time.substring(0, 2) + ':' + current.return_departure_time.substring(2, current.return_departure_time.length) : current.return_departure_time) : null,
+                    return_arrival_time: current.return_arrival_time ? (current.return_arrival_time.indexOf(':') === -1 ? current.return_arrival_time.substring(0, 2) + ':' + current.return_arrival_time.substring(2, current.return_arrival_time.length) : current.return_arrival_time) : null,
+                },
+            },
+            pricePlaceholder: '0.00',
+            isAdd: state.bookings[label].isAdd,
+            isAdded: state.bookings[label].isAdded,
+        };
+    };
 
     const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
         init() {

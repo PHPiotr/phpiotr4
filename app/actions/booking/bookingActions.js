@@ -42,38 +42,37 @@ export const addBookingIfNeeded = (singular, plural) => {
                 if (json.error && json.errors) {
                     dispatch(addBookingFailure({label: singular, error: json.error, errors: json.errors}));
                 }
-            })
-            .catch(error => dispatch(addBookingFailure({label: singular, error: error.message, errors: {}})));
+            });
     };
 };
 const addBookingRequest = payload => ({type: bookingActionTypes.ADD_BOOKING_REQUEST, payload});
 const addBookingSuccess = payload => ({type: bookingActionTypes.ADD_BOOKING_SUCCESS, payload});
 const addBookingFailure = payload => ({type: bookingActionTypes.ADD_BOOKING_FAILURE, payload});
 
-export const editBookingIfNeeded = (singular, plural) => {
+export const editBookingIfNeeded = (label, plural) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        const bookingSingular = bookings[singular];
+        const bookingSingular = bookings[label];
         if (bookingSingular.isAdding) {
             return Promise.resolve();
         }
         const current = {...bookingSingular.current};
         const id = current._id;
         delete current._id;
-        dispatch(editBookingRequest({label: singular}));
+        dispatch(editBookingRequest({label}));
         return putBookings(token, plural, id, JSON.stringify(current))
             .then((response) => {
                 if (response.ok) {
-                    return dispatch(editBookingSuccess({label: singular}));
+                    return dispatch(editBookingSuccess({label}));
                 }
                 return response.json();
             })
             .then((json) => {
                 if (json.err) {
-                    dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? json.err : {}}));
+                    dispatch(editBookingFailure({label, error: json.err}));
                 }
             })
-            .catch(error => dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? error : {}})));
+            .catch(error => dispatch(editBookingFailure({label, error})));
     };
 };
 const editBookingRequest = payload => ({type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload});
@@ -96,7 +95,7 @@ export const deleteBookingIfNeeded = () => {
                 }
                 return dispatch(deleteBookingSuccess({label}));
             })
-            .catch(error => dispatch(deleteBookingFailure({label, error: getState().auth.isLoggedIn ? error : {}})));
+            .catch(error => dispatch(deleteBookingFailure({label, error})));
     };
 };
 const deleteBookingRequest = payload => ({type: bookingActionTypes.DELETE_BOOKING_REQUEST, payload});
@@ -118,23 +117,7 @@ export const getBookingIfNeeded = (singular, plural, id) => {
                 }
                 return response.json();
             })
-            .then((json) => {
-                return {
-                    ...json,
-                    price: json.price ? (parseFloat(json.price)).toFixed(2) : null,
-                    departure_date: json.departure_date ? json.departure_date.substring(0, 10) : null,
-                    return_departure_date: json.return_departure_date ? json.return_departure_date.substring(0, 10) : null,
-                    checkin_date: json.checkin_date ? json.checkin_date.substring(0, 10) : null,
-                    checkout_date: json.checkout_date ? json.checkout_date.substring(0, 10) : null,
-                    departure_time: json.departure_time ? (json.departure_time.indexOf(':') === -1 ? json.departure_time.substring(0, 2) + ':' + json.departure_time.substring(2, json.departure_time.length) : json.departure_time) : null,
-                    arrival_time: json.arrival_time ? (json.arrival_time.indexOf(':') === -1 ? json.arrival_time.substring(0, 2) + ':' + json.arrival_time.substring(2, json.arrival_time.length) : json.arrival_time) : null,
-                    return_departure_time: json.return_departure_time ? (json.return_departure_time.indexOf(':') === -1 ? json.return_departure_time.substring(0, 2) + ':' + json.return_departure_time.substring(2, json.return_departure_time.length) : json.return_departure_time) : null,
-                    return_arrival_time: json.return_arrival_time ? (json.return_arrival_time.indexOf(':') === -1 ? json.return_arrival_time.substring(0, 2) + ':' + json.return_arrival_time.substring(2, json.return_arrival_time.length) : json.return_arrival_time) : null,
-                };
-            })
-            .then((json) => {
-                return dispatch(getBookingSuccess({label: singular, current: getState().auth.isLoggedIn ? json : {}}));
-            })
+            .then(current => dispatch(getBookingSuccess({label: singular, current})))
             .catch((error) => {
                 if (getState().auth.isLoggedIn) {
                     return dispatch(getBookingFailure({label: singular, error, message: error.message, code: error.code}));
@@ -148,14 +131,14 @@ const getBookingRequest = payload => ({type: bookingActionTypes.GET_BOOKING_REQU
 const getBookingSuccess = payload => ({type: bookingActionTypes.GET_BOOKING_SUCCESS, payload});
 const getBookingFailure = payload => ({type: bookingActionTypes.GET_BOOKING_FAILURE, payload});
 
-export const getBookingsIfNeeded = (singular, plural, type, page) => {
+export const getBookingsIfNeeded = (label, plural, type, page) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        const booking = bookings[singular];
+        const booking = bookings[label];
         if (booking.isFetching || booking.isDeleting) {
             return Promise.resolve();
         }
-        dispatch(fetchBookingsRequest({label: singular}));
+        dispatch(fetchBookingsRequest({label}));
         return getBookings(token, plural, type, page)
             .then((response) => {
                 if (!response.ok) {
@@ -163,14 +146,14 @@ export const getBookingsIfNeeded = (singular, plural, type, page) => {
                 }
                 return response.json();
             })
-            .then((json) => {
-                return dispatch(fetchBookingsSuccess({label: singular, data: getState().auth.isLoggedIn ? json : {}}));
+            .then((data) => {
+                return dispatch(fetchBookingsSuccess({label, data}));
             })
             .catch((error) => {
                 if (getState().auth.isLoggedIn) {
-                    return dispatch(fetchBookingsFailure({label: singular, error, message: error.message, code: error.code}));
+                    return dispatch(fetchBookingsFailure({label, error, message: error.message, code: error.code}));
                 } else {
-                    return dispatch(fetchBookingsFailure({label: singular, error: {}, message: '', code: null}));
+                    return dispatch(fetchBookingsFailure({label, error: {}, message: '', code: null}));
                 }
             });
     };

@@ -344,7 +344,7 @@ describe('bookingActions', () => {
                 .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
 
-        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed`, () => {
+        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed (404)`, () => {
 
             nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(404);
             const expectedRequestAction = {
@@ -357,6 +357,29 @@ describe('bookingActions', () => {
                     expect(store.getActions()[0]).toEqual(expectedRequestAction);
                     expect(store.getActions()[1]).toEqual(response);
                 });
+        });
+
+        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed (403)`, () => {
+            store = mockStore({...storeContent});
+            const error = {};
+            const payload = {
+                label,
+                err: error,
+            };
+            nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(403, payload);
+            const expectedActions = [
+                {
+                    type: bookingActionTypes.EDIT_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                },
+                {
+                    type: bookingActionTypes.EDIT_BOOKING_FAILURE,
+                    payload: {label: pluralToSingularMapping[label], error},
+                },
+            ];
+
+            return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
+                .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
 
         it(`should create ${bookingActionTypes.SET_BOOKING_ERROR_MESSAGE} and ${bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE} when form field focused`, () => {
@@ -405,6 +428,26 @@ describe('bookingActions', () => {
                 },
             }, pluralToSingularMapping[label])).toEqual(expectedAction);
         });
+        if (label !== 'hostels') {
+            it(`should create ${bookingActionTypes.SET_BOOKING_PROPERTY} when checkbox form field changed`, () => {
+                const name = 'is_return';
+                const type = 'checkbox';
+                const value = true;
+                const checked = true;
+                const expectedAction = {
+                    type: bookingActionTypes.SET_BOOKING_PROPERTY,
+                    payload: {label: pluralToSingularMapping[label], name, value},
+                };
+                expect(bookingActions.handleChange({
+                    target: {
+                        name,
+                        type,
+                        checked,
+                        value,
+                    },
+                }, pluralToSingularMapping[label])).toEqual(expectedAction);
+            });
+        }
 
         it(`should create ${bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN} when delete booking button clicked`, () => {
             const expectedAction = {type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN};
