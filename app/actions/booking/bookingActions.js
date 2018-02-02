@@ -49,30 +49,30 @@ const addBookingRequest = payload => ({type: bookingActionTypes.ADD_BOOKING_REQU
 const addBookingSuccess = payload => ({type: bookingActionTypes.ADD_BOOKING_SUCCESS, payload});
 const addBookingFailure = payload => ({type: bookingActionTypes.ADD_BOOKING_FAILURE, payload});
 
-export const editBookingIfNeeded = (singular, plural) => {
+export const editBookingIfNeeded = (label, plural) => {
     return (dispatch, getState) => {
         const {bookings, auth: {token}} = getState();
-        const bookingSingular = bookings[singular];
+        const bookingSingular = bookings[label];
         if (bookingSingular.isAdding) {
             return Promise.resolve();
         }
         const current = {...bookingSingular.current};
         const id = current._id;
         delete current._id;
-        dispatch(editBookingRequest({label: singular}));
+        dispatch(editBookingRequest({label}));
         return putBookings(token, plural, id, JSON.stringify(current))
             .then((response) => {
                 if (response.ok) {
-                    return dispatch(editBookingSuccess({label: singular}));
+                    return dispatch(editBookingSuccess({label}));
                 }
                 return response.json();
             })
             .then((json) => {
                 if (json.err) {
-                    dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? json.err : {}}));
+                    dispatch(editBookingFailure({label, error: json.err}));
                 }
             })
-            .catch(error => dispatch(editBookingFailure({label: singular, error: getState().auth.isLoggedIn ? error : {}})));
+            .catch(error => dispatch(editBookingFailure({label, error})));
     };
 };
 const editBookingRequest = payload => ({type: bookingActionTypes.EDIT_BOOKING_REQUEST, payload});
