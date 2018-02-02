@@ -344,7 +344,7 @@ describe('bookingActions', () => {
                 .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
 
-        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed`, () => {
+        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed (404)`, () => {
 
             nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(404);
             const expectedRequestAction = {
@@ -357,6 +357,29 @@ describe('bookingActions', () => {
                     expect(store.getActions()[0]).toEqual(expectedRequestAction);
                     expect(store.getActions()[1]).toEqual(response);
                 });
+        });
+
+        it(`should create ${bookingActionTypes.EDIT_BOOKING_FAILURE} when edition of booking failed (403)`, () => {
+            store = mockStore({...storeContent});
+            const error = {};
+            const payload = {
+                label,
+                err: error,
+            };
+            nock(apiUrl).put(`${apiPrefix}/bookings/${label}/${id}`).reply(403, payload);
+            const expectedActions = [
+                {
+                    type: bookingActionTypes.EDIT_BOOKING_REQUEST,
+                    payload: {label: pluralToSingularMapping[label]},
+                },
+                {
+                    type: bookingActionTypes.EDIT_BOOKING_FAILURE,
+                    payload: {label: pluralToSingularMapping[label], error},
+                },
+            ];
+
+            return store.dispatch(bookingActions.editBookingIfNeeded(pluralToSingularMapping[label], label))
+                .then(() => expect(store.getActions()).toEqual(expectedActions));
         });
 
         it(`should create ${bookingActionTypes.SET_BOOKING_ERROR_MESSAGE} and ${bookingActionTypes.SET_BOOKING_FIELD_ERROR_MESSAGE} when form field focused`, () => {
