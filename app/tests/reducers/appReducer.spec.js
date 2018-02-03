@@ -43,4 +43,17 @@ describe('App reducer', () => {
         freeze(after);
         expect(app(before, action)).toEqual(after);
     });
+    it('should return initial state when unknown action type', () => {
+        const initialState = {
+            appBarTitle: HOME,
+            isDrawerOpen: false,
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const before = initialState;
+        const after = initialState;
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(app(before, action)).toEqual(after);
+    });
 });
