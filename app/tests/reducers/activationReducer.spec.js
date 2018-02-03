@@ -4,6 +4,25 @@ import expect from 'expect';
 import freeze from 'deep-freeze';
 
 describe('Activation reducer', () => {
+    it(`should start activation request on ${activationActionTypes.ACTIVATION_REQUEST} action`, () => {
+        const action = {
+            type: activationActionTypes.ACTIVATION_REQUEST,
+        };
+
+        const beforeState = {
+            isActivating: false,
+        };
+
+        const afterState = {
+            isActivating: true,
+        };
+
+        freeze(action);
+        freeze(beforeState);
+        freeze(afterState);
+
+        expect(activation(beforeState, action)).toEqual(afterState);
+    });
     it(`should set activation success message on ${activationActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE} action`, () => {
         const payload = 'Success';
         const action = {
