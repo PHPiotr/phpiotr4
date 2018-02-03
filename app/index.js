@@ -1,6 +1,6 @@
 import React from 'react';
-import {hydrate, render as ReactDOMRender} from 'react-dom';
-import {AppContainer} from 'react-hot-loader';
+import {hydrate} from 'react-dom';
+import {AppContainer, setConfig} from 'react-hot-loader';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -39,7 +39,8 @@ let render;
 if (process.env.NODE_ENV === 'production') {
     render = App => hydrate(app(App), document.getElementById(ROOT));
 } else {
-    render = App => ReactDOMRender(<AppContainer>{app(App)}</AppContainer>, document.getElementById(ROOT));
+    setConfig({logLevel: 'debug'});
+    render = App => hydrate(<AppContainer>{app(App)}</AppContainer>, document.getElementById(ROOT));
     module.hot && module.hot.accept('./components/containers/App', () => {
         render(require('./components/containers/App').default);
     });
