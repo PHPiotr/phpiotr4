@@ -46,6 +46,29 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
+    it(`should fail activating user on ${activationActionTypes.ACTIVATION_FAILURE} action`, () => {
+        const payload = 'Failure';
+        const action = {
+            type: activationActionTypes.ACTIVATION_FAILURE,
+            payload,
+        };
+
+        const beforeState = {
+            isActivating: true,
+            activationErrorMessage: '',
+        };
+
+        const afterState = {
+            isActivating: false,
+            activationErrorMessage: payload,
+        };
+
+        freeze(action);
+        freeze(beforeState);
+        freeze(afterState);
+
+        expect(activation(beforeState, action)).toEqual(afterState);
+    });
     it(`should set activation success message on ${activationActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE} action`, () => {
         const payload = 'Success';
         const action = {
