@@ -117,4 +117,26 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
+    it('should return initial state', () => {
+        const initialState = {
+            activationUrl: '',
+            activationFromEmail: '',
+            isActivating: false,
+            activationErrorMessage: '',
+            activationSuccessMessage: '',
+        };
+        const action = {
+            type: 'UNKNOWN_ACTION',
+        };
+
+        const beforeState = initialState;
+        const afterState = initialState;
+
+        freeze(action);
+        freeze(beforeState);
+        freeze(afterState);
+
+        expect(activation(beforeState, action)).toEqual(afterState);
+        expect(activation(undefined, action)).toEqual(afterState);
+    });
 });
