@@ -55,5 +55,6 @@ describe('App reducer', () => {
         freeze(before);
         freeze(after);
         expect(app(before, action)).toEqual(after);
+        expect(app(undefined, action)).toEqual(after);
     });
 });
