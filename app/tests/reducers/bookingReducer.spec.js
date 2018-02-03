@@ -97,7 +97,6 @@ describe('bookingReducer', () => {
                 const payload = {
                     label,
                     isAdd: true,
-                    isAdded: false,
                 };
                 const action = {type: bookingActionTypes.SET_IS_ADD, payload};
                 const before = {...initialState};
@@ -106,7 +105,7 @@ describe('bookingReducer', () => {
                     isAdd: payload.isAdd,
                     current: {},
                     errors: {},
-                    isAdded: payload.isAdd ? initialState.isAdded : false,
+                    isAdded: payload.isAdded,
                 }};
                 freeze(action);
                 freeze(before);
@@ -126,7 +125,7 @@ describe('bookingReducer', () => {
                     isAdd: payload.isAdd,
                     current: {},
                     errors: {},
-                    isAdded: payload.isAdd ? initialState.isAdded : false,
+                    isAdded: payload.isAdded,
                 }};
                 freeze(action);
                 freeze(before);
