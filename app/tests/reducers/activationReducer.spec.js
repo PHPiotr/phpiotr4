@@ -25,4 +25,31 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
+    it(`should set activation data on ${activationActionTypes.SET_ACTIVATION_DATA} action`, () => {
+        const payload = {
+            protocol: 'http:',
+            host: 'example.com:3000',
+            hostname: 'example.com',
+        };
+        const action = {
+            payload,
+            type: activationActionTypes.SET_ACTIVATION_DATA,
+        };
+
+        const beforeState = {
+            activationUrl: '',
+            activationFromEmail: '',
+        };
+
+        const afterState = {
+            activationUrl: `${payload.protocol}//${payload.host}/register`,
+            activationFromEmail: `no-reply@${payload.hostname}`,
+        };
+
+        freeze(action);
+        freeze(beforeState);
+        freeze(afterState);
+
+        expect(activation(beforeState, action)).toEqual(afterState);
+    });
 });
