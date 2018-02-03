@@ -4,7 +4,7 @@ import expect from 'expect';
 import freeze from 'deep-freeze';
 
 describe('Activation reducer', () => {
-    it(`should start activation request on ${activationActionTypes.ACTIVATION_REQUEST} action`, () => {
+    it(`should set ${activationActionTypes.ACTIVATION_REQUEST} action`, () => {
         const action = {
             type: activationActionTypes.ACTIVATION_REQUEST,
         };
@@ -23,7 +23,7 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
-    it(`should successfully activate user on ${activationActionTypes.ACTIVATION_SUCCESS} action`, () => {
+    it(`should set ${activationActionTypes.ACTIVATION_SUCCESS} action`, () => {
         const payload = 'Success';
         const action = {
             type: activationActionTypes.ACTIVATION_SUCCESS,
@@ -46,7 +46,7 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
-    it(`should fail activating user on ${activationActionTypes.ACTIVATION_FAILURE} action`, () => {
+    it(`should set ${activationActionTypes.ACTIVATION_FAILURE} action`, () => {
         const payload = 'Failure';
         const action = {
             type: activationActionTypes.ACTIVATION_FAILURE,
@@ -69,7 +69,7 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
-    it(`should set activation success message on ${activationActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE} action`, () => {
+    it(`should set ${activationActionTypes.SET_ACTIVATION_SUCCESS_MESSAGE} action`, () => {
         const payload = 'Success';
         const action = {
             payload,
@@ -90,7 +90,7 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
-    it(`should set activation data on ${activationActionTypes.SET_ACTIVATION_DATA} action`, () => {
+    it(`should set ${activationActionTypes.SET_ACTIVATION_DATA} action`, () => {
         const payload = {
             protocol: 'http:',
             host: 'example.com:3000',
@@ -117,7 +117,7 @@ describe('Activation reducer', () => {
 
         expect(activation(beforeState, action)).toEqual(afterState);
     });
-    it('should return initial state', () => {
+    it('should set initial state', () => {
         const initialState = {
             activationUrl: '',
             activationFromEmail: '',
