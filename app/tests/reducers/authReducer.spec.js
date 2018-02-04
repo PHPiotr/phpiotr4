@@ -32,4 +32,26 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should not change isLoggedIn flag to true in case of ${authActionTypes.LOGIN_FAILURE} action type`, () => {
+        const payload = {message: 'Some error message', errors: {some: 'input errors'}};
+        const action = {type: authActionTypes.LOGIN_FAILURE, payload};
+        const before = {
+            isLoggingIn: true,
+            isLoggedIn: false,
+            token: '',
+            expiresIn: 0,
+        };
+        const after = {
+            loginErrorMessage: payload.message,
+            loginErrors: payload.errors,
+            isLoggingIn: false,
+            isLoggedIn: false,
+            token: '',
+            expiresIn: 0,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
