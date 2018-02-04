@@ -116,4 +116,26 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should remove any errors in case of ${authActionTypes.ON_FOCUS_LOGIN_FIELD} action type`, () => {
+        const fieldName = 'password';
+        const action = {type: authActionTypes.ON_FOCUS_LOGIN_FIELD, fieldName};
+        const before = {
+            loginErrorMessage: 'Some login error message',
+            loginErrors: {
+                password: {
+                    message: 'Some password error message',
+                },
+            },
+        };
+        const after = {
+            loginErrorMessage: '',
+            loginErrors: {
+                password: {},
+            },
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
