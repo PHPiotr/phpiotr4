@@ -93,4 +93,27 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should set initial state in case of ${authActionTypes.LOGOUT} action type`, () => {
+        const initialState = {
+            login: {
+                username: '',
+                password: '',
+            },
+            loginErrorMessage: '',
+            loginErrors: {},
+            isLoggedIn: false,
+            isLoggingIn: false,
+            isVerifying: false,
+            token: '',
+            expiresIn: 0,
+            showLoginPassword: false,
+        };
+        const action = {type: authActionTypes.LOGOUT};
+        const before = {isLoggedIn: true};
+        const after = initialState;
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
