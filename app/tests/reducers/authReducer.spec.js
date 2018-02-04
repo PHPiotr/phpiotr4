@@ -54,4 +54,22 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should set isLoggedIn flag in case of ${authActionTypes.SET_IS_LOGGED_IN} action type`, () => {
+        const action1 = {type: authActionTypes.SET_IS_LOGGED_IN, payload: true};
+        const action2 = {type: authActionTypes.SET_IS_LOGGED_IN, payload: false};
+        const before1 = {isLoggedIn: false};
+        const before2 = {isLoggedIn: true};
+        const after1 = {isLoggedIn: true};
+        const after2 = {isLoggedIn: false};
+        freeze(action1);
+        freeze(action2);
+        freeze(before1);
+        freeze(before2);
+        freeze(after1);
+        freeze(after2);
+        expect(auth(before1, action1)).toEqual(after1);
+        expect(auth(before2, action1)).toEqual(after1);
+        expect(auth(before1, action2)).toEqual(after2);
+        expect(auth(before2, action2)).toEqual(after2);
+    });
 });
