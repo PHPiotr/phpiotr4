@@ -72,4 +72,14 @@ describe('Auth reducer', () => {
         expect(auth(before1, action2)).toEqual(after2);
         expect(auth(before2, action2)).toEqual(after2);
     });
+    it(`should set token value in case of ${authActionTypes.SET_TOKEN} action type`, () => {
+        const payload = 'some.json.webtoken';
+        const action = {type: authActionTypes.SET_TOKEN, payload};
+        const before = {token: 'what.eve.r'};
+        const after = {token: payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
