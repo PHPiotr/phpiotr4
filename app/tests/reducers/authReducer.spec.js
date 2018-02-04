@@ -82,4 +82,15 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should set login-failed-related data in case of ${authActionTypes.SET_LOGIN_FAILED} action type`, () => {
+        const loginErrorMessage = 'Some login error message';
+        const isLoggedIn = false;
+        const action = {type: authActionTypes.SET_LOGIN_FAILED, loginErrorMessage};
+        const before = {loginErrorMessage: '', isLoggedIn};
+        const after = {loginErrorMessage, isLoggedIn};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
