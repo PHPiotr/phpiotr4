@@ -157,4 +157,13 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should toggle password visibility on/off on ${authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY}`, () => {
+        const action = {type: authActionTypes.TOGGLE_LOGIN_PASSWORD_VISIBILITY};
+        const before = {showLoginPassword: false};
+        const after = {showLoginPassword: true};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
