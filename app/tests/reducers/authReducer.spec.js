@@ -138,4 +138,23 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should change field value on ${authActionTypes.ON_CHANGE_LOGIN_FIELD} action type`, () => {
+        const fieldName = 'password';
+        const fieldValue = '1Whatever2@';
+        const action = {type: authActionTypes.ON_CHANGE_LOGIN_FIELD, fieldName, fieldValue};
+        const before = {
+            login: {
+                [fieldName]: fieldValue.substring(0, fieldValue.length - 1),
+            },
+        };
+        const after = {
+            login: {
+                [fieldName]: fieldValue,
+            },
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
