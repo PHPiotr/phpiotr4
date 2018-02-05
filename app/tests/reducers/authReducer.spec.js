@@ -176,4 +176,25 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it('should return initial state when unknown action type', () => {
+        const initialState = {
+            login: {
+                username: '',
+                password: '',
+            },
+            loginErrorMessage: '',
+            loginErrors: {},
+            isLoggedIn: false,
+            isLoggingIn: false,
+            isVerifying: false,
+            token: '',
+            expiresIn: 0,
+            showLoginPassword: false,
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(auth(undefined, action)).toEqual(after);
+    });
 });
