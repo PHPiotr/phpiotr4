@@ -166,4 +166,14 @@ describe('Auth reducer', () => {
         freeze(after);
         expect(auth(before, action)).toEqual(after);
     });
+    it(`should set login error message on ${authActionTypes.SET_LOGIN_ERROR_MESSAGE}`, () => {
+        const payload = 'Some error message';
+        const action = {type: authActionTypes.SET_LOGIN_ERROR_MESSAGE, payload};
+        const before = {loginErrorMessage: ''};
+        const after = {loginErrorMessage: payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(auth(before, action)).toEqual(after);
+    });
 });
