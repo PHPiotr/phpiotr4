@@ -34,7 +34,7 @@ const auth = (state = initialState, action) => {
                 loginErrorMessage: action.payload.message,
                 isLoggedIn: false,
                 isLoggingIn: false,
-                loginErrors: action.payload.errors || {},
+                loginErrors: action.payload.errors,
             };
         case authActionTypes.SET_IS_LOGGED_IN:
             return {...state, isLoggedIn: action.payload};
