@@ -41,4 +41,29 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should remove errors on ${passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD}`, () => {
+        const payload = 'password';
+        const action = {
+            type: passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD,
+            payload,
+        };
+        const before = {
+            passwordResetErrorMessage: 'Some error message',
+            passwordResetInputErrors: {
+                [payload] : {
+                    message: 'Some input error message',
+                },
+            },
+        };
+        const after = {
+            passwordResetErrorMessage: '',
+            passwordResetInputErrors: {
+                [payload] : {},
+            },
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
