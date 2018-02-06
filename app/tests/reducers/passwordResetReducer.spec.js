@@ -83,4 +83,19 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should set isResetting flag on ${passwordResetActionTypes.RESET_PASSWORD_REQUEST}`, () => {
+        const action = {
+            type: passwordResetActionTypes.RESET_PASSWORD_REQUEST,
+        };
+        const before = {
+            isResetting: false,
+        };
+        const after = {
+            isResetting: true,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
