@@ -13,4 +13,14 @@ describe('Profile', () => {
         freeze(after);
         expect(profile(before, action)).toEqual(after);
     });
+    it(`should succeed request on ${profileActionTypes.GET_PROFILE_SUCCESS}`, () => {
+        const payload = {my: 'profile'};
+        const action = {type: profileActionTypes.GET_PROFILE_SUCCESS, payload};
+        const before = {isFetching: true};
+        const after = {isFetching: false, ...payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(profile(before, action)).toEqual(after);
+    });
 });
