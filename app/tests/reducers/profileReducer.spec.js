@@ -46,4 +46,14 @@ describe('Profile', () => {
         freeze(after);
         expect(profile(before, action)).toEqual(after);
     });
+    it('should return initial state on unknown action', () => {
+        const initialState = {
+            isFetching: false,
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(profile(undefined, action)).toEqual(after);
+    });
 });
