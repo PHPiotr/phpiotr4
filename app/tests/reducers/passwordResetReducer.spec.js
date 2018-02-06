@@ -121,4 +121,32 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should set failure data on ${passwordResetActionTypes.RESET_PASSWORD_FAILURE}`, () => {
+        const payload = {
+            passwordResetErrorMessage: 'Some error',
+            passwordResetInputErrors: {
+                password: {
+                    message: 'Some error',
+                },
+            },
+        };
+        const action = {
+            type: passwordResetActionTypes.RESET_PASSWORD_FAILURE,
+            payload,
+        };
+        const before = {
+            isResetting: false,
+            passwordResetErrorMessage: '',
+            passwordResetInputErrors: {},
+        };
+        const after = {
+            isResetting: false,
+            passwordResetErrorMessage: payload.passwordResetErrorMessage,
+            passwordResetInputErrors: payload.passwordResetInputErrors,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
