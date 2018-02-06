@@ -2,6 +2,7 @@ import expect from 'expect';
 import freeze from 'deep-freeze';
 import profile from '../../reducers/profileReducer';
 import * as profileActionTypes from '../../actions/profile/profileActionTypes';
+import {LOGOUT} from '../../actions/auth/authActionTypes';
 
 describe('Profile', () => {
     it(`should start request on ${profileActionTypes.GET_PROFILE_REQUEST}`, () => {
@@ -28,6 +29,18 @@ describe('Profile', () => {
         const action = {type: profileActionTypes.GET_PROFILE_FAILURE, payload};
         const before = {isFetching: true};
         const after = {isFetching: false, ...payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(profile(before, action)).toEqual(after);
+    });
+    it(`should return initial state on ${LOGOUT}`, () => {
+        const initialState = {
+            isFetching: false,
+        };
+        const action = {type: LOGOUT};
+        const before = {some: 'profile data'};
+        const after = initialState;
         freeze(action);
         freeze(before);
         freeze(after);
