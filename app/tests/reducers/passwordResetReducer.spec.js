@@ -98,4 +98,27 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should set success data on ${passwordResetActionTypes.RESET_PASSWORD_SUCCESS}`, () => {
+        const action = {
+            type: passwordResetActionTypes.RESET_PASSWORD_SUCCESS,
+        };
+        const before = {
+            isResetting: true,
+            isReset: false,
+            password: '1Qwertyuiop2@',
+            repeatPassword: '1Qwertyuiop2@',
+            passwordResetErrorMessage: 'There might have been some error here',
+        };
+        const after = {
+            isResetting: false,
+            isReset: true,
+            password: '',
+            repeatPassword: '',
+            passwordResetErrorMessage: '',
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
