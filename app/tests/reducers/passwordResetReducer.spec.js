@@ -149,4 +149,21 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should toggle password input visibility on/off in case of ${passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY}`, () => {
+        const payload = 'showPassword';
+        const action = {
+            type: passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY,
+            payload,
+        };
+        const before = {
+            [payload]: true,
+        };
+        const after = {
+            [payload]: !before[payload],
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
