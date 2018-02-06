@@ -166,4 +166,26 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it('should return initial state on not known action type', () => {
+        const initialState = {
+            password: '',
+            repeatPassword: '',
+            isResetting: false,
+            isReset: false,
+            passwordResetErrorMessage: '',
+            passwordResetInputErrors: {
+                password: {},
+                repeatPassword: {},
+            },
+            showPassword: false,
+            showRepeatPassword: false,
+        };
+        const action = {
+            type: 'UNKNOWN_ACTION',
+        };
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(passwordReset(undefined, action)).toEqual(after);
+    });
 });
