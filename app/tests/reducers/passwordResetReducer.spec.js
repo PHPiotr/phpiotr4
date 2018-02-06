@@ -24,4 +24,21 @@ describe('Password Reset', () => {
         freeze(after);
         expect(passwordReset(before, action)).toEqual(after);
     });
+    it(`should set error message on ${passwordResetActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE}`, () => {
+        const payload = 'Some error message';
+        const action = {
+            type: passwordResetActionTypes.SET_RESET_PASSWORD_ERROR_MESSAGE,
+            payload,
+        };
+        const before = {
+            passwordResetErrorMessage: '',
+        };
+        const after = {
+            passwordResetErrorMessage: payload,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(passwordReset(before, action)).toEqual(after);
+    });
 });
