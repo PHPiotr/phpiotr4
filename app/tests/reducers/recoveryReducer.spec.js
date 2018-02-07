@@ -52,4 +52,16 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it(`should succeed request on ${recoveryActionTypes.ACCOUNT_RECOVERY_FAILURE}`, () => {
+        const payload = {
+            recoveryErrorMessage: 'Some error',
+        };
+        const action = {type: recoveryActionTypes.ACCOUNT_RECOVERY_FAILURE, payload};
+        const before = {isRecovering: true, recoveryErrorMessage: ''};
+        const after = {isRecovering: false, recoveryErrorMessage: payload.recoveryErrorMessage};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(recovery(before, action)).toEqual(after);
+    });
 });
