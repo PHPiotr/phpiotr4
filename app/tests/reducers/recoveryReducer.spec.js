@@ -34,4 +34,13 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it(`should begin request on ${recoveryActionTypes.ACCOUNT_RECOVERY_REQUEST}`, () => {
+        const action = {type: recoveryActionTypes.ACCOUNT_RECOVERY_REQUEST};
+        const before = {isRecovering: false};
+        const after = {isRecovering: true};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(recovery(before, action)).toEqual(after);
+    });
 });
