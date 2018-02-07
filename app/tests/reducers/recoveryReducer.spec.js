@@ -43,4 +43,13 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it(`should succeed request on ${recoveryActionTypes.ACCOUNT_RECOVERY_SUCCESS}`, () => {
+        const action = {type: recoveryActionTypes.ACCOUNT_RECOVERY_SUCCESS};
+        const before = {isRecovering: true, recoveryEmail: 'someone@example.com', isRecovered: false};
+        const after = {isRecovering: false, recoveryEmail: '', isRecovered: true};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(recovery(before, action)).toEqual(after);
+    });
 });
