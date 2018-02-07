@@ -14,4 +14,14 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it(`should set isRecovered flag on ${recoveryActionTypes.SET_IS_RECOVERED}`, () => {
+        const payload = true;
+        const action = {type: recoveryActionTypes.SET_IS_RECOVERED, payload};
+        const before = {isRecovered: false};
+        const after = {isRecovered: payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(recovery(before, action)).toEqual(after);
+    });
 });
