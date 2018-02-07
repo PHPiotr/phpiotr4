@@ -64,4 +64,17 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it('should return initial state on unknown action', () => {
+        const initialState = {
+            recoveryEmail: '',
+            isRecovering: false,
+            isRecovered: false,
+            recoveryErrorMessage: '',
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(recovery(undefined, action)).toEqual(after);
+    });
 });
