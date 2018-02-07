@@ -24,4 +24,14 @@ describe('Recovery', () => {
         freeze(after);
         expect(recovery(before, action)).toEqual(after);
     });
+    it(`should set error message on ${recoveryActionTypes.SET_RECOVERY_ERROR_MESSAGE}`, () => {
+        const payload = 'Some error';
+        const action = {type: recoveryActionTypes.SET_RECOVERY_ERROR_MESSAGE, payload};
+        const before = {recoveryErrorMessage: ''};
+        const after = {recoveryErrorMessage: payload};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(recovery(before, action)).toEqual(after);
+    });
 });
