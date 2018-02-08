@@ -119,4 +119,17 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should toggle repeat-password visibility on/off on ${registrationActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY}`, () => {
+        const action = {type: registrationActionTypes.TOGGLE_REGISTRATION_REPEAT_PASSWORD_VISIBILITY};
+        const before = {
+            showRegistrationRepeatPassword: false,
+        };
+        const after = {
+            showRegistrationRepeatPassword: !before.showRegistrationRepeatPassword,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
