@@ -38,4 +38,27 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should remove errors on ${registrationActionTypes.ON_FOCUS_REGISTRATION_FIELD}`, () => {
+        const fieldName = 'password';
+        const action = {type: registrationActionTypes.ON_FOCUS_REGISTRATION_FIELD, fieldName};
+        const before = {
+            registrationErrorMessage: 'Some error',
+            registrationErrors: {
+                [fieldName]: {
+                    message: 'Some error',
+                },
+            },
+        };
+        const after = {
+            registrationErrorMessage: '',
+            registrationSuccessMessage: '',
+            registrationErrors: {
+                [fieldName]: {},
+            },
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
