@@ -25,8 +25,8 @@ const registration = (state = initialState, action) => {
             return {
                 ...state,
                 isRegistering: false,
-                registrationErrorMessage: action.payload.error || '',
-                registrationErrors: action.payload.errors || {},
+                registrationErrorMessage: action.payload.error,
+                registrationErrors: action.payload.errors,
             };
         case registrationActionTypes.ON_FOCUS_REGISTRATION_FIELD:
             return {
@@ -38,8 +38,6 @@ const registration = (state = initialState, action) => {
         case registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD:
             return {
                 ...state,
-                registrationErrorMessage: '',
-                registrationSuccessMessage: '',
                 registration: {...state.registration, [action.fieldName]: action.fieldValue},
             };
         case registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE:
