@@ -92,4 +92,18 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should set registration success message on ${registrationActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE}`, () => {
+        const payload = 'Success';
+        const action = {type: registrationActionTypes.SET_REGISTRATION_SUCCESS_MESSAGE, payload};
+        const before = {
+            registrationSuccessMessage: '',
+        };
+        const after = {
+            registrationSuccessMessage: payload,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
