@@ -78,4 +78,18 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should set registration error message on ${registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE}`, () => {
+        const payload = 'Error';
+        const action = {type: registrationActionTypes.SET_REGISTRATION_ERROR_MESSAGE, payload};
+        const before = {
+            registrationErrorMessage: '',
+        };
+        const after = {
+            registrationErrorMessage: payload,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
