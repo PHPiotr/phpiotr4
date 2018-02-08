@@ -132,4 +132,20 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it('should return intial state on unknown action', () => {
+        const initialState = {
+            registration: {},
+            registrationErrorMessage: '',
+            registrationErrors: {},
+            isRegistering: false,
+            registrationSuccessMessage: '',
+            showRegistrationPassword: false,
+            showRegistrationRepeatPassword: false,
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(registration(undefined, action)).toEqual(after);
+    });
 });
