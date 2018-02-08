@@ -13,4 +13,14 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should succeed request on ${registrationActionTypes.REGISTRATION_SUCCESS}`, () => {
+        const payload = 'Success';
+        const action = {type: registrationActionTypes.REGISTRATION_SUCCESS, payload};
+        const before = {isRegistering: true, registrationSuccessMessage: payload, registration: {hello: 'world'}};
+        const after = {isRegistering: false, registrationSuccessMessage: payload, registration: {}};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
