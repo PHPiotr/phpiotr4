@@ -106,4 +106,17 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should toggle password visibility on/off on ${registrationActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY}`, () => {
+        const action = {type: registrationActionTypes.TOGGLE_REGISTRATION_PASSWORD_VISIBILITY};
+        const before = {
+            showRegistrationPassword: false,
+        };
+        const after = {
+            showRegistrationPassword: !before.showRegistrationPassword,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
