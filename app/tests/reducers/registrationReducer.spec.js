@@ -61,4 +61,21 @@ describe('Registration', () => {
         freeze(after);
         expect(registration(before, action)).toEqual(after);
     });
+    it(`should set field value on ${registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD}`, () => {
+        const fieldName = 'password';
+        const fieldValue = 'whatever';
+        const action = {type: registrationActionTypes.ON_CHANGE_REGISTRATION_FIELD, fieldName, fieldValue};
+        const before = {
+            registration: {},
+        };
+        const after = {
+            registration: {
+                [fieldName]: fieldValue,
+            },
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(registration(before, action)).toEqual(after);
+    });
 });
