@@ -34,4 +34,16 @@ describe('Report', () => {
         freeze(after);
         expect(report(before, action)).toEqual(after);
     });
+    it(`should toggle details on/off on ${reportActionTypes.TOGGLE_DETAILS_OPEN}`, () => {
+        const payload = 'buses';
+        const action = {type: reportActionTypes.TOGGLE_DETAILS_OPEN, payload};
+        const before = {
+            [`${payload}DetailsOpen`]: false,
+        };
+        const after = {[`${payload}DetailsOpen`]: !before[`${payload}DetailsOpen`]};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(report(before, action)).toEqual(after);
+    });
 });
