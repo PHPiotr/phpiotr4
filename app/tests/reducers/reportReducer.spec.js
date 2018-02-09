@@ -13,4 +13,15 @@ describe('Report', () => {
         freeze(after);
         expect(report(before, action)).toEqual(after);
     });
+    it(`should succeed request on ${reportActionTypes.REPORT_SUCCESS}`, () => {
+        const data = {some: 'data'};
+        const receivedAt = new Date();
+        const action = {type: reportActionTypes.REPORT_SUCCESS, data, receivedAt};
+        const before = {isFetching: true};
+        const after = {isFetching: false, receivedAt, ...data};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(report(before, action)).toEqual(after);
+    });
 });
