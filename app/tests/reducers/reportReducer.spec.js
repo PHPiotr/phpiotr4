@@ -46,4 +46,34 @@ describe('Report', () => {
         freeze(after);
         expect(report(before, action)).toEqual(after);
     });
+    it('should return initial state on unknown action', () => {
+        const initialState = {
+            totalCost: 0,
+            buses: [],
+            busesAvg: 0,
+            busesCost: 0,
+            busesSinglesQuantity: 0,
+            planes: [],
+            planesAvg: 0,
+            planesCost: 0,
+            planesSinglesQuantity: 0,
+            trains: [],
+            trainsAvg: 0,
+            trainsCost: 0,
+            trainsSinglesQuantity: 0,
+            hostels: [],
+            hostelsAvg: 0,
+            hostelsCost: 0,
+            isFetching: false,
+            busesDetailsOpen: false,
+            planesDetailsOpen: false,
+            trainsDetailsOpen: false,
+            hostelsDetailsOpen: false,
+        };
+        const action = {type: 'UNKNOWN_ACTION'};
+        const after = initialState;
+        freeze(action);
+        freeze(after);
+        expect(report(undefined, action)).toEqual(after);
+    });
 });
