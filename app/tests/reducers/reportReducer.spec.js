@@ -24,4 +24,14 @@ describe('Report', () => {
         freeze(after);
         expect(report(before, action)).toEqual(after);
     });
+    it(`should fail request on ${reportActionTypes.REPORT_FAILURE}`, () => {
+        const error = 'Error';
+        const action = {type: reportActionTypes.REPORT_FAILURE, error};
+        const before = {isFetching: true};
+        const after = {isFetching: false, error};
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(report(before, action)).toEqual(after);
+    });
 });
