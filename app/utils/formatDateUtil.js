@@ -16,7 +16,11 @@ export default (date) => {
 
 export const formatDateTime = (datetime) => {
     if (typeof datetime === 'object') {
-        return moment(datetime).format('DD/MM/YYYY HH:mm:ss');
+        if (typeof datetime.toISOString === 'function') {
+            datetime = datetime.toISOString();
+        } else {
+            return datetime;
+        }
     }
     if (typeof datetime === 'string') {
         return datetime.match(/\/+/) ? datetime : moment(datetime).format('DD/MM/YYYY HH:mm:ss');
