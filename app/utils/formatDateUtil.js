@@ -1,7 +1,11 @@
 import moment from 'moment';
 export default (date) => {
     if (typeof date === 'object') {
-        return moment(date).format('DD/MM/YYYY');
+        if (typeof date.toISOString === 'function') {
+            date = date.toISOString();
+        } else {
+            return date;
+        }
     }
     if (typeof date === 'string') {
         return date.match(/\/+/) ? date : moment(date).format('DD/MM/YYYY');
@@ -12,7 +16,11 @@ export default (date) => {
 
 export const formatDateTime = (datetime) => {
     if (typeof datetime === 'object') {
-        return moment(datetime).format('DD/MM/YYYY HH:mm:ss');
+        if (typeof datetime.toISOString === 'function') {
+            datetime = datetime.toISOString();
+        } else {
+            return datetime;
+        }
     }
     if (typeof datetime === 'string') {
         return datetime.match(/\/+/) ? datetime : moment(datetime).format('DD/MM/YYYY HH:mm:ss');
