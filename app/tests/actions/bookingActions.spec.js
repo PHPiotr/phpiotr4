@@ -477,5 +477,26 @@ describe('bookingActions', () => {
             const expectedAction = {type: bookingActionTypes.SET_IS_ADD, payload};
             expect(bookingActions.setIsAdd(payload)).toEqual(expectedAction);
         });
+
+        it(`should create ${bookingActionTypes.SET_MIN_DATE} action type`, () => {
+            let fieldName;
+            switch (label) {
+                case 'hostels':
+                    fieldName = 'checkout_date';
+                    break;
+                default:
+                    fieldName = 'return_departure_date';
+            }
+            const payload = {
+                label: pluralToSingularMapping[label],
+                minDate: '2018-01-01',
+                fieldName,
+            };
+            const expectedAction = {
+                type: bookingActionTypes.SET_MIN_DATE,
+                payload,
+            };
+            expect(bookingActions.setMinDate(payload)).toEqual(expectedAction);
+        });
     });
 });
