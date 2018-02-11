@@ -164,3 +164,4 @@ const fetchBookingsFailure = payload => ({type: bookingActionTypes.GET_BOOKINGS_
 
 export const setCurrentBooking = payload => ({type: bookingActionTypes.SET_CURRENT_BOOKING, payload});
 export const toggleIsBookingDeleteDialogOpen = () => ({type: bookingActionTypes.TOGGLE_IS_BOOKING_DELETE_DIALOG_OPEN});
+export const setMinDate = payload => ({type: bookingActionTypes.SET_MIN_DATE, payload});
