@@ -5,6 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 import {NEW_BUS, EDIT_BUS} from '../../constants';
 import Booking from '../containers/Booking';
 import Input, {InputLabel} from 'material-ui/Input';
+import TextField from 'material-ui/TextField';
 import {withStyles} from 'material-ui/styles';
 import {formStyles as styles} from '../../utils/styles';
 
@@ -54,6 +55,7 @@ const BusForm = (props) => {
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Departure date: ${(bus.errors.departure_date && !!bus.errors.departure_date.message) ? bus.errors.departure_date.message : ''}`}</InputLabel>
                     <Input
+                        inputProps={{max: (!!bus.current.is_return && bus.current.return_departure_date) ? bus.current.return_departure_date : ''}}
                         id={'departure-date'}
                         type={'date'}
                         name={'departure_date'}
@@ -108,6 +110,7 @@ const BusForm = (props) => {
                     <FormControl className={props.classes.formControl} key={1}>
                         <InputLabel htmlFor="password">{`Return departure date: ${(bus.errors.return_departure_date && !!bus.errors.return_departure_date.message) ? bus.errors.return_departure_date.message : ''}`}</InputLabel>
                         <Input
+                            inputProps={{min: bus.current.departure_date || ''}}
                             id={'return-departure-date'}
                             type={'date'}
                             name={'return_departure_date'}
