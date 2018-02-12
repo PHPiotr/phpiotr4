@@ -25,7 +25,7 @@ const FloatingAddButton = (props) => {
 
     return (
         <Button
-            fab
+            variant="fab"
             color="primary"
             aria-label="add"
             className={props.classes.button}
