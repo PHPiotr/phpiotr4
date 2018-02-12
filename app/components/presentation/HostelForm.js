@@ -53,6 +53,7 @@ const HostelForm = (props) => {
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Check-in date: ${(hostel.errors.checkin_date && !!hostel.errors.checkin_date.message) ? hostel.errors.checkin_date.message : ''}`}</InputLabel>
                     <Input
+                        inputProps={{max: hostel.current.checkout_date || ''}}
                         id={'checkin-date'}
                         type={'date'}
                         name={'checkin_date'}
@@ -65,6 +66,7 @@ const HostelForm = (props) => {
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Check-out date: ${(hostel.errors.checkout_date && !!hostel.errors.checkout_date.message) ? hostel.errors.checkout_date.message : ''}`}</InputLabel>
                     <Input
+                        inputProps={{min: hostel.current.checkin_date || ''}}
                         id={'checkout-date'}
                         type={'date'}
                         name={'checkout_date'}
