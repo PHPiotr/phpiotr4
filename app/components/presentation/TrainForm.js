@@ -42,6 +42,7 @@ const TrainForm = (props) => {
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Departure date: ${(train.errors.departure_date && !!train.errors.departure_date.message) ? train.errors.departure_date.message : ''}`}</InputLabel>
                     <Input
+                        inputProps={{max: (!!train.current.is_return && train.current.return_departure_date) ? train.current.return_departure_date : ''}}
                         id={'departure-date'}
                         type={'date'}
                         name={'departure_date'}
@@ -83,6 +84,7 @@ const TrainForm = (props) => {
                     <FormControl className={props.classes.formControl}>
                         <InputLabel htmlFor="password">{`Return date: ${(train.errors.return_departure_date && !!train.errors.return_departure_date.message) ? train.errors.return_departure_date.message : ''}`}</InputLabel>
                         <Input
+                            inputProps={{min: train.current.departure_date || ''}}
                             id={'return-departure-date'}
                             type={'date'}
                             name={'return_departure_date'}
