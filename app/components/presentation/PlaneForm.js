@@ -54,6 +54,7 @@ const PlaneForm = (props) => {
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="password">{`Departure date: ${(plane.errors.departure_date && !!plane.errors.departure_date.message) ? plane.errors.departure_date.message : ''}`}</InputLabel>
                     <Input
+                        inputProps={{max: (!!plane.current.is_return && plane.current.return_departure_date) ? plane.current.return_departure_date : ''}}
                         id={'departure-date'}
                         type={'date'}
                         name={'departure_date'}
@@ -146,6 +147,7 @@ const PlaneForm = (props) => {
                     <FormControl className={props.classes.formControl} key={1}>
                         <InputLabel htmlFor="password">{`Return departure date: ${(plane.errors.return_departure_date && !!plane.errors.return_departure_date.message) ? plane.errors.return_departure_date.message : ''}`}</InputLabel>
                         <Input
+                            inputProps={{min: plane.current.departure_date || ''}}
                             id={'return-departure-date'}
                             type={'date'}
                             name={'return_departure_date'}
