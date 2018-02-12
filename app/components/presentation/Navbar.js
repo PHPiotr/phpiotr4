@@ -31,56 +31,73 @@ const Navbar = (props) => {
                 <ToolbarIconButtonRight {...props}/>
             </Toolbar>
             <Drawer open={props.isDrawerOpen} onClose={props.toggleIsDrawerOpen}>
-                <Typography type="subheading" color="inherit">
-                    <div className={classes.list} onClick={props.toggleIsDrawerOpen}>{
-                        !props.isLoggedIn ? (
-                            <List>
-                                <ListItem button>
-                                    <ListItemIcon><SignInIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/login'}>Sign in</Link>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><SignUpIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/register'}>Sign up</Link>
-                                </ListItem>
-                            </List>
-                        ) : (
-                            <List>
-                                <ListItem button>
-                                    <ListItemIcon><ReportIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/'}>Report</Link>
-                                </ListItem>
-                                <Divider/>
-                                <ListItem button>
-                                    <ListItemIcon><ProfileIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/profile'}>Profile</Link>
-                                </ListItem>
-                                <Divider/>
-                                <ListItem button>
-                                    <ListItemIcon><BusIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/buses/current'}>Buses</Link>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><PlaneIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/planes/current'}>Planes</Link>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><TrainIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/trains/current'}>Trains</Link>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><HostelIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/bookings/hostels/current'}>Hostels</Link>
-                                </ListItem>
-                                <Divider/>
-                                <ListItem button>
-                                    <ListItemIcon><SignoutIcon/></ListItemIcon>
-                                    <Link className={classes.link} to={'/logout'}>Sign out</Link>
-                                </ListItem>
-                            </List>
-                        )
-                    }</div>
-                </Typography>
+                <div className={classes.list} onClick={props.toggleIsDrawerOpen}>{
+                    !props.isLoggedIn ? (
+                        <List>
+                            <ListItem button>
+                                <ListItemIcon><SignInIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/login'}>
+                                    <Typography variant="subheading">Sign in</Typography>
+                                </Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon><SignUpIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/register'}>
+                                    <Typography variant="subheading">Sign up</Typography>
+                                </Link>
+                            </ListItem>
+                        </List>
+                    ) : (
+                        <List>
+                            <ListItem button>
+                                <ListItemIcon><ReportIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/'}>
+                                    <Typography variant="subheading">Report</Typography>
+                                </Link>
+                            </ListItem>
+                            <Divider/>
+                            <ListItem button>
+                                <ListItemIcon><ProfileIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/profile'}>
+                                    <Typography variant="subheading">Profile</Typography>
+                                </Link>
+                            </ListItem>
+                            <Divider/>
+                            <ListItem button>
+                                <ListItemIcon><BusIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/bookings/buses/current'}>
+                                    <Typography variant="subheading">Buses</Typography>
+                                </Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon><PlaneIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/bookings/planes/current'}>
+                                    <Typography variant="subheading">Planes</Typography>
+                                </Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon><TrainIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/bookings/trains/current'}>
+                                    <Typography variant="subheading">Trains</Typography>
+                                </Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon><HostelIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/bookings/hostels/current'}>
+                                    <Typography variant="subheading">Hostels</Typography>
+                                </Link>
+                            </ListItem>
+                            <Divider/>
+                            <ListItem button>
+                                <ListItemIcon><SignoutIcon/></ListItemIcon>
+                                <Link className={classes.link} to={'/logout'}>
+                                    <Typography variant="subheading">Sign out</Typography>
+                                </Link>
+                            </ListItem>
+                        </List>
+                    )
+                }
+                </div>
             </Drawer>
         </AppBar>
     );
