@@ -56,7 +56,7 @@ class AccountRecovery extends Component {
                             />
                         </FormControl>
                         <FormControl className={this.props.classes.formControl}>
-                            <Button raised color="primary" type="submit">Send recovery email</Button>
+                            <Button color="primary" type="submit">Send recovery email</Button>
                         </FormControl>
                     </FormControl>
                 </form>

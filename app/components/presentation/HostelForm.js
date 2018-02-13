@@ -89,7 +89,7 @@ const HostelForm = (props) => {
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <Button raised color="primary" type="submit">Save</Button>
+                    <Button variant="raised" color="primary" type="submit">Save</Button>
                 </FormControl>
             </FormControl>
         </form>
