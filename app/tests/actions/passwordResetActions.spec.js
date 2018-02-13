@@ -116,4 +116,14 @@ describe('Password Reset Actions', () => {
             expect(passwordResetActions.togglePasswordVisibility(payload)).toEqual(expectedAction);
         });
     });
+    it(`should create ${passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD}`, () => {
+        const payloads = ['password', 'repeatPassword'];
+        payloads.forEach((payload) => {
+            const expectedAction = {
+                type: passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD,
+                payload,
+            };
+            expect(passwordResetActions.onFocusPasswordResetField(payload)).toEqual(expectedAction);
+        });
+    });
 });

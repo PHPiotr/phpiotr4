@@ -35,3 +35,4 @@ export const resetPasswordIfNeeded = (userId, token) => {
 };
 
 export const togglePasswordVisibility = payload => ({type: passwordResetActionTypes.TOGGLE_PASSWORD_VISIBILITY, payload});
+export const onFocusPasswordResetField = payload => ({type: passwordResetActionTypes.ON_FOCUS_PASSWORD_RESET_FIELD, payload});
