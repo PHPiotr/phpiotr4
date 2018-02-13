@@ -1,15 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import Button from 'material-ui/Button';
-import {FormControl} from 'material-ui/Form';
 import NoAuth from './NoAuth';
 import * as recoveryActions from '../../actions/recovery/recoveryActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import {LinearProgress} from 'material-ui/Progress';
-import Input, {InputLabel} from 'material-ui/Input';
-import {withStyles} from 'material-ui/styles';
-import {formStyles as styles} from '../../utils/styles';
+import AccountRecoveryForm from '../presentation/AccountRecoveryForm';
 
 class AccountRecovery extends Component {
 
@@ -21,16 +17,6 @@ class AccountRecovery extends Component {
         this.props.setAppBarTitle(null);
     }
 
-    handleChange = (event) => {
-        this.props.setRecoveryEmail(event.target.value);
-    };
-
-    handleFocus = () => {
-        if (this.props.recoveryErrorMessage) {
-            this.props.setRecoveryErrorMessage('');
-        }
-    };
-
     render() {
         if (this.props.isLoggedIn) {
             return null;
@@ -41,25 +27,7 @@ class AccountRecovery extends Component {
 
         return (
             <Fragment>
-                <form className={this.props.classes.root} onSubmit={this.props.handleSubmit}>
-                    <FormControl component="fieldset">
-                        <FormControl className={this.props.classes.formControl}>
-                            <InputLabel htmlFor="password">{`Email: ${this.props.recoveryErrorMessage}`}</InputLabel>
-                            <Input
-                                id="email"
-                                name="email"
-                                type={'text'}
-                                onChange={this.handleChange}
-                                onFocus={this.handleFocus}
-                                value={this.props.recoveryEmail}
-                                error={!!this.props.recoveryErrorMessage}
-                            />
-                        </FormControl>
-                        <FormControl className={this.props.classes.formControl}>
-                            <Button variant="raised" color="primary" type="submit">Send recovery email</Button>
-                        </FormControl>
-                    </FormControl>
-                </form>
+                <AccountRecoveryForm {...this.props}/>
                 <MessageBar
                     open={this.props.isRecovered}
                     message="Recovery email sent"
@@ -92,4 +60,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default withStyles(styles)(NoAuth(connect(mapStateToProps, mapDispatchToProps)(AccountRecovery)));
+export default NoAuth(connect(mapStateToProps, mapDispatchToProps)(AccountRecovery));
