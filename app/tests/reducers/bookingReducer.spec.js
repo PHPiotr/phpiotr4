@@ -17,6 +17,8 @@ const initialBooking = {
     errors: {},
     error: {},
     current: {},
+    byId: {},
+    allIds: [],
 };
 
 const initialState = {

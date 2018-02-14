@@ -14,6 +14,8 @@ const initialBooking = {
     errors: {},
     error: {},
     current: {},
+    allIds: [],
+    byId: {},
 };
 
 const initialState = {
@@ -124,6 +126,11 @@ const bookings = (state = initialState, action) => {
                     ...state[payload.label],
                     isFetching: false,
                     data: payload.data,
+                    allIds: Array.isArray(payload.data.bookings) ? payload.data.bookings.map(booking => booking._id) : [],
+                    byId: Array.isArray(payload.data.bookings) ? payload.data.bookings.reduce((acc, cur) => {
+                        acc[cur._id] = cur;
+                        return acc;
+                    }, {}) : {},
                     code: 200,
                 },
             };
