@@ -5,7 +5,9 @@ import {setAppBarTitle} from '../../actions/app/appActions';
 import {PROFILE} from '../../constants';
 import {getProfileIfNeeded} from '../../actions/profile/profileActions';
 import {LinearProgress} from 'material-ui/Progress';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import EditIcon from 'material-ui-icons/Edit';
 import {formatDateTime} from '../../utils/formatDateUtil';
 import jwtDecode from 'jwt-decode';
 
@@ -35,6 +37,14 @@ class Profile extends Component {
                     </ListItem>
                     <ListItem button>
                         <ListItemText primary="Last modified" secondary={formatDateTime(this.props.updatedAt)} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Password" secondary={'Change password'} />
+                        <ListItemSecondaryAction>
+                            <IconButton aria-label="Edit" href="/password-change">
+                                <EditIcon/>
+                            </IconButton>
+                        </ListItemSecondaryAction>
                     </ListItem>
                 </List>
             </Fragment>
