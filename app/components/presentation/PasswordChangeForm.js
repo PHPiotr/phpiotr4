@@ -35,38 +35,38 @@ const PasswordChangeForm = (props) => {
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <InputLabel htmlFor="new-password">{`New password: ${(props.passwordChangeInputErrors.newPassword && props.passwordChangeInputErrors.newPassword.message) || ''}`}</InputLabel>
+                    <InputLabel htmlFor="new-password">{`New password: ${(props.passwordChangeInputErrors.password && props.passwordChangeInputErrors.password.message) || ''}`}</InputLabel>
                     <Input
                         id="new-password"
-                        name="newPassword"
-                        type={props.showNewPassword ? 'text' : 'password'}
+                        name="password"
+                        type={props.showPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
-                        value={props.newPassword}
-                        error={!!((props.passwordChangeInputErrors.newPassword && props.passwordChangeInputErrors.newPassword.message))}
+                        value={props.password}
+                        error={!!((props.passwordChangeInputErrors.password && props.passwordChangeInputErrors.password.message))}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton onClick={props.handleClickToggleNewPassword}>
-                                    {props.showNewPassword ? <VisibilityOff /> : <Visibility />}
+                                    {props.showPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <InputLabel htmlFor="new-password-repeat">{`Repeat new password: ${(props.passwordChangeInputErrors.repeatNewPassword && props.passwordChangeInputErrors.repeatNewPassword.message) || ''}`}</InputLabel>
+                    <InputLabel htmlFor="new-password-repeat">{`Repeat new password: ${(props.passwordChangeInputErrors.repeatPassword && props.passwordChangeInputErrors.repeatPassword.message) || ''}`}</InputLabel>
                     <Input
                         id="new-password-repeat"
-                        name="repeatNewPassword"
-                        type={props.showRepeatNewPassword ? 'text' : 'password'}
+                        name="repeatPassword"
+                        type={props.showRepeatPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
-                        value={props.repeatNewPassword}
-                        error={!!((props.passwordChangeInputErrors.repeatNewPassword && props.passwordChangeInputErrors.repeatNewPassword.message))}
+                        value={props.repeatPassword}
+                        error={!!((props.passwordChangeInputErrors.repeatPassword && props.passwordChangeInputErrors.repeatPassword.message))}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton onClick={props.handleClickToggleRepeatNewPassword}>
-                                    {props.showRepeatNewPassword ? <VisibilityOff /> : <Visibility />}
+                                    {props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }

@@ -66,10 +66,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(passwordChangeActions.togglePasswordChangeVisibility('showCurrentPassword'));
         },
         handleClickToggleNewPassword() {
-            dispatch(passwordChangeActions.togglePasswordChangeVisibility('showNewPassword'));
+            dispatch(passwordChangeActions.togglePasswordChangeVisibility('showPassword'));
         },
         handleClickToggleRepeatNewPassword() {
-            dispatch(passwordChangeActions.togglePasswordChangeVisibility('showRepeatNewPassword'));
+            dispatch(passwordChangeActions.togglePasswordChangeVisibility('showRepeatPassword'));
         },
         handleChange({target}) {
             const {name, value} = target;

@@ -2,19 +2,19 @@ import * as passwordChangeActionTypes from '../actions/passwordChange/passwordCh
 
 const initialState = {
     currentPassword: '',
-    newPassword: '',
-    repeatNewPassword: '',
+    password: '',
+    repeatPassword: '',
     isChangingPassword: false,
     isChangedPassword: false,
     passwordChangeErrorMessage: '',
     passwordChangeInputErrors: {
         currentPassword: {},
-        newPassword: {},
-        repeatNewPassword: {},
+        password: {},
+        repeatPassword: {},
     },
     showCurrentPassword: false,
-    showNewPassword: false,
-    showRepeatNewPassword: false,
+    showPassword: false,
+    showRepeatPassword: false,
 };
 
 const passwordChange = (state = initialState, action) => {
@@ -39,8 +39,8 @@ const passwordChange = (state = initialState, action) => {
                 isChangingPassword: false,
                 isChangedPassword: true,
                 currentPassword: '',
-                newPassword: '',
-                repeatNewPassword: '',
+                password: '',
+                repeatPassword: '',
                 passwordChangeErrorMessage: '',
             };
         case passwordChangeActionTypes.CHANGE_PASSWORD_FAILURE:
