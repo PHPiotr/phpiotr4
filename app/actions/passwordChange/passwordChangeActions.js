@@ -13,8 +13,8 @@ export const changePasswordIfNeeded = (userId) => {
         dispatch({type: passwordChangeActionTypes.CHANGE_PASSWORD_REQUEST});
         return changePassword(userId, token, {
             currentPassword: passwordChange.currentPassword,
-            newPassword: passwordChange.newPassword,
-            newPasswordRepeat: passwordChange.repeatNewPassword,
+            newPassword: passwordChange.password,
+            newPasswordRepeat: passwordChange.repeatPassword,
         })
             .then((response) => {
                 if (response.status === 204) {
