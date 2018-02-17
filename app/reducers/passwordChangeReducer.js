@@ -38,8 +38,9 @@ const passwordChange = (state = initialState, action) => {
                 ...state,
                 isChangingPassword: false,
                 isChangedPassword: true,
-                password: '',
-                repeatPassword: '',
+                currentPassword: '',
+                newPassword: '',
+                repeatNewPassword: '',
                 passwordChangeErrorMessage: '',
             };
         case passwordChangeActionTypes.CHANGE_PASSWORD_FAILURE:

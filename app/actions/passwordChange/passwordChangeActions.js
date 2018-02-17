@@ -4,9 +4,9 @@ import * as passwordChangeActionTypes from './passwordChangeActionTypes';
 export const setChangePasswordInputValue = payload => ({type: passwordChangeActionTypes.SET_CHANGE_PASSWORD_INPUT_VALUE, payload});
 export const setChangePasswordErrorMessage = payload => ({type: passwordChangeActionTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, payload});
 export const setIsChangePassword = payload => ({type: passwordChangeActionTypes.SET_IS_CHANGE_PASSWORD, payload});
-export const changePasswordIfNeeded = (userId, token) => {
+export const changePasswordIfNeeded = (userId) => {
     return (dispatch, getState) => {
-        const {passwordChange} = getState();
+        const {passwordChange, auth: {token}} = getState();
         if (passwordChange.isChangingPassword) {
             return Promise.resolve();
         }
@@ -27,7 +27,7 @@ export const changePasswordIfNeeded = (userId, token) => {
             .then((json) => {
                 if (json.err) {
                     dispatch({type: passwordChangeActionTypes.CHANGE_PASSWORD_FAILURE, payload: {
-                        passwordChangeErrorMessage: json.err.message,
+                        passwordChangeErrorMessage: json.message,
                         passwordChangeInputErrors: json.err.errors,
                     }});
                 }

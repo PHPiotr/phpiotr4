@@ -9,8 +9,11 @@ import {withStyles} from 'material-ui/styles';
 import {formStyles as styles} from '../../utils/styles';
 
 const PasswordChangeForm = (props) => {
+
+    const handleSubmit = event => props.handleSubmit(event, props.token);
+
     return (
-        <form className={props.classes.root} onSubmit={props.handleSubmit}>
+        <form className={props.classes.root} onSubmit={handleSubmit}>
             <FormControl component="fieldset">
                 <FormControl className={props.classes.formControl}>
                     <InputLabel htmlFor="current-password">{`Current password: ${(props.passwordChangeInputErrors.currentPassword && props.passwordChangeInputErrors.currentPassword.message) || ''}`}</InputLabel>
@@ -35,7 +38,7 @@ const PasswordChangeForm = (props) => {
                     <InputLabel htmlFor="new-password">{`New password: ${(props.passwordChangeInputErrors.newPassword && props.passwordChangeInputErrors.newPassword.message) || ''}`}</InputLabel>
                     <Input
                         id="new-password"
-                        name="password"
+                        name="newPassword"
                         type={props.showNewPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
@@ -51,19 +54,19 @@ const PasswordChangeForm = (props) => {
                     />
                 </FormControl>
                 <FormControl className={props.classes.formControl}>
-                    <InputLabel htmlFor="new-password-repeat">{`Repeat new password: ${(props.passwordChangeInputErrors.repeatPassword && props.passwordChangeInputErrors.repeatPassword.message) || ''}`}</InputLabel>
+                    <InputLabel htmlFor="new-password-repeat">{`Repeat new password: ${(props.passwordChangeInputErrors.repeatNewPassword && props.passwordChangeInputErrors.repeatNewPassword.message) || ''}`}</InputLabel>
                     <Input
                         id="new-password-repeat"
-                        name="repeatPassword"
-                        type={props.showRepeatPassword ? 'text' : 'password'}
+                        name="repeatNewPassword"
+                        type={props.showRepeatNewPassword ? 'text' : 'password'}
                         onChange={props.handleChange}
                         onFocus={props.handleFocus}
-                        value={props.repeatPassword}
-                        error={!!((props.passwordChangeInputErrors.repeatPassword && props.passwordChangeInputErrors.repeatPassword.message))}
+                        value={props.repeatNewPassword}
+                        error={!!((props.passwordChangeInputErrors.repeatNewPassword && props.passwordChangeInputErrors.repeatNewPassword.message))}
                         endAdornment={
                             <InputAdornment position="end">
-                                <IconButton onClick={props.handleClickToggleRepeatPassword}>
-                                    {props.showRepeatPassword ? <VisibilityOff /> : <Visibility />}
+                                <IconButton onClick={props.handleClickToggleRepeatNewPassword}>
+                                    {props.showRepeatNewPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         }

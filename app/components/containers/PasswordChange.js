@@ -7,6 +7,7 @@ import MessageBar from '../presentation/MessageBar';
 import * as passwordChangeActions from '../../actions/passwordChange/passwordChangeActions';
 import {LinearProgress} from 'material-ui/Progress';
 import PasswordChangeForm from '../presentation/PasswordChangeForm';
+import jwtDecode from 'jwt-decode';
 
 class PasswordChange extends Component {
 
@@ -44,13 +45,13 @@ class PasswordChange extends Component {
     }
 }
 
-const mapStateToProps = ({auth: {isLoggedIn}, passwordChange}) => ({...passwordChange, isLoggedIn});
-const mapDispatchToProps = (dispatch, {match}) => {
+const mapStateToProps = ({auth: {isLoggedIn, token}, passwordChange}) => ({...passwordChange, isLoggedIn, token});
+const mapDispatchToProps = (dispatch) => {
     return {
-        handleSubmit(event) {
+        handleSubmit(event, token) {
             event.preventDefault();
-            const {userId, token} = match.params;
-            dispatch(passwordChangeActions.changePasswordIfNeeded(userId, token));
+            const {sub} = jwtDecode(token);
+            dispatch(passwordChangeActions.changePasswordIfNeeded(sub));
         },
         setAppBarTitle(title) {
             dispatch(setAppBarTitle(title));
