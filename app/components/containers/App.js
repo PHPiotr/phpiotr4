@@ -22,6 +22,7 @@ const Registration = universal(() => import('./Registration'));
 const Logout = universal(() => import('./Logout'));
 const AccountRecovery = universal(() => import('./AccountRecovery'));
 const PasswordReset = universal(() => import('./PasswordReset'));
+const PasswordChange = universal(() => import('./PasswordChange'));
 const NotFound = universal(() => import('./NotFound'));
 
 class App extends Component {
@@ -57,6 +58,7 @@ class App extends Component {
                         <Route name="hostel" path="/bookings/hostel/:id?" component={Hostel}/>
                         <Route name="account-recovery" path="/account-recovery" component={AccountRecovery}/>
                         <Route name="password-reset" path="/password-reset/:userId/:token" component={PasswordReset}/>
+                        <Route name="password-change" path="/password-change" component={PasswordChange}/>
                         <Route name="404" path="*" component={NotFound}/>
                     </Switch>
                 </div>

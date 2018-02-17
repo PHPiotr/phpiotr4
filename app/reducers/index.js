@@ -6,6 +6,7 @@ import bookings from './bookingReducer';
 import app from './appReducer';
 import recovery from './recoveryReducer';
 import passwordReset from './passwordResetReducer';
+import passwordChange from './passwordChangeReducer';
 import registration from './registrationReducer';
 import activation from './activationReducer';
 import profile from './profileReducer';
@@ -18,6 +19,7 @@ const reducers = combineReducers({
     app,
     recovery,
     passwordReset,
+    passwordChange,
     registration,
     activation,
     profile,
