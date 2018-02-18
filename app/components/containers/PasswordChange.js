@@ -8,15 +8,18 @@ import * as passwordChangeActions from '../../actions/passwordChange/passwordCha
 import {LinearProgress} from 'material-ui/Progress';
 import PasswordChangeForm from '../presentation/PasswordChangeForm';
 import jwtDecode from 'jwt-decode';
+import {toggleArrowBack} from '../../actions/app/appActions';
 
 class PasswordChange extends Component {
 
     componentDidMount() {
         this.props.setAppBarTitle('Password change');
+        this.props.toggleArrowBackIfNeeded(this.props.isArrowBackVisible);
     }
 
     componentWillUnmount() {
         this.props.setAppBarTitle(null);
+        this.props.toggleArrowBackIfNeeded(this.props.isArrowBackVisible);
     }
 
     render() {
@@ -77,6 +80,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleFocus(event) {
             dispatch(passwordChangeActions.onFocusPasswordChangeField(event.target.name));
+        },
+        toggleArrowBackIfNeeded(isArrowBackVisible) {
+            if (!isArrowBackVisible) {
+                dispatch(toggleArrowBack());
+            }
         },
     };
 };

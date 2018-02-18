@@ -4,6 +4,7 @@ import {HOME} from '../constants';
 const initialState = {
     isDrawerOpen: false,
     appBarTitle: HOME,
+    isArrowBackVisible: false,
 };
 
 const app = (state = initialState, {type, payload}) => {
@@ -12,6 +13,8 @@ const app = (state = initialState, {type, payload}) => {
             return {...state, isDrawerOpen: !state.isDrawerOpen};
         case appActionTypes.SET_APP_BAR_TITLE:
             return {...state, appBarTitle: payload || initialState.appBarTitle};
+        case appActionTypes.TOGGLE_ARROW_BACK:
+            return {...state, isArrowBackVisible: !state.isArrowBackVisible};
         default:
             return state;
     }

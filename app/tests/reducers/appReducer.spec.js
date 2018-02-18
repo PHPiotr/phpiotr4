@@ -47,6 +47,7 @@ describe('App reducer', () => {
         const initialState = {
             appBarTitle: HOME,
             isDrawerOpen: false,
+            isArrowBackVisible: false,
         };
         const action = {type: 'UNKNOWN_ACTION'};
         const before = initialState;

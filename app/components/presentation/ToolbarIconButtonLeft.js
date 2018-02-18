@@ -19,8 +19,8 @@ const ToolbarIconButtonLeft = ({showArrowBack, history, toggleIsDrawerOpen}) => 
     );
 };
 
-const mapStateToProps = ({bookings: {bus, plane, train, hostel}}) => ({
-    showArrowBack: bus.isAdd || plane.isAdd || train.isAdd || hostel.isAdd,
+const mapStateToProps = ({bookings: {bus, plane, train, hostel}, app}) => ({
+    showArrowBack: bus.isAdd || plane.isAdd || train.isAdd || hostel.isAdd || app.isArrowBackVisible,
 });
 
 export default withRouter(connect(mapStateToProps)(ToolbarIconButtonLeft));
