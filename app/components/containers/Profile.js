@@ -41,7 +41,7 @@ class Profile extends Component {
                     <ListItem button>
                         <ListItemText primary="Password" secondary={'Change password'} />
                         <ListItemSecondaryAction>
-                            <IconButton aria-label="Edit" href="/password-change">
+                            <IconButton aria-label="Edit" href="/password-change" onClick={this.props.handleOnChangePasswordClick}>
                                 <EditIcon/>
                             </IconButton>
                         </ListItemSecondaryAction>
@@ -53,12 +53,16 @@ class Profile extends Component {
 }
 
 const mapStateToProps = ({profile, auth: {token}}) => ({...profile, token});
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {history}) => ({
     setAppBarTitle(title) {
         dispatch(setAppBarTitle(title));
     },
     getProfile(sub) {
         dispatch(getProfileIfNeeded(sub));
+    },
+    handleOnChangePasswordClick(event) {
+        event.preventDefault();
+        history.push('/password-change');
     },
 });
 
