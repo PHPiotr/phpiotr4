@@ -58,4 +58,19 @@ describe('App reducer', () => {
         expect(app(before, action)).toEqual(after);
         expect(app(undefined, action)).toEqual(after);
     });
+    it(`should create ${appActionTypes.TOGGLE_ARROW_BACK}`, () => {
+        const action = {
+            type: appActionTypes.TOGGLE_ARROW_BACK,
+        };
+        const before = {
+            isArrowBackVisible: false,
+        };
+        const after = {
+            isArrowBackVisible: true,
+        };
+        freeze(action);
+        freeze(before);
+        freeze(after);
+        expect(app(before, action)).toEqual(after);
+    });
 });
