@@ -17,4 +17,10 @@ describe('App actions', () => {
         };
         expect(appActions.setAppBarTitle(expectedAppBarTitle)).toEqual(expectedAction);
     });
+    it('should toggle visibility of arrow left nav-bar icon', () => {
+        const expectedAction = {
+            type: appActionTypes.TOGGLE_ARROW_BACK,
+        };
+        expect(appActions.toggleArrowBack()).toEqual(expectedAction);
+    });
 });
