@@ -1,5 +1,3 @@
-const ManifestPlugin = require('webpack-manifest-plugin');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 require('babel-polyfill');
 const path = require('path');
 
@@ -40,14 +38,12 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ExtractCssChunks.extract({
-                    use: {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                        },
+                use: {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
                     },
-                }),
+                },
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/,
@@ -78,7 +74,4 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        new ManifestPlugin(),
-    ],
 };
