@@ -1,32 +1,9 @@
 require('babel-polyfill');
 const path = require('path');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, '../../'),
-    entry: {
-        vendor: [
-            'hoist-non-react-statics',
-            'isomorphic-fetch',
-            'jwt-decode',
-            'jsonwebtoken',
-            'jss',
-            'material-ui',
-            'material-ui-icons',
-            'moment',
-            'prop-types',
-            'react',
-            'react-cookie',
-            'react-dom',
-            'react-jss',
-            'react-redux',
-            'react-router-dom',
-            'react-tap-event-plugin',
-            'react-universal-component',
-            'redux',
-            'redux-thunk',
-            'typeface-roboto',
-        ],
-    },
     name: 'client',
     target: 'web',
     module: {
@@ -74,4 +51,7 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new ManifestPlugin(),
+    ],
 };

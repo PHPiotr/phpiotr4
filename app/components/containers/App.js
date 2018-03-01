@@ -4,44 +4,26 @@ import {withRouter, Route, Switch} from 'react-router-dom';
 import Navbar from '../presentation/Navbar';
 import {withCookies} from 'react-cookie';
 import {Helmet} from 'react-helmet';
-//import universal from 'react-universal-component';
+import universal from 'react-universal-component';
 import {HOME} from '../../constants';
-
-// const Report = universal(() => import('./Report'));
-// const Profile = universal(() => import('./Profile'));
-// const Buses = universal(() => import('../presentation/BusesTable'));
-// const Planes = universal(() => import('../presentation/PlanesTable'));
-// const Trains = universal(() => import('../presentation/TrainsTable'));
-// const Hostels = universal(() => import('../presentation/HostelsTable'));
-// const Bus = universal(() => import('../presentation/BusForm'));
-// const Plane = universal(() => import('../presentation/PlaneForm'));
-// const Train = universal(() => import('../presentation/TrainForm'));
-// const Hostel = universal(() => import('../presentation/HostelForm'));
-// const Login = universal(() => import('./Login'));
-// const Registration = universal(() => import('./Registration'));
-// const Logout = universal(() => import('./Logout'));
-// const AccountRecovery = universal(() => import('./AccountRecovery'));
-// const PasswordReset = universal(() => import('./PasswordReset'));
-// const PasswordChange = universal(() => import('./PasswordChange'));
-// const NotFound = universal(() => import('./NotFound'));
-
-import Report from'./Report';
-import Profile from'./Profile';
-import Buses from'../presentation/BusesTable';
-import Planes from'../presentation/PlanesTable';
-import Trains from'../presentation/TrainsTable';
-import Hostels from'../presentation/HostelsTable';
-import Bus from'../presentation/BusForm';
-import Plane from'../presentation/PlaneForm';
-import Train from'../presentation/TrainForm';
-import Hostel from'../presentation/HostelForm';
-import Login from'./Login';
-import Registration from'./Registration';
-import Logout from'./Logout';
-import NotFound from'./NotFound';
-import AccountRecovery from'./AccountRecovery';
-import PasswordChange from'./PasswordChange';
-import PasswordReset from'./PasswordReset';
+import Auth from './Auth';
+const Report = universal(() => import('./Report'));
+const Profile = universal(() => import('./Profile'));
+const Buses = universal(() => import('../presentation/BusesTable'));
+const Planes = universal(() => import('../presentation/PlanesTable'));
+const Trains = universal(() => import('../presentation/TrainsTable'));
+const Hostels = universal(() => import('../presentation/HostelsTable'));
+const Bus = universal(() => import('../presentation/BusForm'));
+const Plane = universal(() => import('../presentation/PlaneForm'));
+const Train = universal(() => import('../presentation/TrainForm'));
+const Hostel = universal(() => import('../presentation/HostelForm'));
+const Login = universal(() => import('./Login'));
+const Registration = universal(() => import('./Registration'));
+const Logout = universal(() => import('./Logout'));
+const AccountRecovery = universal(() => import('./AccountRecovery'));
+const PasswordReset = universal(() => import('./PasswordReset'));
+const PasswordChange = universal(() => import('./PasswordChange'));
+const NotFound = universal(() => import('./NotFound'));
 
 class App extends Component {
     componentDidMount() {
@@ -61,7 +43,7 @@ class App extends Component {
                 <Navbar/>
                 <div style={{paddingTop: 70}}>
                     <Switch>
-                        <Route exact path="/" component={Report}/>
+                        <Route exact path="/" component={Auth(Report)}/>
                         <Route name="profile" path="/profile" component={Profile}/>
                         <Route name="login" path="/login" component={Login}/>
                         <Route name="register" path="/register/:userId?/:bearerToken?" component={Registration}/>

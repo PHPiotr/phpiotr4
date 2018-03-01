@@ -7,11 +7,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'isomorphic-fetch';
 import configureStore from './configureStore';
 import reducers from './reducers';
-import App from './components/containers/App';
 import 'typeface-roboto';
 import {MuiThemeProvider} from 'material-ui/styles';
 import theme from './theme';
 import {CookiesProvider} from 'react-cookie';
+import universal from 'react-universal-component';
+const App = universal(() => import('./components/containers/App'));
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = configureStore(reducers, preloadedState);
