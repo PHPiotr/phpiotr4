@@ -2,8 +2,8 @@
   "name": "phpiotr4",
   "version": "1.0.0",
   "engines": {
-    "node": ">=9.7.0",
-    "npm": ">=5.6.0"
+    "node": "9.7.0",
+    "npm": "5.6.0"
   },
   "description": "Reporting app for a frequent flyer",
   "main": "bin/www",
