@@ -44,21 +44,21 @@ class App extends Component {
                 <div style={{paddingTop: 70}}>
                     <Switch>
                         <Route exact path="/" component={Auth(Report)}/>
-                        <Route name="profile" path="/profile" component={Profile}/>
+                        <Route name="profile" path="/profile" component={Auth(Profile)}/>
                         <Route name="login" path="/login" component={Login}/>
                         <Route name="register" path="/register/:userId?/:bearerToken?" component={Registration}/>
                         <Route name="logout" path="/logout" component={Logout}/>
-                        <Route name="buses" path="/bookings/buses/:current?/:page?" component={Buses}/>
-                        <Route name="bus" path="/bookings/bus/:id?" component={Bus}/>
-                        <Route name="planes" path="/bookings/planes/:current?/:page?" component={Planes}/>
-                        <Route name="plane" path="/bookings/plane/:id?" component={Plane}/>
-                        <Route name="trains" path="/bookings/trains/:current?/:page?" component={Trains}/>
-                        <Route name="train" path="/bookings/train/:id?" component={Train}/>
-                        <Route name="hostels" path="/bookings/hostels/:current?/:page?" component={Hostels}/>
-                        <Route name="hostel" path="/bookings/hostel/:id?" component={Hostel}/>
+                        <Route name="buses" path="/bookings/buses/:current?/:page?" component={Auth(Buses)}/>
+                        <Route name="bus" path="/bookings/bus/:id?" component={Auth(Bus)}/>
+                        <Route name="planes" path="/bookings/planes/:current?/:page?" component={Auth(Planes)}/>
+                        <Route name="plane" path="/bookings/plane/:id?" component={Auth(Plane)}/>
+                        <Route name="trains" path="/bookings/trains/:current?/:page?" component={Auth(Trains)}/>
+                        <Route name="train" path="/bookings/train/:id?" component={Auth(Train)}/>
+                        <Route name="hostels" path="/bookings/hostels/:current?/:page?" component={Auth(Hostels)}/>
+                        <Route name="hostel" path="/bookings/hostel/:id?" component={Auth(Hostel)}/>
                         <Route name="account-recovery" path="/account-recovery" component={AccountRecovery}/>
                         <Route name="password-reset" path="/password-reset/:userId/:token" component={PasswordReset}/>
-                        <Route name="password-change" path="/password-change" component={PasswordChange}/>
+                        <Route name="password-change" path="/password-change" component={Auth(PasswordChange)}/>
                         <Route name="404" path="*" component={NotFound}/>
                     </Switch>
                 </div>

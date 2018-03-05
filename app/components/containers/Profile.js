@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import Auth from './Auth';
 import {connect} from 'react-redux';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import {PROFILE} from '../../constants';
@@ -66,4 +65,4 @@ const mapDispatchToProps = (dispatch, {history}) => ({
     },
 });
 
-export default Auth(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

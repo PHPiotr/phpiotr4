@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import * as bookingActions from '../../actions/booking/bookingActions';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
-import Auth from './Auth';
 import BookingDeleteDialog from '../presentation/BookingDeleteDialog';
 import {LinearProgress} from 'material-ui/Progress';
 
@@ -121,7 +120,7 @@ const booking = (WrappedComponent) => {
         },
     });
 
-    return Auth(connect(mapStateToProps, mapDispatchToProps)(Booking));
+    return connect(mapStateToProps, mapDispatchToProps)(Booking);
 };
 
 export default booking;
