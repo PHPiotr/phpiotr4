@@ -2,7 +2,7 @@ import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {flushChunkNames} from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
-import App from '../app/components/containers/App';
+import universal from 'react-universal-component';
 import {StaticRouter as Router} from 'react-router-dom';
 import theme from '../app/theme';
 import {MuiThemeProvider} from 'material-ui/styles';
@@ -15,6 +15,7 @@ import {create} from 'jss';
 import preset from 'jss-preset-default';
 import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 import {CookiesProvider} from 'react-cookie';
+const App = universal(() => import('../app/components/containers/App'));
 
 export default ({clientStats}) => (req, res) => {
     const sheetsRegistry = new SheetsRegistry();

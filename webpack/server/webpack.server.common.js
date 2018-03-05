@@ -1,4 +1,3 @@
-const Webpack = require('webpack');
 const path = require('path');
 require('babel-polyfill');
 
@@ -24,9 +23,4 @@ module.exports = {
     output: {
         libraryTarget: 'commonjs2',
     },
-    plugins: [
-        new Webpack.optimize.LimitChunkCountPlugin({
-            maxChunks: 1,
-        }),
-    ],
 };
