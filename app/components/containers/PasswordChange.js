@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Auth from './Auth';
 import {setAppBarTitle} from '../../actions/app/appActions';
 import MessageBar from '../presentation/MessageBar';
 import * as passwordChangeActions from '../../actions/passwordChange/passwordChangeActions';
@@ -89,4 +88,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default Auth(withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordChange)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordChange));

@@ -24,7 +24,7 @@ const Navbar = (props) => {
     const {classes} = props;
 
     return (
-        <AppBar>
+        <AppBar position="sticky">
             <Toolbar>
                 <ToolbarIconButtonLeft {...props}/>
                 <Typography type="title" color="inherit">{props.appBarTitle}</Typography>
