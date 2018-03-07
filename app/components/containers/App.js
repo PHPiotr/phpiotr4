@@ -58,7 +58,7 @@ class App extends Component {
                     <Route name="account-recovery" path="/account-recovery" component={AccountRecovery}/>
                     <Route name="password-reset" path="/password-reset/:userId/:token" component={PasswordReset}/>
                     <Route name="password-change" path="/password-change" component={Auth(PasswordChange)}/>
-                    <Route name="404" path="*" component={NotFound}/>
+                    <Route name="404" path="*" component={Auth(NotFound)}/>
                 </Switch>
             </Fragment>
         );
