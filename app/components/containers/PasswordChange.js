@@ -13,12 +13,11 @@ class PasswordChange extends Component {
 
     componentDidMount() {
         this.props.setAppBarTitle('Password change');
-        this.props.toggleArrowBackIfNeeded(this.props.isArrowBackVisible);
+        this.props.toggleArrowBack();
     }
 
     componentWillUnmount() {
-        this.props.setAppBarTitle(null);
-        this.props.toggleArrowBackIfNeeded(this.props.isArrowBackVisible);
+        this.props.toggleArrowBack();
     }
 
     render() {
@@ -80,10 +79,8 @@ const mapDispatchToProps = (dispatch) => {
         handleFocus(event) {
             dispatch(passwordChangeActions.onFocusPasswordChangeField(event.target.name));
         },
-        toggleArrowBackIfNeeded(isArrowBackVisible) {
-            if (!isArrowBackVisible) {
-                dispatch(toggleArrowBack());
-            }
+        toggleArrowBack() {
+            dispatch(toggleArrowBack());
         },
     };
 };
