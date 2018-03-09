@@ -3,7 +3,6 @@ import {hydrate} from 'react-dom';
 import {AppContainer, setConfig} from 'react-hot-loader';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'isomorphic-fetch';
 import configureStore from './configureStore';
 import reducers from './reducers';
@@ -16,12 +15,6 @@ const App = universal(() => import('./components/containers/App'));
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = configureStore(reducers, preloadedState);
-
-try {
-    injectTapEventPlugin();
-} catch (e) {
-    //
-}
 
 const ROOT = 'root';
 
