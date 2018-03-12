@@ -55,7 +55,7 @@ const booking = (WrappedComponent) => {
                 ...state.bookings[label],
                 current: {
                     ...state.bookings[label].current,
-                    price: current.price ? (parseFloat(current.price)).toFixed(2) : null,
+                    price: current.price ? current.price : null,
                     departure_date: current.departure_date ? current.departure_date.substring(0, 10) : null,
                     return_departure_date: current.return_departure_date ? current.return_departure_date.substring(0, 10) : null,
                     checkin_date: current.checkin_date ? current.checkin_date.substring(0, 10) : null,
