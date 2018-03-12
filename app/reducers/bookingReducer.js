@@ -93,7 +93,14 @@ const bookings = (state = initialState, action) => {
             return {...state, [payload.label]: {...state[payload.label], isFetching: true}};
 
         case indexActionTypes.GET_BOOKING_SUCCESS:
-            return {...state, [payload.label]: {...state[payload.label], isFetching: false, current: payload.current}};
+            return {
+                ...state,
+                [payload.label]: {
+                    ...state[payload.label],
+                    isFetching: false,
+                    current: {...payload.current, price: payload.current.price ? (payload.current.price).toFixed(2) : payload.current.price},
+                },
+            };
 
         case indexActionTypes.GET_BOOKING_FAILURE:
             return {
