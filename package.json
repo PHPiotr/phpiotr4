@@ -48,7 +48,7 @@
     "react-cookie": "^2.1.4",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
-    "react-jss": "^8.3.3",
+    "react-jss": "^8.3.5",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-universal-component": "^2.8.4",
