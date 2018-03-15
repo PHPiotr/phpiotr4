@@ -15,8 +15,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "NODE_ENV=production nyc --reporter=html --reporter=text mocha './app/tests/**/*.js' --require babel-core/register",
     "test-watch": "npm run tests -- --watch",
-    "build": "NODE_ENV=production webpack -p --config ./webpack/client/webpack.client.prod.js --progress --colors",
-    "heroku-postbuild": "exit 0"
+    "build": "NODE_ENV=production webpack -p --config ./webpack/client/webpack.client.prod.js --progress --colors"
   },
   "keywords": [
     "jwt",
