@@ -19,7 +19,9 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 const root = isDevelopment ? 'app' : 'buildClient';
 const stats = {entrypoints: true, usedExports: true, colors: true};
 
-app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
+if (path.existsSync(path.resolve(__dirname, root, 'static/img/favicon.ico'))) {
+    app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
+}
 app.use(express.static(path.resolve(__dirname, root, 'static')));
 app.use(cookiesMiddleware());
 
