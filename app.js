@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-//const favicon = require('serve-favicon');
+const favicon = require('serve-favicon');
 const cookiesMiddleware = require('universal-cookie-express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
@@ -19,7 +19,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 const root = isDevelopment ? 'app' : 'buildClient';
 const stats = {entrypoints: true, usedExports: true, colors: true};
 
-//app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
+app.use(favicon(path.resolve(__dirname, root, 'static/img/favicon.ico')));
 app.use(express.static(path.resolve(__dirname, root, 'static')));
 app.use(cookiesMiddleware());
 
