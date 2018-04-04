@@ -1,6 +1,8 @@
-build
+buildClient
 .env
 .idea/
+.DS_Store
+
 # Logs
 logs
 *.log
