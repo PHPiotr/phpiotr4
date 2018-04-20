@@ -87,7 +87,7 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "eslint-watch": "^3.1.4",
-    "expect": "^23.0.0-alpha.6r",
+    "expect": "^23.0.0-beta.0",
     "file-loader": "^1.1.10",
     "image-webpack-loader": "^4.2.0",
     "jss-preset-default": "^4.3.0",
@@ -97,7 +97,7 @@
     "nock": "^9.2.5",
     "nyc": "^11.7.1",
     "react-addons-test-utils": "^15.6.2",
-    "react-hot-loader": "^4.1.0",
+    "react-hot-loader": "^4.1.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.1",
     "redux-mock-store": "^1.5.1",
@@ -109,7 +109,7 @@
     "webpack-flush-chunks": "^1.2.3",
     "webpack-hot-middleware": "^2.22.1",
     "webpack-hot-server-middleware": "^0.5.0",
-    "webpack-manifest-plugin": "^2.0.0",
+    "webpack-manifest-plugin": "^2.0.1",
     "webpack-merge": "^4.1.2"
   }
 }
